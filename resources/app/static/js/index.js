@@ -40,7 +40,7 @@ const index = {
             // Check for errors
             if (message.name === "error") {
                 asticode.notifier.error(message.payload);
-                return
+                return;
             }
 
             document.getElementById("removeButton").innerHTML = message.payload;
@@ -56,7 +56,7 @@ const index = {
             // Check for errors
             if (message.name === "error") {
                 asticode.notifier.error(message.payload);
-                return
+                return;
             }
             
             unitDataList = message.payload;
@@ -83,7 +83,7 @@ const index = {
             // Check for errors
             if (message.name === "error") {
                 asticode.notifier.error(message.payload);
-                return
+                return;
             }
 
             $("#unitTableBody>tr").removeClass("active");
@@ -103,5 +103,41 @@ const index = {
                 }
             }));
         });
+    },
+    activateFileUploadButton: function () {
+        $("#hiddenFileUploadInput").click();
+    },
+    saveToFile: function () {
+        const input = $("#outputFolderInput");
+
+        if (input.length < 1)
+            return;
+
+        const outputDir = input[0].value;
+        const message = { name: "saveToFile", payload: outputDir };
+        astilectron.sendMessage(message, function(message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+        });
+    },
+    updateOutputFolder: function () {
+        const hiddenInput = $("#hiddenFileUploadInput");
+        const input = $("#outputFolderInput");
+
+        if (input.length < 1 || hiddenInput.length < 1)
+            return;
+
+        const updatedValue = hiddenInput[0].value;
+
+        if (!updatedValue)
+            return;
+
+        input[0].value = updatedValue;
+    },
+    saveUnit: function () {
+        // TODO: Implement this
     }
 };

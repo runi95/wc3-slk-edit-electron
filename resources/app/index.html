@@ -63,13 +63,20 @@
     <div class="row" style="height: 100%;">
         <div class="col-4" style="height: 100%; display: flex; flex-direction: column;">
             <div class="form-dark">
+                <div style="display: flex;">
+                    <input type="file" id="hiddenFileUploadInput" hidden onchange="index.updateOutputFolder()" />
+                    <input type="text" class="form-control" id="outputFolderInput" aria-describedby="output folder path"
+                           placeholder="./input" />
+                    <button style="white-space: nowrap;" class="btn" tabindex="-1" onclick="index.activateFileUploadButton()">...</button>
+                    <button style="white-space: nowrap;" class="btn" tabindex="-1" onclick="index.saveToFile()">🖫 Save Files</button>
+                </div>
                 <div class="col-auto" style="padding: 0;">
                     <label class="sr-only" for="searchInput">Search</label>
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="fas fa-search"></i></div>
                         </div>
-                        <input type="text" class="form-control" id="searchInput" placeholder="Search"
+                        <input type="text" class="form-control" id="searchInput" placeholder="search"
                                oninput="index.search(this)">
                     </div>
                 </div>
@@ -87,7 +94,7 @@
                 </table>
             </div>
             <div class="form-dark">
-                <button class="btn btn-block" onclick="index.removeUnit('u009')" id="removeButton">Remove Unit</button>
+                <button class="btn btn-block" onclick="index.removeUnit('u009')" id="removeButton">✖ Remove Unit</button>
             </div>
         </div>
         <div class="col-8" style="height: 100%;">
@@ -119,7 +126,7 @@
                                 <div style="display: flex;">
                                     <input type="text" class="form-control" id="UnitId" aria-describedby="unitid"
                                            placeholder="Unit ID" required />
-                                    <button style="white-space: nowrap;" class="btn" tabindex="-1">Generate Valid ID</button>
+                                    <button style="white-space: nowrap;" class="btn" tabindex="-1">↺ Generate Valid ID</button>
                                 </div>
                             </li>
                         </ul>
@@ -1231,6 +1238,12 @@
 </div>
 <script type="text/javascript">
     index.init();
+
+    document.onkeyup = function(e) {
+        if (e.ctrlKey && e.which === 83) {
+            index.saveUnit();
+        }
+    };
 </script>
 </body>
 </html>
