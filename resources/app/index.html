@@ -6,7 +6,10 @@
     <link rel="stylesheet" href="static/lib/font-awesome-5.7.2/css/all.min.css">
     <link rel="stylesheet" href="static/lib/bootstrap-4-3-1/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/css/base.css"/>
-    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script>if (typeof module === 'object') {
+        window.module = module;
+        module = undefined;
+    }</script>
     <script src="static/lib/jquery-3.3.1/js/jquery.min.js"></script>
     <script src="static/lib/popper-1.14.7/js/popper.min.js"></script>
     <script src="static/lib/astiloader/astiloader.js"></script>
@@ -66,7 +69,8 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text"><i class="fas fa-search"></i></div>
                         </div>
-                        <input type="text" class="form-control" id="searchInput" placeholder="Search" oninput="index.search(this)">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search"
+                               oninput="index.search(this)">
                     </div>
                 </div>
             </div>
@@ -91,41 +95,35 @@
                  style="height: 100%; position: relative; overflow-y: auto;" data-spy="scroll" data-target="#nav"
                  data-offset="0">
                 <section>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label>Unit Type</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <div style="padding: 5px;">
-                                <input class="form-check-input" type="radio" name="unitType"
-                                       id="Hero"
-                                       value="1">
-                                <label class="form-check-label" for="Hero">Hero</label>
-                            </div>
-                            <div style="padding: 5px;">
-                                <input class="form-check-input" type="radio" name="unitType"
-                                       id="Unit"
-                                       value="2">
-                                <label class="form-check-label" for="Unit">Unit</label>
-                            </div>
-                            <div style="padding: 5px;">
-                                <input class="form-check-input" type="radio" name="unitType"
-                                       id="Building"
-                                       value="1">
-                                <label class="form-check-label" for="Building">Building</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="UnitId">Unit ID</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="UnitId" aria-describedby="unitid"
-                                   placeholder="Unit ID"/>
-                            <button class="btn">Generate Valid ID</button>
-                        </div>
-                    </div>
+                    <form class="was-validated">
+                        <ul class="flex-outer">
+                            <li>
+                                <label>Unit Type</label>
+                                <div>
+                                    <input type="radio" name="unitType"
+                                           id="Hero"
+                                           value="1">
+                                    <label for="Hero">Hero</label>
+                                    <input type="radio" name="unitType"
+                                           id="Unit"
+                                           value="2">
+                                    <label class="form-check-label" for="Unit">Unit</label>
+                                    <input type="radio" name="unitType"
+                                           id="Building"
+                                           value="1">
+                                    <label class="form-check-label" for="Building">Building</label>
+                                </div>
+                            </li>
+                            <li>
+                                <label for="UnitId">Unit ID</label>
+                                <div style="display: flex;">
+                                    <input type="text" class="form-control" id="UnitId" aria-describedby="unitid"
+                                           placeholder="Unit ID" required />
+                                    <button style="white-space: nowrap;" class="btn" tabindex="-1">Generate Valid ID</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
                 </section>
                 <section id="abilities-section">
                     <div class="editor-section">
@@ -133,25 +131,22 @@
                         <h3>Abilities</h3>
                         <hr>
                     </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitAbilities-Auto">Default Active Ability</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitAbilities-Auto"
-                                   aria-describedby="default active ability"
-                                   placeholder="Default Active Ability"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitAbilities-AbilList">Abilities</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitAbilities-AbilList" aria-describedby="abilities"
-                                   placeholder="Abilities"/>
-                        </div>
-                    </div>
+                    <form class="was-validated">
+                        <ul class="flex-outer">
+                            <li>
+                                <label for="SLKUnit-UnitAbilities-Auto">Default Active Ability</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitAbilities-Auto"
+                                       aria-describedby="default active ability"
+                                       placeholder="Default Active Ability"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitAbilities-AbilList">Abilities</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitAbilities-AbilList"
+                                       aria-describedby="abilities"
+                                       placeholder="Abilities"/>
+                            </li>
+                        </ul>
+                    </form>
                 </section>
                 <section id="art-section">
                     <div class="editor-section">
@@ -159,604 +154,422 @@
                         <h3>Art</h3>
                         <hr>
                     </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="AllowCustomTeamColor">Allow Custom Team Color</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="checkbox" id="AllowCustomTeamColor"
-                                   aria-label="allow custom team color">
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-Blend">Blend Time (seconds)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-Blend"
-                                   aria-describedby="blend time in seconds"
-                                   placeholder="Blend Time (seconds)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Castbsw">Cast Backswing</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Castbsw" aria-describedby="cast backswing"
-                                   placeholder="Cast Backswing"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Castpt">Cast Point</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Castpt" aria-describedby="cast point"
-                                   placeholder="Cast Point"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-Run">Run Speed</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-Run" aria-describedby="run speed"
-                                   placeholder="Run Speed"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-Walk">Walk Speed</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-Walk" aria-describedby="walk speed"
-                                   placeholder="Walk Speed"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="ButtonPosition">Button Position</label>
-                        </div>
-                        <div class="input-group">
-                            <select> <!-- TODO: Figure this one out -->
-                                <option value="0,0">0,0</option>
-                                <option value="1,0">1,0</option>
-                                <option value="2,0">2,0</option>
-                                <option value="3,0">3,0</option>
-                                <option value="0,1">0,1</option>
-                                <option value="1,1">1,1</option>
-                                <option value="2,1">2,1</option>
-                                <option value="3,1">3,1</option>
-                                <option value="0,2">0,2</option>
-                                <option value="1,2">1,2</option>
-                                <option value="2,2">2,2</option>
-                                <option value="3,2">3,2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="CasterUpgradeArt">Caster Upgrade Art</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="CasterUpgradeArt"
-                                   aria-describedby="caster upgrade art"
-                                   placeholder="Caster Upgrade Art"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitData-Death">Death Time (seconds)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitData-Death"
-                                   aria-describedby="death time in seconds"
-                                   placeholder="Death Time (seconds)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-ElevPts">Elevation - Sample Points</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-ElevPts"
-                                   aria-describedby="elevation - sample points"
-                                   placeholder="Elevation - Sample Points"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-ElevRad">Elevation - Sample Radius</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-ElevRad"
-                                   aria-describedby="elevation sample radius"
-                                   placeholder="Elevation - Sample Radius"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-FogRad">Fog of War - Sample Radius</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-FogRad"
-                                   aria-describedby="fog of war - sample radius"
-                                   placeholder="Fog of War - Sample Radius"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-ShadowOnWater">Has Water Shadow</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="checkbox" id="SLKUnit-UnitUI-ShadowOnWater"
-                                   aria-label="has water shadow">
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="Icon">Icon</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="Icon" aria-describedby="icon"
-                                   placeholder="Icon"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="ScoreScreenIcon">Score Screen Icon</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="ScoreScreenIcon"
-                                   aria-describedby="score screen icon" placeholder="Score Screen Icon"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-MaxPitch">Maximum Pitch Angle (degrees)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-MaxPitch"
-                                   aria-describedby="maximum pitch angle in degrees"
-                                   placeholder="Maximum Pitch Angle (degrees)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-MaxRoll">Maximum Roll Angle (degrees)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-MaxRoll"
-                                   aria-describedby="maximum roll angle in degrees"
-                                   placeholder="Maximum Roll Angle (degrees)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-File">Model File</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-File" aria-describedby="model file"
-                                   placeholder="Model File"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-FileVerFlags">Model File - Extra Versions</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-FileVerFlags"
-                                   aria-describedby="model file - extra versions"
-                                   placeholder="Model File - Extra Versions"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-OccH">Occluder Height</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-OccH"
-                                   aria-describedby="occluder height"
-                                   placeholder="Occluder Height"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitData-OrientInterp">Orientation Interpolation</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitData-OrientInterp"
-                                   aria-describedby="orientation interpolation"
-                                   placeholder="Orientation Interpolation"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-ImpactZ">Projectile Impact - Z</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-ImpactZ"
-                                   aria-describedby="projectile impact z"
-                                   placeholder="Projectile Impact - Z"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-ImpactSwimZ">Projectile Impact - Z (Swimming)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-ImpactSwimZ"
-                                   aria-describedby="projectile impact z while swimming"
-                                   placeholder="Projectile Impact - Z (Swimming)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-LaunchX">Projectile Launch - X</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-LaunchX"
-                                   aria-describedby="projectile launch x"
-                                   placeholder="Projectile Launch - X"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-LaunchY">Projectile Launch - Y</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-LaunchY"
-                                   aria-describedby="projectile launch y"
-                                   placeholder="Projectile Launch - Y"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-LaunchZ">Projectile Launch - Z</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-LaunchZ"
-                                   aria-describedby="projectile launch z"
-                                   placeholder="Projectile Launch - Z"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-LaunchSwimZ">Projectile Launch - Z (Swimming)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-LaunchSwimZ"
-                                   aria-describedby="projectile launch z (swimming)"
-                                   placeholder="Projectile Launch - Z (Swimming)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitData-PropWin">Propulsion Window (degrees)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitData-PropWin"
-                                   aria-describedby="propulsion window (degrees)"
-                                   placeholder="Propulsion Window (degrees)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="RequiredAnimatonNames">Required Animaton Names</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="RequiredAnimatonNames"
-                                   aria-describedby="required animaton names"
-                                   placeholder="Required Animaton Names"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="RequiredAnimatonNamesAttachments">Required Animaton Names - Attachments</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="RequiredAnimatonNamesAttachments"
-                                   aria-describedby="required animaton names - attachments"
-                                   placeholder="Required Animaton Names - Attachments"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="RequiredAttachmentLinkNames">Required Attachment Link Names</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="RequiredAttachmentLinkNames"
-                                   aria-describedby="required attachment link names"
-                                   placeholder="Required Attachment Link Names"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="RequiredBoneNames">Required Bone Names</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="RequiredBoneNames"
-                                   aria-describedby="required bone names"
-                                   placeholder="Required Bone Names"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-ScaleBull">Scale Projectiles</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="checkbox" id="SLKUnit-UnitUI-ScaleBull"
-                                   aria-label="scale projectiles">
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-ModelScale">Scaling Value</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-ModelScale" aria-describedby="scaling value"
-                                   placeholder="Scaling Value"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-SelZ">Selection Circle - Height</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-SelZ"
-                                   aria-describedby="selection circle height"
-                                   placeholder="Selection Circle Height"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-SelCircOnWater">Selection Circle On Water</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="checkbox" id="SLKUnit-UnitUI-SelCircOnWater"
-                                   aria-label="selection circle on water">
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-Scale">Selection Scale</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-Scale"
-                                   aria-describedby="selection scale"
-                                   placeholder="Selection Scale"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="ButtonPosition">Shadow Image</label>
-                        </div>
-                        <div class="input-group">
-                            <select> <!-- TODO: Figure this one out -->
-                                <option>NONE</option>
-                                <option>Flyer</option>
-                                <option>Normal</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-ShadowX">Shadow Image - Center X</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-ShadowX"
-                                   aria-describedby="shadow image - center x"
-                                   placeholder="Shadow Image - Center X"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-ShadowY">Shadow Image - Center Y</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-ShadowY"
-                                   aria-describedby="shadow image - center y"
-                                   placeholder="Shadow Image - Center Y"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-ShadowH">Shadow Image - Height</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-ShadowH"
-                                   aria-describedby="shadow image - height"
-                                   placeholder="Shadow Image - Height"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-ShadowW">Shadow Image - Width</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-ShadowW"
-                                   aria-describedby="shadow image - width"
-                                   placeholder="Shadow Image - Width"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="ShadowTexture">Shadow Texture</label>
-                        </div>
-                        <div class="input-group">
-                            <select> <!-- TODO: Figure this one out -->
-                                <option>NONE</option>
-                                <option>Altar of Darkness</option>
-                                <option>Altar of Elders</option>
-                                <option>Altar of Kings</option>
-                                <option>Altar of Storms</option>
-                                <option>Altar of the Depths</option>
-                                <option>Ancient of Lore</option>
-                                <option>Ancient of War, Corrupted Ancient of War</option>
-                                <option>Ancient of Wind, Ancient of Wonders</option>
-                                <option>Ancient Protector, Corrupted Ancient Protector</option>
-                                <option>Arcane Observatory</option>
-                                <option>Arcane Sanctum</option>
-                                <option>Arcane Tower, Guard Tower, Watch Tower</option>
-                                <option>Arcane Valut</option>
-                                <option>Archmage, Blood Mage, Mountain King, Paladin, Human Transport Ship, Human
-                                    Battleship, Human Frigate, Footman, Knight, ...
-                                </option>
-                                <option>Barracks</option>
-                                <option>Barracks, Spawning Grounds</option>
-                                <option>Beastiary</option>
-                                <option>Black Citadel</option>
-                                <option>Blacksmith</option>
-                                <option>Boneyard</option>
-                                <option>Cannon Tower, Boulder Tower, Advanced Boulder Tower, Dalaran Guard Tower, Cold
-                                    Tower, Advanced Cold Tower, ...
-                                </option>
-                                <option>Castle</option>
-                                <option>Chimera Roost</option>
-                                <option>Crypt</option>
-                                <option>Demon Gate</option>
-                                <option>Dimensional Gate (facing southeast)</option>
-                                <option>Dimensional Gate (facing southwest)</option>
-                                <option>Dragonhawk Rider, Gryphon Rider, Flying Machine, Phoenix, Troll Batrider, Wind
-                                    Rider, Chimera, ....
-                                </option>
-                                <option>Entangled Gold Mine, Haunted Gold Mine, Graveyard, Undead Shipyard, Green Dragon
-                                    Roost, Black Dragon Roost, ...
-                                </option>
-                                <option>Farm</option>
-                                <option>Fortress</option>
-                                <option>Great Hall</option>
-                                <option>Gryphon Aviary</option>
-                                <option>Halls of the Dead</option>
-                                <option>High Elven Barracks</option>
-                                <option>Human Shipyard, Night Elf Shipyard</option>
-                                <option>Hunter's Hall, Barrow Den</option>
-                                <option>Icy Treasure Box, Magic Vault</option>
-                                <option>Keep</option>
-                                <option>Lumber Mill</option>
-                                <option>Mercenary Camp (Lordaeron Summer), Mercenary Camp (Village), Mercenary Camp
-                                    (Lordaeron Fall), ...
-                                </option>
-                                <option>Moon Well, Corrupted Moon Well</option>
-                                <option>Necropolis</option>
-                                <option>Orc Burrow, Tidal Guardian, Fel Orc Burrow (Chaos)</option>
-                                <option>Orc Shipyard, Goblin Shipyard</option>
-                                <option>Sacrificial Pit</option>
-                                <option>Scout Tower, City Building 0, City Building 1, City Building 2, City Building 3,
-                                    City Building 4, City Building 5, ...
-                                </option>
-                                <option>Shrine of Azshara</option>
-                                <option>Slaughterhouse</option>
-                                <option>Spirit Lodge</option>
-                                <option>Spirit Tower, Nerubian Tower, Ziggurat</option>
-                                <option>Stronghold</option>
-                                <option>Tauren Totem</option>
-                                <option>Temple of the Damned</option>
-                                <option>Temple of Tides</option>
-                                <option>Tomb of Relics</option>
-                                <option>Town Hall</option>
-                                <option>Tree of Ages, Tree of Eternity, Tree of Life, Corrupted Tree of Ages, Corrupted
-                                    Tree of Eternity, Corrupted Tree of Life
-                                </option>
-                                <option>Voodoo Lounge, Goblin Merchant</option>
-                                <option>War Mill</option>
-                                <option>Workshop</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-Special">Special</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-Special" aria-describedby="special"
-                                   placeholder="Special"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="Special">Target</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="Target" aria-describedby="target"
-                                   placeholder="Target"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="TeamColor">Team Color</label>
-                        </div>
-                        <div class="input-group">
-                            <select> <!-- TODO: Figure this one out -->
-                                <option>Match Owning Player</option>
-                                <option>Player 1 (Red)</option>
-                                <option>Player 2 (Blue)</option>
-                                <option>Player 3 (Teal)</option>
-                                <option>Player 4 (Purple)</option>
-                                <option>Player 5 (Yellow)</option>
-                                <option>Player 6 (Orange)</option>
-                                <option>Player 7 (Green)</option>
-                                <option>Player 8 (Pink)</option>
-                                <option>Player 9 (Gray)</option>
-                                <option>Player 10 (Light Blue)</option>
-                                <option>Player 11 (Dark Green)</option>
-                                <option>Player 12 (Brown)</option>
-                                <option>Player 13 (Maroon)</option>
-                                <option>Player 14 (Navy)</option>
-                                <option>Player 15 (Turquoise)</option>
-                                <option>Player 16 (Violet)</option>
-                                <option>Player 17 (Wheat)</option>
-                                <option>Player 18 (Peach)</option>
-                                <option>Player 19 (Mint)</option>
-                                <option>Player 20 (Lavender)</option>
-                                <option>Player 21 (Coal)</option>
-                                <option>Player 22 (Snow)</option>
-                                <option>Player 23 (Emerald)</option>
-                                <option>Player 24 (Peanut)</option>
-                                <option>Neutral Hostile</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-Red">Tinting Color 1 (Red)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-Red"
-                                   aria-describedby="tinting color 1 red"
-                                   placeholder="Tinting Color 1 (Red)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-Green">Tinting Color 2 (Green)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-Green"
-                                   aria-describedby="tinting color 2 green"
-                                   placeholder="Tinting Color 2 (Green)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-Blue">Tinting Color 3 (Blue)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-Blue"
-                                   aria-describedby="tinting color 3 blue"
-                                   placeholder="Tinting Color 3 (Blue)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="UseExtendedLineOfSight">Use Extended Line of Sight</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="checkbox" id="UseExtendedLineOfSight"
-                                   aria-label="use extended line of sight"> <!-- TODO: Figure this one out -->
-                        </div>
-                    </div>
+                    <form class="was-validated">
+                        <ul class="flex-outer">
+                            <li>
+                                <label for="AllowCustomTeamColor">Allow Custom Team Color</label>
+                                <input class="form-check-input position-static" type="checkbox"
+                                       id="AllowCustomTeamColor"
+                                       aria-label="allow custom team color" tabindex="-1" />
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-Blend">Blend Time (seconds)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-Blend"
+                                       aria-describedby="blend time in seconds"
+                                       placeholder="Blend Time (seconds)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Castbsw">Cast Backswing</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Castbsw"
+                                       aria-describedby="cast backswing"
+                                       placeholder="Cast Backswing"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Castpt">Cast Point</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Castpt"
+                                       aria-describedby="cast point"
+                                       placeholder="Cast Point"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-Run">Run Speed</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-Run"
+                                       aria-describedby="run speed"
+                                       placeholder="Run Speed"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-Walk">Walk Speed</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-Walk"
+                                       aria-describedby="walk speed"
+                                       placeholder="Walk Speed"/>
+                            </li>
+                            <li>
+                                <label for="ButtonPosition">Button Position</label>
+                                <select class="custom-select"> <!-- TODO: Figure this one out -->
+                                    <option value="0,0">0,0</option>
+                                    <option value="1,0">1,0</option>
+                                    <option value="2,0">2,0</option>
+                                    <option value="3,0">3,0</option>
+                                    <option value="0,1">0,1</option>
+                                    <option value="1,1">1,1</option>
+                                    <option value="2,1">2,1</option>
+                                    <option value="3,1">3,1</option>
+                                    <option value="0,2">0,2</option>
+                                    <option value="1,2">1,2</option>
+                                    <option value="2,2">2,2</option>
+                                    <option value="3,2">3,2</option>
+                                </select></li>
+                            <li>
+                                <label for="CasterUpgradeArt">Caster Upgrade Art</label>
+                                <input type="text" class="form-control" id="CasterUpgradeArt"
+                                       aria-describedby="caster upgrade art"
+                                       placeholder="Caster Upgrade Art"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitData-Death">Death Time (seconds)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitData-Death"
+                                       aria-describedby="death time in seconds"
+                                       placeholder="Death Time (seconds)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-ElevPts">Elevation - Sample Points</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-ElevPts"
+                                       aria-describedby="elevation - sample points"
+                                       placeholder="Elevation - Sample Points"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-ElevRad">Elevation - Sample Radius</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-ElevRad"
+                                       aria-describedby="elevation sample radius"
+                                       placeholder="Elevation - Sample Radius"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-FogRad">Fog of War - Sample Radius</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-FogRad"
+                                       aria-describedby="fog of war - sample radius"
+                                       placeholder="Fog of War - Sample Radius"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-ShadowOnWater">Has Water Shadow</label>
+                                <input class="form-check-input position-static" type="checkbox"
+                                       id="SLKUnit-UnitUI-ShadowOnWater"
+                                       aria-label="has water shadow" tabindex="-1" />
+                            </li>
+                            <li>
+                                <label for="Icon">Icon</label>
+                                <input type="text" class="form-control" id="Icon" aria-describedby="icon"
+                                       placeholder="Icon"/>
+                            </li>
+                            <li>
+                                <label for="ScoreScreenIcon">Score Screen Icon</label>
+                                <input type="text" class="form-control" id="ScoreScreenIcon"
+                                       aria-describedby="score screen icon" placeholder="Score Screen Icon"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-MaxPitch">Maximum Pitch Angle (degrees)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-MaxPitch"
+                                       aria-describedby="maximum pitch angle in degrees"
+                                       placeholder="Maximum Pitch Angle (degrees)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-MaxRoll">Maximum Roll Angle (degrees)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-MaxRoll"
+                                       aria-describedby="maximum roll angle in degrees"
+                                       placeholder="Maximum Roll Angle (degrees)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-File">Model File</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-File"
+                                       aria-describedby="model file"
+                                       placeholder="Model File"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-FileVerFlags">Model File - Extra Versions</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-FileVerFlags"
+                                       aria-describedby="model file - extra versions"
+                                       placeholder="Model File - Extra Versions"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-OccH">Occluder Height</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-OccH"
+                                       aria-describedby="occluder height"
+                                       placeholder="Occluder Height"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitData-OrientInterp">Orientation Interpolation</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitData-OrientInterp"
+                                       aria-describedby="orientation interpolation"
+                                       placeholder="Orientation Interpolation"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-ImpactZ">Projectile Impact - Z</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-ImpactZ"
+                                       aria-describedby="projectile impact z"
+                                       placeholder="Projectile Impact - Z"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-ImpactSwimZ">Projectile Impact - Z (Swimming)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-ImpactSwimZ"
+                                       aria-describedby="projectile impact z while swimming"
+                                       placeholder="Projectile Impact - Z (Swimming)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-LaunchX">Projectile Launch - X</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-LaunchX"
+                                       aria-describedby="projectile launch x"
+                                       placeholder="Projectile Launch - X"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-LaunchY">Projectile Launch - Y</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-LaunchY"
+                                       aria-describedby="projectile launch y"
+                                       placeholder="Projectile Launch - Y"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-LaunchZ">Projectile Launch - Z</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-LaunchZ"
+                                       aria-describedby="projectile launch z"
+                                       placeholder="Projectile Launch - Z"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-LaunchSwimZ">Projectile Launch - Z (Swimming)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-LaunchSwimZ"
+                                       aria-describedby="projectile launch z (swimming)"
+                                       placeholder="Projectile Launch - Z (Swimming)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitData-PropWin">Propulsion Window (degrees)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitData-PropWin"
+                                       aria-describedby="propulsion window (degrees)"
+                                       placeholder="Propulsion Window (degrees)"/>
+                            </li>
+                            <li>
+                                <label for="RequiredAnimatonNames">Required Animaton Names</label>
+                                <input type="text" class="form-control" id="RequiredAnimatonNames"
+                                       aria-describedby="required animaton names"
+                                       placeholder="Required Animaton Names"/>
+                            </li>
+                            <li>
+                                <label for="RequiredAnimatonNamesAttachments">Required Animaton Names -
+                                    Attachments</label>
+                                <input type="text" class="form-control" id="RequiredAnimatonNamesAttachments"
+                                       aria-describedby="required animaton names - attachments"
+                                       placeholder="Required Animaton Names - Attachments"/>
+                            </li>
+                            <li>
+                                <label for="RequiredAttachmentLinkNames">Required Attachment Link Names</label>
+                                <input type="text" class="form-control" id="RequiredAttachmentLinkNames"
+                                       aria-describedby="required attachment link names"
+                                       placeholder="Required Attachment Link Names"/>
+                            </li>
+                            <li>
+                                <label for="RequiredBoneNames">Required Bone Names</label>
+                                <input type="text" class="form-control" id="RequiredBoneNames"
+                                       aria-describedby="required bone names"
+                                       placeholder="Required Bone Names"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-ScaleBull">Scale Projectiles</label>
+                                <input class="form-check-input position-static" type="checkbox"
+                                       id="SLKUnit-UnitUI-ScaleBull"
+                                       aria-label="scale projectiles" tabindex="-1" />
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-ModelScale">Scaling Value</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-ModelScale"
+                                       aria-describedby="scaling value"
+                                       placeholder="Scaling Value"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-SelZ">Selection Circle - Height</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-SelZ"
+                                       aria-describedby="selection circle height"
+                                       placeholder="Selection Circle Height"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-SelCircOnWater">Selection Circle On Water</label>
+                                <input class="form-check-input position-static" type="checkbox"
+                                       id="SLKUnit-UnitUI-SelCircOnWater"
+                                       aria-label="selection circle on water" tabindex="-1" />
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-Scale">Selection Scale</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-Scale"
+                                       aria-describedby="selection scale"
+                                       placeholder="Selection Scale"/>
+                            </li>
+                            <li>
+                                <label for="ButtonPosition">Shadow Image</label>
+                                <select class="custom-select"> <!-- TODO: Figure this one out -->
+                                    <option>NONE</option>
+                                    <option>Flyer</option>
+                                    <option>Normal</option>
+                                </select></li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-ShadowX">Shadow Image - Center X</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-ShadowX"
+                                       aria-describedby="shadow image - center x"
+                                       placeholder="Shadow Image - Center X"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-ShadowY">Shadow Image - Center Y</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-ShadowY"
+                                       aria-describedby="shadow image - center y"
+                                       placeholder="Shadow Image - Center Y"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-ShadowH">Shadow Image - Height</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-ShadowH"
+                                       aria-describedby="shadow image - height"
+                                       placeholder="Shadow Image - Height"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-ShadowW">Shadow Image - Width</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-ShadowW"
+                                       aria-describedby="shadow image - width"
+                                       placeholder="Shadow Image - Width"/>
+                            </li>
+                            <li>
+                                <label for="ShadowTexture">Shadow Texture</label>
+                                <select class="custom-select"> <!-- TODO: Figure this one out -->
+                                    <option>NONE</option>
+                                    <option>Altar of Darkness</option>
+                                    <option>Altar of Elders</option>
+                                    <option>Altar of Kings</option>
+                                    <option>Altar of Storms</option>
+                                    <option>Altar of the Depths</option>
+                                    <option>Ancient of Lore</option>
+                                    <option>Ancient of War, Corrupted Ancient of War</option>
+                                    <option>Ancient of Wind, Ancient of Wonders</option>
+                                    <option>Ancient Protector, Corrupted Ancient Protector</option>
+                                    <option>Arcane Observatory</option>
+                                    <option>Arcane Sanctum</option>
+                                    <option>Arcane Tower, Guard Tower, Watch Tower</option>
+                                    <option>Arcane Valut</option>
+                                    <option>Archmage, Blood Mage, Mountain King, Paladin, Human Transport Ship, Human
+                                        Battleship, Human Frigate, Footman, Knight, ...
+                                    </option>
+                                    <option>Barracks</option>
+                                    <option>Barracks, Spawning Grounds</option>
+                                    <option>Beastiary</option>
+                                    <option>Black Citadel</option>
+                                    <option>Blacksmith</option>
+                                    <option>Boneyard</option>
+                                    <option>Cannon Tower, Boulder Tower, Advanced Boulder Tower, Dalaran Guard Tower,
+                                        Cold
+                                        Tower, Advanced Cold Tower, ...
+                                    </option>
+                                    <option>Castle</option>
+                                    <option>Chimera Roost</option>
+                                    <option>Crypt</option>
+                                    <option>Demon Gate</option>
+                                    <option>Dimensional Gate (facing southeast)</option>
+                                    <option>Dimensional Gate (facing southwest)</option>
+                                    <option>Dragonhawk Rider, Gryphon Rider, Flying Machine, Phoenix, Troll Batrider,
+                                        Wind
+                                        Rider, Chimera, ....
+                                    </option>
+                                    <option>Entangled Gold Mine, Haunted Gold Mine, Graveyard, Undead Shipyard, Green
+                                        Dragon
+                                        Roost, Black Dragon Roost, ...
+                                    </option>
+                                    <option>Farm</option>
+                                    <option>Fortress</option>
+                                    <option>Great Hall</option>
+                                    <option>Gryphon Aviary</option>
+                                    <option>Halls of the Dead</option>
+                                    <option>High Elven Barracks</option>
+                                    <option>Human Shipyard, Night Elf Shipyard</option>
+                                    <option>Hunter's Hall, Barrow Den</option>
+                                    <option>Icy Treasure Box, Magic Vault</option>
+                                    <option>Keep</option>
+                                    <option>Lumber Mill</option>
+                                    <option>Mercenary Camp (Lordaeron Summer), Mercenary Camp (Village), Mercenary Camp
+                                        (Lordaeron Fall), ...
+                                    </option>
+                                    <option>Moon Well, Corrupted Moon Well</option>
+                                    <option>Necropolis</option>
+                                    <option>Orc Burrow, Tidal Guardian, Fel Orc Burrow (Chaos)</option>
+                                    <option>Orc Shipyard, Goblin Shipyard</option>
+                                    <option>Sacrificial Pit</option>
+                                    <option>Scout Tower, City Building 0, City Building 1, City Building 2, City
+                                        Building 3,
+                                        City Building 4, City Building 5, ...
+                                    </option>
+                                    <option>Shrine of Azshara</option>
+                                    <option>Slaughterhouse</option>
+                                    <option>Spirit Lodge</option>
+                                    <option>Spirit Tower, Nerubian Tower, Ziggurat</option>
+                                    <option>Stronghold</option>
+                                    <option>Tauren Totem</option>
+                                    <option>Temple of the Damned</option>
+                                    <option>Temple of Tides</option>
+                                    <option>Tomb of Relics</option>
+                                    <option>Town Hall</option>
+                                    <option>Tree of Ages, Tree of Eternity, Tree of Life, Corrupted Tree of Ages,
+                                        Corrupted
+                                        Tree of Eternity, Corrupted Tree of Life
+                                    </option>
+                                    <option>Voodoo Lounge, Goblin Merchant</option>
+                                    <option>War Mill</option>
+                                    <option>Workshop</option>
+                                </select></li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-Special">Special</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-Special"
+                                       aria-describedby="special"
+                                       placeholder="Special"/>
+                            </li>
+                            <li>
+                                <label for="Special">Target</label>
+                                <input type="text" class="form-control" id="Target" aria-describedby="target"
+                                       placeholder="Target"/>
+                            </li>
+                            <li>
+                                <label for="TeamColor">Team Color</label>
+                                <select class="custom-select"> <!-- TODO: Figure this one out -->
+                                    <option>Match Owning Player</option>
+                                    <option>Player 1 (Red)</option>
+                                    <option>Player 2 (Blue)</option>
+                                    <option>Player 3 (Teal)</option>
+                                    <option>Player 4 (Purple)</option>
+                                    <option>Player 5 (Yellow)</option>
+                                    <option>Player 6 (Orange)</option>
+                                    <option>Player 7 (Green)</option>
+                                    <option>Player 8 (Pink)</option>
+                                    <option>Player 9 (Gray)</option>
+                                    <option>Player 10 (Light Blue)</option>
+                                    <option>Player 11 (Dark Green)</option>
+                                    <option>Player 12 (Brown)</option>
+                                    <option>Player 13 (Maroon)</option>
+                                    <option>Player 14 (Navy)</option>
+                                    <option>Player 15 (Turquoise)</option>
+                                    <option>Player 16 (Violet)</option>
+                                    <option>Player 17 (Wheat)</option>
+                                    <option>Player 18 (Peach)</option>
+                                    <option>Player 19 (Mint)</option>
+                                    <option>Player 20 (Lavender)</option>
+                                    <option>Player 21 (Coal)</option>
+                                    <option>Player 22 (Snow)</option>
+                                    <option>Player 23 (Emerald)</option>
+                                    <option>Player 24 (Peanut)</option>
+                                    <option>Neutral Hostile</option>
+                                </select></li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-Red">Tinting Color 1 (Red)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-Red"
+                                       aria-describedby="tinting color 1 red"
+                                       placeholder="Tinting Color 1 (Red)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-Green">Tinting Color 2 (Green)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-Green"
+                                       aria-describedby="tinting color 2 green"
+                                       placeholder="Tinting Color 2 (Green)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-Blue">Tinting Color 3 (Blue)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-Blue"
+                                       aria-describedby="tinting color 3 blue"
+                                       placeholder="Tinting Color 3 (Blue)"/>
+                            </li>
+                            <li>
+                                <label for="UseExtendedLineOfSight">Use Extended Line of Sight</label>
+                                <input class="form-check-input position-static" type="checkbox"
+                                       id="UseExtendedLineOfSight"
+                                       aria-label="use extended line of sight" tabindex="-1"/> <!-- TODO: Figure this one out -->
+                            </li>
+                        </ul>
+                    </form>
                 </section>
                 <section id="combat-section">
                     <div class="editor-section">
@@ -764,727 +577,469 @@
                         <h3>Combat</h3>
                         <hr>
                     </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Acquire">Acquisition Range</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Acquire"
-                                   aria-describedby="acquisition range"
-                                   placeholder="Acquisition Range"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="ArmorType">Armor Type</label>
-                        </div>
-                        <div class="input-group">
-                            <select> <!-- TODO: Figure this one out -->
-                                <option>Ethereal</option>
-                                <option>Flesh</option>
-                                <option>Metal</option>
-                                <option>Stone</option>
-                                <option>Wood</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-BackSw1">Attack 1 - Animation Backswing Point</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-BackSw1"
-                                   aria-describedby="attack 1 - animation backswing point"
-                                   placeholder="Attack 1 - Animation Backswing Point"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Dmgpt1">Attack 1 - Animation Damage Point</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Dmgpt1"
-                                   aria-describedby="attack 1 - animation damage point"
-                                   placeholder="Attack 1 - Animation Damage Point"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Farea1">Attack 1 - Area of Effect (Full Damage)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Farea1"
-                                   aria-describedby="attack 1 - area of effect full damage"
-                                   placeholder="Attack 1 - Area of Effect (Full Damage)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Harea1">Attack 1 - Area of Effect (Medium
-                                Damage)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Harea1"
-                                   aria-describedby="attack 1 - area of effect medium damage"
-                                   placeholder="Attack 1 - Area of Effect (Medium Damage)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Qarea1">Attack 1 - Area of Effect (Small Damage)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Qarea1"
-                                   aria-describedby="attack 1 - area of effect small damage"
-                                   placeholder="Attack 1 - Area of Effect (Small Damage)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-SplashTargs1">Attack 1 - Area of Effect Targets</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-SplashTargs1"
-                                   aria-describedby="attack 1 - area of effect targets"
-                                   placeholder="Attack 1 - Area of Effect Targets"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="Attack1AttackType">Attack 1 - Attack Type</label>
-                        </div>
-                        <div class="input-group">
-                            <select> <!-- TODO: Figure this one out -->
-                                <option>None</option>
-                                <option>Normal</option>
-                                <option>Pierce</option>
-                                <option>Siege</option>
-                                <option>Spells</option>
-                                <option>Chaos</option>
-                                <option>Magic</option>
-                                <option>Hero</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Cool1">Attack 1 - Cooldown Time</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Cool1"
-                                   aria-describedby="attack 1 - cooldown time"
-                                   placeholder="Attack 1 - Cooldown Time"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Dmgplus1">Attack 1 - Damage Base</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Dmgplus1"
-                                   aria-describedby="attack 1 - damage base"
-                                   placeholder="Attack 1 - Damage Base"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="Attack1DamageFactorMedium">Attack 1 - Damage Factor - Medium</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="Attack1DamageFactorMedium"
-                                   aria-describedby="attack 1 - damage factor - medium"
-                                   placeholder="Attack 1 - Damage Factor - Medium"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Qfact1">Attack 1 - Damage Factor - Small</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Qfact1"
-                                   aria-describedby="attack 1 - damage factor - small"
-                                   placeholder="Attack 1 - Damage Factor - Small"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-DamageLoss1">Attack 1 - Damage Loss Factor</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-DamageLoss1"
-                                   aria-describedby="attack 1 - damage loss factor"
-                                   placeholder="Attack 1 - Damage Loss Factor"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Sides1">Attack 1 - Damage Sides per Die</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Sides1"
-                                   aria-describedby="attack 1 - damage sides per die"
-                                   placeholder="Attack 1 - Damage Sides per Die"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Dice1">Attack 1 - Damage Number of Dice</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Dice1"
-                                   aria-describedby="attack 1 - damage number of dice"
-                                   placeholder="Attack 1 - Damage Number of Dice"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-SpillDist1">Attack 1 - Damage Spill Distance</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-SpillDist1"
-                                   aria-describedby="attack 1 - damage spill distance"
-                                   placeholder="Attack 1 - Damage Spill Distance"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-SpillRadius1">Attack 1 - Damage Spill Radius</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-SpillRadius1"
-                                   aria-describedby="attack 1 - damage spill radius"
-                                   placeholder="Attack 1 - Damage Spill Radius"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="Attack1DamageUpgradeAmount">Attack 1 - Damage Upgrade Amount</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="Attack1DamageUpgradeAmount"
-                                   aria-describedby="attack 1 - damage upgrade amount"
-                                   placeholder="Attack 1 - Damage Upgrade Amount"/> <!-- TODO: Figure this one out -->
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-TargCount1">Attack 1 - Maxiumum Number of Targets</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-TargCount1"
-                                   aria-describedby="attack 1 - maxiumum number of targets"
-                                   placeholder="Attack 1 - Maxiumum Number of Targets"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="UnitFunc-Missilearc1">Attack 1 - Projectile Arc</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="UnitFunc-Missilearc1"
-                                   aria-describedby="attack 1 - projectile arc"
-                                   placeholder="Attack 1 - Projectile Arc"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="UnitFunc-Missileart1">Attack 1 - Projectile Art</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="UnitFunc-Missileart1"
-                                   aria-describedby="attack 1 - projectile art"
-                                   placeholder="Attack 1 - Projectile Art"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="UnitFunc-Missilehoming1">Attack 1 - Projectile Homing Enabled</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="checkbox" id="UnitFunc-Missilehoming1"
-                                   aria-label="attack 1 - projectile homing enabled">
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="UnitFunc-Missilespeed1">Attack 1 - Projectile Speed</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="UnitFunc-Missilespeed1"
-                                   aria-describedby="attack 1 - projectile art"
-                                   placeholder="Attack 1 - Projectile Art"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-RangeN1">Attack 1 - Range</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-RangeN1"
-                                   aria-describedby="attack 1 - range"
-                                   placeholder="Attack 1 - Range"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-RngBuff1">Attack 1 - Range Motion Buffer</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-RngBuff1"
-                                   aria-describedby="attack 1 - range motion buffer"
-                                   placeholder="Attack 1 - Range Motion Buffer"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-ShowUI1">Attack 1 - Show UI</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="checkbox" id="SLKUnit-UnitWeapons-ShowUI1"
-                                   aria-label="attack 1 - show ui">
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Targs1">Attack 1 - Targets Allowed</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Targs1"
-                                   aria-describedby="attack 1 - targets allowed"
-                                   placeholder="Attack 1 - Targets Allowed"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="WeaponSound">Attack 1 - Weapon Sound</label>
-                        </div>
-                        <div class="input-group">
-                            <select> <!-- TODO: Figure this one out -->
-                                <option value="">NONE</option>
-                                <option value="">Axe Medium Chop</option>
-                                <option value="">Metal Heavy Bash</option>
-                                <option value="">Metal Heavy Chop</option>
-                                <option value="">Metal Heavy Slice</option>
-                                <option value="">Metal Light Chop</option>
-                                <option value="">Metal Light Slice</option>
-                                <option value="">Metal Medium Bash</option>
-                                <option value="">Metal Medium Chop</option>
-                                <option value="">Metal Medium Slice</option>
-                                <option value="">Rock Heavy Bash</option>
-                                <option value="">Wood Heavy Bash</option>
-                                <option value="">Wood Light Bash</option>
-                                <option value="">Wood Medium Bash</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="WeaponType">Attack 1 - Weapon Type</label>
-                        </div>
-                        <div class="input-group">
-                            <select> <!-- TODO: Figure this one out -->
-                                <option value="">NONE</option>
-                                <option value="">Normal</option>
-                                <option value="">Instant</option>
-                                <option value="">Artillery</option>
-                                <option value="">Artillery (Line)</option>
-                                <option value="">Missile</option>
-                                <option value="">Missile (Splash)</option>
-                                <option value="">Missile (Bounce)</option>
-                                <option value="">Missile (Line)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-BackSw2">Attack 2 - Animation Backswing Point</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-BackSw2"
-                                   aria-describedby="attack 2 - animation backswing point"
-                                   placeholder="Attack 2 - Animation Backswing Point"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Dmgpt2">Attack 2 - Animation Damage Point</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Dmgpt2"
-                                   aria-describedby="attack 2 - animation damage point"
-                                   placeholder="Attack 2 - Animation Damage Point"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Farea2">Attack 2 - Area of Effect (Full Damage)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Farea2"
-                                   aria-describedby="attack 2 - area of effect full damage"
-                                   placeholder="Attack 2 - Area of Effect (Full Damage)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Harea2">Attack 2 - Area of Effect (Medium
-                                Damage)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Harea2"
-                                   aria-describedby="attack 2 - area of effect medium damage"
-                                   placeholder="Attack 2 - Area of Effect (Medium Damage)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Qarea2">Attack 2 - Area of Effect (Small Damage)</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Qarea2"
-                                   aria-describedby="attack 2 - area of effect small damage"
-                                   placeholder="Attack 2 - Area of Effect (Small Damage)"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-SplashTargs2">Attack 2 - Area of Effect Targets</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-SplashTargs2"
-                                   aria-describedby="attack 2 - area of effect targets"
-                                   placeholder="Attack 2 - Area of Effect Targets"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="Attack2AttackType">Attack 2 - Attack Type</label>
-                        </div>
-                        <div class="input-group">
-                            <select> <!-- TODO: Figure this one out -->
-                                <option>None</option>
-                                <option>Normal</option>
-                                <option>Pierce</option>
-                                <option>Siege</option>
-                                <option>Spells</option>
-                                <option>Chaos</option>
-                                <option>Magic</option>
-                                <option>Hero</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Cool2">Attack 2 - Cooldown Time</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Cool2"
-                                   aria-describedby="attack 2 - cooldown time"
-                                   placeholder="Attack 2 - Cooldown Time"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Dmgplus2">Attack 2 - Damage Base</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Dmgplus2"
-                                   aria-describedby="attack 2 - damage base"
-                                   placeholder="Attack 2 - Damage Base"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="Attack2DamageFactorMedium">Attack 2 - Damage Factor - Medium</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="Attack2DamageFactorMedium"
-                                   aria-describedby="attack 2 - damage factor - medium"
-                                   placeholder="Attack 2 - Damage Factor - Medium"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Qfact2">Attack 2 - Damage Factor - Small</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Qfact2"
-                                   aria-describedby="attack 2 - damage factor - small"
-                                   placeholder="Attack 2 - Damage Factor - Small"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-DamageLoss2">Attack 2 - Damage Loss Factor</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-DamageLoss2"
-                                   aria-describedby="attack 2 - damage loss factor"
-                                   placeholder="Attack 2 - Damage Loss Factor"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Sides2">Attack 2 - Damage Sides per Die</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Sides2"
-                                   aria-describedby="attack 2 - damage sides per die"
-                                   placeholder="Attack 2 - Damage Sides per Die"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Dice2">Attack 2 - Damage Number of Dice</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Dice2"
-                                   aria-describedby="attack 2 - damage number of dice"
-                                   placeholder="Attack 2 - Damage Number of Dice"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-SpillDist2">Attack 2 - Damage Spill Distance</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-SpillDist2"
-                                   aria-describedby="attack 2 - damage spill distance"
-                                   placeholder="Attack 2 - Damage Spill Distance"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-SpillRadius2">Attack 2 - Damage Spill Radius</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-SpillRadius2"
-                                   aria-describedby="attack 2 - damage spill radius"
-                                   placeholder="Attack 2 - Damage Spill Radius"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="Attack2DamageUpgradeAmount">Attack 2 - Damage Upgrade Amount</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="Attack2DamageUpgradeAmount"
-                                   aria-describedby="attack 2 - damage upgrade amount"
-                                   placeholder="Attack 2 - Damage Upgrade Amount"/> <!-- TODO: Figure this one out -->
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-TargCount2">Attack 2 - Maxiumum Number of Targets</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-TargCount2"
-                                   aria-describedby="attack 2 - maxiumum number of targets"
-                                   placeholder="Attack 2 - Maxiumum Number of Targets"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="UnitFunc-Missilearc2">Attack 2 - Projectile Arc</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="UnitFunc-Missilearc2"
-                                   aria-describedby="attack 2 - projectile arc"
-                                   placeholder="Attack 2 - Projectile Arc"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="UnitFunc-Missileart2">Attack 2 - Projectile Art</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="UnitFunc-Missileart2"
-                                   aria-describedby="attack 2 - projectile art"
-                                   placeholder="Attack 2 - Projectile Art"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="UnitFunc-Missilehoming2">Attack 2 - Projectile Homing Enabled</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="checkbox" id="UnitFunc-Missilehoming2"
-                                   aria-label="attack 2 - projectile homing enabled">
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="UnitFunc-Missilespeed2">Attack 2 - Projectile Speed</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="UnitFunc-Missilespeed2"
-                                   aria-describedby="attack 2 - projectile art"
-                                   placeholder="Attack 2 - Projectile Art"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-RangeN2">Attack 2 - Range</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-RangeN2"
-                                   aria-describedby="attack 2 - range"
-                                   placeholder="Attack 2 - Range"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-RngBuff2">Attack 2 - Range Motion Buffer</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-RngBuff2"
-                                   aria-describedby="attack 2 - range motion buffer"
-                                   placeholder="Attack 2 - Range Motion Buffer"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-ShowUI2">Attack 2 - Show UI</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="checkbox" id="SLKUnit-UnitWeapons-ShowUI2"
-                                   aria-label="attack 2 - show ui">
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Targs2">Attack 2 - Targets Allowed</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Targs2"
-                                   aria-describedby="attack 2 - targets allowed"
-                                   placeholder="Attack 2 - Targets Allowed"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="WeaponSound">Attack 2 - Weapon Sound</label>
-                        </div>
-                        <div class="input-group">
-                            <select> <!-- TODO: Figure this one out -->
-                                <option value="">NONE</option>
-                                <option value="">Axe Medium Chop</option>
-                                <option value="">Metal Heavy Bash</option>
-                                <option value="">Metal Heavy Chop</option>
-                                <option value="">Metal Heavy Slice</option>
-                                <option value="">Metal Light Chop</option>
-                                <option value="">Metal Light Slice</option>
-                                <option value="">Metal Medium Bash</option>
-                                <option value="">Metal Medium Chop</option>
-                                <option value="">Metal Medium Slice</option>
-                                <option value="">Rock Heavy Bash</option>
-                                <option value="">Wood Heavy Bash</option>
-                                <option value="">Wood Light Bash</option>
-                                <option value="">Wood Medium Bash</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="WeaponType">Attack 2 - Weapon Type</label>
-                        </div>
-                        <div class="input-group">
-                            <select> <!-- TODO: Figure this one out -->
-                                <option value="">NONE</option>
-                                <option value="">Normal</option>
-                                <option value="">Instant</option>
-                                <option value="">Artillery</option>
-                                <option value="">Artillery (Line)</option>
-                                <option value="">Missile</option>
-                                <option value="">Missile (Splash)</option>
-                                <option value="">Missile (Bounce)</option>
-                                <option value="">Missile (Line)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="AttacksEnabled">Attacks Enabled</label>
-                        </div>
-                        <div class="input-group">
-                            <select> <!-- TODO: Figure this one out -->
-                                <option value="">None</option>
-                                <option value="">Attack 1 Only</option>
-                                <option value="">Attack 2 Only</option>
-                                <option value="">Both</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="DeathType">Death Type</label>
-                        </div>
-                        <div class="input-group">
-                            <select> <!-- TODO: Figure this one out -->
-                                <option value="">Can't raise, Does not decay</option>
-                                <option value="">Can raise, Does not decay</option>
-                                <option value="">Can't raise, Does decay</option>
-                                <option value="">Can raise, Does decay</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-Def">Defense Base</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Def"
-                                   aria-describedby="defense base"
-                                   placeholder="Defense Base"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="DefenseType">Defense Type</label>
-                        </div>
-                        <div class="input-group">
-                            <select> <!-- TODO: Figure this one out -->
-                                <option value="">Normal</option>
-                                <option value="">Small</option>
-                                <option value="">Medium</option>
-                                <option value="">Large</option>
-                                <option value="">Fortified</option>
-                                <option value="">Hero</option>
-                                <option value="">Divine</option>
-                                <option value="">Unarmored</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="DefenseUpgradeBonus">Defense Upgrade Bonus</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="DefenseUpgradeBonus"
-                                   aria-describedby="defense base"
-                                   placeholder="Defense Base"/> <!-- TODO: Figure this one out -->
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-MinRange">Minimum Attack Range</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-MinRange"
-                                   aria-describedby="minimum attack range"
-                                   placeholder="Minimum Attack Range"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitWeapons-TargType">Targeted as</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitWeapons-TargType"
-                                   aria-describedby="targeted as"
-                                   placeholder="Targeted as"/>
-                        </div>
-                    </div>
+                    <form class="was-validated">
+                        <ul class="flex-outer">
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Acquire">Acquisition Range</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Acquire"
+                                       aria-describedby="acquisition range"
+                                       placeholder="Acquisition Range"/>
+                            </li>
+                            <li>
+                                <label for="ArmorType">Armor Type</label>
+                                <select class="custom-select"> <!-- TODO: Figure this one out -->
+                                    <option>Ethereal</option>
+                                    <option>Flesh</option>
+                                    <option>Metal</option>
+                                    <option>Stone</option>
+                                    <option>Wood</option>
+                                </select></li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-BackSw1">Attack 1 - Animation Backswing Point</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-BackSw1"
+                                       aria-describedby="attack 1 - animation backswing point"
+                                       placeholder="Attack 1 - Animation Backswing Point"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Dmgpt1">Attack 1 - Animation Damage Point</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Dmgpt1"
+                                       aria-describedby="attack 1 - animation damage point"
+                                       placeholder="Attack 1 - Animation Damage Point"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Farea1">Attack 1 - Area of Effect (Full Damage)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Farea1"
+                                       aria-describedby="attack 1 - area of effect full damage"
+                                       placeholder="Attack 1 - Area of Effect (Full Damage)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Harea1">Attack 1 - Area of Effect (Medium
+                                    Damage)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Harea1"
+                                       aria-describedby="attack 1 - area of effect medium damage"
+                                       placeholder="Attack 1 - Area of Effect (Medium Damage)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Qarea1">Attack 1 - Area of Effect (Small Damage)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Qarea1"
+                                       aria-describedby="attack 1 - area of effect small damage"
+                                       placeholder="Attack 1 - Area of Effect (Small Damage)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-SplashTargs1">Attack 1 - Area of Effect Targets</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-SplashTargs1"
+                                       aria-describedby="attack 1 - area of effect targets"
+                                       placeholder="Attack 1 - Area of Effect Targets"/>
+                            </li>
+                            <li>
+                                <label for="Attack1AttackType">Attack 1 - Attack Type</label>
+                                <select class="custom-select"> <!-- TODO: Figure this one out -->
+                                    <option>None</option>
+                                    <option>Normal</option>
+                                    <option>Pierce</option>
+                                    <option>Siege</option>
+                                    <option>Spells</option>
+                                    <option>Chaos</option>
+                                    <option>Magic</option>
+                                    <option>Hero</option>
+                                </select></li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Cool1">Attack 1 - Cooldown Time</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Cool1"
+                                       aria-describedby="attack 1 - cooldown time"
+                                       placeholder="Attack 1 - Cooldown Time"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Dmgplus1">Attack 1 - Damage Base</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Dmgplus1"
+                                       aria-describedby="attack 1 - damage base"
+                                       placeholder="Attack 1 - Damage Base"/>
+                            </li>
+                            <li>
+                                <label for="Attack1DamageFactorMedium">Attack 1 - Damage Factor - Medium</label>
+                                <input type="text" class="form-control" id="Attack1DamageFactorMedium"
+                                       aria-describedby="attack 1 - damage factor - medium"
+                                       placeholder="Attack 1 - Damage Factor - Medium"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Qfact1">Attack 1 - Damage Factor - Small</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Qfact1"
+                                       aria-describedby="attack 1 - damage factor - small"
+                                       placeholder="Attack 1 - Damage Factor - Small"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-DamageLoss1">Attack 1 - Damage Loss Factor</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-DamageLoss1"
+                                       aria-describedby="attack 1 - damage loss factor"
+                                       placeholder="Attack 1 - Damage Loss Factor"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Sides1">Attack 1 - Damage Sides per Die</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Sides1"
+                                       aria-describedby="attack 1 - damage sides per die"
+                                       placeholder="Attack 1 - Damage Sides per Die"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Dice1">Attack 1 - Damage Number of Dice</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Dice1"
+                                       aria-describedby="attack 1 - damage number of dice"
+                                       placeholder="Attack 1 - Damage Number of Dice"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-SpillDist1">Attack 1 - Damage Spill Distance</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-SpillDist1"
+                                       aria-describedby="attack 1 - damage spill distance"
+                                       placeholder="Attack 1 - Damage Spill Distance"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-SpillRadius1">Attack 1 - Damage Spill Radius</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-SpillRadius1"
+                                       aria-describedby="attack 1 - damage spill radius"
+                                       placeholder="Attack 1 - Damage Spill Radius"/>
+                            </li>
+                            <li>
+                                <label for="Attack1DamageUpgradeAmount">Attack 1 - Damage Upgrade Amount</label>
+                                <input type="text" class="form-control" id="Attack1DamageUpgradeAmount"
+                                       aria-describedby="attack 1 - damage upgrade amount"
+                                       placeholder="Attack 1 - Damage Upgrade Amount"/>
+                            </li>
+                            <!-- TODO: Figure this one out -->
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-TargCount1">Attack 1 - Maxiumum Number of
+                                    Targets</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-TargCount1"
+                                       aria-describedby="attack 1 - maxiumum number of targets"
+                                       placeholder="Attack 1 - Maxiumum Number of Targets"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Missilearc1">Attack 1 - Projectile Arc</label>
+                                <input type="text" class="form-control" id="UnitFunc-Missilearc1"
+                                       aria-describedby="attack 1 - projectile arc"
+                                       placeholder="Attack 1 - Projectile Arc"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Missileart1">Attack 1 - Projectile Art</label>
+                                <input type="text" class="form-control" id="UnitFunc-Missileart1"
+                                       aria-describedby="attack 1 - projectile art"
+                                       placeholder="Attack 1 - Projectile Art"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Missilehoming1">Attack 1 - Projectile Homing Enabled</label>
+                                <input class="form-check-input position-static" type="checkbox"
+                                       id="UnitFunc-Missilehoming1"
+                                       aria-label="attack 1 - projectile homing enabled" tabindex="-1" />
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Missilespeed1">Attack 1 - Projectile Speed</label>
+                                <input type="text" class="form-control" id="UnitFunc-Missilespeed1"
+                                       aria-describedby="attack 1 - projectile art"
+                                       placeholder="Attack 1 - Projectile Art"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-RangeN1">Attack 1 - Range</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-RangeN1"
+                                       aria-describedby="attack 1 - range"
+                                       placeholder="Attack 1 - Range"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-RngBuff1">Attack 1 - Range Motion Buffer</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-RngBuff1"
+                                       aria-describedby="attack 1 - range motion buffer"
+                                       placeholder="Attack 1 - Range Motion Buffer"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-ShowUI1">Attack 1 - Show UI</label>
+                                <input class="form-check-input position-static" type="checkbox"
+                                       id="SLKUnit-UnitWeapons-ShowUI1"
+                                       aria-label="attack 1 - show ui" tabindex="-1" />
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Targs1">Attack 1 - Targets Allowed</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Targs1"
+                                       aria-describedby="attack 1 - targets allowed"
+                                       placeholder="Attack 1 - Targets Allowed"/>
+                            </li>
+                            <li>
+                                <label for="WeaponSound">Attack 1 - Weapon Sound</label>
+                                <select class="custom-select"> <!-- TODO: Figure this one out -->
+                                    <option value="">NONE</option>
+                                    <option value="">Axe Medium Chop</option>
+                                    <option value="">Metal Heavy Bash</option>
+                                    <option value="">Metal Heavy Chop</option>
+                                    <option value="">Metal Heavy Slice</option>
+                                    <option value="">Metal Light Chop</option>
+                                    <option value="">Metal Light Slice</option>
+                                    <option value="">Metal Medium Bash</option>
+                                    <option value="">Metal Medium Chop</option>
+                                    <option value="">Metal Medium Slice</option>
+                                    <option value="">Rock Heavy Bash</option>
+                                    <option value="">Wood Heavy Bash</option>
+                                    <option value="">Wood Light Bash</option>
+                                    <option value="">Wood Medium Bash</option>
+                                </select></li>
+                            <li>
+                                <label for="WeaponType">Attack 1 - Weapon Type</label>
+                                <select class="custom-select"> <!-- TODO: Figure this one out -->
+                                    <option value="">NONE</option>
+                                    <option value="">Normal</option>
+                                    <option value="">Instant</option>
+                                    <option value="">Artillery</option>
+                                    <option value="">Artillery (Line)</option>
+                                    <option value="">Missile</option>
+                                    <option value="">Missile (Splash)</option>
+                                    <option value="">Missile (Bounce)</option>
+                                    <option value="">Missile (Line)</option>
+                                </select></li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-BackSw2">Attack 2 - Animation Backswing Point</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-BackSw2"
+                                       aria-describedby="attack 2 - animation backswing point"
+                                       placeholder="Attack 2 - Animation Backswing Point"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Dmgpt2">Attack 2 - Animation Damage Point</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Dmgpt2"
+                                       aria-describedby="attack 2 - animation damage point"
+                                       placeholder="Attack 2 - Animation Damage Point"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Farea2">Attack 2 - Area of Effect (Full Damage)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Farea2"
+                                       aria-describedby="attack 2 - area of effect full damage"
+                                       placeholder="Attack 2 - Area of Effect (Full Damage)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Harea2">Attack 2 - Area of Effect (Medium
+                                    Damage)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Harea2"
+                                       aria-describedby="attack 2 - area of effect medium damage"
+                                       placeholder="Attack 2 - Area of Effect (Medium Damage)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Qarea2">Attack 2 - Area of Effect (Small Damage)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Qarea2"
+                                       aria-describedby="attack 2 - area of effect small damage"
+                                       placeholder="Attack 2 - Area of Effect (Small Damage)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-SplashTargs2">Attack 2 - Area of Effect Targets</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-SplashTargs2"
+                                       aria-describedby="attack 2 - area of effect targets"
+                                       placeholder="Attack 2 - Area of Effect Targets"/>
+                            </li>
+                            <li>
+                                <label for="Attack2AttackType">Attack 2 - Attack Type</label>
+                                <select class="custom-select"> <!-- TODO: Figure this one out -->
+                                    <option>None</option>
+                                    <option>Normal</option>
+                                    <option>Pierce</option>
+                                    <option>Siege</option>
+                                    <option>Spells</option>
+                                    <option>Chaos</option>
+                                    <option>Magic</option>
+                                    <option>Hero</option>
+                                </select></li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Cool2">Attack 2 - Cooldown Time</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Cool2"
+                                       aria-describedby="attack 2 - cooldown time"
+                                       placeholder="Attack 2 - Cooldown Time"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Dmgplus2">Attack 2 - Damage Base</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Dmgplus2"
+                                       aria-describedby="attack 2 - damage base"
+                                       placeholder="Attack 2 - Damage Base"/>
+                            </li>
+                            <li>
+                                <label for="Attack2DamageFactorMedium">Attack 2 - Damage Factor - Medium</label>
+                                <input type="text" class="form-control" id="Attack2DamageFactorMedium"
+                                       aria-describedby="attack 2 - damage factor - medium"
+                                       placeholder="Attack 2 - Damage Factor - Medium"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Qfact2">Attack 2 - Damage Factor - Small</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Qfact2"
+                                       aria-describedby="attack 2 - damage factor - small"
+                                       placeholder="Attack 2 - Damage Factor - Small"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-DamageLoss2">Attack 2 - Damage Loss Factor</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-DamageLoss2"
+                                       aria-describedby="attack 2 - damage loss factor"
+                                       placeholder="Attack 2 - Damage Loss Factor"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Sides2">Attack 2 - Damage Sides per Die</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Sides2"
+                                       aria-describedby="attack 2 - damage sides per die"
+                                       placeholder="Attack 2 - Damage Sides per Die"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Dice2">Attack 2 - Damage Number of Dice</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Dice2"
+                                       aria-describedby="attack 2 - damage number of dice"
+                                       placeholder="Attack 2 - Damage Number of Dice"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-SpillDist2">Attack 2 - Damage Spill Distance</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-SpillDist2"
+                                       aria-describedby="attack 2 - damage spill distance"
+                                       placeholder="Attack 2 - Damage Spill Distance"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-SpillRadius2">Attack 2 - Damage Spill Radius</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-SpillRadius2"
+                                       aria-describedby="attack 2 - damage spill radius"
+                                       placeholder="Attack 2 - Damage Spill Radius"/>
+                            </li>
+                            <li>
+                                <label for="Attack2DamageUpgradeAmount">Attack 2 - Damage Upgrade Amount</label>
+                                <input type="text" class="form-control" id="Attack2DamageUpgradeAmount"
+                                       aria-describedby="attack 2 - damage upgrade amount"
+                                       placeholder="Attack 2 - Damage Upgrade Amount"/>
+                            </li>
+                            <!-- TODO: Figure this one out -->
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-TargCount2">Attack 2 - Maxiumum Number of
+                                    Targets</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-TargCount2"
+                                       aria-describedby="attack 2 - maxiumum number of targets"
+                                       placeholder="Attack 2 - Maxiumum Number of Targets"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Missilearc2">Attack 2 - Projectile Arc</label>
+                                <input type="text" class="form-control" id="UnitFunc-Missilearc2"
+                                       aria-describedby="attack 2 - projectile arc"
+                                       placeholder="Attack 2 - Projectile Arc"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Missileart2">Attack 2 - Projectile Art</label>
+                                <input type="text" class="form-control" id="UnitFunc-Missileart2"
+                                       aria-describedby="attack 2 - projectile art"
+                                       placeholder="Attack 2 - Projectile Art"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Missilehoming2">Attack 2 - Projectile Homing Enabled</label>
+                                <input class="form-check-input position-static" type="checkbox"
+                                       id="UnitFunc-Missilehoming2"
+                                       aria-label="attack 2 - projectile homing enabled" tabindex="-1" />
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Missilespeed2">Attack 2 - Projectile Speed</label>
+                                <input type="text" class="form-control" id="UnitFunc-Missilespeed2"
+                                       aria-describedby="attack 2 - projectile art"
+                                       placeholder="Attack 2 - Projectile Art"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-RangeN2">Attack 2 - Range</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-RangeN2"
+                                       aria-describedby="attack 2 - range"
+                                       placeholder="Attack 2 - Range"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-RngBuff2">Attack 2 - Range Motion Buffer</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-RngBuff2"
+                                       aria-describedby="attack 2 - range motion buffer"
+                                       placeholder="Attack 2 - Range Motion Buffer"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-ShowUI2">Attack 2 - Show UI</label>
+                                <input class="form-check-input position-static" type="checkbox"
+                                       id="SLKUnit-UnitWeapons-ShowUI2"
+                                       aria-label="attack 2 - show ui" tabindex="-1" />
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Targs2">Attack 2 - Targets Allowed</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Targs2"
+                                       aria-describedby="attack 2 - targets allowed"
+                                       placeholder="Attack 2 - Targets Allowed"/>
+                            </li>
+                            <li>
+                                <label for="WeaponSound">Attack 2 - Weapon Sound</label>
+                                <select class="custom-select"> <!-- TODO: Figure this one out -->
+                                    <option value="">NONE</option>
+                                    <option value="">Axe Medium Chop</option>
+                                    <option value="">Metal Heavy Bash</option>
+                                    <option value="">Metal Heavy Chop</option>
+                                    <option value="">Metal Heavy Slice</option>
+                                    <option value="">Metal Light Chop</option>
+                                    <option value="">Metal Light Slice</option>
+                                    <option value="">Metal Medium Bash</option>
+                                    <option value="">Metal Medium Chop</option>
+                                    <option value="">Metal Medium Slice</option>
+                                    <option value="">Rock Heavy Bash</option>
+                                    <option value="">Wood Heavy Bash</option>
+                                    <option value="">Wood Light Bash</option>
+                                    <option value="">Wood Medium Bash</option>
+                                </select></li>
+                            <li>
+                                <label for="WeaponType">Attack 2 - Weapon Type</label>
+                                <select class="custom-select"> <!-- TODO: Figure this one out -->
+                                    <option value="">NONE</option>
+                                    <option value="">Normal</option>
+                                    <option value="">Instant</option>
+                                    <option value="">Artillery</option>
+                                    <option value="">Artillery (Line)</option>
+                                    <option value="">Missile</option>
+                                    <option value="">Missile (Splash)</option>
+                                    <option value="">Missile (Bounce)</option>
+                                    <option value="">Missile (Line)</option>
+                                </select></li>
+                            <li>
+                                <label for="AttacksEnabled">Attacks Enabled</label>
+                                <select class="custom-select"> <!-- TODO: Figure this one out -->
+                                    <option value="">None</option>
+                                    <option value="">Attack 1 Only</option>
+                                    <option value="">Attack 2 Only</option>
+                                    <option value="">Both</option>
+                                </select></li>
+                            <li>
+                                <label for="DeathType">Death Type</label>
+                                <select class="custom-select"> <!-- TODO: Figure this one out -->
+                                    <option value="">Can't raise, Does not decay</option>
+                                    <option value="">Can raise, Does not decay</option>
+                                    <option value="">Can't raise, Does decay</option>
+                                    <option value="">Can raise, Does decay</option>
+                                </select></li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Def">Defense Base</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Def"
+                                       aria-describedby="defense base"
+                                       placeholder="Defense Base"/>
+                            </li>
+                            <li>
+                                <label for="DefenseType">Defense Type</label>
+                                <select class="custom-select"> <!-- TODO: Figure this one out -->
+                                    <option value="">Normal</option>
+                                    <option value="">Small</option>
+                                    <option value="">Medium</option>
+                                    <option value="">Large</option>
+                                    <option value="">Fortified</option>
+                                    <option value="">Hero</option>
+                                    <option value="">Divine</option>
+                                    <option value="">Unarmored</option>
+                                </select></li>
+                            <li>
+                                <label for="DefenseUpgradeBonus">Defense Upgrade Bonus</label>
+                                <input type="text" class="form-control" id="DefenseUpgradeBonus"
+                                       aria-describedby="defense base"
+                                       placeholder="Defense Base"/>
+                            </li> <!-- TODO: Figure this one out -->
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-MinRange">Minimum Attack Range</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-MinRange"
+                                       aria-describedby="minimum attack range"
+                                       placeholder="Minimum Attack Range"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-TargType">Targeted as</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-TargType"
+                                       aria-describedby="targeted as"
+                                       placeholder="Targeted as"/>
+                            </li>
+                        </ul>
+                    </form>
                 </section>
                 <section id="movement-section">
                     <div class="editor-section">
@@ -1492,121 +1047,81 @@
                         <h3>Movement</h3>
                         <hr>
                     </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="GroupSeparationEnabled">Group Separation - Enabled</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input position-static" type="checkbox" id="GroupSeparationEnabled"
-                                   aria-label="group separation - enabled"> <!-- TODO: Figure this one out -->
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="GroupSeparationGroupNumber">Group Separation - Group Number</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="GroupSeparationGroupNumber"
-                                   aria-describedby="group separation - group number"
-                                   placeholder="Group Separation - Group Number"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="GroupSeparationParameter">Group Separation - Parameter</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="GroupSeparationParameter"
-                                   aria-describedby="group separation - group parameter"
-                                   placeholder="Group Separation - Group Parameter"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="GroupSeparationPriority">Group Separation - Priority</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="GroupSeparationPriority"
-                                   aria-describedby="group separation - group priority"
-                                   placeholder="Group Separation - Group Priority"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitData-MoveHeight">Height</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitData-MoveHeight"
-                                   aria-describedby="height"
-                                   placeholder="Height"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitData-MoveFloor">Height Minimum</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitData-MoveFloor"
-                                   aria-describedby="height minimum"
-                                   placeholder="Height Minimum"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitBalance-Spd">Speed Base</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitBalance-Spd"
-                                   aria-describedby="speed base"
-                                   placeholder="Speed Base"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitBalance-MaxSpd">Speed Maximum</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitBalance-MaxSpd"
-                                   aria-describedby="speed maximum"
-                                   placeholder="Speed Maximum"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitBalance-MinSpd">Speed Minimum</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitBalance-MinSpd"
-                                   aria-describedby="speed minimum"
-                                   placeholder="Speed Minimum"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitData-TurnRate">Turn Rate</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitData-TurnRate"
-                                   aria-describedby="turn rate"
-                                   placeholder="Turn Rate"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="MovementType">Type</label>
-                        </div>
-                        <div class="input-group">
-                            <select> <!-- TODO: Figure this one out -->
-                                <option value="">NONE</option>
-                                <option value="">Foot</option>
-                                <option value="">Horse</option>
-                                <option value="">Fly</option>
-                                <option value="">Hover</option>
-                                <option value="">Float</option>
-                                <option value="">Amphibious</option>
-                            </select>
-                        </div>
-                    </div>
+                    <form class="was-validated">
+                        <ul class="flex-outer">
+                            <li>
+                                <label for="GroupSeparationEnabled">Group Separation - Enabled</label>
+                                <input class="form-check-input position-static" type="checkbox"
+                                       id="GroupSeparationEnabled"
+                                       aria-label="group separation - enabled" tabindex="-1" /> <!-- TODO: Figure this one out -->
+                            </li>
+                            <li>
+                                <label for="GroupSeparationGroupNumber">Group Separation - Group Number</label>
+                                <input type="text" class="form-control" id="GroupSeparationGroupNumber"
+                                       aria-describedby="group separation - group number"
+                                       placeholder="Group Separation - Group Number"/>
+                            </li>
+                            <li>
+                                <label for="GroupSeparationParameter">Group Separation - Parameter</label>
+                                <input type="text" class="form-control" id="GroupSeparationParameter"
+                                       aria-describedby="group separation - group parameter"
+                                       placeholder="Group Separation - Group Parameter"/>
+                            </li>
+                            <li>
+                                <label for="GroupSeparationPriority">Group Separation - Priority</label>
+                                <input type="text" class="form-control" id="GroupSeparationPriority"
+                                       aria-describedby="group separation - group priority"
+                                       placeholder="Group Separation - Group Priority"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitData-MoveHeight">Height</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitData-MoveHeight"
+                                       aria-describedby="height"
+                                       placeholder="Height"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitData-MoveFloor">Height Minimum</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitData-MoveFloor"
+                                       aria-describedby="height minimum"
+                                       placeholder="Height Minimum"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Spd">Speed Base</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Spd"
+                                       aria-describedby="speed base"
+                                       placeholder="Speed Base"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-MaxSpd">Speed Maximum</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-MaxSpd"
+                                       aria-describedby="speed maximum"
+                                       placeholder="Speed Maximum"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-MinSpd">Speed Minimum</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-MinSpd"
+                                       aria-describedby="speed minimum"
+                                       placeholder="Speed Minimum"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitData-TurnRate">Turn Rate</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitData-TurnRate"
+                                       aria-describedby="turn rate"
+                                       placeholder="Turn Rate"/>
+                            </li>
+                            <li>
+                                <label for="MovementType">Type</label>
+                                <select class="custom-select"> <!-- TODO: Figure this one out -->
+                                    <option value="">NONE</option>
+                                    <option value="">Foot</option>
+                                    <option value="">Horse</option>
+                                    <option value="">Fly</option>
+                                    <option value="">Hover</option>
+                                    <option value="">Float</option>
+                                    <option value="">Amphibious</option>
+                                </select></li>
+                        </ul>
+                    </form>
                 </section>
                 <section id="pathing-section">
                     <div class="editor-section">
@@ -1614,36 +1129,27 @@
                         <h3>Pathing</h3>
                         <hr>
                     </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="AIPlacementRadius">AI Placement Radius</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="AIPlacementRadius"
-                                   aria-describedby="ai placement radius"
-                                   placeholder="AI Placement Radius"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="AIPlacementType">AI Placement Type</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="AIPlacementType"
-                                   aria-describedby="ai placement type"
-                                   placeholder="AI Placement Type"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitBalance-Collision">Collision Size</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitBalance-Collision"
-                                   aria-describedby="collision size"
-                                   placeholder="Collision Size"/>
-                        </div>
-                    </div>
+                    <form class="was-validated">
+                        <ul class="flex-outer">
+                            <li>
+                                <label for="AIPlacementRadius">AI Placement Radius</label>
+                                <input type="text" class="form-control" id="AIPlacementRadius"
+                                       aria-describedby="ai placement radius"
+                                       placeholder="AI Placement Radius"/>
+                            </li>
+                            <li>
+                                <label for="AIPlacementType">AI Placement Type</label>
+                                <input type="text" class="form-control" id="AIPlacementType"
+                                       aria-describedby="ai placement type"
+                                       placeholder="AI Placement Type"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Collision">Collision Size</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Collision"
+                                       aria-describedby="collision size"
+                                       placeholder="Collision Size"/>
+                        </ul>
+                    </form>
                 </section>
                 <section id="sound-section">
                     <div class="editor-section">
@@ -1651,56 +1157,40 @@
                         <h3>Sound</h3>
                         <hr>
                     </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="LoopingFadeInRate">Looping Fade In Rate</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="LoopingFadeInRate"
-                                   aria-describedby="looping fade in rate"
-                                   placeholder="Looping Fade In Rate"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="LoopingFadeOutRate">Looping Fade Out Rate</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="LoopingFadeOutRate"
-                                   aria-describedby="looping fade out rate"
-                                   placeholder="Looping Fade Out Rate"/>
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="Movement">Movement</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="Movement"
-                                   aria-describedby="movement"
-                                   placeholder="Movement"/> <!-- TODO: Figure this one out -->
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="Random">Random</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="Random"
-                                   aria-describedby="random"
-                                   placeholder="Random"/> <!-- TODO: Figure this one out -->
-                        </div>
-                    </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitUI-UnitSound">Unit Sound Set</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitUI-UnitSound"
-                                   aria-describedby="unit sound set"
-                                   placeholder="Unit Sound Set"/>
-                        </div>
-                    </div>
+                    <form class="was-validated">
+                        <ul class="flex-outer">
+                            <li>
+                                <label for="LoopingFadeInRate">Looping Fade In Rate</label>
+                                <input type="text" class="form-control" id="LoopingFadeInRate"
+                                       aria-describedby="looping fade in rate"
+                                       placeholder="Looping Fade In Rate"/>
+                            </li>
+                            <li>
+                                <label for="LoopingFadeOutRate">Looping Fade Out Rate</label>
+                                <input type="text" class="form-control" id="LoopingFadeOutRate"
+                                       aria-describedby="looping fade out rate"
+                                       placeholder="Looping Fade Out Rate"/>
+                            </li>
+                            <li>
+                                <label for="Movement">Movement</label>
+                                <input type="text" class="form-control" id="Movement"
+                                       aria-describedby="movement"
+                                       placeholder="Movement"/> <!-- TODO: Figure this one out -->
+                            </li>
+                            <li>
+                                <label for="Random">Random</label>
+                                <input type="text" class="form-control" id="Random"
+                                       aria-describedby="random"
+                                       placeholder="Random"/> <!-- TODO: Figure this one out -->
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitUI-UnitSound">Unit Sound Set</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitUI-UnitSound"
+                                       aria-describedby="unit sound set"
+                                       placeholder="Unit Sound Set"/>
+                            </li>
+                        </ul>
+                    </form>
                 </section>
                 <section id="stats-section">
                     <div class="editor-section">
@@ -1708,16 +1198,16 @@
                         <h3>Stats</h3>
                         <hr>
                     </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="SLKUnit-UnitBalance-Bldtm">Build Time</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="SLKUnit-UnitBalance-Bldtm"
-                                   aria-describedby="build time"
-                                   placeholder="Build Time"/>
-                        </div>
-                    </div>
+                    <form class="was-validated">
+                        <ul class="flex-outer">
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Bldtm">Build Time</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Bldtm"
+                                       aria-describedby="build time"
+                                       placeholder="Build Time"/>
+                            </li>
+                        </ul>
+                    </form>
                 </section>
                 <section id="text-section">
                     <div class="editor-section">
@@ -1725,15 +1215,15 @@
                         <h3>Text</h3>
                         <hr>
                     </div>
-                    <div class="form-group-small">
-                        <div class="input-group-label">
-                            <label for="Name">Name</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="Name" aria-describedby="name"
-                                   placeholder="Name"/>
-                        </div>
-                    </div>
+                    <form class="was-validated">
+                        <ul class="flex-outer">
+                            <li>
+                                <label for="Name">Name</label>
+                                <input type="text" class="form-control" id="Name" aria-describedby="name"
+                                       placeholder="Name"/>
+                            </li>
+                        </ul>
+                    </form>
                 </section>
             </div>
         </div>

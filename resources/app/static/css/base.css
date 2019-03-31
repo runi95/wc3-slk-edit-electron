@@ -1,0 +1,142 @@
+html, body {
+    background-color: #36393f;
+    color: #fff;
+    margin: 0;
+    width: 100%;
+}
+
+.table {
+    color: #fff;
+}
+
+.color-primary {
+    color: #fff;
+}
+
+.color-secondary {
+    color: #67686c;
+}
+
+.scrollspy {
+    overflow-y: scroll;
+    position: relative;
+}
+
+.form-dark input {
+    color: #fff;
+    border: 1px solid #26272b;
+    background-color: #36373d;
+}
+
+.form-dark input:focus {
+    background-color: #36373d;
+}
+
+.form-dark input:focus {
+    color: #fff;
+}
+
+.form-dark label {
+    color: #67686c;
+}
+
+.form-dark .input-group-text {
+    color: #fff;
+    border: 1px solid #26272b;
+    background: #36373d;
+}
+
+.form-dark button {
+    color: #fff;
+    border: 1px solid #26272b;
+    background-color: #3c3d44;
+}
+
+.form-dark button:hover {
+    color: #fff;
+    background-color: #36373d;
+}
+
+.custom-select.is-valid, .was-validated .custom-select:valid {
+    color: #67686c;
+    background-color: #3c3d44;
+}
+
+.full-width {
+    width: 100% !important;
+}
+
+.pull-left {
+    float: left !important;
+}
+
+.box-dark {
+    color: #67686c;
+    border: 2px solid #26272b;
+    background-color: #36373d
+}
+
+.form-group-small {
+    margin-bottom: 0.5rem;
+}
+
+.editor-section {
+    text-align: center;
+}
+
+#unitTableBody > tr:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+#unitTableBody > .active {
+    background-color: #641e64;
+}
+
+.flex-outer {
+    list-style-type: none;
+    padding: 0;
+}
+
+.flex-outer {
+    margin: 0 auto;
+}
+
+.flex-outer > li {
+    display: flex;
+    align-items: center;
+    flex-flow: row nowrap;
+}
+
+.flex-outer > li:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+.flex-outer > li > label,
+.flex-outer > li > p {
+    width: 15%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.flex-outer > li > label + * {
+    width: 100%;
+}
+
+.flex-outer > li > p {
+    margin: 0;
+}
+
+.flex-outer > li > input:not([type='checkbox']),
+.flex-outer > li > textarea {
+    padding: 15px;
+}
+
+.form-control.is-valid, .was-validated .form-control:valid {
+    border: 1px solid #26272b;
+}
+
+.custom-select.is-valid, .was-validated .custom-select:valid {
+    border: 1px solid #26272b;
+}
