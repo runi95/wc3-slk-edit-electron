@@ -90,21 +90,24 @@ const index = {
             unitTableRow.setAttribute("class", "active");
             Object.keys(message.payload.SLKUnit).forEach(slkUnitKey =>
                 Object.keys(message.payload.SLKUnit[slkUnitKey]).forEach(key => {
-                    if (message.payload.SLKUnit[slkUnitKey][key]) {
+                    const rawValue = message.payload.SLKUnit[slkUnitKey][key];
+                    if (rawValue) {
+                        const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
+                        const value = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
                         const elemList = $("#SLKUnit-" + slkUnitKey + "-" + key);
                         if (elemList.length > 0) {
                             if (elemList[0] instanceof HTMLInputElement) {
                                 const type = elemList[0].type;
 
                                 if (type === "text" || type === "select-one") {
-                                    elemList[0].value = message.payload.SLKUnit[slkUnitKey][key];
+                                    elemList[0].value = value;
                                 } else if (type === "checkbox") {
-                                    elemList[0].checked = message.payload.SLKUnit[slkUnitKey][key] === "1";
+                                    elemList[0].checked = value === "1";
                                 }
                             } else if (elemList[0].classList.contains("multi-check")) {
                                 const childInputs = $("#SLKUnit-" + slkUnitKey + "-" + key + " :input");
                                 for (let i = 0; i < childInputs.length; i++) {
-                                    if (message.payload.SLKUnit[slkUnitKey][key].includes(childInputs[i].value)) {
+                                    if (value.includes(childInputs[i].value)) {
                                         childInputs[i].checked = true;
                                     } else {
                                         childInputs[i].checked = false;
