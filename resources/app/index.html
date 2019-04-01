@@ -55,6 +55,9 @@
             <a class="nav-link" href="#stats-section">Stats</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="#techtree-section">Techtree</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="#text-section">Text</a>
         </li>
     </ul>
@@ -129,7 +132,7 @@
                             <li>
                                 <label for="UnitId">Unit ID</label>
                                 <div style="display: flex;">
-                                    <input type="text" class="form-control" id="UnitId" aria-describedby="unitid"
+                                    <input type="text" class="form-control" id="UnitFunc-UnitId" aria-describedby="unitid"
                                            placeholder="Unit ID" required/>
                                     <button style="white-space: nowrap;" class="btn" tabindex="-1">↺ Generate Valid ID
                                     </button>
@@ -1586,9 +1589,140 @@
                             </li>
                             <li>
                                 <label for="SLKUnit-UnitWeapons-TargType">Targeted as</label>
-                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-TargType"
-                                       aria-describedby="targeted as"
-                                       placeholder="Targeted as"/>
+                                <div id="SLKUnit-UnitWeapons-TargType" class="multi-check">
+                                    <ul>
+                                        <li>
+                                            <label>Air</label>
+                                            <input type="checkbox" tabindex="-1" value="air"/>
+                                        </li>
+                                        <li>
+                                            <label>Alive</label>
+                                            <input type="checkbox" tabindex="-1" value="alive"/>
+                                        </li>
+                                        <li>
+                                            <label>Allied</label>
+                                            <input type="checkbox" tabindex="-1" value="allies"/>
+                                        </li>
+                                        <li>
+                                            <label>Ancient</label>
+                                            <input type="checkbox" tabindex="-1" value="ancient"/>
+                                        </li>
+                                        <li>
+                                            <label>Bridge</label>
+                                            <input type="checkbox" tabindex="-1" value="bridge"/>
+                                        </li>
+                                        <li>
+                                            <label>Dead</label>
+                                            <input type="checkbox" tabindex="-1" value="dead"/>
+                                        </li>
+                                        <li>
+                                            <label>Debris</label>
+                                            <input type="checkbox" tabindex="-1" value="debris"/>
+                                        </li>
+                                        <li>
+                                            <label>Decoration</label>
+                                            <input type="checkbox" tabindex="-1" value="decoration"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Enemy</label>
+                                            <input type="checkbox" tabindex="-1" value="enemies"/>
+                                        </li>
+                                        <li>
+                                            <label>Friend</label>
+                                            <input type="checkbox" tabindex="-1" value="friend"/>
+                                        </li>
+                                        <li>
+                                            <label>Ground</label>
+                                            <input type="checkbox" tabindex="-1" value="ground"/>
+                                        </li>
+                                        <li>
+                                            <label>Hero</label>
+                                            <input type="checkbox" tabindex="-1" value="hero"/>
+                                        </li>
+                                        <li>
+                                            <label>Invulnerable</label>
+                                            <input type="checkbox" tabindex="-1" value="invulnerable"/>
+                                        </li>
+                                        <li>
+                                            <label>Item</label>
+                                            <input type="checkbox" tabindex="-1" value="item"/>
+                                        </li>
+                                        <li>
+                                            <label>Mechanical</label>
+                                            <input type="checkbox" tabindex="-1" value="mechanical"/>
+                                        </li>
+                                        <li>
+                                            <label>Neutral</label>
+                                            <input type="checkbox" tabindex="-1" value="neutral"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Non-Ancient</label>
+                                            <input type="checkbox" tabindex="-1" value="nonancient"/>
+                                        </li>
+                                        <li>
+                                            <label>Non-Hero</label>
+                                            <input type="checkbox" tabindex="-1" value="nonhero"/>
+                                        </li>
+                                        <li>
+                                            <label>Non-suicidal</label>
+                                            <input type="checkbox" tabindex="-1" value="nonsapper"/>
+                                        </li>
+                                        <li>
+                                            <label>None</label>
+                                            <input type="checkbox" tabindex="-1" value="none"/>
+                                        </li>
+                                        <li>
+                                            <label>Not self</label>
+                                            <input type="checkbox" tabindex="-1" value="notself"/>
+                                        </li>
+                                        <li>
+                                            <label>Organic</label>
+                                            <input type="checkbox" tabindex="-1" value="organic"/>
+                                        </li>
+                                        <li>
+                                            <label>Player Units</label>
+                                            <input type="checkbox" tabindex="-1" value="player"/>
+                                        </li>
+                                        <li>
+                                            <label>Self</label>
+                                            <input type="checkbox" tabindex="-1" value="self"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Structure</label>
+                                            <input type="checkbox" tabindex="-1" value="structure"/>
+                                        </li>
+                                        <li>
+                                            <label>Suicidal</label>
+                                            <input type="checkbox" tabindex="-1" value="sapper"/>
+                                        </li>
+                                        <li>
+                                            <label>Terrain</label>
+                                            <input type="checkbox" tabindex="-1" value="terrain"/>
+                                        </li>
+                                        <li>
+                                            <label>Tree</label>
+                                            <input type="checkbox" tabindex="-1" value="tree"/>
+                                        </li>
+                                        <li>
+                                            <label>Vulnerable</label>
+                                            <input type="checkbox" tabindex="-1" value="vulnerable"/>
+                                        </li>
+                                        <li>
+                                            <label>Wall</label>
+                                            <input type="checkbox" tabindex="-1" value="wall"/>
+                                        </li>
+                                        <li>
+                                            <label>Ward</label>
+                                            <input type="checkbox" tabindex="-1" value="ward"/>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                     </form>
@@ -1760,6 +1894,220 @@
                                        aria-describedby="build time"
                                        placeholder="Build Time"/>
                             </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Fused">Food Cost</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Fused"
+                                       aria-describedby="food cost"
+                                       placeholder="Food Cost"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Fmade">Food Produced</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Fmade"
+                                       aria-describedby="food produced"
+                                       placeholder="Food Produced"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitData-Formation">Formation Rank</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitData-Formation"
+                                       aria-describedby="formation rank"
+                                       placeholder="Formation Rank"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Bountyplus">Gold Bounty Awarded - Base</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Bountyplus"
+                                       aria-describedby="gold bounty awarded - base"
+                                       placeholder="Gold Bounty Awarded - Base"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Bountydice">Gold Bounty Awarded - Number of Dice</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Bountydice"
+                                       aria-describedby="gold bounty awarded - number of dice"
+                                       placeholder="Gold Bounty Awarded - Number of Dice"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Bountysides">Gold Bounty Awarded - Sides per Die</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Bountysides"
+                                       aria-describedby="gold bounty awarded - sides per die"
+                                       placeholder="Gold Bounty Awarded - Sides per Die"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Goldcost">Gold Cost</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Goldcost"
+                                       aria-describedby="gold cost"
+                                       placeholder="Gold Cost"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-HP">Hit Points Maximum</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-HP"
+                                       aria-describedby="maximum hit points"
+                                       placeholder="Hit Points Maximum"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-RegenHP">Hit Points Regeneration Rate</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-RegenHP"
+                                       aria-describedby="hit points regeneration rate"
+                                       placeholder="Hit Points Regeneration Rate"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Level">Level</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Level"
+                                       aria-describedby="level"
+                                       placeholder="Level"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Lumberbountyplus">Lumber Bounty Awarded - Base</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Lumberbountyplus"
+                                       aria-describedby="lumber bounty awarded - base"
+                                       placeholder="Lumber Bounty Awarded - Base"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Lumberbountydice">Lumber Bounty Awarded - Number of Dice</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Lumberbountydice"
+                                       aria-describedby="lumber bounty awarded - number of dice"
+                                       placeholder="Lumber Bounty Awarded - Number of Dice"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Lumberbountysides">Lumber Bounty Awarded - Sides per Die</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Lumberbountysides"
+                                       aria-describedby="lumber bounty awarded - sides per die"
+                                       placeholder="Lumber Bounty Awarded - Sides per Die"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Lumbercost">Lumber Cost</label>
+                                <input type="text"  class="form-control" id="SLKUnit-UnitBalance-Lumbercost"
+                                       aria-describedby="lumber cost"
+                                       placeholder="Lumber Cost"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Mana0">Mana Initial Amount</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Mana0"
+                                       aria-describedby="mana initial amount"
+                                       placeholder="Mana Initial Amount"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-ManaN">Mana Maximum</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-ManaN"
+                                       aria-describedby="maximum mana"
+                                       placeholder="Mana Maximum"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-RegenMana">Mana Regeneration</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-RegenMana"
+                                       aria-describedby="mana regeneration"
+                                       placeholder="Mana Regeneration"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitData-Points">Point Value</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitData-Points"
+                                       aria-describedby="point value"
+                                       placeholder="Point Value"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitData-Prio">Priority</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitData-Prio"
+                                       aria-describedby="priority"
+                                       placeholder="Priority"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-GoldRep">Repair Gold Cost</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-GoldRep"
+                                       aria-describedby="repair gold cost"
+                                       placeholder="Repair Gold Cost"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-LumberRep">Repair Lumber Cost</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-LumberRep"
+                                       aria-describedby="repair lumber cost"
+                                       placeholder="Repair Lumber Cost"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Reptm">Repair Time</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Reptm"
+                                       aria-describedby="repair time"
+                                       placeholder="Repair Time"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Sight">Sight Radius (Day)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Sight"
+                                       aria-describedby="sight radius day"
+                                       placeholder="Sight Radius (Day)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Nsight">Sight Radius (Night)</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-Nsight"
+                                       aria-describedby="sight radius night"
+                                       placeholder="Sight Radius (Night)"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-StockMax">Stock Maximum</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-StockMax"
+                                       aria-describedby="stock maximum"
+                                       placeholder="Stock Maximum"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-StockRegen">Stock Replenish Interval</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-StockRegen"
+                                       aria-describedby="stock replenish interval"
+                                       placeholder="Stock Replenish Interval"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-StockStart">Stock Start Delay</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-StockStart"
+                                       aria-describedby="stock start delay"
+                                       placeholder="Stock Start Delay"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitData-CargoSize">Transported Size</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitData-CargoSize"
+                                       aria-describedby="transported size"
+                                       placeholder="Transported Size"/>
+                            </li>
+                        </ul>
+                    </form>
+                </section>
+                <section id="techtree-section">
+                    <div class="editor-section">
+                        <br>
+                        <h3>Techtree</h3>
+                        <hr>
+                    </div>
+                    <form class="was-validated">
+                        <ul class="flex-outer">
+                            <li>
+                                <label for="DependencyEquivalents">Dependency Equivalents</label>
+                                <input type="text" class="form-control" id="DependencyEquivalents" aria-describedby="dependency equivalents"
+                                       placeholder="Dependency Equivalents"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Sellitems">Items Sold</label>
+                                <input type="text" class="form-control" id="UnitFunc-Sellitems" aria-describedby="items sold"
+                                       placeholder="Items Sold"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Requires">Requirements</label>
+                                <input type="text" class="form-control" id="UnitFunc-Requires" aria-describedby="requirements"
+                                       placeholder="Requirements"/>
+                            </li>
+                            <li>
+                                <label for="RequirementsLevels">Requirements - Levels</label>
+                                <input type="text" class="form-control" id="RequirementsLevels" aria-describedby="requirements - levels"
+                                       placeholder="Requirements - Levels"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Builds">Structures Built</label>
+                                <input type="text" class="form-control" id="UnitFunc-Builds" aria-describedby="structures built"
+                                       placeholder="Structures Built"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Sellunits">Units Sold</label>
+                                <input type="text" class="form-control" id="UnitFunc-Sellunits" aria-describedby="units sold"
+                                       placeholder="Units Sold"/>
+                            </li>
+                            <li>
+                                <label for="UpgradesUsed">Upgrades Used</label>
+                                <input type="text" class="form-control" id="UpgradesUsed" aria-describedby="upgrades used"
+                                       placeholder="Upgrades Used"/>
+                            </li>
                         </ul>
                     </form>
                 </section>
@@ -1772,9 +2120,39 @@
                     <form class="was-validated">
                         <ul class="flex-outer">
                             <li>
-                                <label for="Name">Name</label>
-                                <input type="text" class="form-control" id="Name" aria-describedby="name"
+                                <label for="CasterUpgradeTip">Caster Upgrade Tip</label>
+                                <input type="text" class="form-control" id="CasterUpgradeTip" aria-describedby="caster upgrade tip"
+                                       placeholder="Caster Upgrade Tip"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Description">Description</label>
+                                <input type="text" class="form-control" id="UnitFunc-Description" aria-describedby="Description"
+                                       placeholder="Description"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Hotkey">Hotkey</label>
+                                <input type="text" class="form-control" id="UnitFunc-Hotkey" aria-describedby="Hotkey"
+                                       placeholder="Hotkey"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Name">Name</label>
+                                <input type="text" class="form-control" id="UnitFunc-Name" aria-describedby="name"
                                        placeholder="Name"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Editorsuffix">Name - Editor Suffix</label>
+                                <input type="text" class="form-control" id="UnitFunc-Editorsuffix" aria-describedby="name - editor suffix"
+                                       placeholder="Name - Editor Suffix"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Tip">Tooltip - Basic</label>
+                                <input type="text" class="form-control" id="UnitFunc-Tip" aria-describedby="tooltip - basic"
+                                       placeholder="Tooltip - Basic"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Ubertip">Tooltip - Extended</label>
+                                <input type="text" class="form-control" id="UnitFunc-Ubertip" aria-describedby="tooltip - extended"
+                                       placeholder="Tooltip - Extended"/>
                             </li>
                         </ul>
                     </form>
@@ -1786,7 +2164,7 @@
 <script type="text/javascript">
     index.init();
 
-    document.onkeyup = function (e) {
+    document.onkeydown = function (e) {
         if (e.ctrlKey && e.which === 83) {
             index.saveUnit();
         }
