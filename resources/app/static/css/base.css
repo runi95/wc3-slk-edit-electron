@@ -143,3 +143,25 @@ html, body {
 .custom-select.is-valid, .was-validated .custom-select:valid {
     border: 1px solid #26272b;
 }
+
+.multi-check {
+    display: flex;
+    flex-wrap: nowrap;
+    /* justify-content: center; */
+    width: 100%;
+}
+
+.multi-check > ul:not(:last-child) {
+    padding-right: 15px;
+}
+
+.multi-check > ul {
+    display: inline-block;
+    list-style-type: none;
+    padding: 0;
+}
+
+.multi-check label {
+    padding-right: 5px;
+    margin: 0;
+}

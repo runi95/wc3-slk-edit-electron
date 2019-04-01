@@ -15,28 +15,28 @@ const addUnitTableData = (unitTableBody, unitData) => {
 };
 
 const index = {
-    init: function() {
+    init: function () {
         // Init
         asticode.loader.init();
         asticode.notifier.init();
 
         // Wait for astilectron to be ready
-        document.addEventListener('astilectron-ready', function() {
+        document.addEventListener('astilectron-ready', function () {
             // Listen
             index.listen();
 
             index.loadUnitData();
         })
     },
-    listen: function() {
-        astilectron.onMessage(function(message) {
+    listen: function () {
+        astilectron.onMessage(function (message) {
 
         });
     },
-    removeUnit: function(unit) {
-        const unitMessage = { name: "removeUnit", payload: unit };
+    removeUnit: function (unit) {
+        const unitMessage = {name: "removeUnit", payload: unit};
 
-        astilectron.sendMessage(unitMessage, function(message) {
+        astilectron.sendMessage(unitMessage, function (message) {
             // Check for errors
             if (message.name === "error") {
                 asticode.notifier.error(message.payload);
@@ -46,11 +46,11 @@ const index = {
             document.getElementById("removeButton").innerHTML = message.payload;
         })
     },
-    loadUnitData: function() {
-        const message = { name: "loadUnitData", payload: null };
+    loadUnitData: function () {
+        const message = {name: "loadUnitData", payload: null};
         asticode.loader.show();
 
-        astilectron.sendMessage(message, function(message) {
+        astilectron.sendMessage(message, function (message) {
             asticode.loader.hide();
 
             // Check for errors
@@ -58,7 +58,7 @@ const index = {
                 asticode.notifier.error(message.payload);
                 return;
             }
-            
+
             unitDataList = message.payload;
             const unitTableBody = $("#unitTableBody")[0];
             message.payload.forEach(unitData => {
@@ -78,8 +78,8 @@ const index = {
     },
     selectUnit: function (unitTableRow) {
         const unitId = unitTableRow.id;
-        const message = { name: "selectUnit", payload: unitId };
-        astilectron.sendMessage(message, function(message) {
+        const message = {name: "selectUnit", payload: unitId};
+        astilectron.sendMessage(message, function (message) {
             // Check for errors
             if (message.name === "error") {
                 asticode.notifier.error(message.payload);
@@ -90,18 +90,45 @@ const index = {
             unitTableRow.setAttribute("class", "active");
             Object.keys(message.payload.SLKUnit).forEach(slkUnitKey =>
                 Object.keys(message.payload.SLKUnit[slkUnitKey]).forEach(key => {
-                const elemList = $("#SLKUnit-" + slkUnitKey + "-" + key);
+                    if (message.payload.SLKUnit[slkUnitKey][key]) {
+                        const elemList = $("#SLKUnit-" + slkUnitKey + "-" + key);
+                        if (elemList.length > 0) {
+                            if (elemList[0] instanceof HTMLInputElement) {
+                                const type = elemList[0].type;
+
+                                if (type === "text" || type === "select-one") {
+                                    elemList[0].value = message.payload.SLKUnit[slkUnitKey][key];
+                                } else if (type === "checkbox") {
+                                    elemList[0].checked = message.payload.SLKUnit[slkUnitKey][key] === "1";
+                                }
+                            } else if (elemList[0].classList.contains("multi-check")) {
+                                const childInputs = $("#SLKUnit-" + slkUnitKey + "-" + key + " :input");
+                                for (let i = 0; i < childInputs.length; i++) {
+                                    if (message.payload.SLKUnit[slkUnitKey][key].includes(childInputs[i].value)) {
+                                        childInputs.checked = true;
+                                    } else {
+                                        childInputs.checked = false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }));
+
+            Object.keys(message.payload.UnitFunc).forEach(unitFuncKey => {
+                const elemList = $("#UnitFunc-" + unitFuncKey);
                 if (elemList.length > 0) {
                     if (!elemList[0] instanceof HTMLInputElement)
                         return;
 
-                    if (elemList[0].type === "text") {
-                        elemList[0].value = message.payload.SLKUnit[slkUnitKey][key];
-                    } else if (elemList[0].type === "checkbox") {
-                        elemList[0].checked = message.payload.SLKUnit[slkUnitKey][key] === "1";
+                    const type = elemList[0].type;
+                    if (type === "text" || type === "select-one") {
+                        elemList[0].value = message.payload.UnitFunc[unitFuncKey];
+                    } else if (type === "checkbox") {
+                        elemList[0].checked = message.payload.UnitFunc[unitFuncKey] === "1";
                     }
                 }
-            }));
+            });
         });
     },
     activateFileUploadButton: function () {
@@ -114,8 +141,8 @@ const index = {
             return;
 
         const outputDir = input[0].value;
-        const message = { name: "saveToFile", payload: outputDir };
-        astilectron.sendMessage(message, function(message) {
+        const message = {name: "saveToFile", payload: outputDir};
+        astilectron.sendMessage(message, function (message) {
             // Check for errors
             if (message.name === "error") {
                 asticode.notifier.error(message.payload);

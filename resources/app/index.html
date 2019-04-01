@@ -64,11 +64,15 @@
         <div class="col-4" style="height: 100%; display: flex; flex-direction: column;">
             <div class="form-dark">
                 <div style="display: flex;">
-                    <input type="file" id="hiddenFileUploadInput" hidden onchange="index.updateOutputFolder()" />
+                    <input type="file" id="hiddenFileUploadInput" hidden onchange="index.updateOutputFolder()"/>
                     <input type="text" class="form-control" id="outputFolderInput" aria-describedby="output folder path"
-                           placeholder="./input" />
-                    <button style="white-space: nowrap;" class="btn" tabindex="-1" onclick="index.activateFileUploadButton()">...</button>
-                    <button style="white-space: nowrap;" class="btn" tabindex="-1" onclick="index.saveToFile()">🖫 Save Files</button>
+                           placeholder="./input"/>
+                    <button style="white-space: nowrap;" class="btn" tabindex="-1"
+                            onclick="index.activateFileUploadButton()">...
+                    </button>
+                    <button style="white-space: nowrap;" class="btn" tabindex="-1" onclick="index.saveToFile()">🖫 Save
+                        Files
+                    </button>
                 </div>
                 <div class="col-auto" style="padding: 0;">
                     <label class="sr-only" for="searchInput">Search</label>
@@ -94,7 +98,8 @@
                 </table>
             </div>
             <div class="form-dark">
-                <button class="btn btn-block" onclick="index.removeUnit('u009')" id="removeButton">✖ Remove Unit</button>
+                <button class="btn btn-block" onclick="index.removeUnit('u009')" id="removeButton">✖ Remove Unit
+                </button>
             </div>
         </div>
         <div class="col-8" style="height: 100%;">
@@ -125,8 +130,9 @@
                                 <label for="UnitId">Unit ID</label>
                                 <div style="display: flex;">
                                     <input type="text" class="form-control" id="UnitId" aria-describedby="unitid"
-                                           placeholder="Unit ID" required />
-                                    <button style="white-space: nowrap;" class="btn" tabindex="-1">↺ Generate Valid ID</button>
+                                           placeholder="Unit ID" required/>
+                                    <button style="white-space: nowrap;" class="btn" tabindex="-1">↺ Generate Valid ID
+                                    </button>
                                 </div>
                             </li>
                         </ul>
@@ -167,7 +173,7 @@
                                 <label for="AllowCustomTeamColor">Allow Custom Team Color</label>
                                 <input type="checkbox"
                                        id="AllowCustomTeamColor"
-                                       aria-label="allow custom team color" tabindex="-1" />
+                                       aria-label="allow custom team color" tabindex="-1"/>
                             </li>
                             <li>
                                 <label for="SLKUnit-UnitUI-Blend">Blend Time (seconds)</label>
@@ -214,7 +220,8 @@
                                     <option value="1,2">1,2</option>
                                     <option value="2,2">2,2</option>
                                     <option value="3,2">3,2</option>
-                                </select></li>
+                                </select>
+                            </li>
                             <li>
                                 <label for="CasterUpgradeArt">Caster Upgrade Art</label>
                                 <input type="text" class="form-control" id="CasterUpgradeArt"
@@ -249,7 +256,7 @@
                                 <label for="SLKUnit-UnitUI-ShadowOnWater">Has Water Shadow</label>
                                 <input type="checkbox"
                                        id="SLKUnit-UnitUI-ShadowOnWater"
-                                       aria-label="has water shadow" tabindex="-1" />
+                                       aria-label="has water shadow" tabindex="-1"/>
                             </li>
                             <li>
                                 <label for="Icon">Icon</label>
@@ -368,7 +375,7 @@
                                 <label for="SLKUnit-UnitUI-ScaleBull">Scale Projectiles</label>
                                 <input type="checkbox"
                                        id="SLKUnit-UnitUI-ScaleBull"
-                                       aria-label="scale projectiles" tabindex="-1" />
+                                       aria-label="scale projectiles" tabindex="-1"/>
                             </li>
                             <li>
                                 <label for="SLKUnit-UnitUI-ModelScale">Scaling Value</label>
@@ -386,7 +393,7 @@
                                 <label for="SLKUnit-UnitUI-SelCircOnWater">Selection Circle On Water</label>
                                 <input type="checkbox"
                                        id="SLKUnit-UnitUI-SelCircOnWater"
-                                       aria-label="selection circle on water" tabindex="-1" />
+                                       aria-label="selection circle on water" tabindex="-1"/>
                             </li>
                             <li>
                                 <label for="SLKUnit-UnitUI-Scale">Selection Scale</label>
@@ -400,7 +407,8 @@
                                     <option>NONE</option>
                                     <option>Flyer</option>
                                     <option>Normal</option>
-                                </select></li>
+                                </select>
+                            </li>
                             <li>
                                 <label for="SLKUnit-UnitUI-ShadowX">Shadow Image - Center X</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitUI-ShadowX"
@@ -509,7 +517,8 @@
                                     <option>Voodoo Lounge, Goblin Merchant</option>
                                     <option>War Mill</option>
                                     <option>Workshop</option>
-                                </select></li>
+                                </select>
+                            </li>
                             <li>
                                 <label for="SLKUnit-UnitUI-Special">Special</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitUI-Special"
@@ -550,7 +559,8 @@
                                     <option>Player 23 (Emerald)</option>
                                     <option>Player 24 (Peanut)</option>
                                     <option>Neutral Hostile</option>
-                                </select></li>
+                                </select>
+                            </li>
                             <li>
                                 <label for="SLKUnit-UnitUI-Red">Tinting Color 1 (Red)</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitUI-Red"
@@ -573,7 +583,8 @@
                                 <label for="UseExtendedLineOfSight">Use Extended Line of Sight</label>
                                 <input type="checkbox"
                                        id="UseExtendedLineOfSight"
-                                       aria-label="use extended line of sight" tabindex="-1"/> <!-- TODO: Figure this one out -->
+                                       aria-label="use extended line of sight" tabindex="-1"/>
+                                <!-- TODO: Figure this one out -->
                             </li>
                         </ul>
                     </form>
@@ -600,7 +611,8 @@
                                     <option>Metal</option>
                                     <option>Stone</option>
                                     <option>Wood</option>
-                                </select></li>
+                                </select>
+                            </li>
                             <li>
                                 <label for="SLKUnit-UnitWeapons-BackSw1">Attack 1 - Animation Backswing Point</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitWeapons-BackSw1"
@@ -634,9 +646,140 @@
                             </li>
                             <li>
                                 <label for="SLKUnit-UnitWeapons-SplashTargs1">Attack 1 - Area of Effect Targets</label>
-                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-SplashTargs1"
-                                       aria-describedby="attack 1 - area of effect targets"
-                                       placeholder="Attack 1 - Area of Effect Targets"/>
+                                <div id="SLKUnit-UnitWeapons-SplashTargs1" class="multi-check">
+                                    <ul>
+                                        <li>
+                                            <label>Air</label>
+                                            <input type="checkbox" tabindex="-1" value="air"/>
+                                        </li>
+                                        <li>
+                                            <label>Alive</label>
+                                            <input type="checkbox" tabindex="-1" value="alive"/>
+                                        </li>
+                                        <li>
+                                            <label>Allied</label>
+                                            <input type="checkbox" tabindex="-1" value="allies"/>
+                                        </li>
+                                        <li>
+                                            <label>Ancient</label>
+                                            <input type="checkbox" tabindex="-1" value="ancient"/>
+                                        </li>
+                                        <li>
+                                            <label>Bridge</label>
+                                            <input type="checkbox" tabindex="-1" value="bridge"/>
+                                        </li>
+                                        <li>
+                                            <label>Dead</label>
+                                            <input type="checkbox" tabindex="-1" value="dead"/>
+                                        </li>
+                                        <li>
+                                            <label>Debris</label>
+                                            <input type="checkbox" tabindex="-1" value="debris"/>
+                                        </li>
+                                        <li>
+                                            <label>Decoration</label>
+                                            <input type="checkbox" tabindex="-1" value="decoration"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Enemy</label>
+                                            <input type="checkbox" tabindex="-1" value="enemies"/>
+                                        </li>
+                                        <li>
+                                            <label>Friend</label>
+                                            <input type="checkbox" tabindex="-1" value="friend"/>
+                                        </li>
+                                        <li>
+                                            <label>Ground</label>
+                                            <input type="checkbox" tabindex="-1" value="ground"/>
+                                        </li>
+                                        <li>
+                                            <label>Hero</label>
+                                            <input type="checkbox" tabindex="-1" value="hero"/>
+                                        </li>
+                                        <li>
+                                            <label>Invulnerable</label>
+                                            <input type="checkbox" tabindex="-1" value="invulnerable"/>
+                                        </li>
+                                        <li>
+                                            <label>Item</label>
+                                            <input type="checkbox" tabindex="-1" value="item"/>
+                                        </li>
+                                        <li>
+                                            <label>Mechanical</label>
+                                            <input type="checkbox" tabindex="-1" value="mechanical"/>
+                                        </li>
+                                        <li>
+                                            <label>Neutral</label>
+                                            <input type="checkbox" tabindex="-1" value="neutral"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Non-Ancient</label>
+                                            <input type="checkbox" tabindex="-1" value="nonancient"/>
+                                        </li>
+                                        <li>
+                                            <label>Non-Hero</label>
+                                            <input type="checkbox" tabindex="-1" value="nonhero"/>
+                                        </li>
+                                        <li>
+                                            <label>Non-suicidal</label>
+                                            <input type="checkbox" tabindex="-1" value="nonsapper"/>
+                                        </li>
+                                        <li>
+                                            <label>None</label>
+                                            <input type="checkbox" tabindex="-1" value="none"/>
+                                        </li>
+                                        <li>
+                                            <label>Not self</label>
+                                            <input type="checkbox" tabindex="-1" value="notself"/>
+                                        </li>
+                                        <li>
+                                            <label>Organic</label>
+                                            <input type="checkbox" tabindex="-1" value="organic"/>
+                                        </li>
+                                        <li>
+                                            <label>Player Units</label>
+                                            <input type="checkbox" tabindex="-1" value="player"/>
+                                        </li>
+                                        <li>
+                                            <label>Self</label>
+                                            <input type="checkbox" tabindex="-1" value="self"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Structure</label>
+                                            <input type="checkbox" tabindex="-1" value="structure"/>
+                                        </li>
+                                        <li>
+                                            <label>Suicidal</label>
+                                            <input type="checkbox" tabindex="-1" value="sapper"/>
+                                        </li>
+                                        <li>
+                                            <label>Terrain</label>
+                                            <input type="checkbox" tabindex="-1" value="terrain"/>
+                                        </li>
+                                        <li>
+                                            <label>Tree</label>
+                                            <input type="checkbox" tabindex="-1" value="tree"/>
+                                        </li>
+                                        <li>
+                                            <label>Vulnerable</label>
+                                            <input type="checkbox" tabindex="-1" value="vulnerable"/>
+                                        </li>
+                                        <li>
+                                            <label>Wall</label>
+                                            <input type="checkbox" tabindex="-1" value="wall"/>
+                                        </li>
+                                        <li>
+                                            <label>Ward</label>
+                                            <input type="checkbox" tabindex="-1" value="ward"/>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                             <li>
                                 <label for="Attack1AttackType">Attack 1 - Attack Type</label>
@@ -649,7 +792,8 @@
                                     <option>Chaos</option>
                                     <option>Magic</option>
                                     <option>Hero</option>
-                                </select></li>
+                                </select>
+                            </li>
                             <li>
                                 <label for="SLKUnit-UnitWeapons-Cool1">Attack 1 - Cooldown Time</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Cool1"
@@ -734,7 +878,7 @@
                                 <label for="UnitFunc-Missilehoming1">Attack 1 - Projectile Homing Enabled</label>
                                 <input type="checkbox"
                                        id="UnitFunc-Missilehoming1"
-                                       aria-label="attack 1 - projectile homing enabled" tabindex="-1" />
+                                       aria-label="attack 1 - projectile homing enabled" tabindex="-1"/>
                             </li>
                             <li>
                                 <label for="UnitFunc-Missilespeed1">Attack 1 - Projectile Speed</label>
@@ -758,45 +902,178 @@
                                 <label for="SLKUnit-UnitWeapons-ShowUI1">Attack 1 - Show UI</label>
                                 <input type="checkbox"
                                        id="SLKUnit-UnitWeapons-ShowUI1"
-                                       aria-label="attack 1 - show ui" tabindex="-1" />
+                                       aria-label="attack 1 - show ui" tabindex="-1"/>
                             </li>
                             <li>
                                 <label for="SLKUnit-UnitWeapons-Targs1">Attack 1 - Targets Allowed</label>
-                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Targs1"
-                                       aria-describedby="attack 1 - targets allowed"
-                                       placeholder="Attack 1 - Targets Allowed"/>
+                                <div id="SLKUnit-UnitWeapons-Targs1" class="multi-check">
+                                    <ul>
+                                        <li>
+                                            <label>Air</label>
+                                            <input type="checkbox" tabindex="-1" value="air"/>
+                                        </li>
+                                        <li>
+                                            <label>Alive</label>
+                                            <input type="checkbox" tabindex="-1" value="alive"/>
+                                        </li>
+                                        <li>
+                                            <label>Allied</label>
+                                            <input type="checkbox" tabindex="-1" value="allies"/>
+                                        </li>
+                                        <li>
+                                            <label>Ancient</label>
+                                            <input type="checkbox" tabindex="-1" value="ancient"/>
+                                        </li>
+                                        <li>
+                                            <label>Bridge</label>
+                                            <input type="checkbox" tabindex="-1" value="bridge"/>
+                                        </li>
+                                        <li>
+                                            <label>Dead</label>
+                                            <input type="checkbox" tabindex="-1" value="dead"/>
+                                        </li>
+                                        <li>
+                                            <label>Debris</label>
+                                            <input type="checkbox" tabindex="-1" value="debris"/>
+                                        </li>
+                                        <li>
+                                            <label>Decoration</label>
+                                            <input type="checkbox" tabindex="-1" value="decoration"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Enemy</label>
+                                            <input type="checkbox" tabindex="-1" value="enemies"/>
+                                        </li>
+                                        <li>
+                                            <label>Friend</label>
+                                            <input type="checkbox" tabindex="-1" value="friend"/>
+                                        </li>
+                                        <li>
+                                            <label>Ground</label>
+                                            <input type="checkbox" tabindex="-1" value="ground"/>
+                                        </li>
+                                        <li>
+                                            <label>Hero</label>
+                                            <input type="checkbox" tabindex="-1" value="hero"/>
+                                        </li>
+                                        <li>
+                                            <label>Invulnerable</label>
+                                            <input type="checkbox" tabindex="-1" value="invulnerable"/>
+                                        </li>
+                                        <li>
+                                            <label>Item</label>
+                                            <input type="checkbox" tabindex="-1" value="item"/>
+                                        </li>
+                                        <li>
+                                            <label>Mechanical</label>
+                                            <input type="checkbox" tabindex="-1" value="mechanical"/>
+                                        </li>
+                                        <li>
+                                            <label>Neutral</label>
+                                            <input type="checkbox" tabindex="-1" value="neutral"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Non-Ancient</label>
+                                            <input type="checkbox" tabindex="-1" value="nonancient"/>
+                                        </li>
+                                        <li>
+                                            <label>Non-Hero</label>
+                                            <input type="checkbox" tabindex="-1" value="nonhero"/>
+                                        </li>
+                                        <li>
+                                            <label>Non-suicidal</label>
+                                            <input type="checkbox" tabindex="-1" value="nonsapper"/>
+                                        </li>
+                                        <li>
+                                            <label>None</label>
+                                            <input type="checkbox" tabindex="-1" value="none"/>
+                                        </li>
+                                        <li>
+                                            <label>Not self</label>
+                                            <input type="checkbox" tabindex="-1" value="notself"/>
+                                        </li>
+                                        <li>
+                                            <label>Organic</label>
+                                            <input type="checkbox" tabindex="-1" value="organic"/>
+                                        </li>
+                                        <li>
+                                            <label>Player Units</label>
+                                            <input type="checkbox" tabindex="-1" value="player"/>
+                                        </li>
+                                        <li>
+                                            <label>Self</label>
+                                            <input type="checkbox" tabindex="-1" value="self"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Structure</label>
+                                            <input type="checkbox" tabindex="-1" value="structure"/>
+                                        </li>
+                                        <li>
+                                            <label>Suicidal</label>
+                                            <input type="checkbox" tabindex="-1" value="sapper"/>
+                                        </li>
+                                        <li>
+                                            <label>Terrain</label>
+                                            <input type="checkbox" tabindex="-1" value="terrain"/>
+                                        </li>
+                                        <li>
+                                            <label>Tree</label>
+                                            <input type="checkbox" tabindex="-1" value="tree"/>
+                                        </li>
+                                        <li>
+                                            <label>Vulnerable</label>
+                                            <input type="checkbox" tabindex="-1" value="vulnerable"/>
+                                        </li>
+                                        <li>
+                                            <label>Wall</label>
+                                            <input type="checkbox" tabindex="-1" value="wall"/>
+                                        </li>
+                                        <li>
+                                            <label>Ward</label>
+                                            <input type="checkbox" tabindex="-1" value="ward"/>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                             <li>
-                                <label for="WeaponSound">Attack 1 - Weapon Sound</label>
-                                <select class="custom-select"> <!-- TODO: Figure this one out -->
-                                    <option value="">NONE</option>
-                                    <option value="">Axe Medium Chop</option>
-                                    <option value="">Metal Heavy Bash</option>
-                                    <option value="">Metal Heavy Chop</option>
-                                    <option value="">Metal Heavy Slice</option>
-                                    <option value="">Metal Light Chop</option>
-                                    <option value="">Metal Light Slice</option>
-                                    <option value="">Metal Medium Bash</option>
-                                    <option value="">Metal Medium Chop</option>
-                                    <option value="">Metal Medium Slice</option>
-                                    <option value="">Rock Heavy Bash</option>
-                                    <option value="">Wood Heavy Bash</option>
-                                    <option value="">Wood Light Bash</option>
-                                    <option value="">Wood Medium Bash</option>
-                                </select></li>
+                                <label for="SLKUnit-UnitWeapons-WeapType1">Attack 1 - Weapon Sound</label>
+                                <select id="SLKUnit-UnitWeapons-WeapType1" class="custom-select">
+                                    <option value="_">NONE</option>
+                                    <option value="AxeMediumChop">Axe Medium Chop</option>
+                                    <option value="MetalHeavyBash">Metal Heavy Bash</option>
+                                    <option value="MetalHeavyChop">Metal Heavy Chop</option>
+                                    <option value="MetalHeavySlice">Metal Heavy Slice</option>
+                                    <option value="MetalLightChop">Metal Light Chop</option>
+                                    <option value="MetalLightSlice">Metal Light Slice</option>
+                                    <option value="MetalMediumBash">Metal Medium Bash</option>
+                                    <option value="MetalMediumChop">Metal Medium Chop</option>
+                                    <option value="MetalMediumSlice">Metal Medium Slice</option>
+                                    <option value="RockHeavyBash">Rock Heavy Bash</option>
+                                    <option value="WoodHeavyBash">Wood Heavy Bash</option>
+                                    <option value="WoodLightBash">Wood Light Bash</option>
+                                    <option value="WoodMediumBash">Wood Medium Bash</option>
+                                </select>
+                            </li>
                             <li>
-                                <label for="WeaponType">Attack 1 - Weapon Type</label>
-                                <select class="custom-select"> <!-- TODO: Figure this one out -->
-                                    <option value="">NONE</option>
-                                    <option value="">Normal</option>
-                                    <option value="">Instant</option>
-                                    <option value="">Artillery</option>
-                                    <option value="">Artillery (Line)</option>
-                                    <option value="">Missile</option>
-                                    <option value="">Missile (Splash)</option>
-                                    <option value="">Missile (Bounce)</option>
-                                    <option value="">Missile (Line)</option>
-                                </select></li>
+                                <label for="SLKUnit-UnitWeapons-WeapTp1">Attack 1 - Weapon Type</label>
+                                <select id="SLKUnit-UnitWeapons-WeapTp1" class="custom-select">
+                                    <option value="_">NONE</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="instant">Instant</option>
+                                    <option value="artillery">Artillery</option>
+                                    <option value="aline">Artillery (Line)</option>
+                                    <option value="missile">Missile</option>
+                                    <option value="msplash">Missile (Splash)</option>
+                                    <option value="mbounce">Missile (Bounce)</option>
+                                    <option value="mline">Missile (Line)</option>
+                                </select>
+                            </li>
                             <li>
                                 <label for="SLKUnit-UnitWeapons-BackSw2">Attack 2 - Animation Backswing Point</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitWeapons-BackSw2"
@@ -830,9 +1107,140 @@
                             </li>
                             <li>
                                 <label for="SLKUnit-UnitWeapons-SplashTargs2">Attack 2 - Area of Effect Targets</label>
-                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-SplashTargs2"
-                                       aria-describedby="attack 2 - area of effect targets"
-                                       placeholder="Attack 2 - Area of Effect Targets"/>
+                                <div id="SLKUnit-UnitWeapons-SplashTargs2" class="multi-check">
+                                    <ul>
+                                        <li>
+                                            <label>Air</label>
+                                            <input type="checkbox" tabindex="-1" value="air"/>
+                                        </li>
+                                        <li>
+                                            <label>Alive</label>
+                                            <input type="checkbox" tabindex="-1" value="alive"/>
+                                        </li>
+                                        <li>
+                                            <label>Allied</label>
+                                            <input type="checkbox" tabindex="-1" value="allies"/>
+                                        </li>
+                                        <li>
+                                            <label>Ancient</label>
+                                            <input type="checkbox" tabindex="-1" value="ancient"/>
+                                        </li>
+                                        <li>
+                                            <label>Bridge</label>
+                                            <input type="checkbox" tabindex="-1" value="bridge"/>
+                                        </li>
+                                        <li>
+                                            <label>Dead</label>
+                                            <input type="checkbox" tabindex="-1" value="dead"/>
+                                        </li>
+                                        <li>
+                                            <label>Debris</label>
+                                            <input type="checkbox" tabindex="-1" value="debris"/>
+                                        </li>
+                                        <li>
+                                            <label>Decoration</label>
+                                            <input type="checkbox" tabindex="-1" value="decoration"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Enemy</label>
+                                            <input type="checkbox" tabindex="-1" value="enemies"/>
+                                        </li>
+                                        <li>
+                                            <label>Friend</label>
+                                            <input type="checkbox" tabindex="-1" value="friend"/>
+                                        </li>
+                                        <li>
+                                            <label>Ground</label>
+                                            <input type="checkbox" tabindex="-1" value="ground"/>
+                                        </li>
+                                        <li>
+                                            <label>Hero</label>
+                                            <input type="checkbox" tabindex="-1" value="hero"/>
+                                        </li>
+                                        <li>
+                                            <label>Invulnerable</label>
+                                            <input type="checkbox" tabindex="-1" value="invulnerable"/>
+                                        </li>
+                                        <li>
+                                            <label>Item</label>
+                                            <input type="checkbox" tabindex="-1" value="item"/>
+                                        </li>
+                                        <li>
+                                            <label>Mechanical</label>
+                                            <input type="checkbox" tabindex="-1" value="mechanical"/>
+                                        </li>
+                                        <li>
+                                            <label>Neutral</label>
+                                            <input type="checkbox" tabindex="-1" value="neutral"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Non-Ancient</label>
+                                            <input type="checkbox" tabindex="-1" value="nonancient"/>
+                                        </li>
+                                        <li>
+                                            <label>Non-Hero</label>
+                                            <input type="checkbox" tabindex="-1" value="nonhero"/>
+                                        </li>
+                                        <li>
+                                            <label>Non-suicidal</label>
+                                            <input type="checkbox" tabindex="-1" value="nonsapper"/>
+                                        </li>
+                                        <li>
+                                            <label>None</label>
+                                            <input type="checkbox" tabindex="-1" value="none"/>
+                                        </li>
+                                        <li>
+                                            <label>Not self</label>
+                                            <input type="checkbox" tabindex="-1" value="notself"/>
+                                        </li>
+                                        <li>
+                                            <label>Organic</label>
+                                            <input type="checkbox" tabindex="-1" value="organic"/>
+                                        </li>
+                                        <li>
+                                            <label>Player Units</label>
+                                            <input type="checkbox" tabindex="-1" value="player"/>
+                                        </li>
+                                        <li>
+                                            <label>Self</label>
+                                            <input type="checkbox" tabindex="-1" value="self"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Structure</label>
+                                            <input type="checkbox" tabindex="-1" value="structure"/>
+                                        </li>
+                                        <li>
+                                            <label>Suicidal</label>
+                                            <input type="checkbox" tabindex="-1" value="sapper"/>
+                                        </li>
+                                        <li>
+                                            <label>Terrain</label>
+                                            <input type="checkbox" tabindex="-1" value="terrain"/>
+                                        </li>
+                                        <li>
+                                            <label>Tree</label>
+                                            <input type="checkbox" tabindex="-1" value="tree"/>
+                                        </li>
+                                        <li>
+                                            <label>Vulnerable</label>
+                                            <input type="checkbox" tabindex="-1" value="vulnerable"/>
+                                        </li>
+                                        <li>
+                                            <label>Wall</label>
+                                            <input type="checkbox" tabindex="-1" value="wall"/>
+                                        </li>
+                                        <li>
+                                            <label>Ward</label>
+                                            <input type="checkbox" tabindex="-1" value="ward"/>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                             <li>
                                 <label for="Attack2AttackType">Attack 2 - Attack Type</label>
@@ -845,7 +1253,8 @@
                                     <option>Chaos</option>
                                     <option>Magic</option>
                                     <option>Hero</option>
-                                </select></li>
+                                </select>
+                            </li>
                             <li>
                                 <label for="SLKUnit-UnitWeapons-Cool2">Attack 2 - Cooldown Time</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Cool2"
@@ -930,7 +1339,7 @@
                                 <label for="UnitFunc-Missilehoming2">Attack 2 - Projectile Homing Enabled</label>
                                 <input type="checkbox"
                                        id="UnitFunc-Missilehoming2"
-                                       aria-label="attack 2 - projectile homing enabled" tabindex="-1" />
+                                       aria-label="attack 2 - projectile homing enabled" tabindex="-1"/>
                             </li>
                             <li>
                                 <label for="UnitFunc-Missilespeed2">Attack 2 - Projectile Speed</label>
@@ -954,53 +1363,187 @@
                                 <label for="SLKUnit-UnitWeapons-ShowUI2">Attack 2 - Show UI</label>
                                 <input type="checkbox"
                                        id="SLKUnit-UnitWeapons-ShowUI2"
-                                       aria-label="attack 2 - show ui" tabindex="-1" />
+                                       aria-label="attack 2 - show ui" tabindex="-1"/>
                             </li>
                             <li>
                                 <label for="SLKUnit-UnitWeapons-Targs2">Attack 2 - Targets Allowed</label>
-                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Targs2"
-                                       aria-describedby="attack 2 - targets allowed"
-                                       placeholder="Attack 2 - Targets Allowed"/>
+                                <div id="SLKUnit-UnitWeapons-Targs2" class="multi-check">
+                                    <ul>
+                                        <li>
+                                            <label>Air</label>
+                                            <input type="checkbox" tabindex="-1" value="air"/>
+                                        </li>
+                                        <li>
+                                            <label>Alive</label>
+                                            <input type="checkbox" tabindex="-1" value="alive"/>
+                                        </li>
+                                        <li>
+                                            <label>Allied</label>
+                                            <input type="checkbox" tabindex="-1" value="allies"/>
+                                        </li>
+                                        <li>
+                                            <label>Ancient</label>
+                                            <input type="checkbox" tabindex="-1" value="ancient"/>
+                                        </li>
+                                        <li>
+                                            <label>Bridge</label>
+                                            <input type="checkbox" tabindex="-1" value="bridge"/>
+                                        </li>
+                                        <li>
+                                            <label>Dead</label>
+                                            <input type="checkbox" tabindex="-1" value="dead"/>
+                                        </li>
+                                        <li>
+                                            <label>Debris</label>
+                                            <input type="checkbox" tabindex="-1" value="debris"/>
+                                        </li>
+                                        <li>
+                                            <label>Decoration</label>
+                                            <input type="checkbox" tabindex="-1" value="decoration"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Enemy</label>
+                                            <input type="checkbox" tabindex="-1" value="enemies"/>
+                                        </li>
+                                        <li>
+                                            <label>Friend</label>
+                                            <input type="checkbox" tabindex="-1" value="friend"/>
+                                        </li>
+                                        <li>
+                                            <label>Ground</label>
+                                            <input type="checkbox" tabindex="-1" value="ground"/>
+                                        </li>
+                                        <li>
+                                            <label>Hero</label>
+                                            <input type="checkbox" tabindex="-1" value="hero"/>
+                                        </li>
+                                        <li>
+                                            <label>Invulnerable</label>
+                                            <input type="checkbox" tabindex="-1" value="invulnerable"/>
+                                        </li>
+                                        <li>
+                                            <label>Item</label>
+                                            <input type="checkbox" tabindex="-1" value="item"/>
+                                        </li>
+                                        <li>
+                                            <label>Mechanical</label>
+                                            <input type="checkbox" tabindex="-1" value="mechanical"/>
+                                        </li>
+                                        <li>
+                                            <label>Neutral</label>
+                                            <input type="checkbox" tabindex="-1" value="neutral"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Non-Ancient</label>
+                                            <input type="checkbox" tabindex="-1" value="nonancient"/>
+                                        </li>
+                                        <li>
+                                            <label>Non-Hero</label>
+                                            <input type="checkbox" tabindex="-1" value="nonhero"/>
+                                        </li>
+                                        <li>
+                                            <label>Non-suicidal</label>
+                                            <input type="checkbox" tabindex="-1" value="nonsapper"/>
+                                        </li>
+                                        <li>
+                                            <label>None</label>
+                                            <input type="checkbox" tabindex="-1" value="none"/>
+                                        </li>
+                                        <li>
+                                            <label>Not self</label>
+                                            <input type="checkbox" tabindex="-1" value="notself"/>
+                                        </li>
+                                        <li>
+                                            <label>Organic</label>
+                                            <input type="checkbox" tabindex="-1" value="organic"/>
+                                        </li>
+                                        <li>
+                                            <label>Player Units</label>
+                                            <input type="checkbox" tabindex="-1" value="player"/>
+                                        </li>
+                                        <li>
+                                            <label>Self</label>
+                                            <input type="checkbox" tabindex="-1" value="self"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Structure</label>
+                                            <input type="checkbox" tabindex="-1" value="structure"/>
+                                        </li>
+                                        <li>
+                                            <label>Suicidal</label>
+                                            <input type="checkbox" tabindex="-1" value="sapper"/>
+                                        </li>
+                                        <li>
+                                            <label>Terrain</label>
+                                            <input type="checkbox" tabindex="-1" value="terrain"/>
+                                        </li>
+                                        <li>
+                                            <label>Tree</label>
+                                            <input type="checkbox" tabindex="-1" value="tree"/>
+                                        </li>
+                                        <li>
+                                            <label>Vulnerable</label>
+                                            <input type="checkbox" tabindex="-1" value="vulnerable"/>
+                                        </li>
+                                        <li>
+                                            <label>Wall</label>
+                                            <input type="checkbox" tabindex="-1" value="wall"/>
+                                        </li>
+                                        <li>
+                                            <label>Ward</label>
+                                            <input type="checkbox" tabindex="-1" value="ward"/>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                             <li>
-                                <label for="WeaponSound">Attack 2 - Weapon Sound</label>
-                                <select class="custom-select"> <!-- TODO: Figure this one out -->
-                                    <option value="">NONE</option>
-                                    <option value="">Axe Medium Chop</option>
-                                    <option value="">Metal Heavy Bash</option>
-                                    <option value="">Metal Heavy Chop</option>
-                                    <option value="">Metal Heavy Slice</option>
-                                    <option value="">Metal Light Chop</option>
-                                    <option value="">Metal Light Slice</option>
-                                    <option value="">Metal Medium Bash</option>
-                                    <option value="">Metal Medium Chop</option>
-                                    <option value="">Metal Medium Slice</option>
-                                    <option value="">Rock Heavy Bash</option>
-                                    <option value="">Wood Heavy Bash</option>
-                                    <option value="">Wood Light Bash</option>
-                                    <option value="">Wood Medium Bash</option>
-                                </select></li>
+                                <label for="SLKUnit-UnitWeapons-WeapType2">Attack 2 - Weapon Sound</label>
+                                <select id="SLKUnit-UnitWeapons-WeapType2" class="custom-select">
+                                    <option value="_">NONE</option>
+                                    <option value="AxeMediumChop">Axe Medium Chop</option>
+                                    <option value="MetalHeavyBash">Metal Heavy Bash</option>
+                                    <option value="MetalHeavyChop">Metal Heavy Chop</option>
+                                    <option value="MetalHeavySlice">Metal Heavy Slice</option>
+                                    <option value="MetalLightChop">Metal Light Chop</option>
+                                    <option value="MetalLightSlice">Metal Light Slice</option>
+                                    <option value="MetalMediumBash">Metal Medium Bash</option>
+                                    <option value="MetalMediumChop">Metal Medium Chop</option>
+                                    <option value="MetalMediumSlice">Metal Medium Slice</option>
+                                    <option value="RockHeavyBash">Rock Heavy Bash</option>
+                                    <option value="WoodHeavyBash">Wood Heavy Bash</option>
+                                    <option value="WoodLightBash">Wood Light Bash</option>
+                                    <option value="WoodMediumBash">Wood Medium Bash</option>
+                                </select>
+                            </li>
                             <li>
-                                <label for="WeaponType">Attack 2 - Weapon Type</label>
-                                <select class="custom-select"> <!-- TODO: Figure this one out -->
-                                    <option value="">NONE</option>
-                                    <option value="">Normal</option>
-                                    <option value="">Instant</option>
-                                    <option value="">Artillery</option>
-                                    <option value="">Artillery (Line)</option>
-                                    <option value="">Missile</option>
-                                    <option value="">Missile (Splash)</option>
-                                    <option value="">Missile (Bounce)</option>
-                                    <option value="">Missile (Line)</option>
-                                </select></li>
+                                <label for="SLKUnit-UnitWeapons-WeapTp2">Attack 2 - Weapon Type</label>
+                                <select id="SLKUnit-UnitWeapons-WeapTp2" class="custom-select">
+                                    <option value="_">NONE</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="instant">Instant</option>
+                                    <option value="artillery">Artillery</option>
+                                    <option value="aline">Artillery (Line)</option>
+                                    <option value="missile">Missile</option>
+                                    <option value="msplash">Missile (Splash)</option>
+                                    <option value="mbounce">Missile (Bounce)</option>
+                                    <option value="mline">Missile (Line)</option>
+                                </select>
+                            </li>
                             <li>
-                                <label for="AttacksEnabled">Attacks Enabled</label>
-                                <select class="custom-select"> <!-- TODO: Figure this one out -->
-                                    <option value="">None</option>
-                                    <option value="">Attack 1 Only</option>
-                                    <option value="">Attack 2 Only</option>
-                                    <option value="">Both</option>
-                                </select></li>
+                                <label for="SLKUnit-UnitWeapons-WeapsOn">Attacks Enabled</label>
+                                <select id="SLKUnit-UnitWeapons-WeapsOn" class="custom-select">
+                                    <option value="0">None</option>
+                                    <option value="1">Attack 1 Only</option>
+                                    <option value="2">Attack 2 Only</option>
+                                    <option value="3">Both</option>
+                                </select>
+                            </li>
                             <li>
                                 <label for="DeathType">Death Type</label>
                                 <select class="custom-select"> <!-- TODO: Figure this one out -->
@@ -1008,7 +1551,8 @@
                                     <option value="">Can raise, Does not decay</option>
                                     <option value="">Can't raise, Does decay</option>
                                     <option value="">Can raise, Does decay</option>
-                                </select></li>
+                                </select>
+                            </li>
                             <li>
                                 <label for="SLKUnit-UnitWeapons-Def">Defense Base</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Def"
@@ -1026,7 +1570,8 @@
                                     <option value="">Hero</option>
                                     <option value="">Divine</option>
                                     <option value="">Unarmored</option>
-                                </select></li>
+                                </select>
+                            </li>
                             <li>
                                 <label for="DefenseUpgradeBonus">Defense Upgrade Bonus</label>
                                 <input type="text" class="form-control" id="DefenseUpgradeBonus"
@@ -1060,7 +1605,8 @@
                                 <label for="GroupSeparationEnabled">Group Separation - Enabled</label>
                                 <input type="checkbox"
                                        id="GroupSeparationEnabled"
-                                       aria-label="group separation - enabled" tabindex="-1" /> <!-- TODO: Figure this one out -->
+                                       aria-label="group separation - enabled" tabindex="-1"/>
+                                <!-- TODO: Figure this one out -->
                             </li>
                             <li>
                                 <label for="GroupSeparationGroupNumber">Group Separation - Group Number</label>
@@ -1126,7 +1672,8 @@
                                     <option value="">Hover</option>
                                     <option value="">Float</option>
                                     <option value="">Amphibious</option>
-                                </select></li>
+                                </select>
+                            </li>
                         </ul>
                     </form>
                 </section>
@@ -1239,7 +1786,7 @@
 <script type="text/javascript">
     index.init();
 
-    document.onkeyup = function(e) {
+    document.onkeyup = function (e) {
         if (e.ctrlKey && e.which === 83) {
             index.saveUnit();
         }
