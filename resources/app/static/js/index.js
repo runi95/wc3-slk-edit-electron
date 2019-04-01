@@ -105,9 +105,9 @@ const index = {
                                 const childInputs = $("#SLKUnit-" + slkUnitKey + "-" + key + " :input");
                                 for (let i = 0; i < childInputs.length; i++) {
                                     if (message.payload.SLKUnit[slkUnitKey][key].includes(childInputs[i].value)) {
-                                        childInputs.checked = true;
+                                        childInputs[i].checked = true;
                                     } else {
-                                        childInputs.checked = false;
+                                        childInputs[i].checked = false;
                                     }
                                 }
                             }
