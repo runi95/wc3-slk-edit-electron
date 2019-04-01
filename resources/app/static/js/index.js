@@ -98,7 +98,7 @@ const index = {
                         const value = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
                         const elemList = $("#SLKUnit-" + slkUnitKey + "-" + key);
                         if (elemList.length > 0) {
-                            if (elemList[0] instanceof HTMLInputElement) {
+                            if (elemList[0] instanceof HTMLInputElement || elemList[0] instanceof HTMLSelectElement) {
                                 const type = elemList[0].type;
 
                                 if (type === "text" || type === "select-one") {
