@@ -264,6 +264,32 @@
                                        placeholder="Fog of War - Sample Radius"/>
                             </li>
                             <li>
+                                <label for="SLKUnit-UnitUI-UberSplat">Ground Texture</label>
+                                <select id="SLKUnit-UnitUI-UberSplat" class="custom-select">
+                                    <option value="_">NONE</option>
+                                    <option value="UMED">Altar of Darkness, Boneyard, Haunted Gold Mine, Graveyard, Sacrificial Pit, Crypt, Slaughterhouse, Temple of the Damned, ...</option>
+                                    <option value="EMDB">Altar of Elders, Hunter's Hall, Chimera Roost, Entangled Gold Mine, Night Elf Shipyard, Arcane Observatory, Barrow Den</option>
+                                    <option value="HMED">Altar of Kings, Workshop, Arcane Sanctum, Barracks, Blacksmith, Gryphon Aviary, Lumber Mill, Human Shipyard, Arcane Vault, ...</option>
+                                    <option value="OMED">Altar of Storms, Barracks, Beastiary, War Mill, Spirit Lodge, Tauren Totem, Voodoo Lounge, Pocket Factory (Level 1), ...</option>
+                                    <option value="EMDA">Ancient of Lore, Ancient of War, Ancient of Wind, Ancient of Wonders, Tree of Ages, Tree of Eternity, Tree of Life, ...</option>
+                                    <option value="ESMA">Ancient Protector, Corrupted Protector</option>
+                                    <option value="HSMA">Arcane Tower, Cannon Tower, Guard Tower, Farm, Scout Tower, Boulder Tower, Advanced Boulder Tower, Dalaran Guard Tower, ...</option>
+                                    <option value="HCAS">Castle</option>
+                                    <option value="NDGS">Demon Gate</option>
+                                    <option value="DPSE">Dimensional Gate (facing southeast)</option>
+                                    <option value="DPSW">Dimensional Gate (facing southwest)</option>
+                                    <option value="NGOL">Forgotten One, Gold Mine</option>
+                                    <option value="OLAR">Fortress, Great Hall, Stronghold, Draenei Haven, Draenei Barracks, Seer's Den, Green Dragon Roost, Black Dragon Roost, ...</option>
+                                    <option value="ULAR">Halls of the Dead, Black Citadel, Necropolis</option>
+                                    <option value="HTOW">Keep, Town Hall</option>
+                                    <option value="ESMB">Moon Well, Corrupted Moon Well</option>
+                                    <option value="OSMA">Orc Shipyard, Orc Burrow, Watch Tower, Centaur Tent, Centaur Tent (2), Centaur Tent (3), Draenei Chieftain's Hut, ...</option>
+                                    <option value="HLAR">Spawning Grounds</option>
+                                    <option value="USMA">Spirit Tower, Nerubian Tower, Ziggurat, Nerubian Ziggurat</option>
+                                    <option value="NLAR">Temple of Tides</option>
+                                </select>
+                            </li>
+                            <li>
                                 <label for="SLKUnit-UnitUI-ShadowOnWater">Has Water Shadow</label>
                                 <input type="checkbox"
                                        id="SLKUnit-UnitUI-ShadowOnWater"
@@ -460,7 +486,7 @@
                                     <option value="ShadowArcaneObservatory">Arcane Observatory</option>
                                     <option value="ShadowArcaneSanctum">Arcane Sanctum</option>
                                     <option value="ShadowGuardTower">Arcane Tower, Guard Tower, Watch Tower</option>
-                                    <option value="ShadowArcaneVault">Arcane Valut</option>
+                                    <option value="ShadowArcaneVault">Arcane Vault</option>
                                     <option value="Shadow">Archmage, Blood Mage, Mountain King, Paladin, Human Transport Ship, Human
                                         Battleship, Human Frigate, Footman, Knight, ...
                                     </option>
@@ -1839,7 +1865,43 @@
                                 <label for="SLKUnit-UnitBalance-Collision">Collision Size</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitBalance-Collision"
                                        aria-describedby="collision size"
-                                       placeholder="Collision Size"/>
+                                       placeholder="Collision Size" />
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitData-PathTex">Pathing Map</label>
+                                <select id="SLKUnit-UnitData-PathTex" class="custom-select">
+                                    <option value="_">NONE</option>
+                                    <option value="PathTextures\10x10Simple.tga">Altar of Kings, Altar of Storms, Altar of Elders, Altar of Darkness, Altar of the Depths</option>
+                                    <option value="PathTextures\ArcaneObservatoryPath.tga">Arcane Observatory</option>
+                                    <option value="PathTextures\4x4SimpleSolid.tga">Arcane Tower, CannonTower, Guard Tower, Farm, Scout Tower, Watch Tower, Book of Summoning Pedestal, Boulder Tower, ...</option>
+                                    <option value="PathTextures\8x8SimpleSolid.tga">Blacksmith, Gryphon Aviary, Orc Shipyard, Hunter's Hall, Chimera Roost, Draenei Chieftain's Hut, Draenei Hut, ...</option>
+                                    <option value="PathTextures\16x16Simple.tga">Castle, Keep, Town Hall, Fortress, Great Hall, Stronghold, Green Dragon Roost, Black Dragon Roost, Nether Dragon Roost, ...</option>
+                                    <option value="PathTextures\4x4unbuildable.tga">Circle of Power</option>
+                                    <option value="PathTextures\8x8unbuildable.tga">Cirle of Power (large)</option>
+                                    <option value="PathTextures\6x6unbuildable.tga">Circle of Power (medium)</option>
+                                    <option value="PathTextures\CityBuilding0-2.tga">City Building 0, City Building 1, City Building 2</option>
+                                    <option value="PathTextures\CityBuildingLarge_0.tga">City Building 12</option>
+                                    <option value="PathTextures\CityBuildingLarge_135.tga">City Building 13</option>
+                                    <option value="PathTextures\CityBuildingLarge_90.tga">City Building 14</option>
+                                    <option value="PathTextures\CityBuildingLarge_45.tga">City Building 15</option>
+                                    <option value="PathTextures\CityBuilding3-5.tga">City Building 3, City Building 4, City Building 5</option>
+                                    <option value="PathTextures\CityBuilding6-8.tga">City Building 6, City Building 7, City Building 8, Grain Warehouse</option>
+                                    <option value="PathTextures\CityBuilding9-11.tga">City Building 9, City Building 10, City Building 11</option>
+                                    <option value="PathTextures\DemonGatePath.tga">Demon Gate</option>
+                                    <option value="PathTextures\DarkPortalSE.tga">Dimensional Gate (facing southeast)</option>
+                                    <option value="PathTextures\DarkPortalSW.tga">Dimensional Gate (facing southwest)</option>
+                                    <option value="PathTextures\16x16Goldmine.tga">Entangled Gold Mine, Haunted Gold Mine, Gold Mine</option>
+                                    <option value="PathTextures\8x8Default.tga">Forgotten One</option>
+                                    <option value="PathTextures\8x8Round.tga">Fruit Stand, Icecrown Obelisk, Treasure Box, Magic Vault, Wyvern Cage (1), Wyvern Cage (2)</option>
+                                    <option value="PathTextures\UndeadNecropolis.tga">Hall of the Dead, Black Citadel, Necropolis</option>
+                                    <option value="PathTextures\6x6SimpleSolid.tga">Human Shipyard, War Mill, Orc Burrow, Moon Well, Night Elf Shipyard, Ancient Protector, Spirit Tower, Nerubian Tower, ...</option>
+                                    <option value="PathTextures\10x10SimpleSolid.tga">Lumber Mill</option>
+                                    <option value="PathTextures\12x12TreeOfLife.tga">Tree of Ages, Tree of Eternity, Tree of Life, Corrupted Tree of Ages, Corrupted Tree of Eternity, Corrupted Tree of Life</option>
+                                    <option value="PathTextures\Waygate.tga">Way Gate</option>
+                                    <option value="PathTextures\12x12Simple.tga">Workshop, Arcane Sanctum, Barracks, Beastiary, Spirit Lodge, Tauren Totem, Voodoo Lounge, ...</option>
+                                    <option value="PathTextures\2s2UnBuildable.tga">Zone Indicator (Custom Campaign)</option>
+                                </select>
+                            </li>
                         </ul>
                     </form>
                 </section>
