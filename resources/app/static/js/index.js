@@ -25,6 +25,7 @@ const index = {
             // Listen
             index.listen();
 
+            index.loadConfig();
             index.loadUnitData();
         })
     },
@@ -169,5 +170,20 @@ const index = {
     },
     saveUnit: function () {
         // TODO: Implement this
+    },
+    loadConfig: function () {
+        const message = {name: "loadConfig", payload: null};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            const input = $("#outputFolderInput");
+            if (input.length > 0) {
+                input[0].value = message.payload.OutDir;
+            }
+        });
     }
 };
