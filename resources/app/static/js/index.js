@@ -1,4 +1,5 @@
 let unitDataList = [];
+const selectedUnitIndex = null;
 
 const addUnitTableData = (unitTableBody, unitData) => {
     const tr = document.createElement("tr");
@@ -169,7 +170,77 @@ const index = {
         input[0].value = updatedValue;
     },
     saveUnit: function () {
-        // TODO: Implement this
+        const forms = $("form");
+        let formsValid = true;
+        for (let i = 0; i < forms.length; i++) {
+            if (!forms[i].checkValidity()) {
+                formsValid = false;
+            }
+        }
+
+        if (!formsValid)
+            return;
+
+        const unit = {
+            SLKUnit: {UnitUI: {}, UnitData: {}, UnitBalance: {}, UnitWeapons: {}, UnitAbilities: {}},
+            UnitFunc: {}
+        };
+
+        const inputs = $(":input");
+        for (let i = 0; i < inputs.length; i++) {
+            const type = inputs[i].type;
+            const idSplit = inputs[i].id.split("-");
+            if (inputs[i].id) {
+                if (type === "checkbox") {
+                    if (idSplit[0] === "SLKUnit") {
+                        unit.SLKUnit[idSplit[1]][idSplit[2]] = inputs[i].checked ? "1" : "0"
+                    } else if (idSplit[0] === "UnitFunc") {
+                        unit.UnitFunc[idSplit[1]] = inputs[i].checked ? "1" : "0"
+                    }
+                } else if(inputs[i].value) {
+                    if (idSplit[0] === "SLKUnit") {
+                        unit.SLKUnit[idSplit[1]][idSplit[2]] = inputs[i].value
+                    } else if (idSplit[0] === "UnitFunc") {
+                        unit.UnitFunc[idSplit[1]] = inputs[i].value
+                    }
+                }
+            } else if(type === "checkbox" && inputs[i].checked) {
+                const parentNode = inputs[i].parentNode.parentNode.parentNode;
+                const parentIdSplit = parentNode.id.split("-");
+                const oldValue = unit.SLKUnit[parentIdSplit[1]][parentIdSplit[2]];
+                if (oldValue) {
+                    unit.SLKUnit[parentIdSplit[1]][parentIdSplit[2]] += "," + inputs[i].value;
+                } else {
+                    unit.SLKUnit[parentIdSplit[1]][parentIdSplit[2]] = inputs[i].value;
+                }
+            }
+        }
+
+        const unitId = unit.UnitFunc.UnitId;
+        const message = {name: "saveUnit", payload: unit};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            let oldUnit = null;
+            for(let i = 0; i < unitDataList.length; i++) {
+                if (unitDataList[i].UnitID === unitId) {
+                    oldUnit = i;
+                    break;
+                }
+            }
+
+            if (oldUnit) {
+                unitDataList[oldUnit] = { UnitID: unitId, Name: unit.UnitFunc.Name };
+            } else {
+                unitDataList.push({ UnitID: unitId, Name: unit.UnitFunc.Name });
+            }
+
+            index.search(document.getElementById("searchInput"));
+        });
     },
     loadConfig: function () {
         const message = {name: "loadConfig", payload: null};
