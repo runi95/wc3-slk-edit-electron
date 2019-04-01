@@ -162,7 +162,7 @@ const index = {
         if (input.length < 1 || hiddenInput.length < 1)
             return;
 
-        const updatedValue = hiddenInput[0].value;
+        const updatedValue = hiddenInput[0].files[0].path;
 
         if (!updatedValue)
             return;
