@@ -594,8 +594,7 @@
                                 <label for="UseExtendedLineOfSight">Use Extended Line of Sight</label>
                                 <input type="checkbox"
                                        id="UseExtendedLineOfSight"
-                                       aria-label="use extended line of sight" tabindex="-1"/>
-                                <!-- TODO: Figure this one out -->
+                                       aria-label="use extended line of sight" tabindex="-1"/> <!-- TODO: Figure this one out -->
                             </li>
                         </ul>
                     </form>
@@ -793,16 +792,16 @@
                                 </div>
                             </li>
                             <li>
-                                <label for="Attack1AttackType">Attack 1 - Attack Type</label>
-                                <select class="custom-select"> <!-- TODO: Figure this one out -->
-                                    <option>None</option>
-                                    <option>Normal</option>
-                                    <option>Pierce</option>
-                                    <option>Siege</option>
-                                    <option>Spells</option>
-                                    <option>Chaos</option>
-                                    <option>Magic</option>
-                                    <option>Hero</option>
+                                <label for="SLKUnit-UnitWeapons-AtkType1">Attack 1 - Attack Type</label>
+                                <select id="SLKUnit-UnitWeapons-AtkType1" class="custom-select">
+                                    <option value="unknown">None</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="pierce">Pierce</option>
+                                    <option value="siege">Siege</option>
+                                    <option value="spells">Spells</option>
+                                    <option value="chaos">Chaos</option>
+                                    <option value="magic">Magic</option>
+                                    <option value="hero">Hero</option>
                                 </select>
                             </li>
                             <li>
@@ -863,9 +862,8 @@
                                 <label for="Attack1DamageUpgradeAmount">Attack 1 - Damage Upgrade Amount</label>
                                 <input type="text" class="form-control" id="Attack1DamageUpgradeAmount"
                                        aria-describedby="attack 1 - damage upgrade amount"
-                                       placeholder="Attack 1 - Damage Upgrade Amount"/>
+                                       placeholder="Attack 1 - Damage Upgrade Amount"/> <!-- TODO: Figure this one out -->
                             </li>
-                            <!-- TODO: Figure this one out -->
                             <li>
                                 <label for="SLKUnit-UnitWeapons-TargCount1">Attack 1 - Maxiumum Number of
                                     Targets</label>
@@ -1254,16 +1252,16 @@
                                 </div>
                             </li>
                             <li>
-                                <label for="Attack2AttackType">Attack 2 - Attack Type</label>
-                                <select class="custom-select"> <!-- TODO: Figure this one out -->
-                                    <option>None</option>
-                                    <option>Normal</option>
-                                    <option>Pierce</option>
-                                    <option>Siege</option>
-                                    <option>Spells</option>
-                                    <option>Chaos</option>
-                                    <option>Magic</option>
-                                    <option>Hero</option>
+                                <label for="SLKUnit-UnitWeapons-AtkType2">Attack 2 - Attack Type</label>
+                                <select id="SLKUnit-UnitWeapons-AtkType2" class="custom-select">
+                                    <option value="unknown">None</option>
+                                    <option value="normal">Normal</option>
+                                    <option value="pierce">Pierce</option>
+                                    <option value="siege">Siege</option>
+                                    <option value="spells">Spells</option>
+                                    <option value="chaos">Chaos</option>
+                                    <option value="magic">Magic</option>
+                                    <option value="hero">Hero</option>
                                 </select>
                             </li>
                             <li>
@@ -1324,9 +1322,8 @@
                                 <label for="Attack2DamageUpgradeAmount">Attack 2 - Damage Upgrade Amount</label>
                                 <input type="text" class="form-control" id="Attack2DamageUpgradeAmount"
                                        aria-describedby="attack 2 - damage upgrade amount"
-                                       placeholder="Attack 2 - Damage Upgrade Amount"/>
+                                       placeholder="Attack 2 - Damage Upgrade Amount"/> <!-- TODO: Figure this one out -->
                             </li>
-                            <!-- TODO: Figure this one out -->
                             <li>
                                 <label for="SLKUnit-UnitWeapons-TargCount2">Attack 2 - Maxiumum Number of
                                     Targets</label>
@@ -1556,12 +1553,12 @@
                                 </select>
                             </li>
                             <li>
-                                <label for="DeathType">Death Type</label>
-                                <select class="custom-select"> <!-- TODO: Figure this one out -->
-                                    <option value="">Can't raise, Does not decay</option>
-                                    <option value="">Can raise, Does not decay</option>
-                                    <option value="">Can't raise, Does decay</option>
-                                    <option value="">Can raise, Does decay</option>
+                                <label for="SLKUnit-UnitData-DeathType">Death Type</label>
+                                <select id="SLKUnit-UnitData-DeathType" class="custom-select">
+                                    <option value="0">Can't raise, Does not decay</option>
+                                    <option value="1">Can raise, Does not decay</option>
+                                    <option value="2">Can't raise, Does decay</option>
+                                    <option value="3">Can raise, Does decay</option>
                                 </select>
                             </li>
                             <li>
@@ -1571,24 +1568,24 @@
                                        placeholder="Defense Base"/>
                             </li>
                             <li>
-                                <label for="DefenseType">Defense Type</label>
-                                <select class="custom-select"> <!-- TODO: Figure this one out -->
-                                    <option value="">Normal</option>
-                                    <option value="">Small</option>
-                                    <option value="">Medium</option>
-                                    <option value="">Large</option>
-                                    <option value="">Fortified</option>
-                                    <option value="">Hero</option>
-                                    <option value="">Divine</option>
-                                    <option value="">Unarmored</option>
+                                <label for="SLKUnit-UnitBalance-DefType">Defense Type</label>
+                                <select id="SLKUnit-UnitBalance-DefType" class="custom-select">
+                                    <option value="normal">Normal</option>
+                                    <option value="small">Small</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="large">Large</option>
+                                    <option value="fort">Fortified</option>
+                                    <option value="hero">Hero</option>
+                                    <option value="divine">Divine</option>
+                                    <option value="none">Unarmored</option>
                                 </select>
                             </li>
                             <li>
-                                <label for="DefenseUpgradeBonus">Defense Upgrade Bonus</label>
-                                <input type="text" class="form-control" id="DefenseUpgradeBonus"
+                                <label for="SLKUnit-UnitBalance-DefUp">Defense Upgrade Bonus</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-DefUp"
                                        aria-describedby="defense base"
                                        placeholder="Defense Base"/>
-                            </li> <!-- TODO: Figure this one out -->
+                            </li>
                             <li>
                                 <label for="SLKUnit-UnitWeapons-MinRange">Minimum Attack Range</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitWeapons-MinRange"
@@ -1744,27 +1741,26 @@
                     <form class="was-validated">
                         <ul class="flex-outer">
                             <li>
-                                <label for="GroupSeparationEnabled">Group Separation - Enabled</label>
+                                <label for="SLKUnit-UnitBalance-Repulse">Group Separation - Enabled</label>
                                 <input type="checkbox"
-                                       id="GroupSeparationEnabled"
+                                       id="SLKUnit-UnitBalance-Repulse"
                                        aria-label="group separation - enabled" tabindex="-1"/>
-                                <!-- TODO: Figure this one out -->
                             </li>
                             <li>
-                                <label for="GroupSeparationGroupNumber">Group Separation - Group Number</label>
-                                <input type="text" class="form-control" id="GroupSeparationGroupNumber"
+                                <label for="SLKUnit-UnitBalance-RepulseGroup">Group Separation - Group Number</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-RepulseGroup"
                                        aria-describedby="group separation - group number"
                                        placeholder="Group Separation - Group Number"/>
                             </li>
                             <li>
-                                <label for="GroupSeparationParameter">Group Separation - Parameter</label>
-                                <input type="text" class="form-control" id="GroupSeparationParameter"
+                                <label for="SLKUnit-UnitBalance-RepulseParam">Group Separation - Parameter</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-RepulseParam"
                                        aria-describedby="group separation - group parameter"
                                        placeholder="Group Separation - Group Parameter"/>
                             </li>
                             <li>
-                                <label for="GroupSeparationPriority">Group Separation - Priority</label>
-                                <input type="text" class="form-control" id="GroupSeparationPriority"
+                                <label for="SLKUnit-UnitBalance-RepulsePrio">Group Separation - Priority</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitBalance-RepulsePrio"
                                        aria-describedby="group separation - group priority"
                                        placeholder="Group Separation - Group Priority"/>
                             </li>
@@ -1805,15 +1801,15 @@
                                        placeholder="Turn Rate"/>
                             </li>
                             <li>
-                                <label for="MovementType">Type</label>
-                                <select class="custom-select"> <!-- TODO: Figure this one out -->
-                                    <option value="">NONE</option>
-                                    <option value="">Foot</option>
-                                    <option value="">Horse</option>
-                                    <option value="">Fly</option>
-                                    <option value="">Hover</option>
-                                    <option value="">Float</option>
-                                    <option value="">Amphibious</option>
+                                <label for="SLKUnit-UnitData-Movetp">Type</label>
+                                <select id="SLKUnit-UnitData-Movetp" class="custom-select">
+                                    <option value="_">NONE</option>
+                                    <option value="foot">Foot</option>
+                                    <option value="horse">Horse</option>
+                                    <option value="fly">Fly</option>
+                                    <option value="hover">Hover</option>
+                                    <option value="float">Float</option>
+                                    <option value="amph">Amphibious</option>
                                 </select>
                             </li>
                         </ul>
