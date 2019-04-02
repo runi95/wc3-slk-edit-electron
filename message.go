@@ -104,15 +104,16 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			unit.SLKUnit.UnitWeapons.UnitWeapID.SetValid(unit.UnitFunc.UnitId)
 			unit.SLKUnit.UnitAbilities.UnitAbilID.SetValid(unit.UnitFunc.UnitId)
 
+			baseUnitMap[unit.UnitFunc.UnitId] = unit.SLKUnit
+			unitFuncMap[unit.UnitFunc.UnitId] = unit.UnitFunc
+
 			payload = "success"
-			log.Println(pretty.Sprint(unit))
 		} else {
 			payload = fmt.Errorf("invalid input")
 		}
 	case "loadConfig":
 		payload = configuration
 	}
-
 
 	return
 }
