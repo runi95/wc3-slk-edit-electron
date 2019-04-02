@@ -26,6 +26,7 @@ const index = {
             // Listen
             index.listen();
 
+            index.disableInputs(true);
             index.loadConfig();
             index.loadUnitData();
         })
@@ -255,6 +256,25 @@ const index = {
             if (input.length > 0) {
                 input[0].value = message.payload.OutDir;
             }
+        });
+    },
+    disableInputs: function (bool) {
+        const message = {name: "getDisabledInputs", payload: null};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            message.payload.forEach(disabledInputId => {
+                const elem = document.getElementById(disabledInputId);
+                if (elem) {
+                    elem.parentNode.hidden = bool;
+                } else {
+                    console.warn("Can't find the", disabledInputId,"element");
+                }
+            });
         });
     }
 };
