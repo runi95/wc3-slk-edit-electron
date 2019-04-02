@@ -276,5 +276,17 @@ const index = {
                 }
             });
         });
+    },
+    generateUnitId: function () {
+        const message = {name: "generateUnitId", payload: null};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            document.getElementById("UnitFunc-UnitId").value = message.payload;
+        });
     }
 };

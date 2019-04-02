@@ -46,13 +46,13 @@ html, body {
     background: #36373d;
 }
 
-.form-dark button {
+.form-dark .btn {
     color: #fff;
     border: 1px solid #26272b;
     background-color: #3c3d44;
 }
 
-.form-dark button:hover {
+.form-dark .btn:hover {
     color: #fff;
     background-color: #36373d;
 }
@@ -164,4 +164,9 @@ html, body {
 .multi-check label {
     padding-right: 5px;
     margin: 0;
+}
+
+.div-btn {
+    white-space: nowrap;
+    cursor: pointer;
 }
