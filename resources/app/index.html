@@ -1961,6 +1961,12 @@
                                        placeholder="Build Time"/>
                             </li>
                             <li>
+                                <label for="SLKUnit-UnitData-CanFlee">Can Flee</label>
+                                <input type="checkbox"
+                                       id="SLKUnit-UnitData-CanFlee"
+                                       aria-label="can flee" tabindex="-1"/>
+                            </li>
+                            <li>
                                 <label for="SLKUnit-UnitBalance-Fused">Food Cost</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitBalance-Fused"
                                        aria-describedby="food cost"
@@ -2003,6 +2009,12 @@
                                        placeholder="Gold Cost"/>
                             </li>
                             <li>
+                                <label for="SLKUnit-UnitUI-HideOnMinimap">Hide Minimap Display</label>
+                                <input type="checkbox"
+                                       id="SLKUnit-UnitUI-HideOnMinimap"
+                                       aria-label="hide minimap display" tabindex="-1"/>
+                            </li>
+                            <li>
                                 <label for="SLKUnit-UnitBalance-HP">Hit Points Maximum</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitBalance-HP"
                                        aria-describedby="maximum hit points"
@@ -2013,6 +2025,22 @@
                                 <input type="text" class="form-control" id="SLKUnit-UnitBalance-RegenHP"
                                        aria-describedby="hit points regeneration rate"
                                        placeholder="Hit Points Regeneration Rate"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-RegenType">Hit Points Regeneration Type</label>
+                                <select id="SLKUnit-UnitBalance-RegenType" class="custom-select">
+                                    <option value="none">None</option>
+                                    <option value="always">Always</option>
+                                    <option value="blight">Only while on Blight</option>
+                                    <option value="day">Only during the day</option>
+                                    <option value="night">Only during the night</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Isbldg">Is a Building</label>
+                                <input type="checkbox"
+                                       id="SLKUnit-UnitBalance-Isbldg"
+                                       aria-label="is a building" tabindex="-1"/>
                             </li>
                             <li>
                                 <label for="SLKUnit-UnitBalance-Level">Level</label>
@@ -2075,6 +2103,22 @@
                                        placeholder="Priority"/>
                             </li>
                             <li>
+                                <label for="SLKUnit-UnitData-Race">Race</label>
+                                <select id="SLKUnit-UnitData-Race" class="custom-select">
+                                    <option value="commoner">Commoner</option>
+                                    <option value="creeps">Creep</option>
+                                    <option value="critters">Critter</option>
+                                    <option value="demon">Demon</option>
+                                    <option value="human">Human</option>
+                                    <option value="naga">Naga</option>
+                                    <option value="nightelf">Night Elf</option>
+                                    <option value="unknown">None</option>
+                                    <option value="orc">Orc</option>
+                                    <option value="other">Other</option>
+                                    <option value="undead">Undead</option>
+                                </select>
+                            </li>
+                            <li>
                                 <label for="SLKUnit-UnitBalance-GoldRep">Repair Gold Cost</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitBalance-GoldRep"
                                        aria-describedby="repair gold cost"
@@ -2105,6 +2149,12 @@
                                        placeholder="Sight Radius (Night)"/>
                             </li>
                             <li>
+                                <label for="SLKUnit-UnitData-CanSleep">Sleeps</label>
+                                <input type="checkbox"
+                                       id="SLKUnit-UnitData-CanSleep"
+                                       aria-label="sleeps" tabindex="-1"/>
+                            </li>
+                            <li>
                                 <label for="SLKUnit-UnitBalance-StockMax">Stock Maximum</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitBalance-StockMax"
                                        aria-describedby="stock maximum"
@@ -2127,6 +2177,67 @@
                                 <input type="text" class="form-control" id="SLKUnit-UnitData-CargoSize"
                                        aria-describedby="transported size"
                                        placeholder="Transported Size"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitBalance-Type">Unit Classification</label>
+                                <div id="SLKUnit-UnitBalance-Type" class="multi-check">
+                                    <ul>
+                                        <li>
+                                            <label>Ancient</label>
+                                            <input type="checkbox" tabindex="-1" value="ancient"/>
+                                        </li>
+                                        <li>
+                                            <label>Giant</label>
+                                            <input type="checkbox" tabindex="-1" value="giant"/>
+                                        </li>
+                                        <li>
+                                            <label>Mechanical</label>
+                                            <input type="checkbox" tabindex="-1" value="mechanical"/>
+                                        </li>
+                                        <li>
+                                            <label>Neutral</label>
+                                            <input type="checkbox" tabindex="-1" value="neutral"/>
+                                        </li>
+                                        <li>
+                                            <label>Suicidal</label>
+                                            <input type="checkbox" tabindex="-1" value="sapper"/>
+                                        </li>
+                                        <li>
+                                            <label>Summoned</label>
+                                            <input type="checkbox" tabindex="-1" value="summoned"/>
+                                        </li>
+                                        <li>
+                                            <label>Tauren</label>
+                                            <input type="checkbox" tabindex="-1" value="tauren"/>
+                                        </li>
+                                        <li>
+                                            <label>Town Hall</label>
+                                            <input type="checkbox" tabindex="-1" value="townhall"/>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <label>Tree</label>
+                                            <input type="checkbox" tabindex="-1" value="tree"/>
+                                        </li>
+                                        <li>
+                                            <label>Undead</label>
+                                            <input type="checkbox" tabindex="-1" value="undead"/>
+                                        </li>
+                                        <li>
+                                            <label>Walkable</label>
+                                            <input type="checkbox" tabindex="-1" value="standon"/>
+                                        </li>
+                                        <li>
+                                            <label>Ward</label>
+                                            <input type="checkbox" tabindex="-1" value="ward"/>
+                                        </li>
+                                        <li>
+                                            <label>Worker</label>
+                                            <input type="checkbox" tabindex="-1" value="peon"/>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                     </form>
