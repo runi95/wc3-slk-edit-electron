@@ -218,6 +218,51 @@ const index = {
         }
 
         const unitId = unit.UnitFunc.UnitId;
+        const quotedUnitId = "\"" + unitId + "\"";
+        unit.SLKUnit.UnitData.UnitID = quotedUnitId;
+        unit.SLKUnit.UnitBalance.UnitBalanceID = quotedUnitId;
+        unit.SLKUnit.UnitUI.UnitUIID = quotedUnitId;
+        unit.SLKUnit.UnitWeapons.UnitWeapID = quotedUnitId;
+        unit.SLKUnit.UnitAbilities.UnitAbilID = quotedUnitId;
+
+        const containsNumberRegex = new RegExp("^(?:(?:\\d*)|(?:\\d+\\.\\d+))$");
+        Object.keys(unit.SLKUnit.UnitWeapons).forEach(key => {
+            const val = unit.SLKUnit.UnitWeapons[key];
+            const isNotQuoted = !(val.startsWith("\"") && val.endsWith("\""));
+            if (isNotQuoted && !val.match(containsNumberRegex)) {
+                unit.SLKUnit.UnitWeapons[key] = "\"" + val + "\"";
+            }
+        });
+        Object.keys(unit.SLKUnit.UnitUI).forEach(key => {
+            const val = unit.SLKUnit.UnitUI[key];
+            const isNotQuoted = !(val.startsWith("\"") && val.endsWith("\""));
+            if (isNotQuoted && !val.match(containsNumberRegex)) {
+                unit.SLKUnit.UnitUI[key] = "\"" + val + "\"";
+            }
+        });
+        Object.keys(unit.SLKUnit.UnitData).forEach(key => {
+            const val = unit.SLKUnit.UnitData[key];
+            const isNotQuoted = !(val.startsWith("\"") && val.endsWith("\""));
+            if (isNotQuoted && !val.match(containsNumberRegex)) {
+                unit.SLKUnit.UnitData[key] = "\"" + val + "\"";
+            }
+        });
+        Object.keys(unit.SLKUnit.UnitBalance).forEach(key => {
+            const val = unit.SLKUnit.UnitBalance[key];
+            const isNotQuoted = !(val.startsWith("\"") && val.endsWith("\""));
+            if (isNotQuoted && !val.match(containsNumberRegex)) {
+                unit.SLKUnit.UnitBalance[key] = "\"" + val + "\"";
+            }
+        });
+        Object.keys(unit.SLKUnit.UnitAbilities).forEach(key => {
+            const val = unit.SLKUnit.UnitAbilities[key];
+            const isNotQuoted = !(val.startsWith("\"") && val.endsWith("\""));
+            if (isNotQuoted && !val.match(containsNumberRegex)) {
+                unit.SLKUnit.UnitAbilities[key] = "\"" + val + "\"";
+            }
+        });
+        unit.UnitFunc.Ubertip = "\"" + unit.UnitFunc.Ubertip + "\"";
+
         const message = {name: "saveUnit", payload: unit};
         astilectron.sendMessage(message, function (message) {
             // Check for errors

@@ -6,6 +6,7 @@ import (
 	"github.com/asticode/go-astilectron"
 	"github.com/asticode/go-astilectron-bootstrap"
 	"github.com/kr/pretty"
+	"gopkg.in/volatiletech/null.v6"
 	"io/ioutil"
 	"log"
 )
@@ -98,12 +99,6 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				return
 			}
 
-			unit.SLKUnit.UnitData.UnitID.SetValid(unit.UnitFunc.UnitId)
-			unit.SLKUnit.UnitBalance.UnitBalanceID.SetValid(unit.UnitFunc.UnitId)
-			unit.SLKUnit.UnitUI.UnitUIID.SetValid(unit.UnitFunc.UnitId)
-			unit.SLKUnit.UnitWeapons.UnitWeapID.SetValid(unit.UnitFunc.UnitId)
-			unit.SLKUnit.UnitAbilities.UnitAbilID.SetValid(unit.UnitFunc.UnitId)
-
 			baseUnitMap[unit.UnitFunc.UnitId] = unit.SLKUnit
 			unitFuncMap[unit.UnitFunc.UnitId] = unit.UnitFunc
 
@@ -116,4 +111,10 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 	}
 
 	return
+}
+
+func quoteNullString(str *null.String) {
+	if str.Valid && len(str.String) > 0 && string(str.String[0]) != "\"" && string(str.String[len(str.String)-1]) != "\"" {
+		str.SetValid("\"" + str.String + "\"")
+	}
 }
