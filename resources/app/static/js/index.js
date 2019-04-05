@@ -110,7 +110,7 @@ const index = {
                             } else if (elemList[0].classList.contains("multi-check")) {
                                 const childInputs = $("#SLKUnit-" + slkUnitKey + "-" + key + " :input");
                                 for (let i = 0; i < childInputs.length; i++) {
-                                    if (value.includes(childInputs[i].value)) {
+                                    if (value.toLowerCase().includes(childInputs[i].value.toLowerCase())) {
                                         childInputs[i].checked = true;
                                     } else {
                                         childInputs[i].checked = false;
