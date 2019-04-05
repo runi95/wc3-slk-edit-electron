@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/asticode/go-astilectron"
 	"github.com/asticode/go-astilectron-bootstrap"
-	"github.com/kr/pretty"
 	"gopkg.in/volatiletech/null.v6"
 	"io/ioutil"
 	"log"
@@ -13,8 +12,6 @@ import (
 
 // handleMessages handles messages
 func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload interface{}, err error) {
-	log.Println("Got message(" + pretty.Sprint(m) + ")")
-
 	switch m.Name {
 	case "removeUnit":
 		var unit string
