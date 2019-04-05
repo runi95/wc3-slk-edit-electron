@@ -91,7 +91,7 @@ const index = {
 
             $("#unitTableBody>tr").removeClass("active");
             unitTableRow.setAttribute("class", "active");
-            Object.keys(message.payload.SLKUnit).forEach(slkUnitKey =>
+            Object.keys(message.payload.SLKUnit).forEach(slkUnitKey => {
                 Object.keys(message.payload.SLKUnit[slkUnitKey]).forEach(key => {
                     const rawValue = message.payload.SLKUnit[slkUnitKey][key];
                     if (rawValue) {
@@ -119,7 +119,45 @@ const index = {
                             }
                         }
                     }
-                }));
+                })
+            });
+
+            if (message.payload.UnitFunc.Missileart) {
+                const split = message.payload.UnitFunc.Missileart.split(",");
+                if (split.length > 0) {
+                    message.payload.UnitFunc.Missileart1 = split[0];
+                }
+                if (split.length > 1) {
+                    message.payload.UnitFunc.Missileart2 = split[1];
+                }
+            }
+            if (message.payload.UnitFunc.Missilearc) {
+                const split = message.payload.UnitFunc.Missilearc.split(",");
+                if (split.length > 0) {
+                    message.payload.UnitFunc.Missilearc1 = split[0];
+                }
+                if (split.length > 1) {
+                    message.payload.UnitFunc.Missilearc2 = split[1];
+                }
+            }
+            if (message.payload.UnitFunc.Missilespeed) {
+                const split = message.payload.UnitFunc.Missilespeed.split(",");
+                if (split.length > 0) {
+                    message.payload.UnitFunc.Missilespeed1 = split[0];
+                }
+                if (split.length > 1) {
+                    message.payload.UnitFunc.Missilespeed2 = split[1];
+                }
+            }
+            if (message.payload.UnitFunc.Missilehoming) {
+                const split = message.payload.UnitFunc.Missilehoming.split(",");
+                if (split.length > 0) {
+                    message.payload.UnitFunc.Missilehoming1 = split[0];
+                }
+                if (split.length > 1) {
+                    message.payload.UnitFunc.Missilehoming2 = split[1];
+                }
+            }
 
             Object.keys(message.payload.UnitFunc).forEach(unitFuncKey => {
                 const elemList = $("#UnitFunc-" + unitFuncKey);
@@ -198,14 +236,14 @@ const index = {
                     } else if (idSplit[0] === "UnitFunc") {
                         unit.UnitFunc[idSplit[1]] = inputs[i].checked ? "1" : "0"
                     }
-                } else if(inputs[i].value) {
+                } else if (inputs[i].value) {
                     if (idSplit[0] === "SLKUnit") {
                         unit.SLKUnit[idSplit[1]][idSplit[2]] = inputs[i].value
                     } else if (idSplit[0] === "UnitFunc") {
                         unit.UnitFunc[idSplit[1]] = inputs[i].value
                     }
                 }
-            } else if(type === "checkbox" && inputs[i].checked) {
+            } else if (type === "checkbox" && inputs[i].checked) {
                 const parentNode = inputs[i].parentNode.parentNode.parentNode;
                 const parentIdSplit = parentNode.id.split("-");
                 const oldValue = unit.SLKUnit[parentIdSplit[1]][parentIdSplit[2]];
@@ -294,7 +332,7 @@ const index = {
             unit.SLKUnit.UnitBalance.Upgrades = "\"_\"";
         }
         unit.SLKUnit.UnitBalance.Nbrandom = "\"_\"";
-        unit.SLKUnit.UnitBalance.InBeta= "0";
+        unit.SLKUnit.UnitBalance.InBeta = "0";
 
         unit.SLKUnit.UnitData.Sort = "\"z3\"";
         if (!unit.SLKUnit.UnitData.Threat) {
@@ -397,7 +435,7 @@ const index = {
             }
 
             let oldUnit = null;
-            for(let i = 0; i < unitDataList.length; i++) {
+            for (let i = 0; i < unitDataList.length; i++) {
                 if (unitDataList[i].UnitID === unitId) {
                     oldUnit = i;
                     break;
@@ -405,9 +443,9 @@ const index = {
             }
 
             if (oldUnit) {
-                unitDataList[oldUnit] = { UnitID: unitId, Name: unit.UnitFunc.Name };
+                unitDataList[oldUnit] = {UnitID: unitId, Name: unit.UnitFunc.Name};
             } else {
-                unitDataList.push({ UnitID: unitId, Name: unit.UnitFunc.Name });
+                unitDataList.push({UnitID: unitId, Name: unit.UnitFunc.Name});
             }
 
             index.search(document.getElementById("searchInput"));
@@ -442,7 +480,7 @@ const index = {
                 if (elem) {
                     elem.parentNode.hidden = bool;
                 } else {
-                    console.warn("Can't find the", disabledInputId,"element");
+                    console.warn("Can't find the", disabledInputId, "element");
                 }
             });
         });
