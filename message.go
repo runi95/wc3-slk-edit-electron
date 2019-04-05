@@ -10,7 +10,6 @@ import (
 	"log"
 )
 
-// handleMessages handles messages
 func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload interface{}, err error) {
 	switch m.Name {
 	case "removeUnit":
