@@ -1,5 +1,5 @@
 let unitDataList = [];
-const selectedUnitIndex = null;
+let isLocked = false;
 
 const addUnitTableData = (unitTableBody, unitData) => {
     const tr = document.createElement("tr");
@@ -485,6 +485,13 @@ const index = {
                     console.warn("Can't find the", disabledInputId, "element");
                 }
             });
+
+            if (bool) {
+                document.getElementById("modeLock").classList.replace("fa-unlock", "fa-lock");
+            } else {
+                document.getElementById("modeLock").classList.replace("fa-lock", "fa-unlock");
+            }
+            isLocked = bool;
         });
     },
     generateUnitId: function () {
