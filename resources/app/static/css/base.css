@@ -28,6 +28,18 @@ html, body {
     background-color: #36373d;
 }
 
+.form-dark input:disabled {
+    background-color: #26272b;
+}
+
+.form-dark input:disabled::placeholder {
+    color: #4c5358;
+}
+
+.form-dark input[type='checkbox']:disabled {
+    display: none;
+}
+
 .form-dark input:focus {
     background-color: #36373d;
 }
