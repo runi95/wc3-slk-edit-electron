@@ -261,7 +261,9 @@ const index = {
                 unit.SLKUnit.UnitAbilities[key] = "\"" + val + "\"";
             }
         });
-        unit.UnitFunc.Ubertip = "\"" + unit.UnitFunc.Ubertip + "\"";
+        if (unit.UnitFunc.Ubertip) {
+            unit.UnitFunc.Ubertip = "\"" + unit.UnitFunc.Ubertip + "\"";
+        }
 
         unit.SLKUnit.UnitAbilities.SortAbil = "\"z3\"";
 
