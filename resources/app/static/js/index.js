@@ -109,8 +109,10 @@ const index = {
                                 }
                             } else if (elemList[0].classList.contains("multi-check")) {
                                 const childInputs = $("#SLKUnit-" + slkUnitKey + "-" + key + " :input");
+                                const valueSplit = value.split(",");
+                                const valueLower = valueSplit.map(val => val.toLowerCase());
                                 for (let i = 0; i < childInputs.length; i++) {
-                                    if (value.toLowerCase().includes(childInputs[i].value.toLowerCase())) {
+                                    if (valueLower.includes(childInputs[i].value.toLowerCase())) {
                                         childInputs[i].checked = true;
                                     } else {
                                         childInputs[i].checked = false;
