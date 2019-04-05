@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/asticode/go-astilectron"
 	"github.com/asticode/go-astilectron-bootstrap"
-	"gopkg.in/volatiletech/null.v6"
 	"io/ioutil"
 	"log"
 )
@@ -107,10 +106,4 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 	}
 
 	return
-}
-
-func quoteNullString(str *null.String) {
-	if str.Valid && len(str.String) > 0 && string(str.String[0]) != "\"" && string(str.String[len(str.String)-1]) != "\"" {
-		str.SetValid("\"" + str.String + "\"")
-	}
 }
