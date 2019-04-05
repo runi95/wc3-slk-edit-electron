@@ -87,6 +87,7 @@ html, body {
 #unitTableBody > tr:hover {
     opacity: 0.5;
     cursor: pointer;
+    color: #fff;
 }
 
 #unitTableBody > .active {
