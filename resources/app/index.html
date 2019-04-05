@@ -417,14 +417,14 @@
                                        placeholder="Required Animaton Names - Attachments"/>
                             </li>
                             <li>
-                                <label for="RequiredAttachmentLinkNames">Required Attachment Link Names</label>
-                                <input type="text" class="form-control" id="RequiredAttachmentLinkNames"
+                                <label for="UnitFunc-Attachmentlinkprops">Required Attachment Link Names</label>
+                                <input type="text" class="form-control" id="UnitFunc-Attachmentlinkprops"
                                        aria-describedby="required attachment link names"
                                        placeholder="Required Attachment Link Names"/>
                             </li>
                             <li>
-                                <label for="RequiredBoneNames">Required Bone Names</label>
-                                <input type="text" class="form-control" id="RequiredBoneNames"
+                                <label for="UnitFunc-Boneprops">Required Bone Names</label>
+                                <input type="text" class="form-control" id="UnitFunc-Boneprops"
                                        aria-describedby="required bone names"
                                        placeholder="Required Bone Names"/>
                             </li>
@@ -653,7 +653,7 @@
                                 <input type="checkbox"
                                        id="UseExtendedLineOfSight"
                                        aria-label="use extended line of sight" tabindex="-1" disabled />
-                                <!-- TODO: Figure this one out -->
+                                <!-- TODO: Figure this one out (might be FatLOS)-->
                             </li>
                         </ul>
                     </form>
@@ -876,8 +876,8 @@
                                        placeholder="Attack 1 - Damage Base"/>
                             </li>
                             <li>
-                                <label for="Attack1DamageFactorMedium">Attack 1 - Damage Factor - Medium</label>
-                                <input type="text" class="form-control" id="Attack1DamageFactorMedium"
+                                <label for="SLKUnit-UnitWeapons-Hfact1">Attack 1 - Damage Factor - Medium</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Hfact1"
                                        aria-describedby="attack 1 - damage factor - medium"
                                        placeholder="Attack 1 - Damage Factor - Medium"/>
                             </li>
@@ -894,16 +894,16 @@
                                        placeholder="Attack 1 - Damage Loss Factor"/>
                             </li>
                             <li>
-                                <label for="SLKUnit-UnitWeapons-Sides1">Attack 1 - Damage Sides per Die</label>
-                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Sides1"
-                                       aria-describedby="attack 1 - damage sides per die"
-                                       placeholder="Attack 1 - Damage Sides per Die"/>
-                            </li>
-                            <li>
                                 <label for="SLKUnit-UnitWeapons-Dice1">Attack 1 - Damage Number of Dice</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Dice1"
                                        aria-describedby="attack 1 - damage number of dice"
                                        placeholder="Attack 1 - Damage Number of Dice"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Sides1">Attack 1 - Damage Sides per Die</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Sides1"
+                                       aria-describedby="attack 1 - damage sides per die"
+                                       placeholder="Attack 1 - Damage Sides per Die"/>
                             </li>
                             <li>
                                 <label for="SLKUnit-UnitWeapons-SpillDist1">Attack 1 - Damage Spill Distance</label>
@@ -948,6 +948,12 @@
                                 <input type="checkbox"
                                        id="UnitFunc-Missilehoming1"
                                        aria-label="attack 1 - projectile homing enabled" tabindex="-1"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Missilespeed1">Attack 1 - Projectile Speed</label>
+                                <input type="text" class="form-control" id="UnitFunc-Missilespeed1"
+                                       aria-describedby="attack 1 - projectile speed"
+                                       placeholder="Attack 1 - Projectile Speed"/>
                             </li>
                             <li>
                                 <label for="SLKUnit-UnitWeapons-RangeN1">Attack 1 - Range</label>
@@ -1331,8 +1337,8 @@
                                        placeholder="Attack 2 - Damage Base"/>
                             </li>
                             <li>
-                                <label for="Attack2DamageFactorMedium">Attack 2 - Damage Factor - Medium</label>
-                                <input type="text" class="form-control" id="Attack2DamageFactorMedium"
+                                <label for="SLKUnit-UnitWeapons-Hfact2">Attack 2 - Damage Factor - Medium</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Hfact2"
                                        aria-describedby="attack 2 - damage factor - medium"
                                        placeholder="Attack 2 - Damage Factor - Medium"/>
                             </li>
@@ -1349,16 +1355,16 @@
                                        placeholder="Attack 2 - Damage Loss Factor"/>
                             </li>
                             <li>
-                                <label for="SLKUnit-UnitWeapons-Sides2">Attack 2 - Damage Sides per Die</label>
-                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Sides2"
-                                       aria-describedby="attack 2 - damage sides per die"
-                                       placeholder="Attack 2 - Damage Sides per Die"/>
-                            </li>
-                            <li>
                                 <label for="SLKUnit-UnitWeapons-Dice2">Attack 2 - Damage Number of Dice</label>
                                 <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Dice2"
                                        aria-describedby="attack 2 - damage number of dice"
                                        placeholder="Attack 2 - Damage Number of Dice"/>
+                            </li>
+                            <li>
+                                <label for="SLKUnit-UnitWeapons-Sides2">Attack 2 - Damage Sides per Die</label>
+                                <input type="text" class="form-control" id="SLKUnit-UnitWeapons-Sides2"
+                                       aria-describedby="attack 2 - damage sides per die"
+                                       placeholder="Attack 2 - Damage Sides per Die"/>
                             </li>
                             <li>
                                 <label for="SLKUnit-UnitWeapons-SpillDist2">Attack 2 - Damage Spill Distance</label>
@@ -1403,6 +1409,12 @@
                                 <input type="checkbox"
                                        id="UnitFunc-Missilehoming2"
                                        aria-label="attack 2 - projectile homing enabled" tabindex="-1"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Missilespeed2">Attack 2 - Projectile Speed</label>
+                                <input type="text" class="form-control" id="UnitFunc-Missilespeed2"
+                                       aria-describedby="attack 2 - projectile speed"
+                                       placeholder="Attack 2 - Projectile Speed"/>
                             </li>
                             <li>
                                 <label for="SLKUnit-UnitWeapons-RangeN2">Attack 2 - Range</label>
@@ -1876,13 +1888,13 @@
                                 <label for="AIPlacementRadius">AI Placement Radius</label>
                                 <input type="text" class="form-control" id="AIPlacementRadius"
                                        aria-describedby="ai placement radius"
-                                       placeholder="AI Placement Radius"/>
+                                       placeholder="AI Placement Radius" disabled /> <!-- TODO: Figure this one out -->
                             </li>
                             <li>
                                 <label for="AIPlacementType">AI Placement Type</label>
                                 <input type="text" class="form-control" id="AIPlacementType"
                                        aria-describedby="ai placement type"
-                                       placeholder="AI Placement Type"/>
+                                       placeholder="AI Placement Type" disabled /> <!-- TODO: Figure this one out -->
                             </li>
                             <li>
                                 <label for="SLKUnit-UnitBalance-Collision">Collision Size</label>
@@ -2041,28 +2053,34 @@
                     <form class="was-validated">
                         <ul class="flex-outer">
                             <li>
-                                <label for="LoopingFadeInRate">Looping Fade In Rate</label>
-                                <input type="text" class="form-control" id="LoopingFadeInRate"
+                                <label for="UnitFunc-Buildingsoundlabel">Construction</label>
+                                <input type="text" class="form-control" id="UnitFunc-Buildingsoundlabel"
+                                       aria-describedby="contruction"
+                                       placeholder="Construction"/>
+                            </li>
+                            <li>
+                                <label for="UnitFunc-Loopingsoundfadein">Looping Fade In Rate</label>
+                                <input type="text" class="form-control" id="UnitFunc-Loopingsoundfadein"
                                        aria-describedby="looping fade in rate"
                                        placeholder="Looping Fade In Rate"/>
                             </li>
                             <li>
-                                <label for="LoopingFadeOutRate">Looping Fade Out Rate</label>
-                                <input type="text" class="form-control" id="LoopingFadeOutRate"
+                                <label for="UnitFunc-Loopingsoundfadeout">Looping Fade Out Rate</label>
+                                <input type="text" class="form-control" id="UnitFunc-Loopingsoundfadeout"
                                        aria-describedby="looping fade out rate"
                                        placeholder="Looping Fade Out Rate"/>
                             </li>
                             <li>
-                                <label for="Movement">Movement</label>
-                                <input type="text" class="form-control" id="Movement"
+                                <label for="UnitFunc-Movementsoundlabel">Movement</label>
+                                <input type="text" class="form-control" id="UnitFunc-Movementsoundlabel"
                                        aria-describedby="movement"
-                                       placeholder="Movement" disabled /> <!-- TODO: Figure this one out -->
+                                       placeholder="Movement" />
                             </li>
                             <li>
-                                <label for="Random">Random</label>
-                                <input type="text" class="form-control" id="Random"
+                                <label for="UnitFunc-Randomsoundlabel">Random</label>
+                                <input type="text" class="form-control" id="UnitFunc-Randomsoundlabel"
                                        aria-describedby="random"
-                                       placeholder="Random" disabled /> <!-- TODO: Figure this one out -->
+                                       placeholder="Random" />
                             </li>
                             <li>
                                 <label for="SLKUnit-UnitUI-UnitSound">Unit Sound Set</label>
@@ -2395,7 +2413,7 @@
                                 <label for="DependencyEquivalents">Dependency Equivalents</label>
                                 <input type="text" class="form-control" id="DependencyEquivalents"
                                        aria-describedby="dependency equivalents"
-                                       placeholder="Dependency Equivalents"/>
+                                       placeholder="Dependency Equivalents" disabled /> <!-- TODO: Figure this one out -->
                             </li>
                             <li>
                                 <label for="UnitFunc-Sellitems">Items Sold</label>
@@ -2413,7 +2431,7 @@
                                 <label for="RequirementsLevels">Requirements - Levels</label>
                                 <input type="text" class="form-control" id="RequirementsLevels"
                                        aria-describedby="requirements - levels"
-                                       placeholder="Requirements - Levels"/>
+                                       placeholder="Requirements - Levels" disabled/> <!-- TODO: Figure this one out -->
                             </li>
                             <li>
                                 <label for="UnitFunc-Builds">Structures Built</label>
@@ -2431,7 +2449,7 @@
                                 <label for="UpgradesUsed">Upgrades Used</label>
                                 <input type="text" class="form-control" id="UpgradesUsed"
                                        aria-describedby="upgrades used"
-                                       placeholder="Upgrades Used"/>
+                                       placeholder="Upgrades Used" disabled /> <!-- TODO: Figure this one out -->
                             </li>
                         </ul>
                     </form>
@@ -2448,7 +2466,7 @@
                                 <label for="CasterUpgradeTip">Caster Upgrade Tip</label>
                                 <input type="text" class="form-control" id="CasterUpgradeTip"
                                        aria-describedby="caster upgrade tip"
-                                       placeholder="Caster Upgrade Tip"/>
+                                       placeholder="Caster Upgrade Tip" disabled /> <!-- TODO: Figure this one out -->
                             </li>
                             <li>
                                 <label for="UnitFunc-Description">Description</label>
