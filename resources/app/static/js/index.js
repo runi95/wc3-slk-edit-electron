@@ -263,6 +263,129 @@ const index = {
         });
         unit.UnitFunc.Ubertip = "\"" + unit.UnitFunc.Ubertip + "\"";
 
+        unit.SLKUnit.UnitAbilities.SortAbil = "\"z3\"";
+
+        unit.SLKUnit.UnitBalance.SortBalance = "\"z3\"";
+        unit.SLKUnit.UnitBalance.Sort2 = "\"zzm\"";
+        if (!unit.SLKUnit.UnitBalance.Type) {
+            unit.SLKUnit.UnitBalance.Type = "\"_\"";
+        }
+        unit.SLKUnit.UnitBalance.RealHP = unit.SLKUnit.UnitBalance.HP;
+        if (!unit.SLKUnit.UnitBalance.Def) {
+            unit.SLKUnit.UnitBalance.Def = "\"0\"";
+        }
+        unit.SLKUnit.UnitBalance.Realdef = unit.SLKUnit.UnitBalance.Def;
+        if (!unit.SLKUnit.UnitBalance.STR) {
+            unit.SLKUnit.UnitBalance.STR = "\"-\"";
+        }
+        if (!unit.SLKUnit.UnitBalance.AGI) {
+            unit.SLKUnit.UnitBalance.AGI = "\"-\"";
+        }
+        if (!unit.SLKUnit.UnitBalance.INT) {
+            unit.SLKUnit.UnitBalance.INT = "\"-\"";
+        }
+        unit.SLKUnit.UnitBalance.AbilTest = "\"-\"";
+        if (!unit.SLKUnit.UnitBalance.Primary) {
+            unit.SLKUnit.UnitBalance.Primary = "\"_\"";
+        }
+        if (!unit.SLKUnit.UnitBalance.Upgrades) {
+            unit.SLKUnit.UnitBalance.Upgrades = "\"_\"";
+        }
+        unit.SLKUnit.UnitBalance.Nbrandom = "\"_\"";
+        unit.SLKUnit.UnitBalance.InBeta= "0";
+
+        unit.SLKUnit.UnitData.Sort = "\"z3\"";
+        if (!unit.SLKUnit.UnitData.Threat) {
+            unit.SLKUnit.UnitData.Threat = "1";
+        }
+        if (!unit.SLKUnit.UnitData.Valid) {
+            unit.SLKUnit.UnitData.Valid = "1";
+        }
+        if (!unit.SLKUnit.UnitData.TargType) {
+            unit.SLKUnit.UnitData.TargType = "\"_\"";
+        }
+        unit.SLKUnit.UnitData.FatLOS = "0";
+        unit.SLKUnit.UnitData.BuffType = "\"_\"";
+        unit.SLKUnit.UnitData.BuffRadius = "\"-\"";
+        unit.SLKUnit.UnitData.NameCount = "\"-\"";
+        if (!unit.SLKUnit.UnitData.RequireWaterRadius) {
+            unit.SLKUnit.UnitData.RequireWaterRadius = "0";
+        }
+        if (!unit.SLKUnit.UnitData.RequireWaterRadius) {
+            unit.SLKUnit.UnitData.RequireWaterRadius = "0";
+        }
+        if (!unit.SLKUnit.UnitData.RequireWaterRadius) {
+            unit.SLKUnit.UnitData.RequireWaterRadius = "0";
+        }
+        if (!unit.SLKUnit.UnitData.RequireWaterRadius) {
+            unit.SLKUnit.UnitData.RequireWaterRadius = "0";
+        }
+        unit.SLKUnit.UnitData.InBeta = "0";
+        unit.SLKUnit.UnitData.Version = "1";
+
+        unit.SLKUnit.UnitUI.SortUI = "\"z3\"";
+        unit.SLKUnit.UnitUI.TilesetSpecific = "0";
+        unit.SLKUnit.UnitUI.Name = "-";
+        unit.SLKUnit.UnitUI.Campaign = "1";
+        unit.SLKUnit.UnitUI.InEditor = "1";
+        unit.SLKUnit.UnitUI.HiddenInEditor = "0";
+        unit.SLKUnit.UnitUI.HostilePal = "0";
+        unit.SLKUnit.UnitUI.DropItems = "1";
+        unit.SLKUnit.UnitUI.NbmmIcon = "1";
+        unit.SLKUnit.UnitUI.UseClickHelper = "0";
+        unit.SLKUnit.UnitUI.HideHeroBar = "0";
+        unit.SLKUnit.UnitUI.HideHeroMinimap = "0";
+        unit.SLKUnit.UnitUI.HideHeroDeathMsg = "0";
+        unit.SLKUnit.UnitUI.Weap1 = "\"_\"";
+        unit.SLKUnit.UnitUI.Weap2 = "\"_\"";
+        unit.SLKUnit.UnitUI.InBeta = "0";
+
+        unit.SLKUnit.UnitWeapons.SortWeap = "\"n2\"";
+        unit.SLKUnit.UnitWeapons.Sort2 = "\"zzm\"";
+        unit.SLKUnit.UnitWeapons.RngTst = "\"-\"";
+        unit.SLKUnit.UnitWeapons.Mincool1 = "\"-\"";
+        unit.SLKUnit.UnitWeapons.Mindmg1 = "0";
+        unit.SLKUnit.UnitWeapons.Mindmg2 = "0";
+        unit.SLKUnit.UnitWeapons.Avgdmg1 = "0";
+        unit.SLKUnit.UnitWeapons.Avgdmg2 = "0";
+        unit.SLKUnit.UnitWeapons.Maxdmg1 = "0";
+        unit.SLKUnit.UnitWeapons.Maxdmg2 = "0";
+        if (!unit.SLKUnit.UnitWeapons.Targs1) {
+            unit.SLKUnit.UnitWeapons.Targs1 = "\"-\"";
+        }
+        if (!unit.SLKUnit.UnitWeapons.Targs2) {
+            unit.SLKUnit.UnitWeapons.Targs2 = "\"-\"";
+        }
+        if (!unit.SLKUnit.UnitWeapons.DmgUp1) {
+            unit.SLKUnit.UnitWeapons.DmgUp1 = "\"-\"";
+        }
+        if (!unit.SLKUnit.UnitWeapons.DmgUp2) {
+            unit.SLKUnit.UnitWeapons.DmgUp2 = "\"-\"";
+        }
+        if (!unit.SLKUnit.UnitWeapons.Hfact1) {
+            unit.SLKUnit.UnitWeapons.Hfact1 = "\"-\"";
+        }
+        if (!unit.SLKUnit.UnitWeapons.Hfact2) {
+            unit.SLKUnit.UnitWeapons.Hfact2 = "\"-\"";
+        }
+        if (!unit.SLKUnit.UnitWeapons.Qfact1) {
+            unit.SLKUnit.UnitWeapons.Qfact1 = "\"-\"";
+        }
+        if (!unit.SLKUnit.UnitWeapons.Qfact2) {
+            unit.SLKUnit.UnitWeapons.Qfact2 = "\"-\"";
+        }
+        if (!unit.SLKUnit.UnitWeapons.SplashTargs1) {
+            unit.SLKUnit.UnitWeapons.SplashTargs1 = "\"_\"";
+        }
+        if (!unit.SLKUnit.UnitWeapons.SplashTargs2) {
+            unit.SLKUnit.UnitWeapons.SplashTargs2 = "\"_\"";
+        }
+        if (!unit.SLKUnit.UnitWeapons.DmgUpg) {
+            unit.SLKUnit.UnitWeapons.DmgUpg = "\"-\"";
+        }
+        unit.SLKUnit.UnitWeapons.InBeta = "0";
+        unit.SLKUnit.UnitWeapons.RngTst2 = "\"-\"";
+
         const message = {name: "saveUnit", payload: unit};
         astilectron.sendMessage(message, function (message) {
             // Check for errors
