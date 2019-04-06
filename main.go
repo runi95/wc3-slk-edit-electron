@@ -23,9 +23,10 @@ var baseUnitMap map[string]*models.SLKUnit
 var unitFuncMap map[string]*models.UnitFunc
 var lastValidIndex int
 
-var configuration config
+var configuration *config = nil
 
 const CONFIG_PATH = "./config.json"
+const DISABLED_INPUTS_PATH = "./disabled-inputs.json"
 
 /*
 var Asset bootstrap.Asset
@@ -74,7 +75,11 @@ func exists(path string) (bool, error) {
 
 func loadConfig() error {
 	configExists, err := exists(CONFIG_PATH)
-	if configExists && err == nil {
+	if err == nil {
+		if !configExists {
+			return nil
+		}
+
 		configFile, err := ioutil.ReadFile(CONFIG_PATH)
 		if err != nil {
 			return err
@@ -94,6 +99,10 @@ func loadConfig() error {
 }
 
 func makeConfigAbsolute() {
+	if configuration == nil {
+		return
+	}
+
 	absolutePathInDir, err := filepath.Abs(configuration.InDir)
 	if err != nil {
 		log.Println(err)
@@ -117,28 +126,73 @@ func setConfig() {
 	err := loadConfig()
 	if err != nil {
 		log.Println(err)
-
-		configuration = config{"./input", "./input"}
 	}
 
 	makeConfigAbsolute()
 }
 
-func loadSLK() {
-	log.Println("Reading UnitAbilities.slk...")
-
+func initializeConfiguration() {
 	if len(os.Args) > 1 {
 		inputDirectory := os.Args[1]
 		outputDirectory := os.Args[2]
 
-		configuration = config{InDir: inputDirectory, OutDir: outputDirectory}
+		configuration = &config{InDir: inputDirectory, OutDir: outputDirectory}
 
 		makeConfigAbsolute()
 	} else {
 		setConfig()
 	}
+}
 
-	unitAbilitiesBytes, err := ioutil.ReadFile(filepath.Join(configuration.InDir, "UnitAbilities.slk"))
+func saveConfig() error {
+	confingInBytes, err := json.Marshal(configuration)
+	if err != nil {
+		return err
+	}
+
+	err = ioutil.WriteFile(CONFIG_PATH, confingInBytes, 0644)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func loadSLK() {
+	unitAbilitiesPath := filepath.Join(configuration.InDir, "UnitAbilities.slk")
+	unitDataPath := filepath.Join(configuration.InDir, "UnitData.slk")
+	unitUIPath := filepath.Join(configuration.InDir, "UnitUI.slk")
+	unitWeaponsPath := filepath.Join(configuration.InDir, "UnitWeapons.slk")
+	unitBalancePath := filepath.Join(configuration.InDir, "UnitBalance.slk")
+	campaignUnitPath := filepath.Join(configuration.InDir, "CampaignUnitFunc.txt")
+
+	if bool, err := exists(unitAbilitiesPath); err != nil || !bool {
+		return
+	}
+
+	if bool, err := exists(unitDataPath); err != nil || !bool {
+		return
+	}
+
+	if bool, err := exists(unitUIPath); err != nil || !bool {
+		return
+	}
+
+	if bool, err := exists(unitWeaponsPath); err != nil || !bool {
+		return
+	}
+
+	if bool, err := exists(unitBalancePath); err != nil || !bool {
+		return
+	}
+
+	if bool, err := exists(campaignUnitPath); err != nil || !bool {
+		return
+	}
+
+	log.Println("Reading UnitAbilities.slk...")
+
+	unitAbilitiesBytes, err := ioutil.ReadFile(unitAbilitiesPath)
 	if err != nil {
 		log.Println(err)
 		os.Exit(10)
@@ -148,7 +202,7 @@ func loadSLK() {
 
 	log.Println("Reading UnitData.slk...")
 
-	unitDataBytes, err := ioutil.ReadFile(filepath.Join(configuration.InDir, "UnitData.slk"))
+	unitDataBytes, err := ioutil.ReadFile(unitDataPath)
 	if err != nil {
 		log.Println(err)
 		os.Exit(10)
@@ -158,7 +212,7 @@ func loadSLK() {
 
 	log.Println("Reading UnitUI.slk...")
 
-	unitUIBytes, err := ioutil.ReadFile(filepath.Join(configuration.InDir, "UnitUI.slk"))
+	unitUIBytes, err := ioutil.ReadFile(unitUIPath)
 	if err != nil {
 		log.Println(err)
 		os.Exit(10)
@@ -168,7 +222,7 @@ func loadSLK() {
 
 	log.Println("Reading UnitWeapons.slk...")
 
-	unitWeaponsBytes, err := ioutil.ReadFile(filepath.Join(configuration.InDir, "UnitWeapons.slk"))
+	unitWeaponsBytes, err := ioutil.ReadFile(unitWeaponsPath)
 	if err != nil {
 		log.Println(err)
 		os.Exit(10)
@@ -178,7 +232,7 @@ func loadSLK() {
 
 	log.Println("Reading UnitBalance.slk...")
 
-	unitBalanceBytes, err := ioutil.ReadFile(filepath.Join(configuration.InDir, "UnitBalance.slk"))
+	unitBalanceBytes, err := ioutil.ReadFile(unitBalancePath)
 	if err != nil {
 		log.Println(err)
 		os.Exit(10)
@@ -188,7 +242,7 @@ func loadSLK() {
 
 	log.Println("Reading CampaignUnitFunc.txt...")
 
-	campaignUnitFuncBytes, err := ioutil.ReadFile(filepath.Join(configuration.InDir, "CampaignUnitFunc.txt"))
+	campaignUnitFuncBytes, err := ioutil.ReadFile(campaignUnitPath)
 	if err != nil {
 		log.Println(err)
 		os.Exit(10)
@@ -240,8 +294,6 @@ func main() {
 	} else {
 		log.Println("Starting up...")
 
-		loadSLK()
-
 		// Init
 		flag.Parse()
 		astilog.FlagInit()
@@ -266,15 +318,15 @@ func main() {
 				return nil
 			},
 			RestoreAssets: RestoreAssets,
-			Windows: []*bootstrap.Window{{
-				Homepage:       "index.html",
-				MessageHandler: HandleMessages,
-				Options: &astilectron.WindowOptions{
-					Center: astilectron.PtrBool(true),
-					Height: astilectron.PtrInt(700),
-					Width:  astilectron.PtrInt(700),
-				},
-			}},
+			Windows: []*bootstrap.Window{
+				{
+					Homepage:       "index.html",
+					MessageHandler: HandleMessages,
+					Options: &astilectron.WindowOptions{
+						Center:          astilectron.PtrBool(true),
+						AutoHideMenuBar: astilectron.PtrBool(true),
+					},
+				}},
 		}); err != nil {
 			astilog.Fatal(errors.Wrap(err, "running bootstrap failed"))
 		}

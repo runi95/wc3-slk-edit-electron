@@ -26,22 +26,48 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			payload = fmt.Errorf("invalid input")
 		}
 	case "getDisabledInputs":
-		var file []byte
-		file, err = ioutil.ReadFile("disabled-inputs.json")
+		var disabledInputExists bool
+		disabledInputExists, err = exists(DISABLED_INPUTS_PATH)
 		if err != nil {
 			payload = err.Error()
 			return
 		}
 
-		var disabledInputs []string
-		err = json.Unmarshal([]byte(file), &disabledInputs)
-		if err != nil {
-			payload = err.Error()
-			return
-		}
+		if disabledInputExists {
+			var file []byte
+			file, err = ioutil.ReadFile("disabled-inputs.json")
+			if err != nil {
+				payload = err.Error()
+				return
+			}
 
-		payload = disabledInputs
+			var disabledInputs []string
+			err = json.Unmarshal([]byte(file), &disabledInputs)
+			if err != nil {
+				payload = err.Error()
+				return
+			}
+
+			payload = disabledInputs
+		} else {
+			var disabledInputs []string
+			var file []byte
+			file, err = json.Marshal(disabledInputs)
+			if err != nil {
+				payload = err.Error()
+				return
+			}
+
+			err = ioutil.WriteFile(DISABLED_INPUTS_PATH, file, 0644)
+			if err != nil {
+				payload = err.Error()
+				return
+			}
+
+			payload = nil
+		}
 	case "loadUnitData":
+		loadSLK()
 		var unitListData = make([]UnitListData, len(unitFuncMap))
 
 		i := 0
@@ -101,8 +127,29 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		} else {
 			payload = fmt.Errorf("invalid input")
 		}
+	case "initializeConfig":
+		initializeConfiguration()
+		payload = "success"
 	case "loadConfig":
 		payload = configuration
+	case "setConfig":
+		if len(m.Payload) > 0 {
+			if err = json.Unmarshal(m.Payload, &configuration); err != nil {
+				payload = err.Error()
+				return
+			}
+
+			makeConfigAbsolute()
+			err = saveConfig()
+			if err != nil {
+				payload = err.Error()
+				return
+			}
+
+			payload = "success"
+		} else {
+			payload = fmt.Errorf("invalid input")
+		}
 	}
 
 	return
