@@ -5,7 +5,5 @@ wc3-slk-edit
 wc3-slk-edit.exe
 bind*
 output
-static/
 vendor/*
 none/*
-static/*
