@@ -1,7 +1,19 @@
 # Warcraft III SLK Editor
 
-## Check out
-- https://github.com/asticode/go-astilectron
-- https://github.com/JWHennessey/three-obj-viewer
-- https://github.com/4eb0da/war3-model
-- https://github.com/flowtsohg/mdx-m3-viewer
+A simple editor that lets you edit Warcraft III SLK files much more easily.
+
+## Installation
+
+### Linux
+
+You can simply download the Warcraft_III_SLK_Edit file from this repository or you can follow the steps below to build the binary file yourself.
+1. Install `https://github.com/asticode/go-astilectron-bundler` if you don't have it
+2. Run make build
+3. Find your executable inside `output/linux-amd64/Warcraft_III_SLK_Edit`
+
+### Windows
+
+You can simply download the Warcraft_III_SLK_Edit.exe file from this repository or you can follow the steps below to build the executable yourself.
+1. Install `https://github.com/asticode/go-astilectron-bundler` if you don't have it
+2. Run build.bat
+3. Find your executable inside `output\windows-amd64\Warcraft_III_SLK_Edit.exe`
