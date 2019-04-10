@@ -160,6 +160,13 @@ const index = {
                     message.payload.UnitFunc.Missilehoming2 = split[1];
                 }
             }
+            if (message.payload.UnitFunc.Ubertip) {
+                const rawValue = message.payload.UnitFunc.Ubertip;
+                const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
+                const value = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
+
+                message.payload.UnitFunc.Ubertip = value;
+            }
 
             Object.keys(message.payload.UnitFunc).forEach(unitFuncKey => {
                 const elemList = $("#UnitFunc-" + unitFuncKey);
