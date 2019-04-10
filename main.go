@@ -308,7 +308,7 @@ func main() {
 				AppIconDarwinPath:  "resources/icon.icns",
 				AppIconDefaultPath: "resources/icon.png",
 			},
-			Debug:       false,
+			Debug:       *debug,
 			MenuOptions: []*astilectron.MenuItemOptions{},
 			OnWait: func(_ *astilectron.Astilectron, ws []*astilectron.Window, _ *astilectron.Menu, _ *astilectron.Tray, _ *astilectron.Menu) error {
 				w = ws[0]
