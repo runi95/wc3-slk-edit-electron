@@ -48,6 +48,32 @@ html, body {
     color: #fff;
 }
 
+.form-dark textarea {
+    color: #fff;
+    border: 1px solid #26272b;
+    background-color: #36373d;
+}
+
+.form-dark textarea:disabled {
+    background-color: #26272b;
+}
+
+.form-dark textarea:disabled::placeholder {
+    color: #4c5358;
+}
+
+.form-dark textarea[type='checkbox']:disabled {
+    display: none;
+}
+
+.form-dark textarea:focus {
+    background-color: #36373d;
+}
+
+.form-dark textarea:focus {
+    color: #fff;
+}
+
 .form-dark label {
     color: #67686c;
 }

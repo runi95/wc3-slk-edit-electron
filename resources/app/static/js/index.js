@@ -171,14 +171,15 @@ const index = {
             Object.keys(message.payload.UnitFunc).forEach(unitFuncKey => {
                 const elemList = $("#UnitFunc-" + unitFuncKey);
                 if (elemList.length > 0) {
-                    if (!elemList[0] instanceof HTMLInputElement)
-                        return;
-
-                    const type = elemList[0].type;
-                    if (type === "text" || type === "select-one") {
-                        elemList[0].value = message.payload.UnitFunc[unitFuncKey];
-                    } else if (type === "checkbox") {
-                        elemList[0].checked = message.payload.UnitFunc[unitFuncKey] === "1";
+                    if (elemList[0] instanceof HTMLInputElement || elemList[0] instanceof HTMLTextAreaElement) {
+                        const type = elemList[0].type;
+                        if (type === "text" || type === "textarea" || type === "select-one") {
+                            elemList[0].value = message.payload.UnitFunc[unitFuncKey];
+                        } else if (type === "checkbox") {
+                            elemList[0].checked = message.payload.UnitFunc[unitFuncKey] === "1";
+                        } else {
+                            console.log("type is " + elemList[0].type);
+                        }
                     }
                 }
             });
