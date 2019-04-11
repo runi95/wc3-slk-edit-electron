@@ -218,6 +218,47 @@ const index = {
 
         input.value = updatedValue;
     },
+    saveFieldToUnit: function (input) {
+
+        if (!document.getElementById("unitId-form").checkValidity())
+            return;
+
+        let Field = null;
+        let Value = null;
+
+        if (input.classList.contains("sub-multi-check")) {
+            Field = input.parentNode.parentNode.parentNode.id;
+            Value = input.checked ? "1" : "0";
+        } else {
+            const type = input.type;
+            Field = input.id;
+            if (type === "text" || type === "textarea" || type === "select-one") {
+                const containsNumberRegex = new RegExp("^(?:(?:\\d*)|(?:\\d+\\.\\d+))$");
+                Value = input.value;
+
+                if (!Value.match(containsNumberRegex)) {
+                    Value = "\"" + Value + "\"";
+                }
+            } else if (type === "checkbox") {
+                Value = input.checked ? "1" : "0";
+            }
+        }
+
+        const UnitId = document.getElementById("UnitFunc-UnitId").value;
+        const fieldToUnit = {Field, Value, UnitId};
+        if (Field != null && Value != null) {
+            const message = {name: "saveFieldToUnit", payload: fieldToUnit};
+            astilectron.sendMessage(message, function (message) {
+                // Check for errors
+                if (message.name === "error") {
+                    asticode.notifier.error(message.payload);
+                    return;
+                }
+
+                console.log("payload:", message.payload);
+            });
+        }
+    },
     saveUnit: function () {
         const forms = $("form");
         let formsValid = true;
