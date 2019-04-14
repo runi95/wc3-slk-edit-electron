@@ -13,6 +13,6 @@ require (
 	github.com/pkg/errors v0.8.1
 	github.com/runi95/wts-parser v0.0.0-20190405175848-e3a65dfe5c78
 	github.com/sam-kamerer/go-plister v1.1.2 // indirect
-	github.com/shibukawa/configdir v0.0.0-20170330084843-e180dbdc8da0 // indirect
+	github.com/shibukawa/configdir v0.0.0-20170330084843-e180dbdc8da0
 	gopkg.in/volatiletech/null.v6 v6.0.0-20170828023728-0bef4e07ae1b
 )
