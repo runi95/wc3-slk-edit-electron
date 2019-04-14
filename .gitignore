@@ -9,3 +9,4 @@ vendor/*
 none/*
 windows.syso
 auto
+disabled-inputs.json
