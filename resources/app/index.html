@@ -146,7 +146,7 @@
             <div class="col-4" style="height: 100%; display: flex; flex-direction: column;">
                 <div class="form-dark">
                     <div style="display: flex;">
-                        <input type="file" id="hiddenFileUploadInput" hidden onchange="index.updateOutputFolder()"/>
+                        <input type="file" id="hiddenFileUploadInput" hidden onchange="index.updateOutputFolder()" webkitdirectory directory/>
                         <input type="text" class="form-control" id="outputFolderInput"
                                aria-describedby="output folder path"
                                placeholder="./input"/>
