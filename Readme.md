@@ -7,22 +7,25 @@ A simple editor that lets you edit Warcraft III SLK files much more easily.
 ### Linux
 
 You can simply download the Warcraft_III_SLK_Edit file from this repository or you can follow the steps below to build the binary file yourself.
-1. Install `https://github.com/asticode/go-astilectron-bundler` if you don't have it
-2. Run make build
-3. Find your executable inside `output/linux-amd64/Warcraft_III_SLK_Edit`
+1. Install the electron bundler by running `go install github.com/asticode/go-astilectron-bundler/astilectron-bundler
+`
+2. Run `go get -u` to get all the dependencies for this project
+3. Run `make build` to start building
+4. Find your executable inside `output/linux-amd64/Warcraft_III_SLK_Edit`
 
 ### Windows
 
 You can simply download the Warcraft_III_SLK_Edit.exe file from this repository or you can follow the steps below to build the executable yourself.
-1. Install `https://github.com/asticode/go-astilectron-bundler` if you don't have it
-2. Run build.bat
-3. Find your executable inside `output\windows-amd64\Warcraft_III_SLK_Edit.exe`
+1. Install the electron bundler by running `go install github.com/asticode/go-astilectron-bundler/astilectron-bundler
+`
+2. Run `go get -u` to get all the dependencies for this project
+3. Run `build.bat` to start building
+4. Find your executable inside `output\windows-amd64\Warcraft_III_SLK_Edit.exe`
 
 ## Running the editor
 
-If you've downloaded the binary or executable file you'll be able to run the editor right out of the box!
+If you've downloaded the executable or the binary file then everything should work out of the box. If you do not want to download the binaries then you can follow the steps above to compile the program yourself
 
 ## Advanced inputs
 
-You can copy and paste the disabled-inputs.json into the same folder as the binary / executable file if you want to hide rarely used inputs,
-when the editor is running you can show or hide the advanced inputs by clicking the :lock: and :unlock: icons at the top left corner.
+You can show or hide advanced inputs that are rarely used by clicking the :lock: and :unlock: icons at the top left corner.
