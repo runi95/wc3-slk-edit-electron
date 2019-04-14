@@ -1,5 +1,6 @@
 let unitDataList = [];
 let isLocked = false;
+let selectedUnitId = null;
 
 const addUnitTableData = (unitTableBody, unitData) => {
     const tr = document.createElement("tr");
@@ -34,9 +35,11 @@ const index = {
 
         });
     },
-    removeUnit: function (unit) {
-        const unitMessage = {name: "removeUnit", payload: unit};
+    removeUnit: function () {
+        if (selectedUnitId === null)
+            return;
 
+        const unitMessage = {name: "removeUnit", payload: selectedUnitId};
         astilectron.sendMessage(unitMessage, function (message) {
             // Check for errors
             if (message.name === "error") {
@@ -44,6 +47,7 @@ const index = {
                 return;
             }
 
+            selectedUnitId = null;
             unitDataList = unitDataList.filter(unit => unit.UnitID !== message.payload);
             index.search(document.getElementById("searchInput"));
         })
@@ -81,6 +85,7 @@ const index = {
     },
     selectUnit: function (unitTableRow) {
         const unitId = unitTableRow.id;
+        selectedUnitId = unitId;
         const message = {name: "selectUnit", payload: unitId};
         astilectron.sendMessage(message, function (message) {
             // Check for errors
