@@ -5,6 +5,7 @@
   "icon_path_windows": "resources/icon.ico",
   "environments": [
     {"arch": "amd64", "os": "darwin"},
+    {"arch": "amd64", "os": "linux", "target": "AppImage"},
     {
       "arch": "amd64",
       "os": "windows",
