@@ -14,8 +14,8 @@ import (
 
 type FieldToUnit struct {
 	UnitId string
-	Field string
-	Value string
+	Field  string
+	Value  string
 }
 
 func reflectUpdateValueOnFieldNullStruct(iface interface{}, fieldValue interface{}, fieldName string) error {
@@ -129,9 +129,8 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 			payload = disabledInputs
 		} else {
-			var disabledInputs []string
 			var file []byte
-			file, err = json.Marshal(disabledInputs)
+			file, err = json.Marshal(defaultDisabledUnits)
 			if err != nil {
 				payload = err.Error()
 				return
@@ -143,7 +142,7 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				return
 			}
 
-			payload = nil
+			payload = defaultDisabledUnits
 		}
 	case "loadUnitData":
 		loadSLK()
@@ -232,4 +231,57 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 	}
 
 	return
+}
+
+var defaultDisabledUnits = []string{
+	"SLKUnit-UnitUI-Blend",
+	"SLKUnit-UnitWeapons-Castbsw",
+	"SLKUnit-UnitWeapons-Castpt",
+	"SLKUnit-UnitUI-Run",
+	"SLKUnit-UnitUI-Walk",
+	"UnitFunc-Casterupgradeart",
+	"SLKUnit-UnitData-Death",
+	"SLKUnit-UnitUI-ElevPts",
+	"SLKUnit-UnitUI-ElevRad",
+	"SLKUnit-UnitUI-FogRad",
+	"SLKUnit-UnitUI-ShadowOnWater",
+	"UnitFunc-ScoreScreenIcon",
+	"SLKUnit-UnitUI-MaxPitch",
+	"SLKUnit-UnitUI-MaxRoll",
+	"SLKUnit-UnitUI-FileVerFlags",
+	"SLKUnit-UnitUI-OccH",
+	"SLKUnit-UnitData-OrientInterp",
+	"SLKUnit-UnitWeapons-ImpactZ",
+	"SLKUnit-UnitWeapons-ImpactSwimZ",
+	"SLKUnit-UnitWeapons-LaunchX",
+	"SLKUnit-UnitWeapons-LaunchY",
+	"SLKUnit-UnitWeapons-LaunchZ",
+	"SLKUnit-UnitWeapons-LaunchSwimZ",
+	"SLKUnit-UnitData-PropWin",
+	"UnitFunc-Animprops",
+	"UnitFunc-Attachmentanimprops",
+	"SLKUnit-UnitUI-SelZ",
+	"SLKUnit-UnitUI-SelCircOnWater",
+	"UnitFunc-Description",
+	"SLKUnit-UnitBalance-Repulse",
+	"SLKUnit-UnitBalance-RepulseGroup",
+	"SLKUnit-UnitBalance-RepulseParam",
+	"SLKUnit-UnitBalance-RepulsePrio",
+	"UnitFunc-Attachmentlinkprops",
+	"UnitFunc-Boneprops",
+	"SLKUnit-UnitUI-Special",
+	"UnitFunc-Targetart",
+	"UseExtendedLineOfSight",
+	"SLKUnit-UnitBalance-MaxSpd",
+	"SLKUnit-UnitBalance-MinSpd",
+	"AIPlacementRadius",
+	"AIPlacementType",
+	"UnitFunc-Randomsoundlabel",
+	"SLKUnit-UnitData-Formation",
+	"SLKUnit-UnitData-Prio",
+	"SLKUnit-UnitData-CargoSize",
+	"DependencyEquivalents",
+	"RequirementsLevels",
+	"UpgradesUsed",
+	"CasterUpgradeTip",
 }
