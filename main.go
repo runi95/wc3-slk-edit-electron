@@ -10,6 +10,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/runi95/wts-parser/models"
 	"github.com/runi95/wts-parser/parser"
+	"github.com/shibukawa/configdir"
 	"html/template"
 	"io/ioutil"
 	"log"
@@ -19,14 +20,16 @@ import (
 	"strings"
 )
 
+const VENDOR_NAME = "wc3-slk-edit"
+const CONFIG_FILENAME = "config.json"
+const DISABLED_INPUTS_FILENAME = "disabled-inputs.json"
+
 var baseUnitMap map[string]*models.SLKUnit
 var unitFuncMap map[string]*models.UnitFunc
 var lastValidIndex int
+var configDirs = configdir.New(VENDOR_NAME, "")
 
 var configuration *config = nil
-
-const CONFIG_PATH = "./config.json"
-const DISABLED_INPUTS_PATH = "./disabled-inputs.json"
 
 /*
 var Asset bootstrap.Asset
@@ -74,13 +77,9 @@ func exists(path string) (bool, error) {
 }
 
 func loadConfig() error {
-	configExists, err := exists(CONFIG_PATH)
-	if err == nil {
-		if !configExists {
-			return nil
-		}
-
-		configFile, err := ioutil.ReadFile(CONFIG_PATH)
+	config := loadConfigFile(CONFIG_FILENAME)
+	if config != nil {
+		configFile, err := ioutil.ReadFile(config.Path + string(os.PathSeparator) + CONFIG_FILENAME)
 		if err != nil {
 			return err
 		}
@@ -89,13 +88,9 @@ func loadConfig() error {
 		if err != nil {
 			return err
 		}
-
-		return nil
-	} else if err != nil {
-		return err
 	}
 
-	return fmt.Errorf("%s does not exist", CONFIG_PATH)
+	return nil
 }
 
 func makeConfigAbsolute() {
@@ -150,12 +145,20 @@ func saveConfig() error {
 		return err
 	}
 
-	err = ioutil.WriteFile(CONFIG_PATH, confingInBytes, 0644)
-	if err != nil {
-		return err
+	return saveConfigFile(CONFIG_FILENAME, confingInBytes)
+}
+
+func loadConfigFile(fileName string) *configdir.Config {
+	return configDirs.QueryFolderContainsFile(fileName)
+}
+
+func saveConfigFile(fileName string, data []byte) error {
+	folders := configDirs.QueryFolders(configdir.Global)
+	if len(folders) < 1 {
+		return fmt.Errorf("failed to load global configuration")
 	}
 
-	return nil
+	return folders[0].WriteFile(fileName, data)
 }
 
 func loadSLK() {
@@ -286,6 +289,8 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	configDirs.LocalPath, _ = filepath.Abs(".")
+
 	if len(os.Args) > 1 && os.Args[1] == "-web" {
 		fs := http.FileServer(http.Dir("resources/app/static"))
 		http.Handle("/static/", http.StripPrefix("/static/", fs))

@@ -8,6 +8,7 @@ import (
 	"gopkg.in/volatiletech/null.v6"
 	"io/ioutil"
 	"log"
+	"os"
 	"reflect"
 	"strings"
 )
@@ -105,16 +106,10 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			payload = fmt.Errorf("invalid input")
 		}
 	case "getDisabledInputs":
-		var disabledInputExists bool
-		disabledInputExists, err = exists(DISABLED_INPUTS_PATH)
-		if err != nil {
-			payload = err.Error()
-			return
-		}
-
-		if disabledInputExists {
+		config := loadConfigFile(DISABLED_INPUTS_FILENAME)
+		if config != nil {
 			var file []byte
-			file, err = ioutil.ReadFile("disabled-inputs.json")
+			file, err = ioutil.ReadFile(config.Path + string(os.PathSeparator) + DISABLED_INPUTS_FILENAME)
 			if err != nil {
 				payload = err.Error()
 				return
@@ -136,7 +131,7 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				return
 			}
 
-			err = ioutil.WriteFile(DISABLED_INPUTS_PATH, file, 0644)
+			err = saveConfigFile(DISABLED_INPUTS_FILENAME, file)
 			if err != nil {
 				payload = err.Error()
 				return
