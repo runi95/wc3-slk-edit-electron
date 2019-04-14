@@ -10,9 +10,9 @@ You can simply download the Warcraft_III_SLK_Edit file from [latest releases](ht
 1. Download the electron bundler by running `go get -u github.com/asticode/go-astilectron-bundler/...`
 2. Install the electron bundler by running `go install github.com/asticode/go-astilectron-bundler/astilectron-bundler
 `
-3. Run `go get -u` to get all the dependencies for this project
+3. Run `go mod vendor` to get all the dependencies required by this project
 4. Run `make build` to start building
-5. Find your executable inside `output/linux-amd64/Warcraft_III_SLK_Edit`
+5. Find your binary inside `output/linux-amd64/Warcraft_III_SLK_Edit` or run with `make start`
 
 ### Windows
 
@@ -20,9 +20,9 @@ You can simply download the Warcraft_III_SLK_Edit.exe file from [latest releases
 1. Download the electron bundler by running `go get -u github.com/asticode/go-astilectron-bundler/...`
 2. Install the electron bundler by running `go install github.com/asticode/go-astilectron-bundler/astilectron-bundler
 `
-3. Run `go get -u` to get all the dependencies for this project
+3. Run `go mod vendor` to get all the dependencies required by this project
 4. Run `build.bat` to start building
-5. Find your executable inside `output\windows-amd64\Warcraft_III_SLK_Edit.exe`
+5. Find your executable inside `output\windows-amd64\Warcraft_III_SLK_Edit.exe` or run with `run.bat`
 
 ### Mac OS
 
