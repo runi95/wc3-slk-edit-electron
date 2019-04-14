@@ -29,3 +29,7 @@ If you've downloaded the executable or the binary file then everything should wo
 ## Advanced inputs
 
 You can show or hide advanced inputs that are rarely used by clicking the :lock: and :unlock: icons at the top left corner.
+
+## Preview
+
+![Preview Image](/images/Preview-Image-1.png)
