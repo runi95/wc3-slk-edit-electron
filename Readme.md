@@ -22,6 +22,10 @@ You can simply download the Warcraft_III_SLK_Edit.exe file from [latest releases
 3. Run `build.bat` to start building
 4. Find your executable inside `output\windows-amd64\Warcraft_III_SLK_Edit.exe`
 
+### Mac OS
+
+Coming soon...
+
 ## Running the editor
 
 If you've downloaded the executable or the binary file then everything should work out of the box. If you do not want to download the binaries then you can follow the steps above to compile the program yourself
