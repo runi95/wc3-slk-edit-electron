@@ -155,7 +155,7 @@ html, body {
 .flex-outer > li > label,
 .flex-outer > li > p {
     margin: 0;
-    flex: 0 0 15%;
+    flex: 0 0 25%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
