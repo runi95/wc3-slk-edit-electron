@@ -6,13 +6,14 @@ A simple editor that lets you edit Warcraft III SLK files much more easily.
 
 ### Linux
 
-You can simply download the Warcraft_III_SLK_Edit file from [latest releases](https://github.com/runi95/wc3-slk-edit-electron/releases/latest) or you can follow the steps below to build the binary file yourself.
 1. Download the electron bundler by running `go get -u github.com/asticode/go-astilectron-bundler/...`
 2. Install the electron bundler by running `go install github.com/asticode/go-astilectron-bundler/astilectron-bundler
 `
-3. Run `go mod vendor` to get all the dependencies required by this project
-4. Run `make build` to start building
-5. Find your binary inside `output/linux-amd64/Warcraft_III_SLK_Edit` or run with `make start`
+3. Run `go get github.com/runi95/wc3-slk-edit-electron`
+4. Enter the editor's directory `cd $GOPATH/src/github/runi95/wc3-slk-edit-electron`
+5. Run `go mod vendor` to get all the dependencies required by this project
+6. Run `make build` to start building
+7. Find your binary inside `output/linux-amd64/Warcraft_III_SLK_Edit` or run with `make start`
 
 ### Windows
 
@@ -20,9 +21,11 @@ You can simply download the Warcraft_III_SLK_Edit.exe file from [latest releases
 1. Download the electron bundler by running `go get -u github.com/asticode/go-astilectron-bundler/...`
 2. Install the electron bundler by running `go install github.com/asticode/go-astilectron-bundler/astilectron-bundler
 `
-3. Run `go mod vendor` to get all the dependencies required by this project
-4. Run `build.bat` to start building
-5. Find your executable inside `output\windows-amd64\Warcraft_III_SLK_Edit.exe` or run with `run.bat`
+3. Run `go get github.com/runi95/wc3-slk-edit-electron`
+4. Enter the editor's directory `cd %GOPATH%/src/github/runi95/wc3-slk-edit-electron`
+5. Run `go mod vendor` to get all the dependencies required by this project
+6. Run `build.bat` to start building
+7. Find your executable inside `output\windows-amd64\Warcraft_III_SLK_Edit.exe` or run with `run.bat`
 
 ### Mac OS
 
