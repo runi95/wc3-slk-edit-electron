@@ -231,7 +231,27 @@ const index = {
 
         if (input.classList.contains("sub-multi-check")) {
             Field = input.parentNode.parentNode.parentNode.id;
-            Value = input.checked ? "1" : "0";
+            input.parentNode.parentNode.childNodes.forEach(child => {
+                if (child instanceof HTMLLIElement) {
+                    child.childNodes.forEach(listChild => {
+                        if (listChild instanceof HTMLInputElement) {
+                            if (listChild.checked) {
+                                if (Value === null) {
+                                    Value = "\"" + listChild.value;
+                                } else {
+                                    Value += "," + listChild.value;
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+
+            if (Value === null) {
+                Value = "_";
+            } else {
+                Value += "\"";
+            }
         } else {
             const type = input.type;
             Field = input.id;
@@ -257,8 +277,6 @@ const index = {
                     asticode.notifier.error(message.payload);
                     return;
                 }
-
-                console.log("payload:", message.payload);
             });
         }
     },
