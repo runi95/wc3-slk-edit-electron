@@ -98,30 +98,28 @@ const index = {
             unitTableRow.setAttribute("class", "active");
             Object.keys(message.payload.SLKUnit).forEach(slkUnitKey => {
                 Object.keys(message.payload.SLKUnit[slkUnitKey]).forEach(key => {
-                    const rawValue = message.payload.SLKUnit[slkUnitKey][key];
-                    if (rawValue) {
-                        const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
-                        const value = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
-                        const elemList = $("#SLKUnit-" + slkUnitKey + "-" + key);
-                        if (elemList.length > 0) {
-                            if (elemList[0] instanceof HTMLInputElement || elemList[0] instanceof HTMLSelectElement) {
-                                const type = elemList[0].type;
+                    const rawValue = message.payload.SLKUnit[slkUnitKey][key] ? message.payload.SLKUnit[slkUnitKey][key] : "";
+                    const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
+                    const value = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
+                    const elemList = $("#SLKUnit-" + slkUnitKey + "-" + key);
+                    if (elemList.length > 0) {
+                        if (elemList[0] instanceof HTMLInputElement || elemList[0] instanceof HTMLSelectElement) {
+                            const type = elemList[0].type;
 
-                                if (type === "text" || type === "select-one") {
-                                    elemList[0].value = value;
-                                } else if (type === "checkbox") {
-                                    elemList[0].checked = value === "1";
-                                }
-                            } else if (elemList[0].classList.contains("multi-check")) {
-                                const childInputs = $("#SLKUnit-" + slkUnitKey + "-" + key + " :input");
-                                const valueSplit = value.split(",");
-                                const valueLower = valueSplit.map(val => val.toLowerCase());
-                                for (let i = 0; i < childInputs.length; i++) {
-                                    if (valueLower.includes(childInputs[i].value.toLowerCase())) {
-                                        childInputs[i].checked = true;
-                                    } else {
-                                        childInputs[i].checked = false;
-                                    }
+                            if (type === "text" || type === "select-one") {
+                                elemList[0].value = value;
+                            } else if (type === "checkbox") {
+                                elemList[0].checked = value === "1";
+                            }
+                        } else if (elemList[0].classList.contains("multi-check")) {
+                            const childInputs = $("#SLKUnit-" + slkUnitKey + "-" + key + " :input");
+                            const valueSplit = value.split(",");
+                            const valueLower = valueSplit.map(val => val.toLowerCase());
+                            for (let i = 0; i < childInputs.length; i++) {
+                                if (valueLower.includes(childInputs[i].value.toLowerCase())) {
+                                    childInputs[i].checked = true;
+                                } else {
+                                    childInputs[i].checked = false;
                                 }
                             }
                         }
@@ -626,7 +624,7 @@ const index = {
 
         index.submitConfiguration(inDir, outDir);
     },
-    submitConfiguration: function(inDir, outDir) {
+    submitConfiguration: function (inDir, outDir) {
         const message = {name: "setConfig", payload: {InDir: inDir, OutDir: outDir}};
         astilectron.sendMessage(message, function (message) {
             // Check for errors
