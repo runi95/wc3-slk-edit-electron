@@ -10,7 +10,7 @@ A simple editor that lets you edit Warcraft III SLK files much more easily.
 2. Install the electron bundler by running `go install github.com/asticode/go-astilectron-bundler/astilectron-bundler
 `
 3. Run `go get github.com/runi95/wc3-slk-edit-electron`
-4. Enter the editor's directory `cd $GOPATH/src/github/runi95/wc3-slk-edit-electron`
+4. Enter the editor's directory `cd $GOPATH/src/github.com/runi95/wc3-slk-edit-electron`
 5. Run `go mod vendor` to get all the dependencies required by this project
 6. Run `make build` to start building
 7. Find your binary inside `output/linux-amd64/Warcraft_III_SLK_Edit` or run with `make start`
@@ -22,7 +22,7 @@ You can simply download the Warcraft_III_SLK_Edit.exe file from [latest releases
 2. Install the electron bundler by running `go install github.com/asticode/go-astilectron-bundler/astilectron-bundler
 `
 3. Run `go get github.com/runi95/wc3-slk-edit-electron`
-4. Enter the editor's directory `cd %GOPATH%/src/github/runi95/wc3-slk-edit-electron`
+4. Enter the editor's directory `cd %GOPATH%/src/github.com/runi95/wc3-slk-edit-electron`
 5. Run `go mod vendor` to get all the dependencies required by this project
 6. Run `build.bat` to start building
 7. Find your executable inside `output\windows-amd64\Warcraft_III_SLK_Edit.exe` or run with `run.bat`
