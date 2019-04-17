@@ -2616,9 +2616,12 @@
                                 </li>
                                 <li>
                                     <label for="UnitFunc-Ubertip">Tooltip - Extended</label>
-                                    <textarea oninput="index.saveFieldToUnit(this)" class="form-control" id="UnitFunc-Ubertip"
-                                           aria-describedby="tooltip - extended"
-                                              placeholder="Tooltip - Extended"></textarea>
+                                    <div style="display: flex; overflow-x: hidden;">
+                                        <textarea oninput="index.saveFieldToUnit(this); index.multiColorTextarea(this)" onscroll="index.multiColorTextareaScroll(this)" class="form-control" id="UnitFunc-Ubertip"
+                                                  aria-describedby="tooltip - extended"
+                                                  placeholder="Tooltip - Extended"></textarea>
+                                        <div id="preview" style="overflow-y: hidden;" class="form-control multi-color-textarea"></div>
+                                    </div>
                                 </li>
                             </ul>
                         </form>

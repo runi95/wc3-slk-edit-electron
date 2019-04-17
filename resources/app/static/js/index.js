@@ -17,6 +17,22 @@ const addUnitTableData = (unitTableBody, unitData) => {
 };
 
 const index = {
+    multiColorTextarea: function (input) {
+        const regex = new RegExp("\\|C([0-9A-F]{8})((?:(?!\\|C).)*)\\|R", "i");
+        let result = input.value.split("|n").join("<br>").split("\n").join("<br>");
+        let exec = regex.exec(result);
+        while (exec !== null) {
+            const index = exec.index;
+            const color = "rgba(" + parseInt(exec[1].substr(2, 2), 16) + ", " + parseInt(exec[1].substr(4, 2), 16) + ", " + parseInt(exec[1].substr(6, 2), 16) + ", " + (parseInt(exec[1].substr(0, 2), 16) / 255) + ")";
+            result = result.substr(0, index) + `<span style="color: ${color}">` + result.substr(index + 2 + exec[1].length, exec[2].length) + "</span>" + result.substr(index + 4 + exec[1].length + exec[2].length);
+            exec = regex.exec(result);
+        }
+
+        document.getElementById("preview").innerHTML = result;
+    },
+    multiColorTextareaScroll: function (input) {
+        document.getElementById("preview").scrollTop = input.scrollTop;
+    },
     init: function () {
         // Init
         asticode.loader.init();
@@ -186,6 +202,8 @@ const index = {
                     }
                 }
             });
+
+            index.multiColorTextarea(document.getElementById("UnitFunc-Ubertip"));
         });
     },
     activateFileUploadButton: function () {
@@ -222,7 +240,6 @@ const index = {
         input.value = updatedValue;
     },
     saveFieldToUnit: function (input) {
-
         if (!document.getElementById("unitId-form").checkValidity())
             return;
 

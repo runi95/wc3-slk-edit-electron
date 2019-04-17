@@ -62,16 +62,43 @@ html, body {
     color: #4c5358;
 }
 
-.form-dark textarea[type='checkbox']:disabled {
-    display: none;
-}
-
 .form-dark textarea:focus {
     background-color: #36373d;
 }
 
 .form-dark textarea:focus {
     color: #fff;
+}
+
+.multi-color-textarea {
+    text-align: start;
+    height: 150px;
+    overflow-y: auto;
+    word-wrap: break-word;
+}
+
+.form-dark .multi-color-textarea {
+    color: #fff;
+    border: 1px solid #26272b;
+    background-color: #36373d;
+}
+
+.form-dark .multi-color-textarea:disabled {
+    background-color: #26272b;
+}
+
+.form-dark .multi-color-textarea:disabled::placeholder {
+    color: #4c5358;
+}
+
+.form-dark .multi-color-textarea:focus {
+    background-color: #36373d;
+    color: #fff;
+}
+
+.multi-color-textarea .form-control .is-valid {
+    padding-right: calc(1.5em + .75rem);
+    background-position: top calc(.375em + .1875rem) right calc(.375em + .1875rem);
 }
 
 .form-dark label {

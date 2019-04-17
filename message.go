@@ -274,7 +274,7 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 /**
 *    PRIVATE FUNCTIONS
 *     - these are functions that are only called from within this file
-*/
+ */
 func reflectUpdateValueOnFieldNullStruct(iface interface{}, fieldValue interface{}, fieldName string) error {
 	valueIface := reflect.ValueOf(iface)
 	if valueIface.Type().Kind() != reflect.Ptr {
@@ -551,6 +551,9 @@ func loadSLK() {
 	}
 
 	unitFuncMap = parser.TxtToUnitFunc(campaignUnitFuncBytes)
+	for k := range unitFuncMap {
+		unitFuncMap[k].Ubertip.SetValid(strings.Replace(unitFuncMap[k].Ubertip.String, "|n", "\n", -1))
+	}
 
 	baseUnitMap = make(map[string]*models.SLKUnit)
 	i := 0
