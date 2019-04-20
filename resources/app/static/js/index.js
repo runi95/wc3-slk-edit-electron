@@ -294,6 +294,10 @@ const index = {
                     asticode.notifier.error(message.payload);
                     return;
                 }
+
+                if (message.payload === "unsaved") {
+                    index.saveUnit();
+                }
             });
         }
     },

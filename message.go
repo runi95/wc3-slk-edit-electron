@@ -103,6 +103,11 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				return
 			}
 
+			if _, ok := baseUnitMap[fieldToUnit.UnitId]; !ok {
+				payload = "unsaved"
+				return
+			}
+
 			split := strings.Split(fieldToUnit.Field, "-")
 			nullString := new(null.String)
 			nullString.SetValid(fieldToUnit.Value)
