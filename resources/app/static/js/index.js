@@ -563,6 +563,7 @@ const index = {
 
             if (message.payload !== null) {
                 document.getElementById("outputFolderInput").value = message.payload.OutDir;
+                index.disableInputs(message.payload.IsLocked);
                 index.startMainWindow();
             } else {
                 document.getElementById("loadingwindow").hidden = true;
@@ -573,7 +574,10 @@ const index = {
         });
     },
     disableInputs: function (bool) {
-        const message = {name: "getDisabledInputs", payload: null};
+        if (bool === isLocked)
+            return;
+
+        const message = {name: "getDisabledInputs", payload: bool};
         astilectron.sendMessage(message, function (message) {
             // Check for errors
             if (message.name === "error") {
@@ -718,7 +722,6 @@ const index = {
         document.getElementById("mainwindow").hidden = true;
         document.getElementById("loadingwindow").hidden = false;
 
-        index.disableInputs(true);
         index.loadUnitData();
     }
 };

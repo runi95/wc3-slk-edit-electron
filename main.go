@@ -26,7 +26,7 @@ var (
 
 /**
 *    PUBLIC STRUCTURES
-*/
+ */
 type UnitListData struct {
 	UnitID string
 	Name   string
@@ -39,15 +39,17 @@ type UnitData struct {
 
 /**
 *    PRIVATE STRUCTURES
-*/
+ */
 type config struct {
-	InDir  string
-	OutDir string
+	InDir    string
+	OutDir   string
+	IsLocked bool
+	Version  string
 }
 
 /**
 *    PRIVATE FUNCTIONS
-*/
+ */
 func main() {
 	log.Println("Starting up...")
 

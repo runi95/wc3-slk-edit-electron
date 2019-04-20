@@ -149,38 +149,56 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			payload = fmt.Errorf("invalid input")
 		}
 	case "getDisabledInputs":
-		config := loadConfigFile(DISABLED_INPUTS_FILENAME)
-		if config != nil {
-			var file []byte
-			file, err = ioutil.ReadFile(config.Path + string(os.PathSeparator) + DISABLED_INPUTS_FILENAME)
-			if err != nil {
+		var isLocked bool
+		if len(m.Payload) > 0 {
+			if err = json.Unmarshal(m.Payload, &isLocked); err != nil {
 				payload = err.Error()
 				return
 			}
 
-			var disabledInputs []string
-			err = json.Unmarshal([]byte(file), &disabledInputs)
-			if err != nil {
-				payload = err.Error()
-				return
+			if isLocked != configuration.IsLocked {
+				configuration.IsLocked = isLocked
+
+				err = saveConfig()
+				if err != nil {
+					payload = err.Error()
+					return
+				}
 			}
 
-			payload = disabledInputs
-		} else {
-			var file []byte
-			file, err = json.Marshal(defaultDisabledUnits)
-			if err != nil {
-				payload = err.Error()
-				return
-			}
+			config := loadConfigFile(DISABLED_INPUTS_FILENAME)
+			if config != nil {
+				var file []byte
+				file, err = ioutil.ReadFile(config.Path + string(os.PathSeparator) + DISABLED_INPUTS_FILENAME)
+				if err != nil {
+					payload = err.Error()
+					return
+				}
 
-			err = saveConfigFile(DISABLED_INPUTS_FILENAME, file)
-			if err != nil {
-				payload = err.Error()
-				return
-			}
+				var disabledInputs []string
+				err = json.Unmarshal([]byte(file), &disabledInputs)
+				if err != nil {
+					payload = err.Error()
+					return
+				}
 
-			payload = defaultDisabledUnits
+				payload = disabledInputs
+			} else {
+				var file []byte
+				file, err = json.Marshal(defaultDisabledUnits)
+				if err != nil {
+					payload = err.Error()
+					return
+				}
+
+				err = saveConfigFile(DISABLED_INPUTS_FILENAME, file)
+				if err != nil {
+					payload = err.Error()
+					return
+				}
+
+				payload = defaultDisabledUnits
+			}
 		}
 	case "selectUnit":
 		var unitId string
@@ -266,6 +284,21 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		} else {
 			payload = fmt.Errorf("invalid input")
 		}
+	case "updateLock":
+		if len(m.Payload) > 0 {
+			if err = json.Unmarshal(m.Payload, &configuration.IsLocked); err != nil {
+				payload = err.Error()
+				return
+			}
+
+			err = saveConfig()
+			if err != nil {
+				payload = err.Error()
+				return
+			}
+
+			payload = "success"
+		}
 	}
 
 	return
@@ -309,6 +342,19 @@ func initializeConfiguration() {
 	err := loadConfig()
 	if err != nil {
 		log.Println(err)
+	}
+
+	if configuration.Version != "1.0.2" {
+		configuration.IsLocked = false
+		configuration.Version = "1.0.2"
+
+		err = saveConfig()
+		if err != nil {
+			log.Println("An error occurred while updating the configuration to the newest version")
+			if *debug {
+				log.Println(err)
+			}
+		}
 	}
 
 	if *input != "" {
