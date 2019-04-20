@@ -613,6 +613,43 @@ const index = {
             document.getElementById("UnitFunc-UnitId").value = message.payload;
         });
     },
+    generateUnitTooltip: function () {
+        const attacksEnabled = document.getElementById("SLKUnit-UnitWeapons-WeapsOn").value;
+        let value = "";
+        if (attacksEnabled === "1" || attacksEnabled === "3") {
+            value += "|cffffcc00Attack:|r " + document.getElementById("SLKUnit-UnitWeapons-AtkType1").value.charAt(0).toUpperCase() + document.getElementById("SLKUnit-UnitWeapons-AtkType1").value.substr(1) + "|n";
+            value += "|cffffcc00Cooldown:|r " +  document.getElementById("SLKUnit-UnitWeapons-Cool1").value + "|n";
+            const baseDamage = parseInt(document.getElementById("SLKUnit-UnitWeapons-Dmgplus1").value, 10);
+            const damageNumberOfDice = parseInt(document.getElementById("SLKUnit-UnitWeapons-Dice1").value, 10);
+            const damageSidesPerDie = parseInt(document.getElementById("SLKUnit-UnitWeapons-Sides1").value, 10);
+            value += "|cffffcc00Damage:|r " + (baseDamage + damageNumberOfDice) + " - " + (baseDamage + damageNumberOfDice * damageSidesPerDie) + "|n";
+            value += "|cffffcc00Range:|r " + document.getElementById("SLKUnit-UnitWeapons-RangeN1").value + "|n";
+        } else if (attacksEnabled === "2") {
+            value += "|cffffcc00Attack:|r " + document.getElementById("SLKUnit-UnitWeapons-AtkType2").value.charAt(0).toUpperCase() + "|n";
+            value += "|cffffcc00Cooldown:|r " +  document.getElementById("SLKUnit-UnitWeapons-Cool2").value + "|n";
+            const baseDamage = parseInt(document.getElementById("SLKUnit-UnitWeapons-Dmgplus2").value, 10);
+            const damageNumberOfDice = parseInt(document.getElementById("SLKUnit-UnitWeapons-Dice2").value, 10);
+            const damageSidesPerDie = parseInt(document.getElementById("SLKUnit-UnitWeapons-Sides2").value, 10);
+            value += "|cffffcc00Damage:|r " + (baseDamage + damageNumberOfDice) + " - " + (baseDamage + damageNumberOfDice * damageSidesPerDie) + "|n";
+            value += "|cffffcc00Range:|r " + document.getElementById("SLKUnit-UnitWeapons-RangeN2").value + "|n";
+        } else if (attacksEnabled === "0") {
+            value += "|cffffcc00Attack:|r None|n";
+            value += "|cffffcc00Range:|r " + document.getElementById("SLKUnit-UnitWeapons-RangeN1").value + "|n";
+        }
+
+        if (attacksEnabled === "3") {
+            value += "|cffffcc00Attack(2):|r " + document.getElementById("SLKUnit-UnitWeapons-AtkType2").value.charAt(0).toUpperCase() + document.getElementById("SLKUnit-UnitWeapons-AtkType2").value.substr(1) + "|n";
+            value += "|cffffcc00Cooldown(2):|r " +  document.getElementById("SLKUnit-UnitWeapons-Cool2").value + "|n";
+            const baseDamage = parseInt(document.getElementById("SLKUnit-UnitWeapons-Dmgplus2").value, 10);
+            const damageNumberOfDice = parseInt(document.getElementById("SLKUnit-UnitWeapons-Dice2").value, 10);
+            const damageSidesPerDie = parseInt(document.getElementById("SLKUnit-UnitWeapons-Sides2").value, 10);
+            value += "|cffffcc00Damage(2):|r " + (baseDamage + damageNumberOfDice) + " - " + (baseDamage + damageNumberOfDice * damageSidesPerDie) + "|n";
+            value += "|cffffcc00Range(2):|r " + document.getElementById("SLKUnit-UnitWeapons-RangeN2").value + "|n";
+        }
+
+        document.getElementById("UnitFunc-Ubertip").value = value;
+        index.multiColorTextarea(document.getElementById("UnitFunc-Ubertip"));
+    },
     activateFileUploadButtonLoadInput: function () {
         $("#hiddenFileUploadInputLoadInput").click();
     },
