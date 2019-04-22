@@ -43,3 +43,4 @@ You can show or hide advanced inputs that are rarely used by clicking the :lock:
 ## Preview
 
 ![Preview Image](/images/Preview-Image-1.png)
+![Preview Image](/images/Preview-Image-2.png)
