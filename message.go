@@ -14,6 +14,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"runtime"
 	"strings"
 )
 
@@ -304,6 +305,8 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 			payload = "success"
 		}
+	case "getOperatingSystem":
+		payload = runtime.GOOS
 	}
 
 	return
