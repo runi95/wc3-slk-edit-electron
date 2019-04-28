@@ -7,6 +7,7 @@ import (
 	"github.com/asticode/go-astilog"
 	"github.com/pkg/errors"
 	"github.com/runi95/wts-parser/models"
+	"gopkg.in/volatiletech/null.v6"
 	"log"
 )
 
@@ -28,8 +29,9 @@ var (
 *    PUBLIC STRUCTURES
  */
 type UnitListData struct {
-	UnitID string
-	Name   string
+	UnitID       string
+	Name         string
+	EditorSuffix null.String
 }
 
 type UnitData struct {

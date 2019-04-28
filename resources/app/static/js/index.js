@@ -9,6 +9,12 @@ const addUnitTableData = (unitTableBody, unitData) => {
     th.setAttribute("scope", "row");
     th.appendChild(document.createTextNode(unitData.UnitID));
     td.appendChild(document.createTextNode(unitData.Name));
+    if (unitData.EditorSuffix) {
+        const span = document.createElement("span");
+        span.setAttribute("class", "text-secondary");
+        span.appendChild(document.createTextNode(" " + unitData.EditorSuffix));
+        td.appendChild(span);
+    }
     tr.id = unitData.UnitID;
     tr.onclick = () => index.selectUnit(tr);
     tr.appendChild(th);
@@ -91,7 +97,7 @@ const index = {
     },
     search: function (inputField) {
         const regex = new RegExp(inputField.value, "i");
-        const filteredUnitDataList = unitDataList.filter(unitData => (unitData.Name + unitData.UnitID).match(regex));
+        const filteredUnitDataList = unitDataList.filter(unitData => (unitData.Name + unitData.UnitID + unitData.EditorSuffix).match(regex));
         const unitTableBody = $("#unitTableBody")[0];
         unitTableBody.innerHTML = '';
 

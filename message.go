@@ -262,7 +262,7 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 		i := 0
 		for k, v := range unitFuncMap {
-			unitListData[i] = UnitListData{k, v.Name.String}
+			unitListData[i] = UnitListData{k, v.Name.String, v.Editorsuffix}
 			i++
 		}
 
