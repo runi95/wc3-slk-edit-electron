@@ -188,7 +188,8 @@ const index = {
             if (message.payload.UnitFunc.Ubertip) {
                 const rawValue = message.payload.UnitFunc.Ubertip;
                 const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
-                const value = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
+                const trimmedLeft = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
+                const value = trimmedLeft.replace(new RegExp("\\|n", "g"), "\n");
 
                 message.payload.UnitFunc.Ubertip = value;
             }
@@ -280,7 +281,7 @@ const index = {
             Field = input.id;
             if (type === "text" || type === "textarea" || type === "select-one") {
                 const containsNumberRegex = new RegExp("^(?:(?:\\d*)|(?:\\d+\\.\\d+))$");
-                Value = input.value;
+                Value = input.value.replace(new RegExp("\n", "g"), "|n");
 
                 if (!Value.match(containsNumberRegex)) {
                     Value = "\"" + Value + "\"";

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/asticode/go-astilectron"
 	"github.com/asticode/go-astilectron-bootstrap"
+	"github.com/kr/pretty"
 	"github.com/runi95/wts-parser/models"
 	"github.com/runi95/wts-parser/parser"
 	"github.com/shibukawa/configdir"
@@ -489,6 +490,7 @@ func saveUnitsToFile(location string) {
 	var campaignIndex = 0
 	for _, k := range unitFuncMap {
 		campaignUnitFuncs[campaignIndex] = k
+		log.Println(pretty.Sprint(k))
 		campaignIndex++
 	}
 
@@ -605,9 +607,6 @@ func loadSLK() {
 	}
 
 	unitFuncMap = parser.TxtToUnitFunc(campaignUnitFuncBytes)
-	for k := range unitFuncMap {
-		unitFuncMap[k].Ubertip.SetValid(strings.Replace(unitFuncMap[k].Ubertip.String, "|n", "\n", -1))
-	}
 
 	baseUnitMap = make(map[string]*models.SLKUnit)
 	i := 0
