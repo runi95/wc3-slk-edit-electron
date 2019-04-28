@@ -149,42 +149,6 @@ const index = {
                 })
             });
 
-            if (message.payload.UnitFunc.Missileart) {
-                const split = message.payload.UnitFunc.Missileart.split(",");
-                if (split.length > 0) {
-                    message.payload.UnitFunc.Missileart1 = split[0];
-                }
-                if (split.length > 1) {
-                    message.payload.UnitFunc.Missileart2 = split[1];
-                }
-            }
-            if (message.payload.UnitFunc.Missilearc) {
-                const split = message.payload.UnitFunc.Missilearc.split(",");
-                if (split.length > 0) {
-                    message.payload.UnitFunc.Missilearc1 = split[0];
-                }
-                if (split.length > 1) {
-                    message.payload.UnitFunc.Missilearc2 = split[1];
-                }
-            }
-            if (message.payload.UnitFunc.Missilespeed) {
-                const split = message.payload.UnitFunc.Missilespeed.split(",");
-                if (split.length > 0) {
-                    message.payload.UnitFunc.Missilespeed1 = split[0];
-                }
-                if (split.length > 1) {
-                    message.payload.UnitFunc.Missilespeed2 = split[1];
-                }
-            }
-            if (message.payload.UnitFunc.Missilehoming) {
-                const split = message.payload.UnitFunc.Missilehoming.split(",");
-                if (split.length > 0) {
-                    message.payload.UnitFunc.Missilehoming1 = split[0];
-                }
-                if (split.length > 1) {
-                    message.payload.UnitFunc.Missilehoming2 = split[1];
-                }
-            }
             if (message.payload.UnitFunc.Ubertip) {
                 const rawValue = message.payload.UnitFunc.Ubertip;
                 const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
@@ -279,12 +243,15 @@ const index = {
         } else {
             const type = input.type;
             Field = input.id;
+            fieldSplit = Field.split("-");
             if (type === "text" || type === "textarea" || type === "select-one") {
                 const containsNumberRegex = new RegExp("^(?:(?:\\d*)|(?:\\d+\\.\\d+))$");
                 Value = input.value.replace(new RegExp("\n", "g"), "|n");
 
-                if (!Value.match(containsNumberRegex)) {
-                    Value = "\"" + Value + "\"";
+                if (fieldSplit[0] === "SLKUnit" || Field === "UnitFunc-Ubertip") {
+                    if (!Value.match(containsNumberRegex)) {
+                        Value = "\"" + Value + "\"";
+                    }
                 }
             } else if (type === "checkbox") {
                 Value = input.checked ? "1" : "0";

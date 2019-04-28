@@ -218,6 +218,58 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			unitData.UnitFunc = unitFuncMap[unitId]
 			unitData.SLKUnit = baseUnitMap[unitId]
 
+			missileartSplit := strings.Split(unitData.UnitFunc.Missileart.String, ",")
+			missilearcSplit := strings.Split(unitData.UnitFunc.Missilearc.String, ",")
+			missilespeedSplit := strings.Split(unitData.UnitFunc.Missilespeed.String, ",")
+			missilehomingSplit := strings.Split(unitData.UnitFunc.Missilehoming.String, ",")
+			if !unitData.UnitFunc.Missileart1.Valid {
+				if len(missileartSplit) > 0 && len(missileartSplit[0]) > 0 {
+					unitData.UnitFunc.Missileart1.SetValid(missileartSplit[0])
+				}
+			}
+
+			if !unitData.UnitFunc.Missileart2.Valid {
+				if len(missileartSplit) > 1 && len(missileartSplit[1]) > 0 {
+					unitData.UnitFunc.Missileart2.SetValid(missileartSplit[1])
+				}
+			}
+
+			if !unitData.UnitFunc.Missilearc1.Valid {
+				if len(missilearcSplit) > 0 && len(missilearcSplit[0]) > 0 {
+					unitData.UnitFunc.Missilearc1.SetValid(missilearcSplit[0])
+				}
+			}
+
+			if !unitData.UnitFunc.Missilearc2.Valid {
+				if len(missilearcSplit) > 1 && len(missilearcSplit[1]) > 0 {
+					unitData.UnitFunc.Missilearc2.SetValid(missilearcSplit[1])
+				}
+			}
+
+			if !unitData.UnitFunc.Missilespeed1.Valid {
+				if len(missilespeedSplit) > 0 && len(missilespeedSplit[0]) > 0 {
+					unitData.UnitFunc.Missilespeed1.SetValid(missilespeedSplit[0])
+				}
+			}
+
+			if !unitData.UnitFunc.Missilespeed2.Valid {
+				if len(missilespeedSplit) > 1 && len(missilespeedSplit[1]) > 0 {
+					unitData.UnitFunc.Missilespeed2.SetValid(missilespeedSplit[1])
+				}
+			}
+
+			if !unitData.UnitFunc.Missilehoming1.Valid {
+				if len(missilehomingSplit) > 0 && len(missilehomingSplit[0]) > 0 {
+					unitData.UnitFunc.Missilehoming1.SetValid(missilehomingSplit[0])
+				}
+			}
+
+			if !unitData.UnitFunc.Missilehoming2.Valid {
+				if len(missilehomingSplit) > 1 && len(missilehomingSplit[1]) > 0 {
+					unitData.UnitFunc.Missilehoming2.SetValid(missilehomingSplit[1])
+				}
+			}
+
 			payload = unitData
 		} else {
 			payload = fmt.Errorf("invalid input")
