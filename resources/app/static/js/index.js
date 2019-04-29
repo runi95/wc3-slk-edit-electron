@@ -245,7 +245,7 @@ const index = {
             Field = input.id;
             fieldSplit = Field.split("-");
             if (type === "text" || type === "textarea" || type === "select-one") {
-                const containsNumberRegex = new RegExp("^(?:(?:\\d*)|(?:\\d+\\.\\d+))$");
+                const containsNumberRegex = new RegExp("^-?(?:(?:\\d*)|(?:\\d+\\.\\d+))$");
                 Value = input.value.replace(new RegExp("\n", "g"), "|n");
 
                 if (fieldSplit[0] === "SLKUnit" || Field === "UnitFunc-Ubertip") {
@@ -330,7 +330,7 @@ const index = {
         unit.SLKUnit.UnitWeapons.UnitWeapID = quotedUnitId;
         unit.SLKUnit.UnitAbilities.UnitAbilID = quotedUnitId;
 
-        const containsNumberRegex = new RegExp("^(?:(?:\\d*)|(?:\\d+\\.\\d+))$");
+        const containsNumberRegex = new RegExp("^-?(?:(?:\\d*)|(?:\\d+\\.\\d+))$");
         Object.keys(unit.SLKUnit.UnitWeapons).forEach(key => {
             const val = unit.SLKUnit.UnitWeapons[key];
             const isNotQuoted = !(val.startsWith("\"") && val.endsWith("\""));
