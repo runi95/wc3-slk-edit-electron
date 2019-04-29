@@ -3,6 +3,7 @@ clean:
 	rm -f bind_darwin_amd64.go
 	rm -f bind_linux_amd64.go
 	rm -f bind_windows_amd64.go
+	rm -rf auto
 	astilectron-bundler cc -v
 
 build:
