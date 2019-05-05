@@ -292,6 +292,16 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		} else {
 			payload = fmt.Errorf("invalid input")
 		}
+	case "loadIcon":
+		var imagePath string
+		if len(m.Payload) > 0 {
+			if err = json.Unmarshal(m.Payload, &imagePath); err != nil {
+				payload = err.Error()
+				return
+			}
+
+			payload = images[strings.Replace(strings.Replace(imagePath, "ReplaceableTextures\\CommandButtons", "Command", 1), "ReplaceableTextures\\PassiveButtons", "Passive", 1)]
+		}
 	case "saveUnit":
 		var unit UnitData
 		if len(m.Payload) > 0 {
@@ -322,6 +332,12 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 	case "initializeConfig":
 		initializeConfiguration()
 		payload = "success"
+	case "initializeIcons":
+		keys := make([]string, 0, len(images))
+		for k := range images {
+			keys = append(keys, strings.Replace(strings.Replace(k, "Command", "ReplaceableTextures\\CommandButtons", 1), "Passive", "ReplaceableTextures\\PassiveButtons", 1))
+		}
+		payload = keys
 	case "loadConfig":
 		payload = configuration
 	case "setConfig":

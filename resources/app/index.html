@@ -420,9 +420,13 @@
                                 </li>
                                 <li>
                                     <label for="UnitFunc-Art">Icon</label>
-                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Art" aria-describedby="icon"
-                                           placeholder="Icon" required/>
+                                    <div style="display: flex; align-items: center;">
+                                        <input oninput="index.saveFieldToUnit(this); index.loadIcon(this)" type="text" class="form-control"
+                                               id="UnitFunc-Art" aria-describedby="icon"
+                                               placeholder="Icon" list="IconList" autocomplete="on" required/>
+                                        <datalist id="IconList"></datalist>
+                                        <img id="iconImage" height="64" width="64">
+                                    </div>
                                 </li>
                                 <li>
                                     <label for="UnitFunc-ScoreScreenIcon">Score Screen Icon</label>

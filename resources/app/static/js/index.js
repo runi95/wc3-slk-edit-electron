@@ -1,7 +1,6 @@
 let unitDataList = [];
 let isLocked = false;
 let selectedUnitId = null;
-let icons = null;
 
 const addUnitTableData = (unitTableBody, unitData) => {
     const tr = document.createElement("tr");
@@ -176,6 +175,7 @@ const index = {
             });
 
             index.multiColorTextarea(document.getElementById("UnitFunc-Ubertip"));
+            index.loadIcon(document.getElementById("UnitFunc-Art"));
         });
     },
     activateFileUploadButton: function () {
@@ -275,6 +275,20 @@ const index = {
                 }
             });
         }
+    },
+    loadIcon: function (input) {
+        const message = {name: "loadIcon", payload: input.value};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            if (message.payload !== null && message.payload !== "") {
+                document.getElementById("iconImage").setAttribute("src", "data:image/png;base64," + message.payload);
+            }
+        });
     },
     saveUnit: function () {
         const forms = $("form");
@@ -528,6 +542,30 @@ const index = {
                 return;
             }
 
+            index.initializeIcons();
+        });
+    },
+    initializeIcons: function () {
+        const message = {name: "initializeIcons", payload: null};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            const dataList = document.getElementById("IconList");
+            let options = '';
+            message.payload.forEach(imagePath => {
+                /*
+                const option = document.createElement("option");
+                option.setAttribute("value", imagePath);
+                dataList.appendChild(option);
+                */
+                options += '<option value="' + imagePath + '" />';
+            });
+            dataList.innerHTML = options;
+
             index.loadConfig();
         });
     },
@@ -688,7 +726,7 @@ const index = {
                 return;
             }
 
-            index.loadConfig();
+            index.initializeIcons();
         });
     },
     newOutputFolder: function () {
