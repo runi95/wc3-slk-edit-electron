@@ -1,6 +1,7 @@
 let unitDataList = [];
 let isLocked = false;
 let selectedUnitId = null;
+let icons = null;
 
 const addUnitTableData = (unitTableBody, unitData) => {
     const tr = document.createElement("tr");
@@ -679,7 +680,7 @@ const index = {
         index.submitConfiguration(inDir, outDir);
     },
     submitConfiguration: function (inDir, outDir) {
-        const message = {name: "setConfig", payload: {InDir: inDir, OutDir: outDir}};
+        const message = {name: "setConfig", payload: {InDir: inDir, OutDir: outDir, IsLocked: false}};
         astilectron.sendMessage(message, function (message) {
             // Check for errors
             if (message.name === "error") {

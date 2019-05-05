@@ -404,7 +404,7 @@ func initializeConfiguration() {
 		log.Println(err)
 	}
 
-	if configuration.Version != "1.0.2" {
+	if configuration != nil && configuration.Version != "1.0.2" {
 		configuration.IsLocked = false
 		configuration.Version = "1.0.2"
 
@@ -417,11 +417,11 @@ func initializeConfiguration() {
 		}
 	}
 
-	if *input != "" {
+	if input != nil && *input != "" {
 		configuration.InDir = *input
 	}
 
-	if *output != "" {
+	if output != nil && *output != "" {
 		configuration.OutDir = *output
 	}
 
