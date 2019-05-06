@@ -2,13 +2,17 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"github.com/asticode/go-astilectron"
 	"github.com/asticode/go-astilectron-bootstrap"
 	"github.com/asticode/go-astilog"
 	"github.com/pkg/errors"
 	"github.com/runi95/wts-parser/models"
+	"github.com/shibukawa/configdir"
 	"gopkg.in/volatiletech/null.v6"
 	"log"
+	"os"
+	"path/filepath"
 )
 
 var (
@@ -49,10 +53,43 @@ type config struct {
 	Version  string
 }
 
+type chanWriter struct{}
+
 /**
 *    PRIVATE FUNCTIONS
  */
+func (w *chanWriter) Write(p []byte) (int, error) {
+	var err error
+	fmt.Println(string(p))
+
+	configDirs.LocalPath, err = filepath.Abs(".")
+	if err != nil {
+		fmt.Println(err)
+		return 0, err
+	}
+
+	folders := configDirs.QueryFolders(configdir.Global)
+	if len(folders) < 1 {
+		err = fmt.Errorf("failed to load output directories")
+
+		fmt.Println(err)
+		return 0, err
+	}
+
+	file, err := os.OpenFile(folders[0].Path+string(filepath.Separator)+"log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		fmt.Println(err)
+		return 0, err
+	}
+	defer file.Close()
+
+	return file.Write(p)
+}
+
 func main() {
+	writer := new(chanWriter)
+	log.SetOutput(writer)
+
 	log.Println("Starting up...")
 
 	// Init

@@ -100,11 +100,13 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		var fieldToUnit FieldToUnit
 		if len(m.Payload) > 0 {
 			if err = json.Unmarshal(m.Payload, &fieldToUnit); err != nil {
+				log.Println(err)
 				payload = err.Error()
 				return
 			}
 
 			if _, ok := baseUnitMap[fieldToUnit.UnitId]; !ok {
+				log.Println("Unit does not exist, returning unsaved")
 				payload = "unsaved"
 				return
 			}
@@ -144,6 +146,7 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		var unit string
 		if len(m.Payload) > 0 {
 			if err = json.Unmarshal(m.Payload, &unit); err != nil {
+				log.Println(err)
 				payload = err.Error()
 				return
 			}
@@ -152,12 +155,16 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			delete(unitFuncMap, unit)
 			payload = unit
 		} else {
-			payload = fmt.Errorf("invalid input")
+			err = fmt.Errorf("invalid input")
+
+			log.Println(err)
+			payload = err.Error()
 		}
 	case "getDisabledInputs":
 		var isLocked bool
 		if len(m.Payload) > 0 {
 			if err = json.Unmarshal(m.Payload, &isLocked); err != nil {
+				log.Println(err)
 				payload = err.Error()
 				return
 			}
@@ -167,6 +174,7 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 				err = saveConfig()
 				if err != nil {
+					log.Println(err)
 					payload = err.Error()
 					return
 				}
@@ -177,6 +185,7 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				var file []byte
 				file, err = ioutil.ReadFile(config.Path + string(os.PathSeparator) + DISABLED_INPUTS_FILENAME)
 				if err != nil {
+					log.Println(err)
 					payload = err.Error()
 					return
 				}
@@ -184,6 +193,7 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				var disabledInputs []string
 				err = json.Unmarshal([]byte(file), &disabledInputs)
 				if err != nil {
+					log.Println(err)
 					payload = err.Error()
 					return
 				}
@@ -193,12 +203,14 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				var file []byte
 				file, err = json.Marshal(defaultDisabledUnits)
 				if err != nil {
+					log.Println(err)
 					payload = err.Error()
 					return
 				}
 
 				err = saveConfigFile(DISABLED_INPUTS_FILENAME, file)
 				if err != nil {
+					log.Println(err)
 					payload = err.Error()
 					return
 				}
@@ -210,6 +222,7 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		var unitId string
 		if len(m.Payload) > 0 {
 			if err = json.Unmarshal(m.Payload, &unitId); err != nil {
+				log.Println(err)
 				payload = err.Error()
 				return
 			}
@@ -272,7 +285,10 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 			payload = unitData
 		} else {
-			payload = fmt.Errorf("invalid input")
+			err = fmt.Errorf("invalid input")
+
+			log.Println(err)
+			payload = err.Error()
 		}
 	case "generateUnitId":
 		payload = getNextValidUnitId(lastValidIndex)
@@ -280,6 +296,7 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		var outputDir string
 		if len(m.Payload) > 0 {
 			if err = json.Unmarshal(m.Payload, &outputDir); err != nil {
+				log.Println(err)
 				payload = err.Error()
 				return
 			}
@@ -290,12 +307,16 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			saveUnitsToFile(configuration.OutDir)
 			payload = "success" // TODO: Change this
 		} else {
-			payload = fmt.Errorf("invalid input")
+			err = fmt.Errorf("invalid input")
+
+			log.Println(err)
+			payload = err.Error()
 		}
 	case "loadIcon":
 		var imagePath string
 		if len(m.Payload) > 0 {
 			if err = json.Unmarshal(m.Payload, &imagePath); err != nil {
+				log.Println(err)
 				payload = err.Error()
 				return
 			}
@@ -306,7 +327,7 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		var unit UnitData
 		if len(m.Payload) > 0 {
 			if err = json.Unmarshal(m.Payload, &unit); err != nil {
-				log.Println(err.Error())
+				log.Println(err)
 				payload = err.Error()
 				return
 			}
@@ -316,7 +337,10 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 			payload = "success"
 		} else {
-			payload = fmt.Errorf("invalid input")
+			err = fmt.Errorf("invalid input")
+
+			log.Println(err)
+			payload = err.Error()
 		}
 	case "loadUnitData":
 		loadSLK()
@@ -343,6 +367,7 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 	case "setConfig":
 		if len(m.Payload) > 0 {
 			if err = json.Unmarshal(m.Payload, &configuration); err != nil {
+				log.Println(err)
 				payload = err.Error()
 				return
 			}
@@ -350,23 +375,29 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			makeConfigAbsolute()
 			err = saveConfig()
 			if err != nil {
+				log.Println(err)
 				payload = err.Error()
 				return
 			}
 
 			payload = "success"
 		} else {
-			payload = fmt.Errorf("invalid input")
+			err = fmt.Errorf("invalid input")
+
+			log.Println(err)
+			payload = err.Error()
 		}
 	case "updateLock":
 		if len(m.Payload) > 0 {
 			if err = json.Unmarshal(m.Payload, &configuration.IsLocked); err != nil {
+				log.Println(err)
 				payload = err.Error()
 				return
 			}
 
 			err = saveConfig()
 			if err != nil {
+				log.Println(err)
 				payload = err.Error()
 				return
 			}
