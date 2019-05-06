@@ -13,6 +13,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"runtime/debug"
 )
 
 var (
@@ -24,9 +25,9 @@ var (
 	w *astilectron.Window
 
 	// Flags
-	debug  = flag.Bool("d", false, "enables the debug mode")
-	input  = flag.String("input", "", "sets the input folder where the SLK files are stored")
-	output = flag.String("output", "", "sets the output folder where we'll save the resulting SLK files")
+	debugFlag = flag.Bool("d", false, "enables the debug mode")
+	input     = flag.String("input", "", "sets the input folder where the SLK files are stored")
+	output    = flag.String("output", "", "sets the output folder where we'll save the resulting SLK files")
 )
 
 /**
@@ -86,9 +87,18 @@ func (w *chanWriter) Write(p []byte) (int, error) {
 	return file.Write(p)
 }
 
+func catchPanic() {
+	if err := recover(); err != nil {
+		log.Println(err)
+		log.Println(string(debug.Stack()))
+	}
+}
+
 func main() {
 	writer := new(chanWriter)
 	log.SetOutput(writer)
+
+	defer catchPanic()
 
 	log.Println("Starting up...")
 
@@ -106,12 +116,12 @@ func main() {
 			AppIconDarwinPath:  "resources/icon.icns",
 			AppIconDefaultPath: "resources/icon.png",
 		},
-		Debug:       *debug,
+		Debug:       *debugFlag,
 		MenuOptions: []*astilectron.MenuItemOptions{},
 		OnWait: func(_ *astilectron.Astilectron, ws []*astilectron.Window, _ *astilectron.Menu, _ *astilectron.Tray, _ *astilectron.Menu) error {
 			w = ws[0]
 
-			if *debug {
+			if *debugFlag {
 				w.OpenDevTools()
 			}
 
