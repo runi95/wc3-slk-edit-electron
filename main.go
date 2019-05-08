@@ -54,12 +54,12 @@ type config struct {
 	Version  string
 }
 
-type chanWriter struct{}
+type logWriter struct{}
 
 /**
 *    PRIVATE FUNCTIONS
  */
-func (w *chanWriter) Write(p []byte) (int, error) {
+func (w *logWriter) Write(p []byte) (int, error) {
 	var err error
 	fmt.Println(string(p))
 
@@ -95,7 +95,7 @@ func catchPanic() {
 }
 
 func main() {
-	writer := new(chanWriter)
+	writer := new(logWriter)
 	log.SetOutput(writer)
 
 	defer catchPanic()
