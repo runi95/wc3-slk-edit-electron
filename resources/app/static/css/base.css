@@ -5,6 +5,24 @@ html, body {
     width: 100%;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #484848;
+}
+
+::-webkit-scrollbar-track {
+    background: #ddd;
+    border-radius: 20px;
+}
+
 .table {
     color: #fff;
 }
