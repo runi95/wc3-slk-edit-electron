@@ -458,7 +458,7 @@ func initializeConfiguration() {
 		err = saveConfig()
 		if err != nil {
 			log.Println("An error occurred while updating the configuration to the newest version")
-			if *debug {
+			if *debugFlag {
 				log.Println(err)
 			}
 		}
