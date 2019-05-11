@@ -2,6 +2,7 @@ let unitDataList = [];
 let isLocked = false;
 let selectedUnitId = null;
 const mdxModels = {};
+const unitModelNameToPath = {};
 
 const addUnitTableData = (unitTableBody, unitData) => {
     const tr = document.createElement("tr");
@@ -597,7 +598,7 @@ const index = {
             }
 
             const dataList = document.getElementById("IconList");
-            let options = '';
+            let options = "";
             message.payload.forEach(imagePath => {
                 /*
                 const option = document.createElement("option");
@@ -611,6 +612,9 @@ const index = {
             index.loadMdx();
         });
     },
+    changeMdxModel: function (input) {
+        loadMdxModel(input.value);
+    },
     loadMdx: function () {
         const message = {name: "loadMdx", payload: null};
         astilectron.sendMessage(message, function (message) {
@@ -620,8 +624,23 @@ const index = {
                 return;
             }
 
+            let options = "";
+            message.payload.forEach(unitModel => {
+                unitModelNameToPath[unitModel.Name] = unitModel.Path
+                options += '<option value="' + unitModel.Path + '">' + unitModel.Name + '</option>';
+            });
+
+            document.getElementById("model-selector").innerHTML = options;
+
             index.loadConfig();
         });
+    },
+    selectMdxModel: function () {
+        const modelFileInput = document.getElementById("SLKUnit-UnitUI-File");
+        modelFileInput.value = document.getElementById("model-selector").value;
+
+        $('#unit-model-modal').modal('toggle');
+        index.saveFieldToUnit(modelFileInput);
     },
     loadConfig: function () {
         const message = {name: "loadConfig", payload: null};

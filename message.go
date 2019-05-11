@@ -19,6 +19,7 @@ import (
 	"path/filepath"
 	"reflect"
 	"runtime"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -106,6 +107,25 @@ type EventMessage struct {
 	Payload interface{}
 }
 
+type UnitModel struct {
+	Name string
+	Path string
+}
+
+type UnitModels []UnitModel
+
+func (unitModels UnitModels) Len() int {
+	return len(unitModels)
+}
+
+func (unitModels UnitModels) Less(i, j int) bool {
+	return unitModels[i].Name < unitModels[j].Name
+}
+
+func (unitModels UnitModels) Swap(i, j int) {
+	unitModels[i], unitModels[j] = unitModels[j], unitModels[i]
+}
+
 func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload interface{}, err error) {
 	switch m.Name {
 	case "saveFieldToUnit":
@@ -174,7 +194,7 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			data, err := ioutil.ReadFile(folders[0].Path + string(filepath.Separator) + path)
 			if err != nil {
 				log.Println(err)
-				return 0, fmt.Errorf("hahaha")
+				return 0, fmt.Errorf("failed to fetch mdx models")
 			}
 
 			encoded := base64.StdEncoding.EncodeToString(data)
@@ -444,8 +464,18 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		}
 	case "loadMdx":
 		if len(m.Payload) > 0 {
+			folders := configDirs.QueryFolders(configdir.Global)
+			if len(folders) < 1 {
+				err = fmt.Errorf("failed to load config directory")
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+
+			path := folders[0].Path
+
 			if !configuration.IsDoneDownloadingModels {
-				err = startDownload(w)
+				err = startDownload(w, path)
 				if err != nil {
 					log.Println(err)
 					payload = err.Error()
@@ -462,7 +492,34 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				}
 			}
 
-			payload = "success"
+			var unitModelList UnitModels
+			walkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "units"
+
+			err = filepath.Walk(walkPath, func(currentPath string, info os.FileInfo, err error) error {
+				if err != nil {
+					return err
+				}
+
+				if !info.IsDir() {
+					index := strings.LastIndex(info.Name(), ".")
+					if index > -1 {
+						if info.Name()[index:] == ".mdx" {
+							unitModelList = append(unitModelList, UnitModel{info.Name()[:index], "units" + currentPath[len(walkPath):]})
+						}
+					}
+				}
+				return err
+			})
+
+			if err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+
+			sort.Sort(unitModelList)
+
+			payload = unitModelList
 		}
 	case "getOperatingSystem":
 		payload = runtime.GOOS
@@ -832,20 +889,14 @@ func SendDownloadProgressMessage(w *astilectron.Window, done chan int64, path st
 	}
 }
 
-func startDownload(w *astilectron.Window) error {
+func startDownload(w *astilectron.Window, path string) error {
 	w.SendMessage(EventMessage{"downloadStart", nil})
 
 	url := MODEL_DOWNLOAD_URL
 
-	folders := configDirs.QueryFolders(configdir.Global)
-	if len(folders) < 1 {
-		err := fmt.Errorf("failed to load config directory")
-		return err
-	}
-
 	start := time.Now()
 
-	file := folders[0].Path + string(filepath.Separator) + "temp.zip"
+	file := path + string(filepath.Separator) + "temp.zip"
 
 	log.Printf("Download started for %s...\n", file)
 
@@ -900,7 +951,7 @@ func startDownload(w *astilectron.Window) error {
 
 	w.SendMessage(EventMessage{"downloadTextUpdate", "Extracting..."})
 
-	unzipDestination := folders[0].Path + string(filepath.Separator) + "resources"
+	unzipDestination := path + string(filepath.Separator) + "resources"
 
 	err = os.Mkdir(unzipDestination, os.ModePerm)
 	if err != nil {

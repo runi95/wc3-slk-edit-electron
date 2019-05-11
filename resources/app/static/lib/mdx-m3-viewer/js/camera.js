@@ -74,15 +74,6 @@ function setupCamera(scene) {
     onResize();
     */
 
-    // Disable the context menu when right-clicking.
-    canvas.addEventListener("contextmenu", function(e) {
-        e.preventDefault();
-    });
-
-    canvas.addEventListener("selectstart", function(e) {
-        e.preventDefault();
-    });
-
     // Track mouse clicks.
     canvas.addEventListener("mousedown", function(e) {
         e.preventDefault();
