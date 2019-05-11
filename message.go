@@ -766,8 +766,7 @@ func loadSLK() {
 
 	unitAbilitiesBytes, err := ioutil.ReadFile(unitAbilitiesPath)
 	if err != nil {
-		log.Println(err)
-		os.Exit(10)
+		panic(err)
 	}
 
 	unitAbilitiesMap := parser.SlkToUnitAbilities(unitAbilitiesBytes)
@@ -776,8 +775,7 @@ func loadSLK() {
 
 	unitDataBytes, err := ioutil.ReadFile(unitDataPath)
 	if err != nil {
-		log.Println(err)
-		os.Exit(10)
+		panic(err)
 	}
 
 	unitDataMap := parser.SlkToUnitData(unitDataBytes)
@@ -786,8 +784,7 @@ func loadSLK() {
 
 	unitUIBytes, err := ioutil.ReadFile(unitUIPath)
 	if err != nil {
-		log.Println(err)
-		os.Exit(10)
+		panic(err)
 	}
 
 	unitUIMap := parser.SLKToUnitUI(unitUIBytes)
@@ -796,8 +793,7 @@ func loadSLK() {
 
 	unitWeaponsBytes, err := ioutil.ReadFile(unitWeaponsPath)
 	if err != nil {
-		log.Println(err)
-		os.Exit(10)
+		panic(err)
 	}
 
 	unitWeaponsMap := parser.SLKToUnitWeapons(unitWeaponsBytes)
@@ -806,8 +802,7 @@ func loadSLK() {
 
 	unitBalanceBytes, err := ioutil.ReadFile(unitBalancePath)
 	if err != nil {
-		log.Println(err)
-		os.Exit(10)
+		panic(err)
 	}
 
 	unitBalanceMap := parser.SLKToUnitBalance(unitBalanceBytes)
@@ -816,8 +811,7 @@ func loadSLK() {
 
 	campaignUnitFuncBytes, err := ioutil.ReadFile(campaignUnitPath)
 	if err != nil {
-		log.Println(err)
-		os.Exit(10)
+		panic(err)
 	}
 
 	unitFuncMap = parser.TxtToUnitFunc(campaignUnitFuncBytes)
