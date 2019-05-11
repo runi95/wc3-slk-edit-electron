@@ -330,6 +330,8 @@ const index = {
 
             if (message.payload !== null && message.payload !== "") {
                 document.getElementById("iconImage").setAttribute("src", "data:image/png;base64," + message.payload);
+            } else {
+                document.getElementById("iconImage").setAttribute("src", "emptyicon.png");
             }
         });
     },
