@@ -1,6 +1,8 @@
 package main
 
 import (
+	"archive/zip"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"github.com/asticode/go-astilectron"
@@ -9,13 +11,17 @@ import (
 	"github.com/runi95/wts-parser/parser"
 	"github.com/shibukawa/configdir"
 	"gopkg.in/volatiletech/null.v6"
+	"io"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"path/filepath"
 	"reflect"
 	"runtime"
+	"strconv"
 	"strings"
+	"time"
 )
 
 const (
@@ -23,6 +29,7 @@ const (
 	VENDOR_NAME              = "wc3-slk-edit"
 	CONFIG_FILENAME          = "config.json"
 	DISABLED_INPUTS_FILENAME = "disabled-inputs.json"
+	MODEL_DOWNLOAD_URL       = "http://www.maulbot.com/media/slk-editor-required-files.zip"
 )
 
 var (
@@ -94,7 +101,12 @@ type FieldToUnit struct {
 	Value  string
 }
 
-func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload interface{}, err error) {
+type EventMessage struct {
+	Name    string
+	Payload interface{}
+}
+
+func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload interface{}, err error) {
 	switch m.Name {
 	case "saveFieldToUnit":
 		var fieldToUnit FieldToUnit
@@ -141,6 +153,32 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			}
 
 			payload = "success"
+		}
+	case "fetchMdxModel":
+		var path string
+		if len(m.Payload) > 0 {
+			if err = json.Unmarshal(m.Payload, &path); err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+
+			folders := configDirs.QueryFolders(configdir.Global)
+			if len(folders) < 1 {
+				err = fmt.Errorf("failed to load config directory")
+
+				log.Println(err)
+				return 0, err
+			}
+
+			data, err := ioutil.ReadFile(folders[0].Path + string(filepath.Separator) + path)
+			if err != nil {
+				log.Println(err)
+				return 0, fmt.Errorf("hahaha")
+			}
+
+			encoded := base64.StdEncoding.EncodeToString(data)
+			payload = encoded
 		}
 	case "removeUnit":
 		var unit string
@@ -400,6 +438,28 @@ func HandleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				log.Println(err)
 				payload = err.Error()
 				return
+			}
+
+			payload = "success"
+		}
+	case "loadMdx":
+		if len(m.Payload) > 0 {
+			if !configuration.IsDoneDownloadingModels {
+				err = startDownload(w)
+				if err != nil {
+					log.Println(err)
+					payload = err.Error()
+					return
+				}
+
+				configuration.IsDoneDownloadingModels = true
+
+				err = saveConfig()
+				if err != nil {
+					log.Println(err)
+					payload = err.Error()
+					return
+				}
 			}
 
 			payload = "success"
@@ -733,4 +793,244 @@ func exists(path string) (bool, error) {
 	}
 
 	return true, err
+}
+
+func SendDownloadProgressMessage(w *astilectron.Window, done chan int64, path string, total int64) {
+	stop := false
+
+	for {
+		select {
+		case <-done:
+			stop = true
+		default:
+			file, err := os.Open(path)
+			if err != nil {
+				log.Println(err)
+			}
+
+			fileStat, err := file.Stat()
+			if err != nil {
+				log.Println(err)
+			}
+
+			size := fileStat.Size()
+
+			if size == 0 {
+				size = 1
+			}
+
+			percent := float64(size) / float64(total) * 50
+
+			w.SendMessage(EventMessage{"downloadPercentUpdate", percent})
+		}
+
+		if stop {
+			break
+		}
+
+		time.Sleep(time.Second)
+	}
+}
+
+func startDownload(w *astilectron.Window) error {
+	w.SendMessage(EventMessage{"downloadStart", nil})
+
+	url := MODEL_DOWNLOAD_URL
+
+	folders := configDirs.QueryFolders(configdir.Global)
+	if len(folders) < 1 {
+		err := fmt.Errorf("failed to load config directory")
+		return err
+	}
+
+	start := time.Now()
+
+	file := folders[0].Path + string(filepath.Separator) + "temp.zip"
+
+	log.Printf("Download started for %s...\n", file)
+
+	var err error
+
+	out, err := os.Create(file)
+	if err != nil {
+		return err
+	}
+
+	headResp, err := http.Head(url)
+	if err != nil {
+		return err
+	}
+
+	defer headResp.Body.Close()
+
+	size, err := strconv.Atoi(headResp.Header.Get("Content-Length"))
+	if err != nil {
+		return err
+	}
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+
+	defer resp.Body.Close()
+
+	w.SendMessage(EventMessage{"downloadTextUpdate", "Downloading..."})
+
+	done := make(chan int64)
+
+	go SendDownloadProgressMessage(w, done, file, int64(size))
+
+	n, err := io.Copy(out, resp.Body)
+	if err != nil {
+		done <- 0
+
+		return err
+	}
+
+	done <- n
+
+	err = out.Close()
+	if err != nil {
+		return err
+	}
+
+	elapsed := time.Since(start)
+	log.Printf("Download completed in %s\n", elapsed)
+
+	w.SendMessage(EventMessage{"downloadTextUpdate", "Extracting..."})
+
+	unzipDestination := folders[0].Path + string(filepath.Separator) + "resources"
+
+	err = os.Mkdir(unzipDestination, os.ModePerm)
+	if err != nil {
+		return err
+	}
+
+	_, err = Unzip(w, file, unzipDestination)
+	if err != nil {
+		return err
+	}
+
+	w.SendMessage(EventMessage{"downloadTextUpdate", "Cleaning up..."})
+
+	err = os.Remove(file)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DirSize(path string) (int64, error) {
+	var size int64
+	err := filepath.Walk(path, func(_ string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !info.IsDir() {
+			size += info.Size()
+		}
+		return err
+	})
+	return size, err
+}
+
+func SendExtractionProgressMessage(w *astilectron.Window, done chan int64, path string, total int64) {
+	stop := false
+
+	for {
+		select {
+		case <-done:
+			stop = true
+		default:
+
+			size, err := DirSize(path)
+			if err != nil {
+				log.Println(err)
+			}
+
+			if size == 0 {
+				size = 1
+			}
+
+			percent := 50 + (float64(size) / float64(total) * 50)
+
+			w.SendMessage(EventMessage{"downloadPercentUpdate", percent})
+		}
+
+		if stop {
+			break
+		}
+
+		time.Sleep(time.Second)
+	}
+}
+
+// Unzip will decompress a zip archive, moving all files and folders
+// within the zip file to an output directory
+func Unzip(w *astilectron.Window, src string, destination string) ([]string, error) {
+	var fileNames []string
+
+	r, err := zip.OpenReader(src)
+	if err != nil {
+		return fileNames, err
+	}
+
+	var totalSize int64
+	totalSize = 0
+
+	for _, f := range r.File {
+		totalSize += f.FileInfo().Size()
+	}
+
+	done := make(chan int64)
+
+	go SendExtractionProgressMessage(w, done, destination, totalSize)
+
+	for _, f := range r.File {
+		filePath := filepath.Join(destination, f.Name)
+
+		if !strings.HasPrefix(filePath, filepath.Clean(destination)+string(os.PathSeparator)) {
+			return fileNames, fmt.Errorf("%s: illegal file path", filePath)
+		}
+
+		fileNames = append(fileNames, filePath)
+
+		if f.FileInfo().IsDir() {
+			os.MkdirAll(filePath, os.ModePerm)
+			continue
+		}
+
+		if err = os.MkdirAll(filepath.Dir(filePath), os.ModePerm); err != nil {
+			return fileNames, err
+		}
+
+		outFile, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
+		if err != nil {
+			return fileNames, err
+		}
+
+		rc, err := f.Open()
+		if err != nil {
+			return fileNames, err
+		}
+
+		_, err = io.Copy(outFile, rc)
+
+		// Close the file without defer to close before next iteration of loop
+		outFile.Close()
+		rc.Close()
+
+		if err != nil {
+			return fileNames, err
+		}
+	}
+
+	err = r.Close()
+	if err != nil {
+		return fileNames, err
+	}
+
+	return fileNames, nil
 }

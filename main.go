@@ -48,10 +48,11 @@ type UnitData struct {
 *    PRIVATE STRUCTURES
  */
 type config struct {
-	InDir    string
-	OutDir   string
-	IsLocked bool
-	Version  string
+	InDir                   string
+	OutDir                  string
+	IsLocked                bool
+	IsDoneDownloadingModels bool
+	Version                 string
 }
 
 type logWriter struct{}
@@ -62,12 +63,6 @@ type logWriter struct{}
 func (w *logWriter) Write(p []byte) (int, error) {
 	var err error
 	fmt.Println(string(p))
-
-	configDirs.LocalPath, err = filepath.Abs(".")
-	if err != nil {
-		fmt.Println(err)
-		return 0, err
-	}
 
 	folders := configDirs.QueryFolders(configdir.Global)
 	if len(folders) < 1 {

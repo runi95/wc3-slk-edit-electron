@@ -1,6 +1,7 @@
 let unitDataList = [];
 let isLocked = false;
 let selectedUnitId = null;
+const mdxModels = {};
 
 const addUnitTableData = (unitTableBody, unitData) => {
     const tr = document.createElement("tr");
@@ -39,6 +40,33 @@ const index = {
     multiColorTextareaScroll: function (input) {
         document.getElementById("preview").scrollTop = input.scrollTop;
     },
+    loadMdxModel: function (path) {
+        if (mdxModels.hasOwnProperty(path)) {
+            return {src: mdxModels[path], fetch: false};
+        } else {
+            const fetchPromise = new Promise((resolve, reject) => {
+                astilectron.sendMessage({name: "fetchMdxModel", payload: path}, function (message) {
+                    // Check for errors
+                    if (message.name === "error") {
+                        // asticode.notifier.error(message.payload);
+                        reject(message.payload);
+                    } else {
+                        const binary_string = window.atob(message.payload);
+                        const len = binary_string.length;
+                        const bytes = new Uint8Array(len);
+                        for (let i = 0; i < len; i++) {
+                            bytes[i] = binary_string.charCodeAt(i);
+                        }
+
+                        const buf = bytes.buffer;
+                        mdxModels[path] = buf;
+                        resolve(buf);
+                    }
+                })
+            });
+            return {src: fetchPromise, fetch: true};
+        }
+    },
     init: function () {
         // Init
         asticode.loader.init();
@@ -46,6 +74,8 @@ const index = {
 
         // Wait for astilectron to be ready
         document.addEventListener('astilectron-ready', function () {
+            console.log("Initializing...");
+
             // Listen
             index.listen();
 
@@ -54,7 +84,18 @@ const index = {
     },
     listen: function () {
         astilectron.onMessage(function (message) {
-
+            switch (message.Name) {
+                case "downloadStart":
+                    document.getElementById("loadingwindow").hidden = true;
+                    document.getElementById("downloadwindow").hidden = false;
+                    break;
+                case "downloadPercentUpdate":
+                    document.getElementById("downloadbar").setAttribute("style", "width: " + message.Payload + "%");
+                    break;
+                case "downloadTextUpdate":
+                    document.getElementById("downloadtext").innerText = message.Payload;
+                    break;
+            }
         });
     },
     removeUnit: function () {
@@ -91,6 +132,7 @@ const index = {
 
             document.getElementById("inputselectwindow").hidden = true;
             document.getElementById("outputselectwindow").hidden = true;
+            document.getElementById("downloadwindow").hidden = true;
             document.getElementById("loadingwindow").hidden = true;
             document.getElementById("mainwindow").hidden = false;
         });
@@ -566,6 +608,18 @@ const index = {
             });
             dataList.innerHTML = options;
 
+            index.loadMdx();
+        });
+    },
+    loadMdx: function () {
+        const message = {name: "loadMdx", payload: null};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
             index.loadConfig();
         });
     },
@@ -584,6 +638,7 @@ const index = {
                 index.startMainWindow();
             } else {
                 document.getElementById("loadingwindow").hidden = true;
+                document.getElementById("downloadwindow").hidden = true;
                 document.getElementById("outputselectwindow").hidden = true;
                 document.getElementById("mainwindow").hidden = true;
                 document.getElementById("inputselectwindow").hidden = false;
@@ -737,8 +792,10 @@ const index = {
         document.getElementById("inputselectwindow").hidden = true;
         document.getElementById("outputselectwindow").hidden = true;
         document.getElementById("mainwindow").hidden = true;
+        document.getElementById("downloadwindow").hidden = true;
         document.getElementById("loadingwindow").hidden = false;
 
+        // initMdx();
         index.activateHotkeys();
         index.loadUnitData();
     },

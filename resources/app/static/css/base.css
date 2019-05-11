@@ -23,6 +23,18 @@ html, body {
     border-radius: 20px;
 }
 
+.progress-bar {
+    -o-transition: width 1s;
+    -moz-transition: width 1s;
+    -webkit-transition: width 1s;
+    transition: width 1s;
+
+    -o-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -webkit-transition-timing-function: linear;
+    transition-timing-function: linear;
+}
+
 .table {
     color: #fff;
 }

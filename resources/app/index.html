@@ -15,6 +15,10 @@
     <script src="static/lib/astiloader/astiloader.js"></script>
     <script src="static/lib/astinotifier/astinotifier.js"></script>
     <script src="static/lib/bootstrap-4-3-1/js/bootstrap.min.js"></script>
+    <script src="static/lib/mdx-m3-viewer/js/viewer.min.js"></script>
+    <script src="static/lib/mdx-m3-viewer/js/common.js"></script>
+    <script src="static/lib/mdx-m3-viewer/js/camera.js"></script>
+    <script src="static/lib/mdx-m3-viewer/js/mdx.js"></script>
     <script src="static/js/index.js"></script>
     <script>if (window.module) module = window.module;</script>
 </head>
@@ -103,6 +107,20 @@
                         </button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="downloadwindow" hidden>
+    <div class="color-secondary">
+        <h1 class="text-center">SLK Editor</h1>
+        <div class="justify-content-center col-6 offset-3" style="padding-top: 20px;">
+            <div class="progress">
+                <div id="downloadbar" class="progress-bar" style="width: 0;" role="progressbar" aria-valuenow="50"
+                     aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="text-center">
+                <span id="downloadtext"></span>
             </div>
         </div>
     </div>
@@ -421,7 +439,8 @@
                                 <li>
                                     <label for="UnitFunc-Art">Icon</label>
                                     <div style="display: flex; align-items: center;">
-                                        <input oninput="index.saveFieldToUnit(this); index.loadIcon(this)" type="text" class="form-control"
+                                        <input oninput="index.saveFieldToUnit(this); index.loadIcon(this)" type="text"
+                                               class="form-control"
                                                id="UnitFunc-Art" aria-describedby="icon"
                                                placeholder="Icon" list="IconList" autocomplete="on" required/>
                                         <datalist id="IconList"></datalist>
