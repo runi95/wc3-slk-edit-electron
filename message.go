@@ -415,16 +415,12 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		initializeConfiguration()
 		payload = "success"
 	case "initializeIcons":
-		CrashWithMessage(w, "This is a test!")
-		var i = 0
 		iconModels := make(UnitModels, 0, len(images))
 		for k := range images {
 			path := strings.Replace(strings.Replace(k, "Command", "ReplaceableTextures\\CommandButtons", 1), "Passive", "ReplaceableTextures\\PassiveButtons", 1)
 			name := strings.Replace(strings.Replace(strings.Replace(k, "Command\\BTN", "", 1), "Passive\\PASBTN", "", 1), ".blp", "", 1)
 
 			iconModels = append(iconModels, UnitModel{name, path})
-			// iconModels[i] = UnitModel{name, path}
-			i++
 		}
 
 		sort.Sort(iconModels)
