@@ -44,6 +44,11 @@ You can simply download the Warcraft_III_SLK_Edit_macos_amd64.zip file from [lat
 
 If you've downloaded the executable or the binary file then everything should work out of the box. If you do not want to download the binaries then you can follow the steps above to compile the program yourself
 
+## Hotkeys
+
+`CTRL + F` - Immediately gives focus to the unit search field
+`CTRL + S` - Force saves the unit and updates the unit table
+
 ## Advanced inputs
 
 You can show or hide advanced inputs that are rarely used by clicking the :lock: and :unlock: icons at the top left corner.
@@ -52,3 +57,4 @@ You can show or hide advanced inputs that are rarely used by clicking the :lock:
 
 ![Preview Image](/images/Preview-Image-1.png)
 ![Preview Image](/images/Preview-Image-2.png)
+![Preview Image](/images/Preview-Image-3.png)
