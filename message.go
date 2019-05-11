@@ -584,9 +584,9 @@ func initializeConfiguration() {
 		log.Println(err)
 	}
 
-	if configuration != nil && configuration.Version != "1.0.2" {
+	if configuration != nil && configuration.Version != "1.0.4" {
 		configuration.IsLocked = false
-		configuration.Version = "1.0.2"
+		configuration.Version = "1.0.4"
 
 		err = saveConfig()
 		if err != nil {
