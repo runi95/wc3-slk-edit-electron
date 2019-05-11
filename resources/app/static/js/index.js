@@ -96,6 +96,10 @@ const index = {
                 case "downloadTextUpdate":
                     document.getElementById("downloadtext").innerText = message.Payload;
                     break;
+                case "crash":
+                    astilectron.showErrorBox("Crash", message.Payload);
+                    astilectron.sendMessage({name: "closeWindow", payload: null}, function (message) {});
+                    break;
             }
         });
     },
@@ -318,6 +322,30 @@ const index = {
                 }
             });
         }
+    },
+    changeModalIcon: function (input) {
+        const message = {name: "loadIcon", payload: input.value};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            if (message.payload !== null && message.payload !== "") {
+                document.getElementById("iconModal").setAttribute("src", "data:image/png;base64," + message.payload);
+            } else {
+                document.getElementById("iconModal").setAttribute("src", "emptyicon.png");
+            }
+        });
+    },
+    selectUnitIcon: function () {
+        const iconInput = document.getElementById("UnitFunc-Art");
+        iconInput.value = document.getElementById("icon-selector").value;
+        $('#unit-icon-modal').modal('toggle');
+
+        index.saveFieldToUnit(iconInput);
+        index.loadIcon(iconInput);
     },
     loadIcon: function (input) {
         const message = {name: "loadIcon", payload: input.value};
@@ -599,17 +627,12 @@ const index = {
                 return;
             }
 
-            const dataList = document.getElementById("IconList");
+            const iconSelector = document.getElementById("icon-selector");
             let options = "";
-            message.payload.forEach(imagePath => {
-                /*
-                const option = document.createElement("option");
-                option.setAttribute("value", imagePath);
-                dataList.appendChild(option);
-                */
-                options += '<option value="' + imagePath + '" />';
+            message.payload.forEach(iconModels => {
+                options += '<option value="' + iconModels.Path + '">' + iconModels.Name + '</option>';
             });
-            dataList.innerHTML = options;
+            iconSelector.innerHTML = options;
 
             index.loadMdx();
         });

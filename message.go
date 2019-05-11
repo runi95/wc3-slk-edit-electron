@@ -415,11 +415,21 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		initializeConfiguration()
 		payload = "success"
 	case "initializeIcons":
-		keys := make([]string, 0, len(images))
+		CrashWithMessage(w, "This is a test!")
+		var i = 0
+		iconModels := make(UnitModels, 0, len(images))
 		for k := range images {
-			keys = append(keys, strings.Replace(strings.Replace(k, "Command", "ReplaceableTextures\\CommandButtons", 1), "Passive", "ReplaceableTextures\\PassiveButtons", 1))
+			path := strings.Replace(strings.Replace(k, "Command", "ReplaceableTextures\\CommandButtons", 1), "Passive", "ReplaceableTextures\\PassiveButtons", 1)
+			name := strings.Replace(strings.Replace(strings.Replace(k, "Command\\BTN", "", 1), "Passive\\PASBTN", "", 1), ".blp", "", 1)
+
+			iconModels = append(iconModels, UnitModel{name, path})
+			// iconModels[i] = UnitModel{name, path}
+			i++
 		}
-		payload = keys
+
+		sort.Sort(iconModels)
+
+		payload = iconModels
 	case "loadConfig":
 		payload = configuration
 	case "setConfig":
@@ -523,6 +533,16 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		}
 	case "getOperatingSystem":
 		payload = runtime.GOOS
+	case "hideWindow":
+		err = w.Hide()
+		if err != nil {
+			panic(err)
+		}
+	case "closeWindow":
+		err = w.Close()
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	return
@@ -766,7 +786,7 @@ func loadSLK() {
 
 	unitAbilitiesBytes, err := ioutil.ReadFile(unitAbilitiesPath)
 	if err != nil {
-		panic(err)
+		CrashWithMessage(w, err.Error())
 	}
 
 	unitAbilitiesMap := parser.SlkToUnitAbilities(unitAbilitiesBytes)
@@ -775,7 +795,7 @@ func loadSLK() {
 
 	unitDataBytes, err := ioutil.ReadFile(unitDataPath)
 	if err != nil {
-		panic(err)
+		CrashWithMessage(w, err.Error())
 	}
 
 	unitDataMap := parser.SlkToUnitData(unitDataBytes)
@@ -784,7 +804,7 @@ func loadSLK() {
 
 	unitUIBytes, err := ioutil.ReadFile(unitUIPath)
 	if err != nil {
-		panic(err)
+		CrashWithMessage(w, err.Error())
 	}
 
 	unitUIMap := parser.SLKToUnitUI(unitUIBytes)
@@ -793,7 +813,7 @@ func loadSLK() {
 
 	unitWeaponsBytes, err := ioutil.ReadFile(unitWeaponsPath)
 	if err != nil {
-		panic(err)
+		CrashWithMessage(w, err.Error())
 	}
 
 	unitWeaponsMap := parser.SLKToUnitWeapons(unitWeaponsBytes)
@@ -802,7 +822,7 @@ func loadSLK() {
 
 	unitBalanceBytes, err := ioutil.ReadFile(unitBalancePath)
 	if err != nil {
-		panic(err)
+		CrashWithMessage(w, err.Error())
 	}
 
 	unitBalanceMap := parser.SLKToUnitBalance(unitBalanceBytes)
@@ -811,7 +831,7 @@ func loadSLK() {
 
 	campaignUnitFuncBytes, err := ioutil.ReadFile(campaignUnitPath)
 	if err != nil {
-		panic(err)
+		CrashWithMessage(w, err.Error())
 	}
 
 	unitFuncMap = parser.TxtToUnitFunc(campaignUnitFuncBytes)
@@ -1078,4 +1098,8 @@ func Unzip(w *astilectron.Window, src string, destination string) ([]string, err
 	}
 
 	return fileNames, nil
+}
+
+func CrashWithMessage(w *astilectron.Window, message string) {
+	w.SendMessage(EventMessage{"crash", message})
 }

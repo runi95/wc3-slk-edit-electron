@@ -57,6 +57,29 @@
         </div>
     </div>
 </div>
+<div class="modal" id="unit-icon-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Unit Icon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span style="color: #fff;" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center;">
+                    <img src="emptyicon.png" id="iconModal" height="64" width="64">
+                </div>
+                <select id="icon-selector" class="custom-select-no-validation"
+                        onchange="index.changeModalIcon(this)"></select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="index.selectUnitIcon()">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="loadingwindow">
     <div class="color-secondary">
         <h1 class="text-center">SLK Editor</h1>
@@ -468,8 +491,10 @@
                                         <input oninput="index.saveFieldToUnit(this); index.loadIcon(this)" type="text"
                                                class="form-control"
                                                id="UnitFunc-Art" aria-describedby="icon"
-                                               placeholder="Icon" list="IconList" autocomplete="on" required/>
-                                        <datalist id="IconList"></datalist>
+                                               placeholder="Icon" autocomplete="on" required/>
+                                        <div class="btn div-btn" data-toggle="modal"
+                                             data-target="#unit-icon-modal">...
+                                        </div>
                                         <img src="emptyicon.png" id="iconImage" height="64" width="64">
                                     </div>
                                 </li>

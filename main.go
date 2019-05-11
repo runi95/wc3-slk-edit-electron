@@ -13,7 +13,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"runtime/debug"
 )
 
 var (
@@ -82,18 +81,9 @@ func (w *logWriter) Write(p []byte) (int, error) {
 	return file.Write(p)
 }
 
-func catchPanic() {
-	if err := recover(); err != nil {
-		log.Println(err)
-		log.Println(string(debug.Stack()))
-	}
-}
-
 func main() {
 	writer := new(logWriter)
 	log.SetOutput(writer)
-
-	defer catchPanic()
 
 	log.Println("Starting up...")
 
