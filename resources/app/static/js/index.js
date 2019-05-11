@@ -654,6 +654,9 @@ const index = {
             }
 
             if (message.payload !== null) {
+                if (message.payload.Version) {
+                    document.getElementById("version-info").innerText = message.payload.Version
+                }
                 document.getElementById("outputFolderInput").value = message.payload.OutDir;
                 index.disableInputs(message.payload.IsLocked);
                 index.startMainWindow();
