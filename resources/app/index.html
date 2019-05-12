@@ -80,23 +80,16 @@
         </div>
     </div>
 </div>
-<div id="loadingwindow">
-    <div class="color-secondary">
-        <h1 class="text-center">SLK Editor</h1>
-        <div class="d-flex justify-content-center" style="padding-top: 10px;">
-            <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
+<div class="modal" id="options-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-cog"></i> Options</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span style="color: #fff;" aria-hidden="true">&times;</span>
+                </button>
             </div>
-        </div>
-    </div>
-</div>
-<div id="inputselectwindow" hidden>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-4 offset-4">
-                <div class="text-center">
-                    Please select your input folder...
-                </div>
+            <div class="modal-body">
                 <div class="form-dark">
                     <div style="display: flex;">
                         <input type="file" id="hiddenFileUploadInputLoadInput" hidden
@@ -109,33 +102,6 @@
                                 onclick="index.activateFileUploadButtonLoadInput()">...
                         </button>
                     </div>
-                    <div style="display: flex; padding-top: 5px; align-items: center;">
-                        <div style="padding-right: 10px;">
-                            Output folder is
-                        </div>
-                        <button style="white-space: nowrap;" class="btn" tabindex="-1"
-                                onclick="index.submitConfigurationSame()">Same
-                        </button>
-                        <div style="padding-left: 10px; padding-right: 10px;">
-                            or
-                        </div>
-                        <button style="white-space: nowrap;" class="btn" tabindex="-1"
-                                onclick="index.newOutputFolder()">New Folder
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="outputselectwindow" hidden>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-4 offset-4">
-                <div class="text-center">
-                    Please select your output folder...
-                </div>
-                <div class="form-dark">
                     <div style="display: flex;">
                         <input type="file" id="hiddenFileUploadInputLoadOutput" hidden
                                onchange="index.updateOutputConfigPath()"
@@ -147,12 +113,21 @@
                                 onclick="index.activateFileUploadButtonLoadOutput()">...
                         </button>
                     </div>
-                    <div style="padding-top: 5px;">
-                        <button style="white-space: nowrap;" class="btn btn-block" tabindex="-1"
-                                onclick="index.submitConfigurationDifferent()">Submit
-                        </button>
-                    </div>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="index.saveOptions()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="loadingwindow">
+    <div class="color-secondary">
+        <h1 class="text-center">SLK Editor</h1>
+        <div class="d-flex justify-content-center" style="padding-top: 10px;">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
             </div>
         </div>
     </div>
@@ -178,8 +153,17 @@
             Editor
         </a>
         <div id="version-info" class="mr-3"></div>
-        <div class="div-btn mr-auto"><i id="modeLock" class="fas fa-unlock"
-                                        onclick="index.disableInputs(!isLocked)"></i></div>
+        <div class="div-btn mr-3"><i id="modeLock" class="fas fa-unlock"
+                                     onclick="index.disableInputs(!isLocked)"></i>
+        </div>
+        <div class="div-btn mr-3">
+            <i class="fas fa-cog" data-toggle="modal"
+               data-target="#options-modal"></i>
+        </div>
+        <div class="div-btn mr-auto">
+            <span id="savedSpan"><i class="fas fa-save"></i> Save files</span>
+            <span id="unsavedSpan" hidden><i class="fas fa-save"></i> <i>Save files*</i></span>
+        </div>
         <ul class="nav nav-pills justify-content-end">
             <li class="nav-item">
                 <a class="nav-link" href="#meta-section">Meta</a>
@@ -217,20 +201,6 @@
         <div class="row" style="height: 100%;">
             <div class="col-4" style="height: 100%; display: flex; flex-direction: column;">
                 <div class="form-dark">
-                    <div style="display: flex;">
-                        <input type="file" id="hiddenFileUploadInput" hidden onchange="index.updateOutputFolder()"
-                               webkitdirectory directory/>
-                        <input type="text" class="form-control" id="outputFolderInput"
-                               aria-describedby="output folder path"
-                               placeholder="./input"/>
-                        <button style="white-space: nowrap;" class="btn" tabindex="-1"
-                                onclick="index.activateFileUploadButton()">...
-                        </button>
-                        <button style="white-space: nowrap;" class="btn" tabindex="-1" onclick="index.saveToFile()">🖫
-                            Save
-                            Files
-                        </button>
-                    </div>
                     <div class="col-auto" style="padding: 0;">
                         <label class="sr-only" for="searchInput">Search</label>
                         <div class="input-group mb-2">
@@ -240,8 +210,11 @@
                             <input type="text" class="form-control" id="searchInput" placeholder="search"
                                    oninput="index.search(this)">
                             <div style="display: flex; align-items: center;">
-                                <input type="checkbox" id="Regex-Toggle" style="margin-left: 5px;" onchange="index.setRegexSearch(!isRegexSearch);" aria-label="Regex" tabindex="-1"/>
-                                <label for="Regex-Toggle" style="margin: auto 0 auto 3px; padding-bottom: 4px;">Regex</label>
+                                <input type="checkbox" id="Regex-Toggle" style="margin-left: 5px;"
+                                       onchange="index.setRegexSearch(!isRegexSearch);" aria-label="Regex"
+                                       tabindex="-1"/>
+                                <label for="Regex-Toggle"
+                                       style="margin: auto 0 auto 3px; padding-bottom: 4px;">Regex</label>
                             </div>
                         </div>
                     </div>

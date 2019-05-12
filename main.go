@@ -47,8 +47,8 @@ type UnitData struct {
 *    PRIVATE STRUCTURES
  */
 type config struct {
-	InDir                   string
-	OutDir                  string
+	InDir                   *string
+	OutDir                  *string
 	IsLocked                bool
 	IsDoneDownloadingModels bool
 	IsRegexSearch           bool

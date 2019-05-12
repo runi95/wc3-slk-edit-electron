@@ -81,7 +81,7 @@ const index = {
             // Listen
             index.listen();
 
-            index.initializeConfig();
+            index.loadConfig();
         })
     },
     listen: function () {
@@ -99,7 +99,8 @@ const index = {
                     break;
                 case "crash":
                     astilectron.showErrorBox("Crash", message.Payload);
-                    astilectron.sendMessage({name: "closeWindow", payload: null}, function (message) {});
+                    astilectron.sendMessage({name: "closeWindow", payload: null}, function (message) {
+                    });
                     break;
             }
         });
@@ -136,8 +137,6 @@ const index = {
                 addUnitTableData(unitTableBody, unitData);
             });
 
-            document.getElementById("inputselectwindow").hidden = true;
-            document.getElementById("outputselectwindow").hidden = true;
             document.getElementById("downloadwindow").hidden = true;
             document.getElementById("loadingwindow").hidden = true;
             document.getElementById("mainwindow").hidden = false;
@@ -232,17 +231,8 @@ const index = {
             index.loadIcon(document.getElementById("UnitFunc-Art"));
         });
     },
-    activateFileUploadButton: function () {
-        $("#hiddenFileUploadInput").click();
-    },
     saveToFile: function () {
-        const input = $("#outputFolderInput");
-
-        if (input.length < 1)
-            return;
-
-        const outputDir = input[0].value;
-        const message = {name: "saveToFile", payload: outputDir};
+        const message = {name: "saveToFile", payload: null};
         astilectron.sendMessage(message, function (message) {
             // Check for errors
             if (message.name === "error") {
@@ -250,20 +240,6 @@ const index = {
                 return;
             }
         });
-    },
-    updateOutputFolder: function () {
-        const hiddenInput = document.getElementById("hiddenFileUploadInput");
-        const input = document.getElementById("outputFolderInput");
-
-        if (!hiddenInput.files || hiddenInput.files.length < 1)
-            return;
-
-        const updatedValue = hiddenInput.files[0].path;
-
-        if (!updatedValue)
-            return;
-
-        input.value = updatedValue;
     },
     saveFieldToUnit: function (input) {
         if (!document.getElementById("unitId-form").checkValidity())
@@ -635,20 +611,8 @@ const index = {
             index.search(document.getElementById("searchInput"));
         });
     },
-    initializeConfig: function () {
-        const message = {name: "initializeConfig", payload: null};
-        astilectron.sendMessage(message, function (message) {
-            // Check for errors
-            if (message.name === "error") {
-                asticode.notifier.error(message.payload);
-                return;
-            }
-
-            index.initializeIcons();
-        });
-    },
-    initializeIcons: function () {
-        const message = {name: "initializeIcons", payload: null};
+    loadIcons: function () {
+        const message = {name: "loadIcons", payload: null};
         astilectron.sendMessage(message, function (message) {
             // Check for errors
             if (message.name === "error") {
@@ -686,7 +650,7 @@ const index = {
 
             document.getElementById("model-selector").innerHTML = options;
 
-            index.loadConfig();
+            index.startMainWindow()
         });
     },
     selectMdxModel: function () {
@@ -705,21 +669,13 @@ const index = {
                 return;
             }
 
-            if (message.payload !== null) {
-                if (message.payload.Version) {
-                    document.getElementById("version-info").innerText = message.payload.Version
-                }
-                document.getElementById("outputFolderInput").value = message.payload.OutDir;
-                index.disableInputs(message.payload.IsLocked);
-                index.setRegexSearch(message.payload.IsRegexSearch);
-                index.startMainWindow();
-            } else {
-                document.getElementById("loadingwindow").hidden = true;
-                document.getElementById("downloadwindow").hidden = true;
-                document.getElementById("outputselectwindow").hidden = true;
-                document.getElementById("mainwindow").hidden = true;
-                document.getElementById("inputselectwindow").hidden = false;
-            }
+            document.getElementById("version-info").innerText = message.payload.Version;
+            document.getElementById("configInput").value = message.payload.InDir;
+            document.getElementById("configOutput").value = message.payload.OutDir;
+            index.disableInputs(message.payload.IsLocked);
+            index.setRegexSearch(message.payload.IsRegexSearch);
+
+            index.loadIcons();
         });
     },
     disableInputs: function (bool) {
@@ -837,42 +793,11 @@ const index = {
 
         input.value = updatedValue;
     },
-    submitConfigurationDifferent: function () {
-        const inDir = document.getElementById("configInput").value;
-        const outDir = document.getElementById("configOutput").value;
-
-        index.submitConfiguration(inDir, outDir);
-    },
-    submitConfigurationSame: function () {
-        const inDir = document.getElementById("configInput").value;
-        const outDir = inDir;
-
-        index.submitConfiguration(inDir, outDir);
-    },
-    submitConfiguration: function (inDir, outDir) {
-        const message = {name: "setConfig", payload: {InDir: inDir, OutDir: outDir, IsLocked: false}};
-        astilectron.sendMessage(message, function (message) {
-            // Check for errors
-            if (message.name === "error") {
-                asticode.notifier.error(message.payload);
-                return;
-            }
-
-            index.initializeIcons();
-        });
-    },
-    newOutputFolder: function () {
-        document.getElementById("inputselectwindow").hidden = true;
-        document.getElementById("outputselectwindow").hidden = false;
-    },
     startMainWindow: function () {
-        document.getElementById("inputselectwindow").hidden = true;
-        document.getElementById("outputselectwindow").hidden = true;
         document.getElementById("mainwindow").hidden = true;
         document.getElementById("downloadwindow").hidden = true;
         document.getElementById("loadingwindow").hidden = false;
 
-        // initMdx();
         index.activateHotkeys();
         index.loadUnitData();
     },
@@ -916,6 +841,20 @@ const index = {
             isRegexSearch = bool;
             document.getElementById("Regex-Toggle").checked = isRegexSearch;
             index.search(document.getElementById("searchInput"));
+        });
+    },
+    saveOptions: function () {
+        const InDir = document.getElementById("configInput").value;
+        const OutDir = document.getElementById("configOutput").value;
+        const message = {name: "saveOptions", payload: { InDir, OutDir }};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            $('#options-modal').modal('toggle');
         });
     }
 };

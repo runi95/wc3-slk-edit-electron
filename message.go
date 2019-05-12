@@ -40,9 +40,10 @@ var (
 	lastValidIndex int
 
 	// Private Initialized Variables
-	configDirs                   = configdir.New(VENDOR_NAME, "")
-	configuration        *config = nil
-	defaultDisabledUnits         = []string{
+	configDirs                             = configdir.New(VENDOR_NAME, "")
+	configuration                          = &config{InDir: nil, OutDir: nil, IsLocked: false, IsDoneDownloadingModels: false, IsRegexSearch: false, Version: ""}
+	globalConfig         *configdir.Config = nil
+	defaultDisabledUnits                   = []string{
 		"SLKUnit-UnitUI-Blend",
 		"SLKUnit-UnitWeapons-Castbsw",
 		"SLKUnit-UnitWeapons-Castpt",
@@ -100,6 +101,11 @@ type FieldToUnit struct {
 	UnitId string
 	Field  string
 	Value  string
+}
+
+type ConfigurationDirectories struct {
+	InDir  *string
+	OutDir *string
 }
 
 type EventMessage struct {
@@ -351,25 +357,11 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 	case "generateUnitId":
 		payload = getNextValidUnitId(lastValidIndex)
 	case "saveToFile":
-		var outputDir string
-		if len(m.Payload) > 0 {
-			if err = json.Unmarshal(m.Payload, &outputDir); err != nil {
-				log.Println(err)
-				payload = err.Error()
-				return
-			}
-
-			configuration.OutDir = outputDir
-			makeConfigAbsolute()
-
-			saveUnitsToFile(configuration.OutDir)
-			payload = "success" // TODO: Change this
-		} else {
-			err = fmt.Errorf("invalid input")
-
-			log.Println(err)
-			payload = err.Error()
+		if configuration.OutDir != nil {
+			saveUnitsToFile(*configuration.OutDir)
 		}
+
+		payload = configuration.OutDir
 	case "loadIcon":
 		var imagePath string
 		if len(m.Payload) > 0 {
@@ -411,10 +403,7 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		}
 
 		payload = unitListData
-	case "initializeConfig":
-		initializeConfiguration()
-		payload = "success"
-	case "initializeIcons":
+	case "loadIcons":
 		iconModels := make(UnitModels, 0, len(images))
 		for k := range images {
 			path := strings.Replace(strings.Replace(k, "Command", "ReplaceableTextures\\CommandButtons", 1), "Passive", "ReplaceableTextures\\PassiveButtons", 1)
@@ -427,16 +416,83 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 		payload = iconModels
 	case "loadConfig":
-		payload = configuration
-	case "setConfig":
-		if len(m.Payload) > 0 {
-			if err = json.Unmarshal(m.Payload, &configuration); err != nil {
+		queryResult := configDirs.QueryFolders(configdir.Global)
+		if len(queryResult) < 1 {
+			err = fmt.Errorf("failed to locate the configuration directory")
+			log.Println(err)
+			CrashWithMessage(w, err.Error())
+			payload = err.Error()
+			return
+		}
+
+		globalConfig = queryResult[0]
+		configPath := globalConfig.Path + string(filepath.Separator) + CONFIG_FILENAME
+
+		var flag bool
+		if flag, err = exists(configPath); err != nil || !flag {
+			err = saveConfig()
+			if err != nil {
+				log.Println(err)
+				CrashWithMessage(w, err.Error())
+				payload = err.Error()
+				return
+			}
+		} else {
+			var fileData []byte
+			fileData, err = ioutil.ReadFile(configPath)
+			if err != nil {
 				log.Println(err)
 				payload = err.Error()
 				return
 			}
 
-			makeConfigAbsolute()
+			if err = json.Unmarshal(fileData, &configuration); err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+		}
+
+		if input != nil && *input != "" {
+			configuration.InDir = input
+		}
+
+		if output != nil && *output != "" {
+			configuration.OutDir = output
+		}
+
+		payload = configuration
+	case "saveOptions":
+		if m.Payload != nil {
+			var configurationDirectories ConfigurationDirectories
+
+			if err = json.Unmarshal(m.Payload, &configurationDirectories); err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+
+			configuration.InDir = configurationDirectories.InDir
+			configuration.OutDir = configurationDirectories.OutDir
+
+			if configuration.InDir != nil {
+				absolutePathInDir, err := filepath.Abs(*configuration.InDir)
+				if err != nil {
+					log.Println(err)
+				}
+
+				configuration.InDir = &absolutePathInDir
+			}
+
+			if configuration.OutDir != nil {
+				absolutePathOutDir, err := filepath.Abs(*configuration.OutDir)
+				if err != nil {
+					log.Println(err)
+				}
+
+				configuration.OutDir = &absolutePathOutDir
+			}
+
 			err = saveConfig()
 			if err != nil {
 				log.Println(err)
@@ -444,9 +500,9 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				return
 			}
 
-			payload = "success"
+			payload = configuration
 		} else {
-			err = fmt.Errorf("invalid input")
+			err = fmt.Errorf("invalid configuration")
 
 			log.Println(err)
 			payload = err.Error()
@@ -598,54 +654,6 @@ func reflectUpdateValueOnFieldNullStruct(iface interface{}, fieldValue interface
 	return nil
 }
 
-func initializeConfiguration() {
-	configDirs.LocalPath, _ = filepath.Abs(".")
-
-	err := loadConfig()
-	if err != nil {
-		log.Println(err)
-	}
-
-	if configuration != nil && configuration.Version != "1.0.4" {
-		configuration.Version = "1.0.4"
-
-		err = saveConfig()
-		if err != nil {
-			log.Println("An error occurred while updating the configuration to the newest version")
-			if *debugFlag {
-				log.Println(err)
-			}
-		}
-	}
-
-	if input != nil && *input != "" {
-		configuration.InDir = *input
-	}
-
-	if output != nil && *output != "" {
-		configuration.OutDir = *output
-	}
-
-	makeConfigAbsolute()
-}
-
-func loadConfig() error {
-	config := loadConfigFile(CONFIG_FILENAME)
-	if config != nil {
-		configFile, err := ioutil.ReadFile(config.Path + string(os.PathSeparator) + CONFIG_FILENAME)
-		if err != nil {
-			return err
-		}
-
-		err = json.Unmarshal(configFile, &configuration)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
 func loadConfigFile(fileName string) *configdir.Config {
 	return configDirs.QueryFolderContainsFile(fileName)
 }
@@ -712,30 +720,6 @@ func intToHex(i int) string {
 	}
 }
 
-func makeConfigAbsolute() {
-	if configuration == nil {
-		return
-	}
-
-	absolutePathInDir, err := filepath.Abs(configuration.InDir)
-	if err != nil {
-		log.Println(err)
-
-		return
-	}
-
-	configuration.InDir = absolutePathInDir
-
-	absolutePathOutDir, err := filepath.Abs(configuration.OutDir)
-	if err != nil {
-		log.Println(err)
-
-		return
-	}
-
-	configuration.OutDir = absolutePathOutDir
-}
-
 func saveUnitsToFile(location string) {
 	customUnitFuncs := new(models.UnitFuncs)
 	campaignUnitFuncs := make([]*models.UnitFunc, len(unitFuncMap))
@@ -768,34 +752,42 @@ func saveUnitsToFile(location string) {
 }
 
 func loadSLK() {
-	unitAbilitiesPath := filepath.Join(configuration.InDir, "UnitAbilities.slk")
-	unitDataPath := filepath.Join(configuration.InDir, "UnitData.slk")
-	unitUIPath := filepath.Join(configuration.InDir, "UnitUI.slk")
-	unitWeaponsPath := filepath.Join(configuration.InDir, "UnitWeapons.slk")
-	unitBalancePath := filepath.Join(configuration.InDir, "UnitBalance.slk")
-	campaignUnitPath := filepath.Join(configuration.InDir, "CampaignUnitFunc.txt")
+	var inputDirectory string
 
-	if bool, err := exists(unitAbilitiesPath); err != nil || !bool {
+	if configuration.InDir == nil {
+		log.Println("Input directory has not been set!")
 		return
 	}
 
-	if bool, err := exists(unitDataPath); err != nil || !bool {
+	inputDirectory = *configuration.InDir
+	unitAbilitiesPath := filepath.Join(inputDirectory, "UnitAbilities.slk")
+	unitDataPath := filepath.Join(inputDirectory, "UnitData.slk")
+	unitUIPath := filepath.Join(inputDirectory, "UnitUI.slk")
+	unitWeaponsPath := filepath.Join(inputDirectory, "UnitWeapons.slk")
+	unitBalancePath := filepath.Join(inputDirectory, "UnitBalance.slk")
+	campaignUnitPath := filepath.Join(inputDirectory, "CampaignUnitFunc.txt")
+
+	if flag, err := exists(unitAbilitiesPath); err != nil || !flag {
 		return
 	}
 
-	if bool, err := exists(unitUIPath); err != nil || !bool {
+	if flag, err := exists(unitDataPath); err != nil || !flag {
 		return
 	}
 
-	if bool, err := exists(unitWeaponsPath); err != nil || !bool {
+	if flag, err := exists(unitUIPath); err != nil || !flag {
 		return
 	}
 
-	if bool, err := exists(unitBalancePath); err != nil || !bool {
+	if flag, err := exists(unitWeaponsPath); err != nil || !flag {
 		return
 	}
 
-	if bool, err := exists(campaignUnitPath); err != nil || !bool {
+	if flag, err := exists(unitBalancePath); err != nil || !flag {
+		return
+	}
+
+	if flag, err := exists(campaignUnitPath); err != nil || !flag {
 		return
 	}
 
