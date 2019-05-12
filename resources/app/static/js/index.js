@@ -2,6 +2,7 @@ let unitDataList = [];
 let isLocked = false;
 let isRegexSearch = false;
 let selectedUnitId = null;
+let isUnsaved = false;
 const mdxModels = {};
 const unitModelNameToPath = {};
 
@@ -239,6 +240,12 @@ const index = {
                 asticode.notifier.error(message.payload);
                 return;
             }
+
+            if (isUnsaved) {
+                isUnsaved = false;
+                document.getElementById("savedSpan").hidden = false;
+                document.getElementById("unsavedSpan").hidden = true;
+            }
         });
     },
     saveFieldToUnit: function (input) {
@@ -298,6 +305,12 @@ const index = {
                 if (message.name === "error") {
                     asticode.notifier.error(message.payload);
                     return;
+                }
+
+                if (!isUnsaved) {
+                    isUnsaved = true;
+                    document.getElementById("savedSpan").hidden = true;
+                    document.getElementById("unsavedSpan").hidden = false;
                 }
 
                 if (message.payload === "unsaved") {
