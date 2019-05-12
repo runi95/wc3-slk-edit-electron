@@ -651,7 +651,7 @@ func loadConfigFile(fileName string) *configdir.Config {
 }
 
 func saveConfig() error {
-	confingInBytes, err := json.Marshal(configuration)
+	confingInBytes, err := json.MarshalIndent(configuration, "", "  ")
 	if err != nil {
 		return err
 	}
