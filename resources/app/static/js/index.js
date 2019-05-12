@@ -326,6 +326,28 @@ const index = {
 
                 if (message.payload === "unsaved") {
                     index.saveUnit();
+                } else {
+                    if (Field === "UnitFunc-Name" || Field === "UnitFunc-Editorsuffix") {
+                        let oldUnit = null;
+                        for (let i = 0; i < unitDataList.length; i++) {
+                            if (unitDataList[i].UnitID === UnitId) {
+                                oldUnit = i;
+                                break;
+                            }
+                        }
+
+                        if (oldUnit) {
+                            const oldUnitData = unitDataList[oldUnit];
+
+                            if (Field === "UnitFunc-Name") {
+                                oldUnitData.Name = Value;
+                            } else if (Field === "UnitFunc-Editorsuffix") {
+                                oldUnitData.EditorSuffix = Value;
+                            }
+
+                            index.search(document.getElementById("searchInput"));
+                        }
+                    }
                 }
             });
         }
@@ -607,7 +629,7 @@ const index = {
             if (oldUnit) {
                 unitDataList[oldUnit] = {UnitID: unitId, Name: unit.UnitFunc.Name};
             } else {
-                unitDataList.push({UnitID: unitId, Name: unit.UnitFunc.Name});
+                unitDataList.push({UnitID: unitId, Name: unit.UnitFunc.Name, EditorSuffix: unit.UnitFunc.Editorsuffix});
             }
 
             index.search(document.getElementById("searchInput"));
