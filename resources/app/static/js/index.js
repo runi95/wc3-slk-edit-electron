@@ -1,5 +1,6 @@
 let unitDataList = [];
 let isLocked = false;
+let isRegexSearch = false;
 let selectedUnitId = null;
 const mdxModels = {};
 const unitModelNameToPath = {};
@@ -143,9 +144,15 @@ const index = {
         });
     },
     search: function (inputField) {
-        const regex = new RegExp(inputField.value, "i");
-        const filteredUnitDataList = unitDataList.filter(unitData => (unitData.Name + unitData.UnitID + unitData.EditorSuffix).match(regex));
-        const unitTableBody = $("#unitTableBody")[0];
+        let filteredUnitDataList;
+        if (isRegexSearch) {
+            const regex = new RegExp(inputField.value, "i");
+            filteredUnitDataList = unitDataList.filter(unitData => (unitData.Name + unitData.UnitID + unitData.EditorSuffix).match(regex));
+        } else {
+            filteredUnitDataList = unitDataList.filter(unitData => (unitData.Name + unitData.UnitID + unitData.EditorSuffix).includes(inputField.value));
+        }
+
+        const unitTableBody = document.getElementById("unitTableBody");
         unitTableBody.innerHTML = '';
 
         filteredUnitDataList.forEach(unitData => {
@@ -682,6 +689,7 @@ const index = {
                 }
                 document.getElementById("outputFolderInput").value = message.payload.OutDir;
                 index.disableInputs(message.payload.IsLocked);
+                index.setRegexSearch(message.payload.IsRegexSearch);
                 index.startMainWindow();
             } else {
                 document.getElementById("loadingwindow").hidden = true;
@@ -872,6 +880,20 @@ const index = {
                     }
                 }
             }
+        });
+    },
+    setRegexSearch: function (bool) {
+        const message = {name: "setRegexSearch", payload: bool};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            isRegexSearch = bool;
+            document.getElementById("Regex-Toggle").checked = isRegexSearch;
+            index.search(document.getElementById("searchInput"));
         });
     }
 };

@@ -51,6 +51,7 @@ type config struct {
 	OutDir                  string
 	IsLocked                bool
 	IsDoneDownloadingModels bool
+	IsRegexSearch           bool
 	Version                 string
 }
 

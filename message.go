@@ -527,6 +527,28 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 			payload = unitModelList
 		}
+	case "setRegexSearch":
+		var isRegexSearch bool
+		if len(m.Payload) > 0 {
+			if err = json.Unmarshal(m.Payload, &isRegexSearch); err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+
+			if isRegexSearch != configuration.IsRegexSearch {
+				configuration.IsRegexSearch = isRegexSearch
+
+				err = saveConfig()
+				if err != nil {
+					log.Println(err)
+					payload = err.Error()
+					return
+				}
+			}
+
+			payload = configuration.IsRegexSearch
+		}
 	case "getOperatingSystem":
 		payload = runtime.GOOS
 	case "hideWindow":

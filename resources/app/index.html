@@ -239,6 +239,10 @@
                             </div>
                             <input type="text" class="form-control" id="searchInput" placeholder="search"
                                    oninput="index.search(this)">
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" id="Regex-Toggle" style="margin-left: 5px;" onchange="index.setRegexSearch(!isRegexSearch);" aria-label="Regex" tabindex="-1"/>
+                                <label for="Regex-Toggle" style="margin: auto 0 auto 3px; padding-bottom: 4px;">Regex</label>
+                            </div>
                         </div>
                     </div>
                 </div>
