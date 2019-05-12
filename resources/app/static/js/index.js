@@ -207,22 +207,28 @@ const index = {
                 const rawValue = message.payload.UnitFunc.Ubertip;
                 const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
                 const trimmedLeft = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
-                const value = trimmedLeft.replace(new RegExp("\\|n", "g"), "\n");
 
-                message.payload.UnitFunc.Ubertip = value;
+                message.payload.UnitFunc.Ubertip = trimmedLeft.replace(new RegExp("\\|n", "g"), "\n");
             }
 
             Object.keys(message.payload.UnitFunc).forEach(unitFuncKey => {
-                const elemList = $("#UnitFunc-" + unitFuncKey);
-                if (elemList.length > 0) {
-                    if (elemList[0] instanceof HTMLInputElement || elemList[0] instanceof HTMLTextAreaElement) {
-                        const type = elemList[0].type;
+                const elem = document.getElementById("UnitFunc-" + unitFuncKey);
+                if (elem) {
+                    if (elem instanceof HTMLInputElement || elem instanceof HTMLTextAreaElement) {
+                        const type = elem.type;
                         if (type === "text" || type === "textarea" || type === "select-one") {
-                            elemList[0].value = message.payload.UnitFunc[unitFuncKey];
+                            elem.value = message.payload.UnitFunc[unitFuncKey];
                         } else if (type === "checkbox") {
-                            elemList[0].checked = message.payload.UnitFunc[unitFuncKey] === "1";
+                            elem.checked = message.payload.UnitFunc[unitFuncKey] === "1";
                         } else {
-                            console.log("type is " + elemList[0].type);
+                            console.log("type is " + elem.type);
+                        }
+                    } else if (elem.id === "UnitFunc-Buttonpos") {
+                        const buttonpos = message.payload.UnitFunc[unitFuncKey];
+                        if (!buttonpos || buttonpos === "-" || buttonpos === "_") {
+                            elem.value = "0,0"
+                        } else {
+                            elem.value = buttonpos;
                         }
                     }
                 }
