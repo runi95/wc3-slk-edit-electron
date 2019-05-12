@@ -669,12 +669,24 @@ const index = {
                 return;
             }
 
-            document.getElementById("version-info").innerText = message.payload.Version;
             document.getElementById("configInput").value = message.payload.InDir;
             document.getElementById("configOutput").value = message.payload.OutDir;
             index.disableInputs(message.payload.IsLocked);
             index.setRegexSearch(message.payload.IsRegexSearch);
 
+            index.loadVersion();
+        });
+    },
+    loadVersion: function () {
+        const message = {name: "loadVersion", payload: null};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            document.getElementById("version-info").innerText = message.payload;
             index.loadIcons();
         });
     },

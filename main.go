@@ -52,7 +52,6 @@ type config struct {
 	IsLocked                bool
 	IsDoneDownloadingModels bool
 	IsRegexSearch           bool
-	Version                 string
 }
 
 type logWriter struct{}
