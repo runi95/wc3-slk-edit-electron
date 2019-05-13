@@ -6,24 +6,18 @@ let isUnsaved = false;
 const mdxModels = {};
 const unitModelNameToPath = {};
 
-const addUnitTableData = (unitTableBody, unitData) => {
-    const tr = document.createElement("tr");
-    const th = document.createElement("th");
-    const td = document.createElement("td");
-    th.setAttribute("scope", "row");
-    th.appendChild(document.createTextNode(unitData.UnitID));
-    td.appendChild(document.createTextNode(unitData.Name));
-    if (unitData.EditorSuffix) {
-        const span = document.createElement("span");
-        span.setAttribute("class", "text-secondary");
-        span.appendChild(document.createTextNode(" " + unitData.EditorSuffix));
-        td.appendChild(span);
-    }
-    tr.id = unitData.UnitID;
-    tr.onclick = () => index.selectUnit(tr);
-    tr.appendChild(th);
-    tr.appendChild(td);
-    unitTableBody.appendChild(tr);
+const addUnitTableData = (unitTableBody, unitDataList) => {
+    let trList = "";
+    unitDataList.forEach(unitData => {
+        let str = '<tr id=""' + unitData.UnitID + ' onclick="() => index.selectUnit(this)"><th scope="row">' + unitData.UnitID + '</th><td>' + unitData.Name;
+        if (unitData.EditorSuffix) {
+            str += '<span class="text-secondary"> ' + unitData.EditorSuffix + '</span>';
+        }
+        str += '</td></tr>';
+        trList += str;
+    });
+
+    unitTableBody.innerHTML = trList;
 };
 
 const index = {
@@ -134,9 +128,12 @@ const index = {
 
             unitDataList = message.payload;
             const unitTableBody = $("#unitTableBody")[0];
+            addUnitTableData(unitTableBody, message.payload);
+            /*
             message.payload.forEach(unitData => {
                 addUnitTableData(unitTableBody, unitData);
             });
+            */
 
             document.getElementById("downloadwindow").hidden = true;
             document.getElementById("loadingwindow").hidden = true;
@@ -153,11 +150,12 @@ const index = {
         }
 
         const unitTableBody = document.getElementById("unitTableBody");
-        unitTableBody.innerHTML = '';
-
+        addUnitTableData(unitTableBody, filteredUnitDataList);
+        /*
         filteredUnitDataList.forEach(unitData => {
             addUnitTableData(unitTableBody, unitData);
         });
+        */
     },
     selectUnit: function (unitTableRow) {
         const unitId = unitTableRow.id;
@@ -886,6 +884,7 @@ const index = {
             }
 
             $('#options-modal').modal('toggle');
+            index.loadUnitData();
         });
     }
 };
