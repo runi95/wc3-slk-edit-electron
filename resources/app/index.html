@@ -223,8 +223,8 @@
                     <table class="table table-striped table-hover">
                         <thead>
                         <tr>
-                            <th scope="col">Unit ID <i class="fas fa-sort"></i></th>
-                            <th scope="col">Name <i class="fas fa-sort"></i></th>
+                            <th scope="col" style="cursor: pointer;" onclick="index.sortUnitId()">Unit ID <i id="uid-sort-icon" class="fas fa-sort"></i></th>
+                            <th scope="col" style="cursor: pointer;" onclick="index.sortName()">Name <i id="name-sort-icon" class="fas fa-sort"></i></th>
                         </tr>
                         </thead>
                         <tbody id="unitTableBody"></tbody>
