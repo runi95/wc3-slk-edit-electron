@@ -27,7 +27,7 @@ const sortUnitIdInverse = (a, b) => {
 const addUnitTableData = (unitTableBody, unitDataList) => {
     let trList = "";
     unitDataList.forEach(unitData => {
-        let str = '<tr id=""' + unitData.UnitID + ' onclick="() => index.selectUnit(this)"><th scope="row">' + unitData.UnitID + '</th><td>' + unitData.Name;
+        let str = '<tr id="' + unitData.UnitID + '" onclick="index.selectUnit(this)"><th scope="row">' + unitData.UnitID + '</th><td>' + unitData.Name;
         if (unitData.EditorSuffix) {
             str += '<span class="text-secondary"> ' + unitData.EditorSuffix + '</span>';
         }
