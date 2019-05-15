@@ -7,6 +7,7 @@ let sortNameState = 0;
 let sortUnitIdState = 0;
 const mdxModels = {};
 const unitModelNameToPath = {};
+const unitIconNameToPath = {};
 
 const sortNameAlphabetical = (a, b) => {
     return a.Name > b.Name ? 1 : -1;
@@ -350,7 +351,13 @@ const index = {
         }
     },
     changeModalIcon: function (input) {
-        const message = {name: "loadIcon", payload: input.value};
+        const inputValue = input.value.toLowerCase();
+        if (unitIconNameToPath.hasOwnProperty(inputValue)) {
+            index.loadModalIcon(unitIconNameToPath[inputValue]);
+        }
+    },
+    loadModalIcon: function (path) {
+        const message = {name: "loadIcon", payload: path};
         astilectron.sendMessage(message, function (message) {
             // Check for errors
             if (message.name === "error") {
@@ -366,12 +373,15 @@ const index = {
         });
     },
     selectUnitIcon: function () {
-        const iconInput = document.getElementById("UnitFunc-Art");
-        iconInput.value = document.getElementById("icon-selector").value;
-        $('#unit-icon-modal').modal('toggle');
+        const inputValue = document.getElementById("icon-selector").value.toLowerCase();
+        if (unitIconNameToPath.hasOwnProperty(inputValue)) {
+            const iconInput = document.getElementById("UnitFunc-Art");
+            iconInput.value = unitIconNameToPath[inputValue];
+            $('#unit-icon-modal').modal('toggle');
 
-        index.saveFieldToUnit(iconInput);
-        index.loadIcon(iconInput);
+            index.saveFieldToUnit(iconInput);
+            index.loadIcon(iconInput);
+        }
     },
     loadIcon: function (input) {
         const message = {name: "loadIcon", payload: input.value};
@@ -641,18 +651,42 @@ const index = {
                 return;
             }
 
-            const iconSelector = document.getElementById("icon-selector");
-            let options = "";
-            message.payload.forEach(iconModels => {
-                options += '<option value="' + iconModels.Path + '">' + iconModels.Name + '</option>';
+            message.payload.forEach(icon => unitIconNameToPath[icon.Name.toLowerCase()] = icon.Path);
+
+            const icons = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                local: message.payload.map(icon => icon.Name)
             });
-            iconSelector.innerHTML = options;
+
+            $("#icon-selector").typeahead({
+                    hint: true,
+                    highlight: true,
+                    minLength: 0
+                },
+                {
+                    name: "icons",
+                    limit: Object.keys(message.payload).length,
+                    source: (q, sync) => {
+                        if (q === "") {
+                            sync(icons.all());
+                        } else {
+                            icons.search(q, sync);
+                        }
+                    }
+                }).bind("typeahead:selected", (obj, datum) => {
+                index.loadModalIcon(unitIconNameToPath[datum.toLowerCase()]);
+            });
 
             index.loadMdx();
         });
     },
     changeMdxModel: function (input) {
-        loadMdxModel(input.value);
+        const inputValue = input.value.toLowerCase();
+
+        if (unitModelNameToPath.hasOwnProperty(inputValue)) {
+            loadMdxModel(unitModelNameToPath[inputValue]);
+        }
     },
     loadMdx: function () {
         const message = {name: "loadMdx", payload: null};
@@ -663,23 +697,45 @@ const index = {
                 return;
             }
 
-            let options = "";
-            message.payload.forEach(unitModel => {
-                unitModelNameToPath[unitModel.Name] = unitModel.Path
-                options += '<option value="' + unitModel.Path + '">' + unitModel.Name + '</option>';
+            message.payload.forEach(unitModel => unitModelNameToPath[unitModel.Name.toLowerCase()] = unitModel.Path);
+
+            const models = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                local: message.payload.map(unitModel => unitModel.Name)
             });
 
-            document.getElementById("model-selector").innerHTML = options;
+            $("#model-selector").typeahead({
+                    hint: true,
+                    highlight: true,
+                    minLength: 0
+                },
+                {
+                    name: "models",
+                    limit: Object.keys(message.payload).length,
+                    source: (q, sync) => {
+                        if (q === "") {
+                            sync(models.all());
+                        } else {
+                            models.search(q, sync);
+                        }
+                    }
+                }).bind("typeahead:selected", (obj, datum) => {
+                loadMdxModel(unitModelNameToPath[datum.toLowerCase()]);
+            });
 
             index.startMainWindow()
         });
     },
     selectMdxModel: function () {
-        const modelFileInput = document.getElementById("SLKUnit-UnitUI-File");
-        modelFileInput.value = document.getElementById("model-selector").value;
+        const inputValue = document.getElementById("model-selector").value.toLowerCase();
+        if (unitModelNameToPath.hasOwnProperty(inputValue)) {
+            const modelFileInput = document.getElementById("SLKUnit-UnitUI-File");
+            modelFileInput.value = unitModelNameToPath[inputValue];
 
-        $('#unit-model-modal').modal('toggle');
-        index.saveFieldToUnit(modelFileInput);
+            $('#unit-model-modal').modal('toggle');
+            index.saveFieldToUnit(modelFileInput);
+        }
     },
     loadConfig: function () {
         const message = {name: "loadConfig", payload: null};
@@ -923,7 +979,7 @@ const index = {
     saveOptions: function () {
         const InDir = document.getElementById("configInput").value;
         const OutDir = document.getElementById("configOutput").value;
-        const message = {name: "saveOptions", payload: { InDir, OutDir }};
+        const message = {name: "saveOptions", payload: {InDir, OutDir}};
         astilectron.sendMessage(message, function (message) {
             // Check for errors
             if (message.name === "error") {

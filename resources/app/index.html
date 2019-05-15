@@ -15,6 +15,7 @@
     <script src="static/lib/astiloader/astiloader.js"></script>
     <script src="static/lib/astinotifier/astinotifier.js"></script>
     <script src="static/lib/bootstrap-4-3-1/js/bootstrap.min.js"></script>
+    <script src="static/lib/twitter/typeahead.bundle.min.js"></script>
     <script src="static/lib/mdx-m3-viewer/js/viewer.min.js"></script>
     <script src="static/lib/mdx-m3-viewer/js/common.js"></script>
     <script src="static/lib/mdx-m3-viewer/js/camera.js"></script>
@@ -47,8 +48,9 @@
                 <div style="text-align: center;">
                     <canvas id="canvas" height="300" width="400"></canvas>
                 </div>
-                <select id="model-selector" class="custom-select-no-validation"
-                        onchange="index.changeMdxModel(this)"></select>
+                <div class="form-dark">
+                    <input id="model-selector" oninput="index.changeMdxModel(this)" type="text" class="typeahead tt-query" autocomplete="off" spellcheck="false">
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -70,8 +72,9 @@
                 <div style="text-align: center;">
                     <img src="emptyicon.png" id="iconModal" height="64" width="64">
                 </div>
-                <select id="icon-selector" class="custom-select-no-validation"
-                        onchange="index.changeModalIcon(this)"></select>
+                <div class="form-dark">
+                    <input id="icon-selector" oninput="index.changeModalIcon(this)" type="text" class="typeahead tt-query" autocomplete="off" spellcheck="false">
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

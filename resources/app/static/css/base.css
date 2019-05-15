@@ -5,6 +5,58 @@ html, body {
     width: 100%;
 }
 
+.twitter-typeahead {
+    width: 100%;
+}
+
+.typeahead, .tt-query, .tt-hint {
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    border: 2px solid #CCCCCC;
+    border-radius: 0.25rem;
+    outline: medium none;
+    padding: 8px 12px;
+    margin: 10px 0 0 0;
+}
+
+.tt-query {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+
+.tt-menu {
+    background: rgb(54, 55, 61) none repeat scroll 0 0;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 12px;
+    padding: 8px 0;
+    width: 100%;
+    overflow-y: auto;
+    max-height: 250px;
+}
+
+.tt-suggestion {
+    font-size: 22px;  /* Set suggestion dropdown font size */
+    padding: 3px 20px;
+}
+
+.tt-suggestion:hover {
+    cursor: pointer;
+    opacity: 0.5;
+    color: #fff;
+}
+
+.tt-suggestion p {
+    margin: 0;
+}
+
+.tt-cursor {
+    background-color: #641e64;
+}
+
 .custom-select-no-validation {
     color: #67686c;
     background: #3c3d44 url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px;
@@ -213,7 +265,6 @@ html, body {
 #unitTableBody > tr:hover {
     opacity: 0.5;
     cursor: pointer;
-    color: #fff;
 }
 
 #unitTableBody > .active {
