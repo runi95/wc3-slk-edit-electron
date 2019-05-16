@@ -676,6 +676,8 @@ const index = {
                     }
                 }).bind("typeahead:selected", (obj, datum) => {
                 index.loadModalIcon(unitIconNameToPath[datum.toLowerCase()]);
+            }).bind("typeahead:cursorchange", (obj, datum) => {
+                index.loadModalIcon(unitIconNameToPath[datum.toLowerCase()]);
             });
 
             index.loadMdx();
@@ -720,7 +722,9 @@ const index = {
                             models.search(q, sync);
                         }
                     }
-                }).bind("typeahead:selected", (obj, datum) => {
+                }).bind("typeahead:select", (obj, datum) => {
+                loadMdxModel(unitModelNameToPath[datum.toLowerCase()]);
+            }).bind("typeahead:cursorchange", (obj, datum) => {
                 loadMdxModel(unitModelNameToPath[datum.toLowerCase()]);
             });
 
