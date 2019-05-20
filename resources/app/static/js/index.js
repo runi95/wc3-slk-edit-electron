@@ -1092,12 +1092,10 @@ const index = {
             index.multiColorTextarea(document.getElementById("UnitFunc-Ubertip"));
             index.loadIcon(document.getElementById("UnitFunc-Art"));
 
-            // unitDataList.push({UnitID: message.payload.UnitFunc.UnitId, Name: name});
-            // index.search(document.getElementById("searchInput"));
+            unitDataList.push({UnitID: message.payload.UnitFunc.UnitId, Name: name});
+            index.search(document.getElementById("searchInput"));
 
             $('#new-unit-modal').modal('toggle');
-            index.loadUnitData();
-            console.log("New Unit Added!");
         });
 
 
