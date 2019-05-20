@@ -260,10 +260,11 @@ const index = {
 
             if (isUnsaved) {
                 isUnsaved = false;
-                document.getElementById("savedSpan").hidden = false;
-                document.getElementById("unsavedSpan").hidden = true;
-                document.getElementById("savingSpan").hidden = true;
             }
+
+            document.getElementById("savedSpan").hidden = false;
+            document.getElementById("unsavedSpan").hidden = true;
+            document.getElementById("savingSpan").hidden = true;
         });
     },
     saveFieldToUnit: function (input) {
