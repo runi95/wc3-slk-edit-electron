@@ -257,7 +257,11 @@
         <div class="div-btn mr-3">
             <span id="savedSpan" onclick="index.saveToFile()"><i class="fas fa-save"></i> Save files</span>
             <span id="unsavedSpan" onclick="index.saveToFile()" hidden><i
-                    class="fas fa-save"></i> <i>Save files*</i></span>
+                    class="fas fa-save"></i><i> Save files*</i></span>
+            <span id="savingSpan" onclick="index.saveToFile()" hidden>
+                <div class="spinner-border" style="height: 16px; width: 16px; animation: spinner-border 1.25s linear infinite;" role="status"></div>
+                <span><i> Save files*</i></span>
+            </span>
         </div>
         <div class="div-btn mr-auto">
             <span data-toggle="modal" data-target="#new-unit-modal"><i

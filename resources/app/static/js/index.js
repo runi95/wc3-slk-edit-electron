@@ -242,10 +242,18 @@ const index = {
         });
     },
     saveToFile: function () {
+        document.getElementById("savingSpan").hidden = false;
+        document.getElementById("savedSpan").hidden = true;
+        document.getElementById("unsavedSpan").hidden = true;
+
         const message = {name: "saveToFile", payload: null};
         astilectron.sendMessage(message, function (message) {
             // Check for errors
             if (message.name === "error") {
+                document.getElementById("unsavedSpan").hidden = false;
+                document.getElementById("savedSpan").hidden = true;
+                document.getElementById("savingSpan").hidden = true;
+
                 asticode.notifier.error(message.payload);
                 return;
             }
@@ -254,6 +262,7 @@ const index = {
                 isUnsaved = false;
                 document.getElementById("savedSpan").hidden = false;
                 document.getElementById("unsavedSpan").hidden = true;
+                document.getElementById("savingSpan").hidden = true;
             }
         });
     },
