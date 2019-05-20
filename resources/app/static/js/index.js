@@ -994,5 +994,112 @@ const index = {
             $('#options-modal').modal('toggle');
             index.loadUnitData();
         });
+    },
+    updateNewUnitIsGenerated: function (input) {
+        if (input.checked) {
+            input.required = true;
+            document.getElementById("NewUnit-UnitId").disabled = true;
+        } else {
+            input.required = false;
+            document.getElementById("NewUnit-UnitId").disabled = false;
+        }
+    },
+    createNewUnit: function () {
+        if (!document.getElementById("NewUnit-Form").checkValidity())
+            return;
+
+        const generateId = document.getElementById("NewUnit-Generated").checked;
+        const unitId = generateId ? document.getElementById("NewUnit-UnitId").value : null;
+        // const baseUnitValue = document.getElementById("NewUnit-BaseUnitId").value;
+        const baseUnitId = null; // baseUnitValue.length > 0 ? baseUnitValue : null;
+        const name = document.getElementById("NewUnit-Name").value;
+        const attackType = document.getElementById("NewUnit-AttackType").value;
+        const unitType = document.getElementById("NewUnit-TypeUnit").checked ? document.getElementById("NewUnit-TypeUnit").value :
+            (document.getElementById("NewUnit-TypeBuilding").checked ? document.getElementById("NewUnit-TypeBuilding").value :
+                (document.getElementById("NewUnit-TypeHero").checked ? document.getElementById("NewUnit-TypeHero").value :
+                    "none"));
+        const message = {name: "createNewUnit", payload: { UnitId: unitId, GenerateId: generateId, Name: name, UnitType: unitType, BaseUnitId: baseUnitId, AttackType: attackType}};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            $("#unitTableBody>tr").removeClass("active");
+            Object.keys(message.payload.SLKUnit).forEach(slkUnitKey => {
+                Object.keys(message.payload.SLKUnit[slkUnitKey]).forEach(key => {
+                    const rawValue = message.payload.SLKUnit[slkUnitKey][key] ? message.payload.SLKUnit[slkUnitKey][key] : "";
+                    const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
+                    const value = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
+                    const elemList = $("#SLKUnit-" + slkUnitKey + "-" + key);
+                    if (elemList.length > 0) {
+                        if (elemList[0] instanceof HTMLInputElement || elemList[0] instanceof HTMLSelectElement) {
+                            const type = elemList[0].type;
+
+                            if (type === "text" || type === "select-one") {
+                                elemList[0].value = value;
+                            } else if (type === "checkbox") {
+                                elemList[0].checked = value === "1";
+                            }
+                        } else if (elemList[0].classList.contains("multi-check")) {
+                            const childInputs = $("#SLKUnit-" + slkUnitKey + "-" + key + " :input");
+                            const valueSplit = value.split(",");
+                            const valueLower = valueSplit.map(val => val.toLowerCase());
+                            for (let i = 0; i < childInputs.length; i++) {
+                                if (valueLower.includes(childInputs[i].value.toLowerCase())) {
+                                    childInputs[i].checked = true;
+                                } else {
+                                    childInputs[i].checked = false;
+                                }
+                            }
+                        }
+                    }
+                })
+            });
+
+            if (message.payload.UnitFunc.Ubertip) {
+                const rawValue = message.payload.UnitFunc.Ubertip;
+                const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
+                const trimmedLeft = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
+
+                message.payload.UnitFunc.Ubertip = trimmedLeft.replace(new RegExp("\\|n", "g"), "\n");
+            }
+
+            Object.keys(message.payload.UnitFunc).forEach(unitFuncKey => {
+                const elem = document.getElementById("UnitFunc-" + unitFuncKey);
+                if (elem) {
+                    if (elem instanceof HTMLInputElement || elem instanceof HTMLTextAreaElement) {
+                        const type = elem.type;
+                        if (type === "text" || type === "textarea" || type === "select-one") {
+                            elem.value = message.payload.UnitFunc[unitFuncKey];
+                        } else if (type === "checkbox") {
+                            elem.checked = message.payload.UnitFunc[unitFuncKey] === "1";
+                        } else {
+                            console.log("type is " + elem.type);
+                        }
+                    } else if (elem.id === "UnitFunc-Buttonpos") {
+                        const buttonpos = message.payload.UnitFunc[unitFuncKey];
+                        if (!buttonpos || buttonpos === "-" || buttonpos === "_") {
+                            elem.value = "0,0"
+                        } else {
+                            elem.value = buttonpos;
+                        }
+                    }
+                }
+            });
+
+            index.multiColorTextarea(document.getElementById("UnitFunc-Ubertip"));
+            index.loadIcon(document.getElementById("UnitFunc-Art"));
+
+            // unitDataList.push({UnitID: message.payload.UnitFunc.UnitId, Name: name});
+            // index.search(document.getElementById("searchInput"));
+
+            $('#new-unit-modal').modal('toggle');
+            index.loadUnitData();
+            console.log("New Unit Added!");
+        });
+
+
     }
 };
