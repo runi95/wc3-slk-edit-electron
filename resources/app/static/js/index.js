@@ -910,7 +910,7 @@ const index = {
             if (message.payload === "darwin") {
                 document.onkeydown = function (e) {
                     if (e.metaKey && e.key === "s") {
-                        index.saveUnit();
+                        index.saveToFile();
                     } else if (e.metaKey && e.key === "f") {
                         document.getElementById("searchInput").focus();
                     }
@@ -918,7 +918,7 @@ const index = {
             } else {
                 document.onkeydown = function (e) {
                     if (e.ctrlKey && e.key === "s") {
-                        index.saveUnit();
+                        index.saveToFile();
                     } else if (e.ctrlKey && e.key === "f") {
                         document.getElementById("searchInput").focus();
                     }
