@@ -96,27 +96,39 @@
             </div>
             <div class="modal-body">
                 <div class="form-dark">
-                    <div style="display: flex;">
+                    <div class="form-group">
                         <input type="file" id="hiddenFileUploadInputLoadInput" hidden
                                onchange="index.updateInputConfigPath()"
                                webkitdirectory directory/>
-                        <input type="text" class="form-control" id="configInput"
-                               aria-describedby="input folder path"
-                               placeholder="./input"/>
-                        <button style="white-space: nowrap;" class="btn" tabindex="-1"
-                                onclick="index.activateFileUploadButtonLoadInput()">...
-                        </button>
+                        <label class="" for="configInput">Input</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-file-import"></i></div>
+                            </div>
+                            <input type="text" class="form-control" id="configInput"
+                                   aria-describedby="input folder path"
+                                   placeholder="Choose directory..."/>
+                            <span class="input-group-btn"><button class="btn" tabindex="-1"
+                                                                  onclick="index.activateFileUploadButtonLoadInput()">...
+                            </button></span>
+                        </div>
                     </div>
-                    <div style="display: flex;">
+                    <div class="form-group">
                         <input type="file" id="hiddenFileUploadInputLoadOutput" hidden
                                onchange="index.updateOutputConfigPath()"
                                webkitdirectory directory/>
-                        <input type="text" class="form-control" id="configOutput"
-                               aria-describedby="output folder path"
-                               placeholder="./output"/>
-                        <button style="white-space: nowrap;" class="btn" tabindex="-1"
-                                onclick="index.activateFileUploadButtonLoadOutput()">...
-                        </button>
+                        <label for="configOutput">Output</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text"><i class="fas fa-file-export"></i></div>
+                            </div>
+                            <input type="text" class="form-control" id="configOutput"
+                                   aria-describedby="output folder path"
+                                   placeholder="Choose directory..."/>
+                            <span class="input-group-btn"><button class="btn" tabindex="-1"
+                                                                  onclick="index.activateFileUploadButtonLoadOutput()">...
+                            </button></span>
+                        </div>
                     </div>
                 </div>
             </div>
