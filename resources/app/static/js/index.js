@@ -276,24 +276,28 @@ const index = {
 
         if (input.classList.contains("sub-multi-check")) {
             Field = input.parentNode.parentNode.parentNode.id;
-            input.parentNode.parentNode.childNodes.forEach(child => {
-                if (child instanceof HTMLLIElement) {
+            input.parentNode.parentNode.parentNode.childNodes.forEach(child => {
+                if (child instanceof HTMLUListElement) {
                     child.childNodes.forEach(listChild => {
-                        if (listChild instanceof HTMLInputElement) {
-                            if (listChild.checked) {
-                                if (Value === null) {
-                                    Value = "\"" + listChild.value;
-                                } else {
-                                    Value += "," + listChild.value;
+                        if (listChild instanceof HTMLLIElement) {
+                            listChild.childNodes.forEach(listElement => {
+                                if (listElement instanceof HTMLInputElement) {
+                                    if (listElement.checked) {
+                                        if (Value === null) {
+                                            Value = "\"" + listElement.value;
+                                        } else {
+                                            Value += "," + listElement.value;
+                                        }
+                                    }
                                 }
-                            }
+                            });
                         }
                     });
                 }
             });
 
             if (Value === null) {
-                Value = "_";
+                Value = "\"_\"";
             } else {
                 Value += "\"";
             }
@@ -1028,7 +1032,16 @@ const index = {
             (document.getElementById("NewUnit-TypeBuilding").checked ? document.getElementById("NewUnit-TypeBuilding").value :
                 (document.getElementById("NewUnit-TypeHero").checked ? document.getElementById("NewUnit-TypeHero").value :
                     "none"));
-        const message = {name: "createNewUnit", payload: { UnitId: unitId, GenerateId: generateId, Name: name, UnitType: unitType, BaseUnitId: baseUnitId, AttackType: attackType}};
+        const message = {name: "createNewUnit",
+            payload: {
+                UnitId: unitId,
+                GenerateId: generateId,
+                Name: name,
+                UnitType: unitType,
+                BaseUnitId: baseUnitId,
+                AttackType: attackType
+            }
+        };
         astilectron.sendMessage(message, function (message) {
             // Check for errors
             if (message.name === "error") {
