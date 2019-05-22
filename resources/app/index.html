@@ -259,7 +259,9 @@
             <span id="unsavedSpan" onclick="index.saveToFile()" hidden><i
                     class="fas fa-save"></i><i> Save files*</i></span>
             <span id="savingSpan" onclick="index.saveToFile()" hidden>
-                <div class="spinner-border" style="height: 16px; width: 16px; animation: spinner-border 1.25s linear infinite;" role="status"></div>
+                <div class="spinner-border"
+                     style="height: 16px; width: 16px; animation: spinner-border 1.25s linear infinite;"
+                     role="status"></div>
                 <span><i> Save files*</i></span>
             </span>
         </div>
@@ -1031,164 +1033,195 @@
                                     <div id="SLKUnit-UnitWeapons-SplashTargs1" class="multi-check">
                                         <ul>
                                             <li>
-                                                <label>Air</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Air">Air</label>
+                                                <input id="AOE-Targets-1-Air" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="air"/>
                                             </li>
                                             <li>
-                                                <label>Alive</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Alive">Alive</label>
+                                                <input id="AOE-Targets-1-Alive" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="alive"/>
                                             </li>
                                             <li>
-                                                <label>Allied</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Allied">Allied</label>
+                                                <input id="AOE-Targets-1-Allied" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="allies"/>
                                             </li>
                                             <li>
-                                                <label>Ancient</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Ancient">Ancient</label>
+                                                <input id="AOE-Targets-1-Ancient" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ancient"/>
                                             </li>
                                             <li>
-                                                <label>Bridge</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Bridge">Bridge</label>
+                                                <input id="AOE-Targets-1-Bridge" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="bridge"/>
                                             </li>
                                             <li>
-                                                <label>Dead</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Dead">Dead</label>
+                                                <input id="AOE-Targets-1-Dead" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="dead"/>
                                             </li>
                                             <li>
-                                                <label>Debris</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Debris">Debris</label>
+                                                <input id="AOE-Targets-1-Debris" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="debris"/>
                                             </li>
                                             <li>
-                                                <label>Decoration</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Decoration">Decoration</label>
+                                                <input id="AOE-Targets-1-Decoration"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="decoration"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Enemy</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Enemy">Enemy</label>
+                                                <input id="AOE-Targets-1-Enemy" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="enemies"/>
                                             </li>
                                             <li>
-                                                <label>Friend</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Friend">Friend</label>
+                                                <input id="AOE-Targets-1-Friend" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="friend"/>
                                             </li>
                                             <li>
-                                                <label>Ground</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Ground">Ground</label>
+                                                <input id="AOE-Targets-1-Ground" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ground"/>
                                             </li>
                                             <li>
-                                                <label>Hero</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Hero">Hero</label>
+                                                <input id="AOE-Targets-1-Hero" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="hero"/>
                                             </li>
                                             <li>
-                                                <label>Invulnerable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Invulnerable">Invulnerable</label>
+                                                <input id="AOE-Targets-1-Invulnerable"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="invulnerable"/>
                                             </li>
                                             <li>
-                                                <label>Item</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Item">Item</label>
+                                                <input id="AOE-Targets-1-Item" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="item"/>
                                             </li>
                                             <li>
-                                                <label>Mechanical</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Mechanical">Mechanical</label>
+                                                <input id="AOE-Targets-1-Mechanical"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="mechanical"/>
                                             </li>
                                             <li>
-                                                <label>Neutral</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Neutral">Neutral</label>
+                                                <input id="AOE-Targets-1-Neutral" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="neutral"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Non-Ancient</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-NonAncient">Non-Ancient</label>
+                                                <input id="AOE-Targets-1-NonAncient"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="nonancient"/>
                                             </li>
                                             <li>
-                                                <label>Non-Hero</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-NonHero">Non-Hero</label>
+                                                <input id="AOE-Targets-1-NonHero" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="nonhero"/>
                                             </li>
                                             <li>
-                                                <label>Non-suicidal</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Nonsuicidal">Non-suicidal</label>
+                                                <input id="AOE-Targets-1-Nonsuicidal"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="nonsapper"/>
                                             </li>
                                             <li>
-                                                <label>None</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-None">None</label>
+                                                <input id="AOE-Targets-1-None" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="none"/>
                                             </li>
                                             <li>
-                                                <label>Not self</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Notself">Not self</label>
+                                                <input id="AOE-Targets-1-Notself" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="notself"/>
                                             </li>
                                             <li>
-                                                <label>Organic</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Organic">Organic</label>
+                                                <input id="AOE-Targets-1-Organic" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="organic"/>
                                             </li>
                                             <li>
-                                                <label>Player Units</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-PlayerUnits">Player Units</label>
+                                                <input id="AOE-Targets-1-PlayerUnits"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="player"/>
                                             </li>
                                             <li>
-                                                <label>Self</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Self">Self</label>
+                                                <input id="AOE-Targets-1-Self" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="self"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Structure</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Structure">Structure</label>
+                                                <input id="AOE-Targets-1-Structure"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="structure"/>
                                             </li>
                                             <li>
-                                                <label>Suicidal</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Suicidal">Suicidal</label>
+                                                <input id="AOE-Targets-1-Suicidal" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="sapper"/>
                                             </li>
                                             <li>
-                                                <label>Terrain</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Terrain">Terrain</label>
+                                                <input id="AOE-Targets-1-Terrain" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="terrain"/>
                                             </li>
                                             <li>
-                                                <label>Tree</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Tree">Tree</label>
+                                                <input id="AOE-Targets-1-Tree" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="tree"/>
                                             </li>
                                             <li>
-                                                <label>Vulnerable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Vulnerable">Vulnerable</label>
+                                                <input id="AOE-Targets-1-Vulnerable"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="vulnerable"/>
                                             </li>
                                             <li>
-                                                <label>Wall</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Wall">Wall</label>
+                                                <input id="AOE-Targets-1-Wall" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="wall"/>
                                             </li>
                                             <li>
-                                                <label>Ward</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-1-Ward">Ward</label>
+                                                <input id="AOE-Targets-1-Ward" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ward"/>
                                             </li>
                                         </ul>
@@ -1339,164 +1372,195 @@
                                     <div id="SLKUnit-UnitWeapons-Targs1" class="multi-check">
                                         <ul>
                                             <li>
-                                                <label>Air</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Air">Air</label>
+                                                <input id="Weapon-Targets-1-Air" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="air"/>
                                             </li>
                                             <li>
-                                                <label>Alive</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Alive">Alive</label>
+                                                <input id="Weapon-Targets-1-Alive" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="alive"/>
                                             </li>
                                             <li>
-                                                <label>Allied</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Allied">Allied</label>
+                                                <input id="Weapon-Targets-1-Allied"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="allies"/>
                                             </li>
                                             <li>
-                                                <label>Ancient</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Ancient">Ancient</label>
+                                                <input id="Weapon-Targets-1-Ancient"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ancient"/>
                                             </li>
                                             <li>
-                                                <label>Bridge</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Bridge">Bridge</label>
+                                                <input id="Weapon-Targets-1-Bridge"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="bridge"/>
                                             </li>
                                             <li>
-                                                <label>Dead</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Dead">Dead</label>
+                                                <input id="Weapon-Targets-1-Dead" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="dead"/>
                                             </li>
                                             <li>
-                                                <label>Debris</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Debris">Debris</label>
+                                                <input id="Weapon-Targets-1-Debris"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="debris"/>
                                             </li>
                                             <li>
-                                                <label>Decoration</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Decoration">Decoration</label>
+                                                <input id="Weapon-Targets-1-Decoration"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="decoration"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Enemy</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Enemy">Enemy</label>
+                                                <input id="Weapon-Targets-1-Enemy" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="enemies"/>
                                             </li>
                                             <li>
-                                                <label>Friend</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Friend">Friend</label>
+                                                <input id="Weapon-Targets-1-Friend"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="friend"/>
                                             </li>
                                             <li>
-                                                <label>Ground</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Ground">Ground</label>
+                                                <input id="Weapon-Targets-1-Ground"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ground"/>
                                             </li>
                                             <li>
-                                                <label>Hero</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Hero">Hero</label>
+                                                <input id="Weapon-Targets-1-Hero" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="hero"/>
                                             </li>
                                             <li>
-                                                <label>Invulnerable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Invulnerable">Invulnerable</label>
+                                                <input id="Weapon-Targets-1-Invulnerable"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="invulnerable"/>
                                             </li>
                                             <li>
-                                                <label>Item</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Item">Item</label>
+                                                <input id="Weapon-Targets-1-Item" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="item"/>
                                             </li>
                                             <li>
-                                                <label>Mechanical</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Mechanical">Mechanical</label>
+                                                <input id="Weapon-Targets-1-Mechanical"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="mechanical"/>
                                             </li>
                                             <li>
-                                                <label>Neutral</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Neutral">Neutral</label>
+                                                <input id="Weapon-Targets-1-Neutral"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="neutral"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Non-Ancient</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-NonAncient">Non-Ancient</label>
+                                                <input id="Weapon-Targets-1-NonAncient"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="nonancient"/>
                                             </li>
                                             <li>
-                                                <label>Non-Hero</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-NonHero">Non-Hero</label>
+                                                <input id="Weapon-Targets-1-NonHero"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="nonhero"/>
                                             </li>
                                             <li>
-                                                <label>Non-suicidal</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Nonsuicidal">Non-suicidal</label>
+                                                <input id="Weapon-Targets-1-Nonsuicidal"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="nonsapper"/>
                                             </li>
                                             <li>
-                                                <label>None</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-None">None</label>
+                                                <input id="Weapon-Targets-1-None" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="none"/>
                                             </li>
                                             <li>
-                                                <label>Not self</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Notself">Not self</label>
+                                                <input id="Weapon-Targets-1-Notself"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="notself"/>
                                             </li>
                                             <li>
-                                                <label>Organic</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Organic">Organic</label>
+                                                <input id="Weapon-Targets-1-Organic"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="organic"/>
                                             </li>
                                             <li>
-                                                <label>Player Units</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-PlayerUnits">Player Units</label>
+                                                <input id="Weapon-Targets-1-PlayerUnits"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="player"/>
                                             </li>
                                             <li>
-                                                <label>Self</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Self">Self</label>
+                                                <input id="Weapon-Targets-1-Self" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="self"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Structure</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Structure">Structure</label>
+                                                <input id="Weapon-Targets-1-Structure"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="structure"/>
                                             </li>
                                             <li>
-                                                <label>Suicidal</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Suicidal">Suicidal</label>
+                                                <input id="Weapon-Targets-1-Suicidal"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="sapper"/>
                                             </li>
                                             <li>
-                                                <label>Terrain</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Terrain">Terrain</label>
+                                                <input id="Weapon-Targets-1-Terrain"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="terrain"/>
                                             </li>
                                             <li>
-                                                <label>Tree</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Tree">Tree</label>
+                                                <input id="Weapon-Targets-1-Tree" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="tree"/>
                                             </li>
                                             <li>
-                                                <label>Vulnerable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Vulnerable">Vulnerable</label>
+                                                <input id="Weapon-Targets-1-Vulnerable"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="vulnerable"/>
                                             </li>
                                             <li>
-                                                <label>Wall</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Wall">Wall</label>
+                                                <input id="Weapon-Targets-1-Wall" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="wall"/>
                                             </li>
                                             <li>
-                                                <label>Ward</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-1-Ward">Ward</label>
+                                                <input id="Weapon-Targets-1-Ward" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ward"/>
                                             </li>
                                         </ul>
@@ -1578,164 +1642,195 @@
                                     <div id="SLKUnit-UnitWeapons-SplashTargs2" class="multi-check">
                                         <ul>
                                             <li>
-                                                <label>Air</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Air">Air</label>
+                                                <input id="AOE-Targets-2-Air" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="air"/>
                                             </li>
                                             <li>
-                                                <label>Alive</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Alive">Alive</label>
+                                                <input id="AOE-Targets-2-Alive" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="alive"/>
                                             </li>
                                             <li>
-                                                <label>Allied</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Allied">Allied</label>
+                                                <input id="AOE-Targets-2-Allied" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="allies"/>
                                             </li>
                                             <li>
-                                                <label>Ancient</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Ancient">Ancient</label>
+                                                <input id="AOE-Targets-2-Ancient" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ancient"/>
                                             </li>
                                             <li>
-                                                <label>Bridge</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Bridge">Bridge</label>
+                                                <input id="AOE-Targets-2-Bridge" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="bridge"/>
                                             </li>
                                             <li>
-                                                <label>Dead</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Dead">Dead</label>
+                                                <input id="AOE-Targets-2-Dead" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="dead"/>
                                             </li>
                                             <li>
-                                                <label>Debris</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Debris">Debris</label>
+                                                <input id="AOE-Targets-2-Debris" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="debris"/>
                                             </li>
                                             <li>
-                                                <label>Decoration</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Decoration">Decoration</label>
+                                                <input id="AOE-Targets-2-Decoration"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="decoration"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Enemy</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Enemy">Enemy</label>
+                                                <input id="AOE-Targets-2-Enemy" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="enemies"/>
                                             </li>
                                             <li>
-                                                <label>Friend</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Friend">Friend</label>
+                                                <input id="AOE-Targets-2-Friend" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="friend"/>
                                             </li>
                                             <li>
-                                                <label>Ground</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Ground">Ground</label>
+                                                <input id="AOE-Targets-2-Ground" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ground"/>
                                             </li>
                                             <li>
-                                                <label>Hero</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Hero">Hero</label>
+                                                <input id="AOE-Targets-2-Hero" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="hero"/>
                                             </li>
                                             <li>
-                                                <label>Invulnerable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Invulnerable">Invulnerable</label>
+                                                <input id="AOE-Targets-2-Invulnerable"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="invulnerable"/>
                                             </li>
                                             <li>
-                                                <label>Item</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Item">Item</label>
+                                                <input id="AOE-Targets-2-Item" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="item"/>
                                             </li>
                                             <li>
-                                                <label>Mechanical</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Mechanical">Mechanical</label>
+                                                <input id="AOE-Targets-2-Mechanical"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="mechanical"/>
                                             </li>
                                             <li>
-                                                <label>Neutral</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Neutral">Neutral</label>
+                                                <input id="AOE-Targets-2-Neutral" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="neutral"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Non-Ancient</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-NonAncient">Non-Ancient</label>
+                                                <input id="AOE-Targets-2-NonAncient"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="nonancient"/>
                                             </li>
                                             <li>
-                                                <label>Non-Hero</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-NonHero">Non-Hero</label>
+                                                <input id="AOE-Targets-2-NonHero" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="nonhero"/>
                                             </li>
                                             <li>
-                                                <label>Non-suicidal</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Nonsuicidal">Non-suicidal</label>
+                                                <input id="AOE-Targets-2-Nonsuicidal"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="nonsapper"/>
                                             </li>
                                             <li>
-                                                <label>None</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-None">None</label>
+                                                <input id="AOE-Targets-2-None" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="none"/>
                                             </li>
                                             <li>
-                                                <label>Not self</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Notself">Not self</label>
+                                                <input id="AOE-Targets-2-Notself" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="notself"/>
                                             </li>
                                             <li>
-                                                <label>Organic</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Organic">Organic</label>
+                                                <input id="AOE-Targets-2-Organic" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="organic"/>
                                             </li>
                                             <li>
-                                                <label>Player Units</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-PlayerUnits">Player Units</label>
+                                                <input id="AOE-Targets-2-PlayerUnits"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="player"/>
                                             </li>
                                             <li>
-                                                <label>Self</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Self">Self</label>
+                                                <input id="AOE-Targets-2-Self" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="self"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Structure</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Structure">Structure</label>
+                                                <input id="AOE-Targets-2-Structure"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="structure"/>
                                             </li>
                                             <li>
-                                                <label>Suicidal</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Suicidal">Suicidal</label>
+                                                <input id="AOE-Targets-2-Suicidal" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="sapper"/>
                                             </li>
                                             <li>
-                                                <label>Terrain</label>
-                                                <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                                       tabindex="-1" value="terrain"/>
+                                                <label for="AOE-Targets-2-Terrain">Terrain</label>
+                                                <input id="AOE-Targets-2-Terrain" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
+                                                       type="checkbox" tabindex="-1" value="terrain"/>
                                             </li>
                                             <li>
-                                                <label>Tree</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Tree">Tree</label>
+                                                <input id="AOE-Targets-2-Tree" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="tree"/>
                                             </li>
                                             <li>
-                                                <label>Vulnerable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Vulnerable">Vulnerable</label>
+                                                <input id="AOE-Targets-2-Vulnerable"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="vulnerable"/>
                                             </li>
                                             <li>
-                                                <label>Wall</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Wall">Wall</label>
+                                                <input id="AOE-Targets-2-Wall" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="wall"/>
                                             </li>
                                             <li>
-                                                <label>Ward</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="AOE-Targets-2-Ward">Ward</label>
+                                                <input id="AOE-Targets-2-Ward" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ward"/>
                                             </li>
                                         </ul>
@@ -1886,164 +1981,190 @@
                                     <div id="SLKUnit-UnitWeapons-Targs2" class="multi-check">
                                         <ul>
                                             <li>
-                                                <label>Air</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Air">Air</label>
+                                                <input id="Weapon-Targets-2-Air" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="air"/>
                                             </li>
                                             <li>
-                                                <label>Alive</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Alive">Alive</label>
+                                                <input id="Weapon-Targets-2-Alive" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="alive"/>
                                             </li>
                                             <li>
-                                                <label>Allied</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Allied">Allied</label>
+                                                <input id="Weapon-Targets-2-Allied"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="allies"/>
                                             </li>
                                             <li>
-                                                <label>Ancient</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Ancient">Ancient</label>
+                                                <input id="Weapon-Targets-2-Ancient"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ancient"/>
                                             </li>
                                             <li>
-                                                <label>Bridge</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Bridge">Bridge</label>
+                                                <input id="Weapon-Targets-2-Bridge"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="bridge"/>
                                             </li>
                                             <li>
-                                                <label>Dead</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Dead">Dead</label>
+                                                <input id="Weapon-Targets-2-Dead" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="dead"/>
                                             </li>
                                             <li>
-                                                <label>Debris</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Debris">Debris</label>
+                                                <input id="Weapon-Targets-2-Debris"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="debris"/>
                                             </li>
                                             <li>
-                                                <label>Decoration</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Decoration">Decoration</label>
+                                                <input id="Weapon-Targets-2-Decoration"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="decoration"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Enemy</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Enemy">Enemy</label>
+                                                <input id="Weapon-Targets-2-Enemy" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="enemies"/>
                                             </li>
                                             <li>
-                                                <label>Friend</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Friend">Friend</label>
+                                                <input id="Weapon-Targets-2-Friend"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="friend"/>
                                             </li>
                                             <li>
-                                                <label>Ground</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Ground">Ground</label>
+                                                <input id="Weapon-Targets-2-Ground"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ground"/>
                                             </li>
                                             <li>
-                                                <label>Hero</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Hero">Hero</label>
+                                                <input id="Weapon-Targets-2-Hero" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="hero"/>
                                             </li>
                                             <li>
-                                                <label>Invulnerable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Invulnerable">Invulnerable</label>
+                                                <input id="Weapon-Targets-2-Invulnerable"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="invulnerable"/>
                                             </li>
                                             <li>
-                                                <label>Item</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Item">Item</label>
+                                                <input id="Weapon-Targets-2-Item" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="item"/>
                                             </li>
                                             <li>
-                                                <label>Mechanical</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Mechanical">Mechanical</label>
+                                                <input id="Weapon-Targets-2-Mechanical"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="mechanical"/>
                                             </li>
                                             <li>
-                                                <label>Neutral</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Neutral">Neutral</label>
+                                                <input id="Weapon-Targets-2-Neutral"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="neutral"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Non-Ancient</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-NonAncient">Non-Ancient</label>
+                                                <input id="Weapon-Targets-2-NonAncient" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="nonancient"/>
                                             </li>
                                             <li>
-                                                <label>Non-Hero</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-NonHero">Non-Hero</label>
+                                                <input id="Weapon-Targets-2-NonHero" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="nonhero"/>
                                             </li>
                                             <li>
-                                                <label>Non-suicidal</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Nonsuicidal">Non-suicidal</label>
+                                                <input id="Weapon-Targets-2-Nonsuicidal" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="nonsapper"/>
                                             </li>
                                             <li>
-                                                <label>None</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-None">None</label>
+                                                <input id="Weapon-Targets-2-None" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="none"/>
                                             </li>
                                             <li>
-                                                <label>Not self</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Notself">Not self</label>
+                                                <input id="Weapon-Targets-2-Notself" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="notself"/>
                                             </li>
                                             <li>
-                                                <label>Organic</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Organic">Organic</label>
+                                                <input id="Weapon-Targets-2-Organic"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="organic"/>
                                             </li>
                                             <li>
-                                                <label>Player Units</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-PlayerUnits">Player Units</label>
+                                                <input id="Weapon-Targets-2-PlayerUnits" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="player"/>
                                             </li>
                                             <li>
-                                                <label>Self</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Self">Self</label>
+                                                <input id="Weapon-Targets-2-Self" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="self"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Structure</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Structure">Structure</label>
+                                                <input id="Weapon-Targets-2-Structure"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="structure"/>
                                             </li>
                                             <li>
-                                                <label>Suicidal</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Suicidal">Suicidal</label>
+                                                <input id="Weapon-Targets-2-Suicidal"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="sapper"/>
                                             </li>
                                             <li>
-                                                <label>Terrain</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Terrain">Terrain</label>
+                                                <input id="Weapon-Targets-2-Terrain"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="terrain"/>
                                             </li>
                                             <li>
-                                                <label>Tree</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Tree">Tree</label>
+                                                <input id="Weapon-Targets-2-Tree" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="tree"/>
                                             </li>
                                             <li>
-                                                <label>Vulnerable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Vulnerable">Vulnerable</label>
+                                                <input id="Weapon-Targets-2-Vulnerable"
+                                                       oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="vulnerable"/>
                                             </li>
                                             <li>
-                                                <label>Wall</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Wall">Wall</label>
+                                                <input id="Weapon-Targets-2-Wall" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="wall"/>
                                             </li>
                                             <li>
-                                                <label>Ward</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Weapon-Targets-2-Ward">Ward</label>
+                                                <input id="Weapon-Targets-2-Ward" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ward"/>
                                             </li>
                                         </ul>
@@ -2144,164 +2265,193 @@
                                     <div id="SLKUnit-UnitData-TargType" class="multi-check">
                                         <ul>
                                             <li>
-                                                <label>Air</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Air">Air</label>
+                                                <input id="Target-As-Air" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="air"/>
                                             </li>
                                             <li>
-                                                <label>Alive</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Alive">Alive</label>
+                                                <input id="Target-As-Alive" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="alive"/>
                                             </li>
                                             <li>
-                                                <label>Allied</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Allied">Allied</label>
+                                                <input id="Target-As-Allied" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="allies"/>
                                             </li>
                                             <li>
-                                                <label>Ancient</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Ancient">Ancient</label>
+                                                <input id="Target-As-Ancient" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ancient"/>
                                             </li>
                                             <li>
-                                                <label>Bridge</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Bridge">Bridge</label>
+                                                <input id="Target-As-Bridge" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="bridge"/>
                                             </li>
                                             <li>
-                                                <label>Dead</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Dead">Dead</label>
+                                                <input id="Target-As-Dead" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="dead"/>
                                             </li>
                                             <li>
-                                                <label>Debris</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Debris">Debris</label>
+                                                <input id="Target-As-Debris" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="debris"/>
                                             </li>
                                             <li>
-                                                <label>Decoration</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Decoration">Decoration</label>
+                                                <input id="Target-As-Decoration" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="decoration"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Enemy</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Enemy">Enemy</label>
+                                                <input id="Target-As-Enemy" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="enemies"/>
                                             </li>
                                             <li>
-                                                <label>Friend</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Friend">Friend</label>
+                                                <input id="Target-As-Friend" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="friend"/>
                                             </li>
                                             <li>
-                                                <label>Ground</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Ground">Ground</label>
+                                                <input id="Target-As-Ground" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ground"/>
                                             </li>
                                             <li>
-                                                <label>Hero</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Hero">Hero</label>
+                                                <input id="Target-As-Hero" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="hero"/>
                                             </li>
                                             <li>
-                                                <label>Invulnerable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Invulnerable">Invulnerable</label>
+                                                <input id="Target-As-Invulnerable" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="invulnerable"/>
                                             </li>
                                             <li>
-                                                <label>Item</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Item">Item</label>
+                                                <input id="Target-As-Item" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="item"/>
                                             </li>
                                             <li>
-                                                <label>Mechanical</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Mechanical">Mechanical</label>
+                                                <input id="Target-As-Mechanical" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="mechanical"/>
                                             </li>
                                             <li>
-                                                <label>Neutral</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Neutral">Neutral</label>
+                                                <input id="Target-As-Neutral" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="neutral"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Non-Ancient</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-NonAncient">Non-Ancient</label>
+                                                <input id="Target-As-NonAncient" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="nonancient"/>
                                             </li>
                                             <li>
-                                                <label>Non-Hero</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-NonHero">Non-Hero</label>
+                                                <input id="Target-As-NonHero" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="nonhero"/>
                                             </li>
                                             <li>
-                                                <label>Non-suicidal</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Nonsuicidal">Non-suicidal</label>
+                                                <input id="Target-As-Nonsuicidal" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="nonsapper"/>
                                             </li>
                                             <li>
-                                                <label>None</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-None">None</label>
+                                                <input id="Target-As-None" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="none"/>
                                             </li>
                                             <li>
-                                                <label>Not self</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Notself">Not self</label>
+                                                <input id="Target-As-Notself" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="notself"/>
                                             </li>
                                             <li>
-                                                <label>Organic</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Organic">Organic</label>
+                                                <input id="Target-As-Organic" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="organic"/>
                                             </li>
                                             <li>
-                                                <label>Player Units</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-PlayerUnits">Player Units</label>
+                                                <input id="Target-As-PlayerUnits" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="player"/>
                                             </li>
                                             <li>
-                                                <label>Self</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Self">Self</label>
+                                                <input id="Target-As-Self" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="self"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Structure</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Structure">Structure</label>
+                                                <input id="Target-As-Structure" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="structure"/>
                                             </li>
                                             <li>
-                                                <label>Suicidal</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Suicidal">Suicidal</label>
+                                                <input id="Target-As-Suicidal" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="sapper"/>
                                             </li>
                                             <li>
-                                                <label>Terrain</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Terrain">Terrain</label>
+                                                <input id="Target-As-Terrain" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="terrain"/>
                                             </li>
                                             <li>
-                                                <label>Tree</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Tree">Tree</label>
+                                                <input id="Target-As-Tree" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="tree"/>
                                             </li>
                                             <li>
-                                                <label>Vulnerable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Vulnerable">Vulnerable</label>
+                                                <input id="Target-As-Vulnerable" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="vulnerable"/>
                                             </li>
                                             <li>
-                                                <label>Wall</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Wall">Wall</label>
+                                                <input id="Target-As-Wall" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="wall"/>
                                             </li>
                                             <li>
-                                                <label>Ward</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Target-As-Ward">Ward</label>
+                                                <input id="Target-As-Ward" oninput="index.saveFieldToUnit(this)"
+                                                       class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ward"/>
                                             </li>
                                         </ul>
@@ -2526,33 +2676,33 @@
                                     <div id="SLKUnit-UnitBalance-PreventPlace" class="multi-check">
                                         <ul>
                                             <li>
-                                                <label>Air-pathable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="PreventPlace-Airpathable">Air-pathable</label>
+                                                <input id="PreventPlace-Airpathable" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="unflyable"/>
                                             </li>
                                             <li>
-                                                <label>Amphibious-pathable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="PreventPlace-Amphibiouspathable">Amphibious-pathable</label>
+                                                <input id="PreventPlace-Amphibiouspathable" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="unamph"/>
                                             </li>
                                             <li>
-                                                <label>Buildable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="PreventPlace-Buildable">Buildable</label>
+                                                <input id="PreventPlace-Buildable" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="unbuildable"/>
                                             </li>
                                             <li>
-                                                <label>Ground-pathable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="PreventPlace-Groundpathable">Ground-pathable</label>
+                                                <input id="PreventPlace-Groundpathable" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="unwalkable"/>
                                             </li>
                                             <li>
-                                                <label>Sea-pathable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="PreventPlace-Seapathable">Sea-pathable</label>
+                                                <input id="PreventPlace-Seapathable" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="unfloat"/>
                                             </li>
                                             <li>
-                                                <label>Unblighted</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="PreventPlace-Unblighted">Unblighted</label>
+                                                <input id="PreventPlace-Unblighted" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="blighted"/>
                                             </li>
                                         </ul>
@@ -2563,33 +2713,33 @@
                                     <div id="SLKUnit-UnitBalance-RequirePlace" class="multi-check">
                                         <ul>
                                             <li>
-                                                <label>Air-pathable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="RequirePlace-Airpathable">Air-pathable</label>
+                                                <input id="RequirePlace-Airpathable" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="unflyable"/>
                                             </li>
                                             <li>
-                                                <label>Amphibious-pathable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="RequirePlace-Amphibiouspathable">Amphibious-pathable</label>
+                                                <input id="RequirePlace-Amphibiouspathable" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="unamph"/>
                                             </li>
                                             <li>
-                                                <label>Buildable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="RequirePlace-Buildable">Buildable</label>
+                                                <input id="RequirePlace-Buildable" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="unbuildable"/>
                                             </li>
                                             <li>
-                                                <label>Ground-pathable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="RequirePlace-Groundpathable">Ground-pathable</label>
+                                                <input id="RequirePlace-Groundpathable" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="unwalkable"/>
                                             </li>
                                             <li>
-                                                <label>Sea-pathable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="RequirePlace-Seapathable">Sea-pathable</label>
+                                                <input id="RequirePlace-Seapathable" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="unfloat"/>
                                             </li>
                                             <li>
-                                                <label>Unblighted</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="RequirePlace-Unblighted">Unblighted</label>
+                                                <input id="RequirePlace-Unblighted" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="blighted"/>
                                             </li>
                                         </ul>
@@ -2944,70 +3094,70 @@
                                     <div id="SLKUnit-UnitBalance-Type" class="multi-check">
                                         <ul>
                                             <li>
-                                                <label>Ancient</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Type-Ancient">Ancient</label>
+                                                <input id="Type-Ancient" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ancient"/>
                                             </li>
                                             <li>
-                                                <label>Giant</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Type-Giant">Giant</label>
+                                                <input id="Type-Giant" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="giant"/>
                                             </li>
                                             <li>
-                                                <label>Mechanical</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Type-Mechanical">Mechanical</label>
+                                                <input id="Type-Mechanical" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="mechanical"/>
                                             </li>
                                             <li>
-                                                <label>Neutral</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Type-Neutral">Neutral</label>
+                                                <input id="Type-Neutral" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="neutral"/>
                                             </li>
                                             <li>
-                                                <label>Suicidal</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Type-Suicidal">Suicidal</label>
+                                                <input id="Type-Suicidal" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="sapper"/>
                                             </li>
                                             <li>
-                                                <label>Summoned</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Type-Summoned">Summoned</label>
+                                                <input id="Type-Summoned" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="summoned"/>
                                             </li>
                                             <li>
-                                                <label>Tauren</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Type-Tauren">Tauren</label>
+                                                <input id="Type-Tauren" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="tauren"/>
                                             </li>
                                             <li>
-                                                <label>Town Hall</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Type-TownHall">Town Hall</label>
+                                                <input id="Type-TownHall" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="townhall"/>
                                             </li>
                                         </ul>
                                         <ul>
                                             <li>
-                                                <label>Tree</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Type-Tree">Tree</label>
+                                                <input id="Type-Tree" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="tree"/>
                                             </li>
                                             <li>
-                                                <label>Undead</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Type-Undead">Undead</label>
+                                                <input id="Type-Undead" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="undead"/>
                                             </li>
                                             <li>
-                                                <label>Walkable</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Type-Walkable">Walkable</label>
+                                                <input id="Type-Walkable" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="standon"/>
                                             </li>
                                             <li>
-                                                <label>Ward</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Type-Ward">Ward</label>
+                                                <input id="Type-Ward" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="ward"/>
                                             </li>
                                             <li>
-                                                <label>Worker</label>
-                                                <input oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
+                                                <label for="Type-Worker">Worker</label>
+                                                <input id="Type-Worker" oninput="index.saveFieldToUnit(this)" class="sub-multi-check"
                                                        type="checkbox" tabindex="-1" value="peon"/>
                                             </li>
                                         </ul>
