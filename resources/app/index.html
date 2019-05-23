@@ -253,66 +253,72 @@
     </div>
 </div>
 <div id="mainwindow" hidden>
-    <nav id="nav" class="navbar navbar-expand navbar-dark fixed-top">
+    <nav id="nav" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" role="navigation">
         <a class="navbar-brand" href="#">
             <img src="slk.png" width="32" height="32" class="d-inline-block align-top" alt="">
-            Editor
+            <span class="d-none d-sm-inline">Editor</span>
         </a>
-        <div id="version-info" class="mr-3"></div>
-        <div class="div-btn mr-3"><i id="modeLock" class="fas fa-unlock"
-                                     onclick="index.disableInputs(!isLocked)"></i>
+        <div id="version-info" class="mr-3 d-none d-sm-block">v1.0.4</div>
+        <div class="div-btn mr-3 d-none d-sm-block"><i id="modeLock" class="fas fa-unlock"
+                                                       onclick="index.disableInputs(!isLocked)"></i>
         </div>
         <div class="div-btn mr-3">
             <i class="fas fa-cog" data-toggle="modal"
                data-target="#options-modal"></i>
         </div>
         <div class="div-btn mr-3">
-            <span id="savedSpan" onclick="index.saveToFile()"><i class="fas fa-save"></i> Save files</span>
+            <span id="savedSpan" onclick="index.saveToFile()"><i class="fas fa-save"></i><span class="d-none d-sm-inline"> Save files</span></span>
             <span id="unsavedSpan" onclick="index.saveToFile()" hidden><i
-                    class="fas fa-save"></i><i> Save files*</i></span>
+                    class="fas fa-save"></i><i><span class="d-none d-sm-inline"> Save files*</span></i></span>
             <span id="savingSpan" onclick="index.saveToFile()" hidden>
                 <div class="spinner-border"
                      style="height: 16px; width: 16px; animation: spinner-border 1.25s linear infinite;"
                      role="status"></div>
-                <span><i> Save files*</i></span>
+                <span><i><span class="d-none d-sm-inline"> Save files*</span></i></span>
             </span>
         </div>
         <div class="div-btn mr-auto">
             <span data-toggle="modal" data-target="#new-unit-modal"><i
-                    class="fas fa-plus-circle"></i> New unit...</span>
+                    class="fas fa-plus-circle"></i><span class="d-none d-sm-inline"> New unit...</span></span>
         </div>
-        <ul class="nav nav-pills justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link" href="#meta-section">Meta</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#abilities-section">Abilities</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#art-section">Art</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#combat-section">Combat</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#movement-section">Movement</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#pathing-section">Pathing</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#sound-section">Sound</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#stats-section">Stats</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#techtree-section">Techtree</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#text-section">Text</a>
-            </li>
-        </ul>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content"
+                aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbar-content">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link" href="#meta-section">Meta</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#abilities-section">Abilities</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#art-section">Art</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#combat-section">Combat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#movement-section">Movement</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#pathing-section">Pathing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#sound-section">Sound</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#stats-section">Stats</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#techtree-section">Techtree</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#text-section">Text</a>
+                </li>
+            </ul>
+        </div>
     </nav>
     <div class="container-fluid" style="height: 100%;">
         <div class="row" style="height: 100%;">
