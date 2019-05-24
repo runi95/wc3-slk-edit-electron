@@ -71,7 +71,7 @@
             </div>
             <div class="modal-body">
                 <div style="text-align: center;">
-                    <img src="emptyicon.png" id="iconModal" height="64" width="64">
+                    <img src="emptyicon.png" alt="icon" id="iconModal" height="64" width="64">
                 </div>
                 <div class="form-dark">
                     <input id="icon-selector" oninput="index.changeModalIcon(this)" type="text"
@@ -596,10 +596,11 @@
                                                placeholder="Icon" autocomplete="on" required/>
                                         <div class="btn div-btn"
                                              style="padding: 0 4rem 0 4rem; height: calc(1.5em + .75rem + 2px);"
+                                             onclick="index.loadIconModal()"
                                              data-toggle="modal"
                                              data-target="#unit-icon-modal">...
                                         </div>
-                                        <img src="emptyicon.png" id="iconImage" height="64" width="64">
+                                        <img src="emptyicon.png" alt="icon" id="iconImage" height="64" width="64">
                                     </div>
                                 </li>
                                 <li>
@@ -629,7 +630,7 @@
                                                id="SLKUnit-UnitUI-File"
                                                aria-describedby="model file"
                                                placeholder="Model File"/>
-                                        <div class="btn div-btn" style="padding: 0 4rem 0 4rem;" onclick="initMdx()"
+                                        <div class="btn div-btn" style="padding: 0 4rem 0 4rem;" onclick="index.loadMdxModal()"
                                              data-toggle="modal"
                                              data-target="#unit-model-modal">...
                                         </div>

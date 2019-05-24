@@ -7,7 +7,9 @@ let sortNameState = 0;
 let sortUnitIdState = 0;
 const mdxModels = {};
 const unitModelNameToPath = {};
+const unitModelPathToName = {};
 const unitIconNameToPath = {};
+const unitIconPathToName = {};
 
 const sortNameAlphabetical = (a, b) => {
     return a.Name > b.Name ? 1 : -1;
@@ -82,6 +84,29 @@ const index = {
             });
             return {src: fetchPromise, fetch: true};
         }
+    },
+    loadMdxModal: function () {
+        initMdx();
+
+        const currentModelPath = document.getElementById("SLKUnit-UnitUI-File").value;
+        const lowercaseModelPath = currentModelPath.toLowerCase().replace(new RegExp("\.mdl$"), ".mdx");
+        const modelPathWithExtension = lowercaseModelPath.endsWith("mdx") ? lowercaseModelPath : lowercaseModelPath + ".mdx";
+        console.log("Loading:", modelPathWithExtension);
+        if (!unitModelPathToName.hasOwnProperty(modelPathWithExtension)) {
+            return;
+        }
+
+        $("#model-selector").typeahead("val", unitModelPathToName[modelPathWithExtension]);
+        loadMdxModel(modelPathWithExtension);
+    },
+    loadIconModal: function () {
+        const currentIconPath = document.getElementById("UnitFunc-Art").value;
+        if (!unitIconPathToName.hasOwnProperty(currentIconPath.toLowerCase())) {
+            return;
+        }
+
+        $("#icon-selector").typeahead("val", unitIconPathToName[currentIconPath.toLowerCase()]);
+        index.loadModalIcon(currentIconPath);
     },
     init: function () {
         // Init
@@ -665,7 +690,10 @@ const index = {
                 return;
             }
 
-            message.payload.forEach(icon => unitIconNameToPath[icon.Name.toLowerCase()] = icon.Path);
+            message.payload.forEach(icon => {
+                unitIconNameToPath[icon.Name.toLowerCase()] = icon.Path;
+                unitIconPathToName[icon.Path.toLowerCase()] = icon.Name.toLowerCase();
+            });
 
             const icons = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.whitespace,
@@ -713,7 +741,10 @@ const index = {
                 return;
             }
 
-            message.payload.forEach(unitModel => unitModelNameToPath[unitModel.Name.toLowerCase()] = unitModel.Path);
+            message.payload.forEach(unitModel => {
+                unitModelNameToPath[unitModel.Name.toLowerCase()] = unitModel.Path;
+                unitModelPathToName[unitModel.Path.toLowerCase()] = unitModel.Name.toLowerCase();
+            });
 
             const models = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.whitespace,
@@ -906,6 +937,7 @@ const index = {
         document.getElementById("loadingwindow").hidden = false;
 
         index.activateHotkeys();
+        index.listenToModals();
         index.loadUnitData();
 
         document.getElementById("downloadwindow").hidden = true;
@@ -939,6 +971,10 @@ const index = {
                 }
             }
         });
+    },
+    listenToModals: function () {
+        $("#unit-model-modal").on("shown.bs.modal", () => document.getElementById("model-selector").focus());
+        $("#unit-icon-modal").on("shown.bs.modal", () => document.getElementById("icon-selector").focus())
     },
     setRegexSearch: function (bool) {
         const message = {name: "setRegexSearch", payload: bool};
