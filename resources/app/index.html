@@ -179,9 +179,9 @@
                         </div>
                     </fieldset>
                     <div class="form-group row">
-                        <label for="NewUnit-UnitId" class="col-sm-2 col-form-label">Unit ID</label>
+                        <label for="NewUnit-UnitID" class="col-sm-2 col-form-label">Unit ID</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="NewUnit-UnitId" placeholder="Unit ID"
+                            <input type="text" class="form-control" id="NewUnit-UnitID" placeholder="Unit ID"
                                    pattern="[A-Za-z]{1}[A-Za-z0-9]{3}" required disabled>
                         </div>
                         <div class="col-sm-4" style="display: flex; align-items: center;">
@@ -393,7 +393,7 @@
                                     <label for="UnitId">Unit ID</label>
                                     <div style="display: flex;">
                                         <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                               id="UnitFunc-UnitId"
+                                               id="Unit-UnitID"
                                                aria-describedby="unitid"
                                                placeholder="Unit ID" required/>
                                         <div class="btn div-btn" tabindex="-1" onclick="index.generateUnitId()">↺
@@ -414,16 +414,16 @@
                         <form class="was-validated">
                             <ul class="flex-outer">
                                 <li>
-                                    <label for="SLKUnit-UnitAbilities-Auto">Default Active Ability</label>
+                                    <label for="Unit-Auto">Default Active Ability</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitAbilities-Auto"
+                                           id="Unit-Auto"
                                            aria-describedby="default active ability"
                                            placeholder="Default Active Ability"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitAbilities-AbilList">Abilities</label>
+                                    <label for="Unit-AbilList">Abilities</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitAbilities-AbilList"
+                                           id="Unit-AbilList"
                                            aria-describedby="abilities"
                                            placeholder="Abilities"/>
                                 </li>
@@ -439,49 +439,49 @@
                         <form class="was-validated">
                             <ul class="flex-outer">
                                 <li>
-                                    <label for="SLKUnit-UnitUI-CustomTeamColor">Allow Custom Team Color</label>
+                                    <label for="Unit-CustomTeamColor">Allow Custom Team Color</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                           id="SLKUnit-UnitUI-CustomTeamColor"
+                                           id="Unit-CustomTeamColor"
                                            aria-label="allow custom team color" tabindex="-1"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-Blend">Blend Time (seconds)</label>
+                                    <label for="Unit-Blend">Blend Time (seconds)</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-Blend"
+                                           id="Unit-Blend"
                                            aria-describedby="blend time in seconds"
                                            placeholder="Blend Time (seconds)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Castbsw">Cast Backswing</label>
+                                    <label for="Unit-Castbsw">Cast Backswing</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Castbsw"
+                                           id="Unit-Castbsw"
                                            aria-describedby="cast backswing"
                                            placeholder="Cast Backswing"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Castpt">Cast Point</label>
+                                    <label for="Unit-Castpt">Cast Point</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Castpt"
+                                           id="Unit-Castpt"
                                            aria-describedby="cast point"
                                            placeholder="Cast Point"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-Run">Run Speed</label>
+                                    <label for="Unit-Run">Run Speed</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-Run"
+                                           id="Unit-Run"
                                            aria-describedby="run speed"
                                            placeholder="Run Speed"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-Walk">Walk Speed</label>
+                                    <label for="Unit-Walk">Walk Speed</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-Walk"
+                                           id="Unit-Walk"
                                            aria-describedby="walk speed"
                                            placeholder="Walk Speed"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Buttonpos">Button Position</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="UnitFunc-Buttonpos"
+                                    <label for="Unit-Buttonpos">Button Position</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-Buttonpos"
                                             class="custom-select">
                                         <option value="0,0">0,0</option>
                                         <option value="1,0">1,0</option>
@@ -498,43 +498,43 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Casterupgradeart">Caster Upgrade Art</label>
+                                    <label for="Unit-Casterupgradeart">Caster Upgrade Art</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Casterupgradeart"
+                                           id="Unit-Casterupgradeart"
                                            aria-describedby="caster upgrade art"
                                            placeholder="Caster Upgrade Art"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-Death">Death Time (seconds)</label>
+                                    <label for="Unit-Death">Death Time (seconds)</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitData-Death"
+                                           id="Unit-Death"
                                            aria-describedby="death time in seconds"
                                            placeholder="Death Time (seconds)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-ElevPts">Elevation - Sample Points</label>
+                                    <label for="Unit-ElevPts">Elevation - Sample Points</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-ElevPts"
+                                           id="Unit-ElevPts"
                                            aria-describedby="elevation - sample points"
                                            placeholder="Elevation - Sample Points"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-ElevRad">Elevation - Sample Radius</label>
+                                    <label for="Unit-ElevRad">Elevation - Sample Radius</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-ElevRad"
+                                           id="Unit-ElevRad"
                                            aria-describedby="elevation sample radius"
                                            placeholder="Elevation - Sample Radius"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-FogRad">Fog of War - Sample Radius</label>
+                                    <label for="Unit-FogRad">Fog of War - Sample Radius</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-FogRad"
+                                           id="Unit-FogRad"
                                            aria-describedby="fog of war - sample radius"
                                            placeholder="Fog of War - Sample Radius"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-UberSplat">Ground Texture</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitUI-UberSplat"
+                                    <label for="Unit-UberSplat">Ground Texture</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-UberSplat"
                                             class="custom-select">
                                         <option value="_">NONE</option>
                                         <option value="UMED">Altar of Darkness, Boneyard, Haunted Gold Mine, Graveyard,
@@ -582,17 +582,17 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-ShadowOnWater">Has Water Shadow</label>
+                                    <label for="Unit-ShadowOnWater">Has Water Shadow</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                           id="SLKUnit-UnitUI-ShadowOnWater"
+                                           id="Unit-ShadowOnWater"
                                            aria-label="has water shadow" tabindex="-1"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Art">Icon</label>
+                                    <label for="Unit-Art">Icon</label>
                                     <div style="display: flex; align-items: center;">
                                         <input oninput="index.saveFieldToUnit(this); index.loadIcon(this)" type="text"
                                                class="form-control"
-                                               id="UnitFunc-Art" aria-describedby="icon"
+                                               id="Unit-Art" aria-describedby="icon"
                                                placeholder="Icon" autocomplete="on" required/>
                                         <div class="btn div-btn"
                                              style="padding: 0 4rem 0 4rem; height: calc(1.5em + .75rem + 2px);"
@@ -604,30 +604,30 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-ScoreScreenIcon">Score Screen Icon</label>
+                                    <label for="Unit-ScoreScreenIcon">Score Screen Icon</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-ScoreScreenIcon"
+                                           id="Unit-ScoreScreenIcon"
                                            aria-describedby="score screen icon" placeholder="Score Screen Icon"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-MaxPitch">Maximum Pitch Angle (degrees)</label>
+                                    <label for="Unit-MaxPitch">Maximum Pitch Angle (degrees)</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-MaxPitch"
+                                           id="Unit-MaxPitch"
                                            aria-describedby="maximum pitch angle in degrees"
                                            placeholder="Maximum Pitch Angle (degrees)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-MaxRoll">Maximum Roll Angle (degrees)</label>
+                                    <label for="Unit-MaxRoll">Maximum Roll Angle (degrees)</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-MaxRoll"
+                                           id="Unit-MaxRoll"
                                            aria-describedby="maximum roll angle in degrees"
                                            placeholder="Maximum Roll Angle (degrees)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-File">Model File</label>
+                                    <label for="Unit-File">Model File</label>
                                     <div style="display: flex;">
                                         <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                               id="SLKUnit-UnitUI-File"
+                                               id="Unit-File"
                                                aria-describedby="model file"
                                                placeholder="Model File"/>
                                         <div class="btn div-btn" style="padding: 0 4rem 0 4rem;" onclick="index.loadMdxModal()"
@@ -637,142 +637,142 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-FileVerFlags">Model File - Extra Versions</label>
+                                    <label for="Unit-FileVerFlags">Model File - Extra Versions</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-FileVerFlags"
+                                           id="Unit-FileVerFlags"
                                            aria-describedby="model file - extra versions"
                                            placeholder="Model File - Extra Versions"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-OccH">Occluder Height</label>
+                                    <label for="Unit-OccH">Occluder Height</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-OccH"
+                                           id="Unit-OccH"
                                            aria-describedby="occluder height"
                                            placeholder="Occluder Height"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-OrientInterp">Orientation Interpolation</label>
+                                    <label for="Unit-OrientInterp">Orientation Interpolation</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitData-OrientInterp"
+                                           id="Unit-OrientInterp"
                                            aria-describedby="orientation interpolation"
                                            placeholder="Orientation Interpolation"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-ImpactZ">Projectile Impact - Z</label>
+                                    <label for="Unit-ImpactZ">Projectile Impact - Z</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-ImpactZ"
+                                           id="Unit-ImpactZ"
                                            aria-describedby="projectile impact z"
                                            placeholder="Projectile Impact - Z"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-ImpactSwimZ">Projectile Impact - Z
+                                    <label for="Unit-ImpactSwimZ">Projectile Impact - Z
                                         (Swimming)</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-ImpactSwimZ"
+                                           id="Unit-ImpactSwimZ"
                                            aria-describedby="projectile impact z while swimming"
                                            placeholder="Projectile Impact - Z (Swimming)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-LaunchX">Projectile Launch - X</label>
+                                    <label for="Unit-LaunchX">Projectile Launch - X</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-LaunchX"
+                                           id="Unit-LaunchX"
                                            aria-describedby="projectile launch x"
                                            placeholder="Projectile Launch - X"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-LaunchY">Projectile Launch - Y</label>
+                                    <label for="Unit-LaunchY">Projectile Launch - Y</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-LaunchY"
+                                           id="Unit-LaunchY"
                                            aria-describedby="projectile launch y"
                                            placeholder="Projectile Launch - Y"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-LaunchZ">Projectile Launch - Z</label>
+                                    <label for="Unit-LaunchZ">Projectile Launch - Z</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-LaunchZ"
+                                           id="Unit-LaunchZ"
                                            aria-describedby="projectile launch z"
                                            placeholder="Projectile Launch - Z"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-LaunchSwimZ">Projectile Launch - Z
+                                    <label for="Unit-LaunchSwimZ">Projectile Launch - Z
                                         (Swimming)</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-LaunchSwimZ"
+                                           id="Unit-LaunchSwimZ"
                                            aria-describedby="projectile launch z (swimming)"
                                            placeholder="Projectile Launch - Z (Swimming)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-PropWin">Propulsion Window (degrees)</label>
+                                    <label for="Unit-PropWin">Propulsion Window (degrees)</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitData-PropWin"
+                                           id="Unit-PropWin"
                                            aria-describedby="propulsion window (degrees)"
                                            placeholder="Propulsion Window (degrees)"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Animprops">Required Animaton Names</label>
+                                    <label for="Unit-Animprops">Required Animaton Names</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Animprops"
+                                           id="Unit-Animprops"
                                            aria-describedby="required animaton names"
                                            placeholder="Required Animaton Names"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Attachmentanimprops">Required Animaton Names -
+                                    <label for="Unit-Attachmentanimprops">Required Animaton Names -
                                         Attachments</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Attachmentanimprops"
+                                           id="Unit-Attachmentanimprops"
                                            aria-describedby="required animaton names - attachments"
                                            placeholder="Required Animaton Names - Attachments"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Attachmentlinkprops">Required Attachment Link Names</label>
+                                    <label for="Unit-Attachmentlinkprops">Required Attachment Link Names</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Attachmentlinkprops"
+                                           id="Unit-Attachmentlinkprops"
                                            aria-describedby="required attachment link names"
                                            placeholder="Required Attachment Link Names"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Boneprops">Required Bone Names</label>
+                                    <label for="Unit-Boneprops">Required Bone Names</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Boneprops"
+                                           id="Unit-Boneprops"
                                            aria-describedby="required bone names"
                                            placeholder="Required Bone Names"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-ScaleBull">Scale Projectiles</label>
+                                    <label for="Unit-ScaleBull">Scale Projectiles</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                           id="SLKUnit-UnitUI-ScaleBull"
+                                           id="Unit-ScaleBull"
                                            aria-label="scale projectiles" tabindex="-1"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-ModelScale">Scaling Value</label>
+                                    <label for="Unit-ModelScale">Scaling Value</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-ModelScale"
+                                           id="Unit-ModelScale"
                                            aria-describedby="scaling value"
                                            placeholder="Scaling Value"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-SelZ">Selection Circle - Height</label>
+                                    <label for="Unit-SelZ">Selection Circle - Height</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-SelZ"
+                                           id="Unit-SelZ"
                                            aria-describedby="selection circle height"
                                            placeholder="Selection Circle Height"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-SelCircOnWater">Selection Circle On Water</label>
+                                    <label for="Unit-SelCircOnWater">Selection Circle On Water</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                           id="SLKUnit-UnitUI-SelCircOnWater"
+                                           id="Unit-SelCircOnWater"
                                            aria-label="selection circle on water" tabindex="-1"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-Scale">Selection Scale</label>
+                                    <label for="Unit-Scale">Selection Scale</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-Scale"
+                                           id="Unit-Scale"
                                            aria-describedby="selection scale"
                                            placeholder="Selection Scale"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-UnitShadow">Shadow Image</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitUI-UnitShadow"
+                                    <label for="Unit-UnitShadow">Shadow Image</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-UnitShadow"
                                             class="custom-select">
                                         <option value="_">NONE</option>
                                         <option value="ShadowFlyer">Flyer</option>
@@ -780,36 +780,36 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-ShadowX">Shadow Image - Center X</label>
+                                    <label for="Unit-ShadowX">Shadow Image - Center X</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-ShadowX"
+                                           id="Unit-ShadowX"
                                            aria-describedby="shadow image - center x"
                                            placeholder="Shadow Image - Center X"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-ShadowY">Shadow Image - Center Y</label>
+                                    <label for="Unit-ShadowY">Shadow Image - Center Y</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-ShadowY"
+                                           id="Unit-ShadowY"
                                            aria-describedby="shadow image - center y"
                                            placeholder="Shadow Image - Center Y"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-ShadowH">Shadow Image - Height</label>
+                                    <label for="Unit-ShadowH">Shadow Image - Height</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-ShadowH"
+                                           id="Unit-ShadowH"
                                            aria-describedby="shadow image - height"
                                            placeholder="Shadow Image - Height"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-ShadowW">Shadow Image - Width</label>
+                                    <label for="Unit-ShadowW">Shadow Image - Width</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-ShadowW"
+                                           id="Unit-ShadowW"
                                            aria-describedby="shadow image - width"
                                            placeholder="Shadow Image - Width"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-BuildingShadow">Shadow Texture</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitUI-BuildingShadow"
+                                    <label for="Unit-BuildingShadow">Shadow Texture</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-BuildingShadow"
                                             class="custom-select">
                                         <option value="_">NONE</option>
                                         <option value="ShadowAltarOfDarkness">Altar of Darkness</option>
@@ -909,22 +909,22 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-Special">Special</label>
+                                    <label for="Unit-Special">Special</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-Special"
+                                           id="Unit-Special"
                                            aria-describedby="special"
                                            placeholder="Special"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Targetart">Target</label>
+                                    <label for="Unit-Targetart">Target</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Targetart"
+                                           id="Unit-Targetart"
                                            aria-describedby="target"
                                            placeholder="Target"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-TeamColor">Team Color</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitUI-TeamColor"
+                                    <label for="Unit-TeamColor">Team Color</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-TeamColor"
                                             class="custom-select">
                                         <option value="-1">Match Owning Player</option>
                                         <option value="0">Player 1 (Red)</option>
@@ -955,23 +955,23 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-Red">Tinting Color 1 (Red)</label>
+                                    <label for="Unit-Red">Tinting Color 1 (Red)</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-Red"
+                                           id="Unit-Red"
                                            aria-describedby="tinting color 1 red"
                                            placeholder="Tinting Color 1 (Red)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-Green">Tinting Color 2 (Green)</label>
+                                    <label for="Unit-Green">Tinting Color 2 (Green)</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-Green"
+                                           id="Unit-Green"
                                            aria-describedby="tinting color 2 green"
                                            placeholder="Tinting Color 2 (Green)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-Blue">Tinting Color 3 (Blue)</label>
+                                    <label for="Unit-Blue">Tinting Color 3 (Blue)</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-Blue"
+                                           id="Unit-Blue"
                                            aria-describedby="tinting color 3 blue"
                                            placeholder="Tinting Color 3 (Blue)"/>
                                 </li>
@@ -994,15 +994,15 @@
                         <form class="was-validated">
                             <ul class="flex-outer">
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Acquire">Acquisition Range</label>
+                                    <label for="Unit-Acquire">Acquisition Range</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Acquire"
+                                           id="Unit-Acquire"
                                            aria-describedby="acquisition range"
                                            placeholder="Acquisition Range"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-Armor">Armor Type</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitUI-Armor"
+                                    <label for="Unit-Armor">Armor Type</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-Armor"
                                             class="custom-select">
                                         <option value="Ethereal">Ethereal</option>
                                         <option value="Flesh">Flesh</option>
@@ -1012,44 +1012,44 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-BackSw1">Animation Backswing
+                                    <label for="Unit-BackSw1">Animation Backswing
                                         Point - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-BackSw1"
+                                           id="Unit-BackSw1"
                                            aria-describedby="animation backswing point"
                                            placeholder="Animation Backswing Point"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Dmgpt1">Animation Damage Point - 1</label>
+                                    <label for="Unit-Dmgpt1">Animation Damage Point - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Dmgpt1"
+                                           id="Unit-Dmgpt1"
                                            aria-describedby="animation damage point"
                                            placeholder="Animation Damage Point"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Farea1">AOE (Full) - 1</label>
+                                    <label for="Unit-Farea1">AOE (Full) - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Farea1"
+                                           id="Unit-Farea1"
                                            aria-describedby="area of effect full damage"
                                            placeholder="Area of Effect (Full Damage)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Harea1">AOE (Medium) - 1</label>
+                                    <label for="Unit-Harea1">AOE (Medium) - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Harea1"
+                                           id="Unit-Harea1"
                                            aria-describedby="area of effect medium damage"
                                            placeholder="Area of Effect (Medium Damage)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Qarea1">AOE (Small) - 1</label>
+                                    <label for="Unit-Qarea1">AOE (Small) - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Qarea1"
+                                           id="Unit-Qarea1"
                                            aria-describedby="area of effect small damage"
                                            placeholder="Area of Effect (Small Damage)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-SplashTargs1">AOE Targets - 1</label>
-                                    <div id="SLKUnit-UnitWeapons-SplashTargs1" class="multi-check">
+                                    <label for="Unit-SplashTargs1">AOE Targets - 1</label>
+                                    <div id="Unit-SplashTargs1" class="multi-check">
                                         <ul>
                                             <li>
                                                 <label for="AOE-Targets-1-Air">Air</label>
@@ -1247,8 +1247,8 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-AtkType1">Attack Type - 1</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitWeapons-AtkType1"
+                                    <label for="Unit-AtkType1">Attack Type - 1</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-AtkType1"
                                             class="custom-select">
                                         <option value="unknown">None</option>
                                         <option value="normal">Normal</option>
@@ -1261,65 +1261,65 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Cool1">Cooldown Time - 1</label>
+                                    <label for="Unit-Cool1">Cooldown Time - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Cool1"
+                                           id="Unit-Cool1"
                                            aria-describedby="cooldown time"
                                            placeholder="Cooldown Time"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Dmgplus1">Damage Base - 1</label>
+                                    <label for="Unit-Dmgplus1">Damage Base - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Dmgplus1"
+                                           id="Unit-Dmgplus1"
                                            aria-describedby="damage base"
                                            placeholder="Damage Base"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Hfact1">Damage Factor - Medium 1</label>
+                                    <label for="Unit-Hfact1">Damage Factor - Medium 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Hfact1"
+                                           id="Unit-Hfact1"
                                            aria-describedby="damage factor - medium"
                                            placeholder="Damage Factor - Medium"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Qfact1">Damage Factor - Small 1</label>
+                                    <label for="Unit-Qfact1">Damage Factor - Small 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Qfact1"
+                                           id="Unit-Qfact1"
                                            aria-describedby="damage factor - small"
                                            placeholder="Damage Factor - Small"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-DamageLoss1">Damage Loss Factor - 1</label>
+                                    <label for="Unit-DamageLoss1">Damage Loss Factor - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-DamageLoss1"
+                                           id="Unit-DamageLoss1"
                                            aria-describedby="damage loss factor"
                                            placeholder="Damage Loss Factor"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Dice1">Damage Number of Dice - 1</label>
+                                    <label for="Unit-Dice1">Damage Number of Dice - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Dice1"
+                                           id="Unit-Dice1"
                                            aria-describedby="damage number of dice"
                                            placeholder="Damage Number of Dice"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Sides1">Damage Sides per Die - 1</label>
+                                    <label for="Unit-Sides1">Damage Sides per Die - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Sides1"
+                                           id="Unit-Sides1"
                                            aria-describedby="damage sides per die"
                                            placeholder="Damage Sides per Die"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-SpillDist1">Damage Spill Distance - 1</label>
+                                    <label for="Unit-SpillDist1">Damage Spill Distance - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-SpillDist1"
+                                           id="Unit-SpillDist1"
                                            aria-describedby="damage spill distance"
                                            placeholder="Damage Spill Distance"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-SpillRadius1">Damage Spill Radius - 1</label>
+                                    <label for="Unit-SpillRadius1">Damage Spill Radius - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-SpillRadius1"
+                                           id="Unit-SpillRadius1"
                                            aria-describedby="damage spill radius"
                                            placeholder="Damage Spill Radius"/>
                                 </li>
@@ -1332,63 +1332,63 @@
                                     <!-- TODO: Figure this one out -->
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-TargCount1">Maxiumum Number of
+                                    <label for="Unit-TargCount1">Maxiumum Number of
                                         Targets - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-TargCount1"
+                                           id="Unit-TargCount1"
                                            aria-describedby="maxiumum number of targets"
                                            placeholder="Maxiumum Number of Targets"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Missilearc1">Projectile Arc - 1</label>
+                                    <label for="Unit-Missilearc1">Projectile Arc - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Missilearc1"
+                                           id="Unit-Missilearc1"
                                            aria-describedby="projectile arc"
                                            placeholder="Projectile Arc"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Missileart1">Projectile Art - 1</label>
+                                    <label for="Unit-Missileart1">Projectile Art - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Missileart1"
+                                           id="Unit-Missileart1"
                                            aria-describedby="projectile art"
                                            placeholder="Projectile Art"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Missilehoming1">Projectile Homing - 1</label>
+                                    <label for="Unit-Missilehoming1">Projectile Homing - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                           id="UnitFunc-Missilehoming1"
+                                           id="Unit-Missilehoming1"
                                            aria-label="projectile homing enabled" tabindex="-1"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Missilespeed1">Projectile Speed - 1</label>
+                                    <label for="Unit-Missilespeed1">Projectile Speed - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Missilespeed1"
+                                           id="Unit-Missilespeed1"
                                            aria-describedby="projectile speed"
                                            placeholder="Projectile Speed"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-RangeN1">Range - 1</label>
+                                    <label for="Unit-RangeN1">Range - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-RangeN1"
+                                           id="Unit-RangeN1"
                                            aria-describedby="range"
                                            placeholder="Range"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-RngBuff1">Range Motion Buffer - 1</label>
+                                    <label for="Unit-RngBuff1">Range Motion Buffer - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-RngBuff1"
+                                           id="Unit-RngBuff1"
                                            aria-describedby="range motion buffer"
                                            placeholder="Range Motion Buffer"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-ShowUI1">Show UI - 1</label>
+                                    <label for="Unit-ShowUI1">Show UI - 1</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                           id="SLKUnit-UnitWeapons-ShowUI1"
+                                           id="Unit-ShowUI1"
                                            aria-label="show ui" tabindex="-1"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Targs1">Targets Allowed - 1</label>
-                                    <div id="SLKUnit-UnitWeapons-Targs1" class="multi-check">
+                                    <label for="Unit-Targs1">Targets Allowed - 1</label>
+                                    <div id="Unit-Targs1" class="multi-check">
                                         <ul>
                                             <li>
                                                 <label for="Weapon-Targets-1-Air">Air</label>
@@ -1586,8 +1586,8 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-WeapType1">Weapon Sound - 1</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitWeapons-WeapType1"
+                                    <label for="Unit-WeapType1">Weapon Sound - 1</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-WeapType1"
                                             class="custom-select">
                                         <option value="_">NONE</option>
                                         <option value="AxeMediumChop">Axe Medium Chop</option>
@@ -1606,8 +1606,8 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-WeapTp1">Weapon Type - 1</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitWeapons-WeapTp1"
+                                    <label for="Unit-WeapTp1">Weapon Type - 1</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-WeapTp1"
                                             class="custom-select">
                                         <option value="_">NONE</option>
                                         <option value="normal">Normal</option>
@@ -1621,44 +1621,44 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-BackSw2">Animation Backswing
+                                    <label for="Unit-BackSw2">Animation Backswing
                                         Point - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-BackSw2"
+                                           id="Unit-BackSw2"
                                            aria-describedby="animation backswing point"
                                            placeholder="Animation Backswing Point"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Dmgpt2">Animation Damage Point - 2</label>
+                                    <label for="Unit-Dmgpt2">Animation Damage Point - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Dmgpt2"
+                                           id="Unit-Dmgpt2"
                                            aria-describedby="animation damage point"
                                            placeholder="Animation Damage Point"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Farea2">AOE (Full) - 2</label>
+                                    <label for="Unit-Farea2">AOE (Full) - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Farea2"
+                                           id="Unit-Farea2"
                                            aria-describedby="area of effect full damage"
                                            placeholder="Area of Effect (Full Damage)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Harea2">AOE (Medium) - 2</label>
+                                    <label for="Unit-Harea2">AOE (Medium) - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Harea2"
+                                           id="Unit-Harea2"
                                            aria-describedby="area of effect medium damage"
                                            placeholder="Area of Effect (Medium Damage)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Qarea2">AOE (Small) - 2</label>
+                                    <label for="Unit-Qarea2">AOE (Small) - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Qarea2"
+                                           id="Unit-Qarea2"
                                            aria-describedby="area of effect small damage"
                                            placeholder="Area of Effect (Small Damage)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-SplashTargs2">AOE Targets - 2</label>
-                                    <div id="SLKUnit-UnitWeapons-SplashTargs2" class="multi-check">
+                                    <label for="Unit-SplashTargs2">AOE Targets - 2</label>
+                                    <div id="Unit-SplashTargs2" class="multi-check">
                                         <ul>
                                             <li>
                                                 <label for="AOE-Targets-2-Air">Air</label>
@@ -1856,8 +1856,8 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-AtkType2">Attack Type - 2</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitWeapons-AtkType2"
+                                    <label for="Unit-AtkType2">Attack Type - 2</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-AtkType2"
                                             class="custom-select">
                                         <option value="unknown">None</option>
                                         <option value="normal">Normal</option>
@@ -1870,65 +1870,65 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Cool2">Cooldown Time - 2</label>
+                                    <label for="Unit-Cool2">Cooldown Time - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Cool2"
+                                           id="Unit-Cool2"
                                            aria-describedby="cooldown time"
                                            placeholder="Cooldown Time"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Dmgplus2">Damage Base - 2</label>
+                                    <label for="Unit-Dmgplus2">Damage Base - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Dmgplus2"
+                                           id="Unit-Dmgplus2"
                                            aria-describedby="damage base"
                                            placeholder="Damage Base"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Hfact2">Damage Factor - Medium 2</label>
+                                    <label for="Unit-Hfact2">Damage Factor - Medium 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Hfact2"
+                                           id="Unit-Hfact2"
                                            aria-describedby="damage factor - medium"
                                            placeholder="Damage Factor - Medium"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Qfact2">Damage Factor - Small 2</label>
+                                    <label for="Unit-Qfact2">Damage Factor - Small 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Qfact2"
+                                           id="Unit-Qfact2"
                                            aria-describedby="damage factor - small"
                                            placeholder="Damage Factor - Small"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-DamageLoss2">Damage Loss Factor - 2</label>
+                                    <label for="Unit-DamageLoss2">Damage Loss Factor - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-DamageLoss2"
+                                           id="Unit-DamageLoss2"
                                            aria-describedby="damage loss factor"
                                            placeholder="Damage Loss Factor"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Dice2">Damage Number of Dice - 2</label>
+                                    <label for="Unit-Dice2">Damage Number of Dice - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Dice2"
+                                           id="Unit-Dice2"
                                            aria-describedby="damage number of dice"
                                            placeholder="Damage Number of Dice"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Sides2">Damage Sides per Die - 2</label>
+                                    <label for="Unit-Sides2">Damage Sides per Die - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-Sides2"
+                                           id="Unit-Sides2"
                                            aria-describedby="damage sides per die"
                                            placeholder="Damage Sides per Die"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-SpillDist2">Damage Spill Distance - 2</label>
+                                    <label for="Unit-SpillDist2">Damage Spill Distance - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-SpillDist2"
+                                           id="Unit-SpillDist2"
                                            aria-describedby="damage spill distance"
                                            placeholder="Damage Spill Distance"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-SpillRadius2">Damage Spill Radius - 2</label>
+                                    <label for="Unit-SpillRadius2">Damage Spill Radius - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-SpillRadius2"
+                                           id="Unit-SpillRadius2"
                                            aria-describedby="damage spill radius"
                                            placeholder="Damage Spill Radius"/>
                                 </li>
@@ -1941,63 +1941,63 @@
                                     <!-- TODO: Figure this one out -->
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-TargCount2">Maxiumum Number of
+                                    <label for="Unit-TargCount2">Maxiumum Number of
                                         Targets - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-TargCount2"
+                                           id="Unit-TargCount2"
                                            aria-describedby="maxiumum number of targets"
                                            placeholder="Maxiumum Number of Targets"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Missilearc2">Projectile Arc - 2</label>
+                                    <label for="Unit-Missilearc2">Projectile Arc - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Missilearc2"
+                                           id="Unit-Missilearc2"
                                            aria-describedby="projectile arc"
                                            placeholder="Projectile Arc"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Missileart2">Projectile Art - 2</label>
+                                    <label for="Unit-Missileart2">Projectile Art - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Missileart2"
+                                           id="Unit-Missileart2"
                                            aria-describedby="projectile art"
                                            placeholder="Projectile Art"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Missilehoming2">Projectile Homing Enabled - 2</label>
+                                    <label for="Unit-Missilehoming2">Projectile Homing Enabled - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                           id="UnitFunc-Missilehoming2"
+                                           id="Unit-Missilehoming2"
                                            aria-label="projectile homing enabled" tabindex="-1"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Missilespeed2">Projectile Speed - 2</label>
+                                    <label for="Unit-Missilespeed2">Projectile Speed - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Missilespeed2"
+                                           id="Unit-Missilespeed2"
                                            aria-describedby="projectile speed"
                                            placeholder="Projectile Speed"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-RangeN2">Range - 2</label>
+                                    <label for="Unit-RangeN2">Range - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-RangeN2"
+                                           id="Unit-RangeN2"
                                            aria-describedby="range"
                                            placeholder="Range"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-RngBuff2">Range Motion Buffer - 2</label>
+                                    <label for="Unit-RngBuff2">Range Motion Buffer - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-RngBuff2"
+                                           id="Unit-RngBuff2"
                                            aria-describedby="range motion buffer"
                                            placeholder="Range Motion Buffer"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-ShowUI2">Show UI - 2</label>
+                                    <label for="Unit-ShowUI2">Show UI - 2</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                           id="SLKUnit-UnitWeapons-ShowUI2"
+                                           id="Unit-ShowUI2"
                                            aria-label="show ui" tabindex="-1"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-Targs2">Targets Allowed - 2</label>
-                                    <div id="SLKUnit-UnitWeapons-Targs2" class="multi-check">
+                                    <label for="Unit-Targs2">Targets Allowed - 2</label>
+                                    <div id="Unit-Targs2" class="multi-check">
                                         <ul>
                                             <li>
                                                 <label for="Weapon-Targets-2-Air">Air</label>
@@ -2190,8 +2190,8 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-WeapType2">Weapon Sound - 2</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitWeapons-WeapType2"
+                                    <label for="Unit-WeapType2">Weapon Sound - 2</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-WeapType2"
                                             class="custom-select">
                                         <option value="_">NONE</option>
                                         <option value="AxeMediumChop">Axe Medium Chop</option>
@@ -2210,8 +2210,8 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-WeapTp2">Weapon Type - 2</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitWeapons-WeapTp2"
+                                    <label for="Unit-WeapTp2">Weapon Type - 2</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-WeapTp2"
                                             class="custom-select">
                                         <option value="_">NONE</option>
                                         <option value="normal">Normal</option>
@@ -2225,8 +2225,8 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-WeapsOn">Attacks Enabled</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitWeapons-WeapsOn"
+                                    <label for="Unit-WeapsOn">Attacks Enabled</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-WeapsOn"
                                             class="custom-select">
                                         <option value="0">None</option>
                                         <option value="1">Attack 1 Only</option>
@@ -2235,8 +2235,8 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-DeathType">Death Type</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitData-DeathType"
+                                    <label for="Unit-DeathType">Death Type</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-DeathType"
                                             class="custom-select">
                                         <option value="0">Can't raise, Does not decay</option>
                                         <option value="1">Can raise, Does not decay</option>
@@ -2245,15 +2245,15 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Def">Defense Base</label>
+                                    <label for="Unit-Def">Defense Base</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Def"
+                                           id="Unit-Def"
                                            aria-describedby="defense base"
                                            placeholder="Defense Base"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-DefType">Defense Type</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitBalance-DefType"
+                                    <label for="Unit-DefType">Defense Type</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-DefType"
                                             class="custom-select">
                                         <option value="normal">Normal</option>
                                         <option value="small">Small</option>
@@ -2266,22 +2266,22 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-DefUp">Defense Upgrade Bonus</label>
+                                    <label for="Unit-DefUp">Defense Upgrade Bonus</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-DefUp"
+                                           id="Unit-DefUp"
                                            aria-describedby="defense base"
                                            placeholder="Defense Base"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitWeapons-MinRange">Minimum Attack Range</label>
+                                    <label for="Unit-MinRange">Minimum Attack Range</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitWeapons-MinRange"
+                                           id="Unit-MinRange"
                                            aria-describedby="minimum attack range"
                                            placeholder="Minimum Attack Range"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-TargType">Targeted as</label>
-                                    <div id="SLKUnit-UnitData-TargType" class="multi-check">
+                                    <label for="Unit-TargType">Targeted as</label>
+                                    <div id="Unit-TargType" class="multi-check">
                                         <ul>
                                             <li>
                                                 <label for="Target-As-Air">Air</label>
@@ -2488,78 +2488,78 @@
                         <form class="was-validated">
                             <ul class="flex-outer">
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Repulse">Group Separation - Enabled</label>
+                                    <label for="Unit-Repulse">Group Separation - Enabled</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                           id="SLKUnit-UnitBalance-Repulse"
+                                           id="Unit-Repulse"
                                            aria-label="group separation - enabled" tabindex="-1"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-RepulseGroup">Group Separation - Group
+                                    <label for="Unit-RepulseGroup">Group Separation - Group
                                         Number</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-RepulseGroup"
+                                           id="Unit-RepulseGroup"
                                            aria-describedby="group separation - group number"
                                            placeholder="Group Separation - Group Number"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-RepulseParam">Group Separation - Parameter</label>
+                                    <label for="Unit-RepulseParam">Group Separation - Parameter</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-RepulseParam"
+                                           id="Unit-RepulseParam"
                                            aria-describedby="group separation - group parameter"
                                            placeholder="Group Separation - Group Parameter"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-RepulsePrio">Group Separation - Priority</label>
+                                    <label for="Unit-RepulsePrio">Group Separation - Priority</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-RepulsePrio"
+                                           id="Unit-RepulsePrio"
                                            aria-describedby="group separation - group priority"
                                            placeholder="Group Separation - Group Priority"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-MoveHeight">Height</label>
+                                    <label for="Unit-MoveHeight">Height</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitData-MoveHeight"
+                                           id="Unit-MoveHeight"
                                            aria-describedby="height"
                                            placeholder="Height"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-MoveFloor">Height Minimum</label>
+                                    <label for="Unit-MoveFloor">Height Minimum</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitData-MoveFloor"
+                                           id="Unit-MoveFloor"
                                            aria-describedby="height minimum"
                                            placeholder="Height Minimum"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Spd">Speed Base</label>
+                                    <label for="Unit-Spd">Speed Base</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Spd"
+                                           id="Unit-Spd"
                                            aria-describedby="speed base"
                                            placeholder="Speed Base"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-MaxSpd">Speed Maximum</label>
+                                    <label for="Unit-MaxSpd">Speed Maximum</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-MaxSpd"
+                                           id="Unit-MaxSpd"
                                            aria-describedby="speed maximum"
                                            placeholder="Speed Maximum"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-MinSpd">Speed Minimum</label>
+                                    <label for="Unit-MinSpd">Speed Minimum</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-MinSpd"
+                                           id="Unit-MinSpd"
                                            aria-describedby="speed minimum"
                                            placeholder="Speed Minimum"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-TurnRate">Turn Rate</label>
+                                    <label for="Unit-TurnRate">Turn Rate</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitData-TurnRate"
+                                           id="Unit-TurnRate"
                                            aria-describedby="turn rate"
                                            placeholder="Turn Rate"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-Movetp">Type</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitData-Movetp"
+                                    <label for="Unit-Movetp">Type</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-Movetp"
                                             class="custom-select">
                                         <option value="_">NONE</option>
                                         <option value="foot">Foot</option>
@@ -2597,15 +2597,15 @@
                                            placeholder="AI Placement Type" disabled/> <!-- TODO: Figure this one out -->
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Collision">Collision Size</label>
+                                    <label for="Unit-Collision">Collision Size</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Collision"
+                                           id="Unit-Collision"
                                            aria-describedby="collision size"
                                            placeholder="Collision Size"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-PathTex">Pathing Map</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitData-PathTex"
+                                    <label for="Unit-PathTex">Pathing Map</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-PathTex"
                                             class="custom-select">
                                         <option value="_">NONE</option>
                                         <option value="PathTextures\10x10Simple.tga">Altar of Kings, Altar of Storms,
@@ -2691,8 +2691,8 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-PreventPlace">Placement Prevented By</label>
-                                    <div id="SLKUnit-UnitBalance-PreventPlace" class="multi-check">
+                                    <label for="Unit-PreventPlace">Placement Prevented By</label>
+                                    <div id="Unit-PreventPlace" class="multi-check">
                                         <ul>
                                             <li>
                                                 <label for="PreventPlace-Airpathable">Air-pathable</label>
@@ -2728,8 +2728,8 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-RequirePlace">Placement Requires</label>
-                                    <div id="SLKUnit-UnitBalance-RequirePlace" class="multi-check">
+                                    <label for="Unit-RequirePlace">Placement Requires</label>
+                                    <div id="Unit-RequirePlace" class="multi-check">
                                         <ul>
                                             <li>
                                                 <label for="RequirePlace-Airpathable">Air-pathable</label>
@@ -2765,10 +2765,10 @@
                                     </div>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-RequireWaterRadius">Placement Requires Water
+                                    <label for="Unit-RequireWaterRadius">Placement Requires Water
                                         Radius</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitData-RequireWaterRadius"
+                                           id="Unit-RequireWaterRadius"
                                            aria-describedby="placement requires water radius"
                                            placeholder="Placement Requires Water Radius"/>
                                 </li>
@@ -2784,44 +2784,44 @@
                         <form class="was-validated">
                             <ul class="flex-outer">
                                 <li>
-                                    <label for="UnitFunc-Buildingsoundlabel">Construction</label>
+                                    <label for="Unit-Buildingsoundlabel">Construction</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Buildingsoundlabel"
+                                           id="Unit-Buildingsoundlabel"
                                            aria-describedby="contruction"
                                            placeholder="Construction"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Loopingsoundfadein">Looping Fade In Rate</label>
+                                    <label for="Unit-Loopingsoundfadein">Looping Fade In Rate</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Loopingsoundfadein"
+                                           id="Unit-Loopingsoundfadein"
                                            aria-describedby="looping fade in rate"
                                            placeholder="Looping Fade In Rate"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Loopingsoundfadeout">Looping Fade Out Rate</label>
+                                    <label for="Unit-Loopingsoundfadeout">Looping Fade Out Rate</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Loopingsoundfadeout"
+                                           id="Unit-Loopingsoundfadeout"
                                            aria-describedby="looping fade out rate"
                                            placeholder="Looping Fade Out Rate"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Movementsoundlabel">Movement</label>
+                                    <label for="Unit-Movementsoundlabel">Movement</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Movementsoundlabel"
+                                           id="Unit-Movementsoundlabel"
                                            aria-describedby="movement"
                                            placeholder="Movement"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Randomsoundlabel">Random</label>
+                                    <label for="Unit-Randomsoundlabel">Random</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Randomsoundlabel"
+                                           id="Unit-Randomsoundlabel"
                                            aria-describedby="random"
                                            placeholder="Random"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-UnitSound">Unit Sound Set</label>
+                                    <label for="Unit-UnitSound">Unit Sound Set</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitUI-UnitSound"
+                                           id="Unit-UnitSound"
                                            aria-describedby="unit sound set"
                                            placeholder="Unit Sound Set"/>
                                 </li>
@@ -2837,104 +2837,104 @@
                         <form class="was-validated">
                             <ul class="flex-outer">
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Bldtm">Build Time</label>
+                                    <label for="Unit-Bldtm">Build Time</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Bldtm"
+                                           id="Unit-Bldtm"
                                            aria-describedby="build time"
                                            placeholder="Build Time"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-IsBuildOn">Can Be Built On</label>
+                                    <label for="Unit-IsBuildOn">Can Be Built On</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                           id="SLKUnit-UnitData-IsBuildOn"
+                                           id="Unit-IsBuildOn"
                                            aria-label="can be built on" tabindex="-1"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-CanBuildOn">Can Build On</label>
+                                    <label for="Unit-CanBuildOn">Can Build On</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                           id="SLKUnit-UnitData-CanBuildOn"
+                                           id="Unit-CanBuildOn"
                                            aria-label="can build on" tabindex="-1"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-CanFlee">Can Flee</label>
+                                    <label for="Unit-CanFlee">Can Flee</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                           id="SLKUnit-UnitData-CanFlee"
+                                           id="Unit-CanFlee"
                                            aria-label="can flee" tabindex="-1"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Fused">Food Cost</label>
+                                    <label for="Unit-Fused">Food Cost</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Fused"
+                                           id="Unit-Fused"
                                            aria-describedby="food cost"
                                            placeholder="Food Cost"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Fmade">Food Produced</label>
+                                    <label for="Unit-Fmade">Food Produced</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Fmade"
+                                           id="Unit-Fmade"
                                            aria-describedby="food produced"
                                            placeholder="Food Produced"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-Formation">Formation Rank</label>
+                                    <label for="Unit-Formation">Formation Rank</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitData-Formation"
+                                           id="Unit-Formation"
                                            aria-describedby="formation rank"
                                            placeholder="Formation Rank"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Bountyplus">Gold Bounty - Base</label>
+                                    <label for="Unit-Bountyplus">Gold Bounty - Base</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Bountyplus"
+                                           id="Unit-Bountyplus"
                                            aria-describedby="gold bounty awarded - base"
                                            placeholder="Gold Bounty - Base"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Bountydice">Gold Bounty - Number of
+                                    <label for="Unit-Bountydice">Gold Bounty - Number of
                                         Dice</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Bountydice"
+                                           id="Unit-Bountydice"
                                            aria-describedby="gold bounty awarded - number of dice"
                                            placeholder="Gold Bounty - Number of Dice"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Bountysides">Gold Bounty - Sides per
+                                    <label for="Unit-Bountysides">Gold Bounty - Sides per
                                         Die</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Bountysides"
+                                           id="Unit-Bountysides"
                                            aria-describedby="gold bounty awarded - sides per die"
                                            placeholder="Gold Bounty - Sides per Die"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Goldcost">Gold Cost</label>
+                                    <label for="Unit-Goldcost">Gold Cost</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Goldcost"
+                                           id="Unit-Goldcost"
                                            aria-describedby="gold cost"
                                            placeholder="Gold Cost"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitUI-HideOnMinimap">Hide Minimap Display</label>
+                                    <label for="Unit-HideOnMinimap">Hide Minimap Display</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                           id="SLKUnit-UnitUI-HideOnMinimap"
+                                           id="Unit-HideOnMinimap"
                                            aria-label="hide minimap display" tabindex="-1"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-HP">Hit Points Maximum</label>
+                                    <label for="Unit-HP">Hit Points Maximum</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-HP"
+                                           id="Unit-HP"
                                            aria-describedby="maximum hit points"
                                            placeholder="Hit Points Maximum"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-RegenHP">Hit Points Regeneration Rate</label>
+                                    <label for="Unit-RegenHP">Hit Points Regeneration Rate</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-RegenHP"
+                                           id="Unit-RegenHP"
                                            aria-describedby="hit points regeneration rate"
                                            placeholder="Hit Points Regeneration Rate"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-RegenType">Hit Points Regeneration Type</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitBalance-RegenType"
+                                    <label for="Unit-RegenType">Hit Points Regeneration Type</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-RegenType"
                                             class="custom-select">
                                         <option value="none">None</option>
                                         <option value="always">Always</option>
@@ -2944,87 +2944,87 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Isbldg">Is a Building</label>
+                                    <label for="Unit-Isbldg">Is a Building</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                           id="SLKUnit-UnitBalance-Isbldg"
+                                           id="Unit-Isbldg"
                                            aria-label="is a building" tabindex="-1"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Level">Level</label>
+                                    <label for="Unit-Level">Level</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Level"
+                                           id="Unit-Level"
                                            aria-describedby="level"
                                            placeholder="Level"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Lumberbountyplus">Lumber Bounty -
+                                    <label for="Unit-Lumberbountyplus">Lumber Bounty -
                                         Base</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Lumberbountyplus"
+                                           id="Unit-Lumberbountyplus"
                                            aria-describedby="lumber bounty awarded - base"
                                            placeholder="Lumber Bounty - Base"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Lumberbountydice">Lumber Bounty - Number of
+                                    <label for="Unit-Lumberbountydice">Lumber Bounty - Number of
                                         Dice</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Lumberbountydice"
+                                           id="Unit-Lumberbountydice"
                                            aria-describedby="lumber bounty awarded - number of dice"
                                            placeholder="Lumber Bounty - Number of Dice"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Lumberbountysides">Lumber Bounty - Sides per
+                                    <label for="Unit-Lumberbountysides">Lumber Bounty - Sides per
                                         Die</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Lumberbountysides"
+                                           id="Unit-Lumberbountysides"
                                            aria-describedby="lumber bounty awarded - sides per die"
                                            placeholder="Lumber Bounty - Sides per Die"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Lumbercost">Lumber Cost</label>
+                                    <label for="Unit-Lumbercost">Lumber Cost</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Lumbercost"
+                                           id="Unit-Lumbercost"
                                            aria-describedby="lumber cost"
                                            placeholder="Lumber Cost"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Mana0">Mana Initial Amount</label>
+                                    <label for="Unit-Mana0">Mana Initial Amount</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Mana0"
+                                           id="Unit-Mana0"
                                            aria-describedby="mana initial amount"
                                            placeholder="Mana Initial Amount"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-ManaN">Mana Maximum</label>
+                                    <label for="Unit-ManaN">Mana Maximum</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-ManaN"
+                                           id="Unit-ManaN"
                                            aria-describedby="maximum mana"
                                            placeholder="Mana Maximum"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-RegenMana">Mana Regeneration</label>
+                                    <label for="Unit-RegenMana">Mana Regeneration</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-RegenMana"
+                                           id="Unit-RegenMana"
                                            aria-describedby="mana regeneration"
                                            placeholder="Mana Regeneration"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-Points">Point Value</label>
+                                    <label for="Unit-Points">Point Value</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitData-Points"
+                                           id="Unit-Points"
                                            aria-describedby="point value"
                                            placeholder="Point Value"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-Prio">Priority</label>
+                                    <label for="Unit-Prio">Priority</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitData-Prio"
+                                           id="Unit-Prio"
                                            aria-describedby="priority"
                                            placeholder="Priority"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-Race">Race</label>
-                                    <select onchange="index.saveFieldToUnit(this)" id="SLKUnit-UnitData-Race"
+                                    <label for="Unit-Race">Race</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Unit-Race"
                                             class="custom-select">
                                         <option value="commoner">Commoner</option>
                                         <option value="creeps">Creep</option>
@@ -3040,77 +3040,77 @@
                                     </select>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-GoldRep">Repair Gold Cost</label>
+                                    <label for="Unit-GoldRep">Repair Gold Cost</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-GoldRep"
+                                           id="Unit-GoldRep"
                                            aria-describedby="repair gold cost"
                                            placeholder="Repair Gold Cost"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-LumberRep">Repair Lumber Cost</label>
+                                    <label for="Unit-LumberRep">Repair Lumber Cost</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-LumberRep"
+                                           id="Unit-LumberRep"
                                            aria-describedby="repair lumber cost"
                                            placeholder="Repair Lumber Cost"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Reptm">Repair Time</label>
+                                    <label for="Unit-Reptm">Repair Time</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Reptm"
+                                           id="Unit-Reptm"
                                            aria-describedby="repair time"
                                            placeholder="Repair Time"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Sight">Sight Radius (Day)</label>
+                                    <label for="Unit-Sight">Sight Radius (Day)</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Sight"
+                                           id="Unit-Sight"
                                            aria-describedby="sight radius day"
                                            placeholder="Sight Radius (Day)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Nsight">Sight Radius (Night)</label>
+                                    <label for="Unit-Nsight">Sight Radius (Night)</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-Nsight"
+                                           id="Unit-Nsight"
                                            aria-describedby="sight radius night"
                                            placeholder="Sight Radius (Night)"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-CanSleep">Sleeps</label>
+                                    <label for="Unit-CanSleep">Sleeps</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="checkbox"
-                                           id="SLKUnit-UnitData-CanSleep"
+                                           id="Unit-CanSleep"
                                            aria-label="sleeps" tabindex="-1"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-StockMax">Stock Maximum</label>
+                                    <label for="Unit-StockMax">Stock Maximum</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-StockMax"
+                                           id="Unit-StockMax"
                                            aria-describedby="stock maximum"
                                            placeholder="Stock Maximum"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-StockRegen">Stock Replenish Interval</label>
+                                    <label for="Unit-StockRegen">Stock Replenish Interval</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-StockRegen"
+                                           id="Unit-StockRegen"
                                            aria-describedby="stock replenish interval"
                                            placeholder="Stock Replenish Interval"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-StockStart">Stock Start Delay</label>
+                                    <label for="Unit-StockStart">Stock Start Delay</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitBalance-StockStart"
+                                           id="Unit-StockStart"
                                            aria-describedby="stock start delay"
                                            placeholder="Stock Start Delay"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitData-CargoSize">Transported Size</label>
+                                    <label for="Unit-CargoSize">Transported Size</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="SLKUnit-UnitData-CargoSize"
+                                           id="Unit-CargoSize"
                                            aria-describedby="transported size"
                                            placeholder="Transported Size"/>
                                 </li>
                                 <li>
-                                    <label for="SLKUnit-UnitBalance-Type">Unit Classification</label>
-                                    <div id="SLKUnit-UnitBalance-Type" class="multi-check">
+                                    <label for="Unit-Type">Unit Classification</label>
+                                    <div id="Unit-Type" class="multi-check">
                                         <ul>
                                             <li>
                                                 <label for="Type-Ancient">Ancient</label>
@@ -3202,16 +3202,16 @@
                                     <!-- TODO: Figure this one out -->
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Sellitems">Items Sold</label>
+                                    <label for="Unit-Sellitems">Items Sold</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Sellitems"
+                                           id="Unit-Sellitems"
                                            aria-describedby="items sold"
                                            placeholder="Items Sold"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Requires">Requirements</label>
+                                    <label for="Unit-Requires">Requirements</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Requires"
+                                           id="Unit-Requires"
                                            aria-describedby="requirements"
                                            placeholder="Requirements"/>
                                 </li>
@@ -3224,23 +3224,23 @@
                                     <!-- TODO: Figure this one out -->
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Builds">Structures Built</label>
+                                    <label for="Unit-Builds">Structures Built</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Builds"
+                                           id="Unit-Builds"
                                            aria-describedby="structures built"
                                            placeholder="Structures Built"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Sellunits">Units Sold</label>
+                                    <label for="Unit-Sellunits">Units Sold</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Sellunits"
+                                           id="Unit-Sellunits"
                                            aria-describedby="units sold"
                                            placeholder="Units Sold"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Upgrade">Upgrades To</label>
+                                    <label for="Unit-Upgrade">Upgrades To</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Upgrade"
+                                           id="Unit-Upgrade"
                                            aria-describedby="upgrades to"
                                            placeholder="Upgrades To"/>
                                 </li>
@@ -3270,46 +3270,46 @@
                                            placeholder="Caster Upgrade Tip" disabled/><!-- TODO: Figure this one out -->
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Description">Description</label>
+                                    <label for="Unit-Description">Description</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Description"
+                                           id="Unit-Description"
                                            aria-describedby="Description"
                                            placeholder="Description"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Hotkey">Hotkey</label>
+                                    <label for="Unit-Hotkey">Hotkey</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Hotkey"
+                                           id="Unit-Hotkey"
                                            aria-describedby="Hotkey"
                                            placeholder="Hotkey"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Name">Name</label>
+                                    <label for="Unit-Name">Name</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Name" aria-describedby="name"
+                                           id="Unit-Name" aria-describedby="name"
                                            placeholder="Name"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Editorsuffix">Name - Editor Suffix</label>
+                                    <label for="Unit-Editorsuffix">Name - Editor Suffix</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Editorsuffix"
+                                           id="Unit-Editorsuffix"
                                            aria-describedby="name - editor suffix"
                                            placeholder="Name - Editor Suffix"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Tip">Tooltip - Basic</label>
+                                    <label for="Unit-Tip">Tooltip - Basic</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="UnitFunc-Tip"
+                                           id="Unit-Tip"
                                            aria-describedby="tooltip - basic"
                                            placeholder="Tooltip - Basic"/>
                                 </li>
                                 <li>
-                                    <label for="UnitFunc-Ubertip">Tooltip - Extended</label>
+                                    <label for="Unit-Ubertip">Tooltip - Extended</label>
                                     <div>
                                         <div style="display: flex; overflow-x: hidden;">
                                         <textarea oninput="index.saveFieldToUnit(this); index.multiColorTextarea(this)"
                                                   onscroll="index.multiColorTextareaScroll(this)" class="form-control"
-                                                  id="UnitFunc-Ubertip"
+                                                  id="Unit-Ubertip"
                                                   aria-describedby="tooltip - extended"
                                                   placeholder="Tooltip - Extended"></textarea>
                                             <div id="preview" style="overflow-y: hidden;"

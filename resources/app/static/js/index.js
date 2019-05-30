@@ -88,7 +88,7 @@ const index = {
     loadMdxModal: function () {
         initMdx();
 
-        const currentModelPath = document.getElementById("SLKUnit-UnitUI-File").value;
+        const currentModelPath = document.getElementById("Unit-File").value;
         const lowercaseModelPath = currentModelPath.toLowerCase().replace(new RegExp("\.mdl$"), ".mdx");
         const modelPathWithExtension = lowercaseModelPath.endsWith("mdx") ? lowercaseModelPath : lowercaseModelPath + ".mdx";
         console.log("Loading:", modelPathWithExtension);
@@ -100,7 +100,7 @@ const index = {
         loadMdxModel(modelPathWithExtension);
     },
     loadIconModal: function () {
-        const currentIconPath = document.getElementById("UnitFunc-Art").value;
+        const currentIconPath = document.getElementById("Unit-Art").value;
         if (!unitIconPathToName.hasOwnProperty(currentIconPath.toLowerCase())) {
             return;
         }
@@ -200,70 +200,57 @@ const index = {
 
             $("#unitTableBody>tr").removeClass("active");
             unitTableRow.setAttribute("class", "active");
-            Object.keys(message.payload.SLKUnit).forEach(slkUnitKey => {
-                Object.keys(message.payload.SLKUnit[slkUnitKey]).forEach(key => {
-                    const rawValue = message.payload.SLKUnit[slkUnitKey][key] ? message.payload.SLKUnit[slkUnitKey][key] : "";
-                    const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
-                    const value = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
-                    const elemList = $("#SLKUnit-" + slkUnitKey + "-" + key);
-                    if (elemList.length > 0) {
-                        if (elemList[0] instanceof HTMLInputElement || elemList[0] instanceof HTMLSelectElement) {
-                            const type = elemList[0].type;
 
-                            if (type === "text" || type === "select-one") {
-                                elemList[0].value = value;
-                            } else if (type === "checkbox") {
-                                elemList[0].checked = value === "1";
-                            }
-                        } else if (elemList[0].classList.contains("multi-check")) {
-                            const childInputs = $("#SLKUnit-" + slkUnitKey + "-" + key + " :input");
-                            const valueSplit = value.split(",");
-                            const valueLower = valueSplit.map(val => val.toLowerCase());
-                            for (let i = 0; i < childInputs.length; i++) {
-                                if (valueLower.includes(childInputs[i].value.toLowerCase())) {
-                                    childInputs[i].checked = true;
-                                } else {
-                                    childInputs[i].checked = false;
-                                }
-                            }
-                        }
-                    }
-                })
-            });
-
-            if (message.payload.UnitFunc.Ubertip) {
-                const rawValue = message.payload.UnitFunc.Ubertip;
+            if (message.payload.Ubertip) {
+                const rawValue = message.payload.Ubertip;
                 const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
                 const trimmedLeft = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
 
-                message.payload.UnitFunc.Ubertip = trimmedLeft.replace(new RegExp("\\|n", "g"), "\n");
+                message.payload.Ubertip = trimmedLeft.replace(new RegExp("\\|n", "g"), "\n");
             }
 
-            Object.keys(message.payload.UnitFunc).forEach(unitFuncKey => {
-                const elem = document.getElementById("UnitFunc-" + unitFuncKey);
+            if (message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
+                if (message.payload.ButtonposX === "" || message.payload.ButtonposX === "_" || message.payload.ButtonposX === "-" || message.payload.ButtonposY === "" || message.payload.ButtonposY === "_" || message.payload.ButtonposY === "-") {
+                    message.payload.Buttonpos = "0,0";
+                } else {
+                    message.payload.Buttonpos = message.payload.ButtonposX + "," + message.payload.ButtonposY;
+                }
+            }
+
+            Object.keys(message.payload).forEach(slkUnitKey => {
+                const rawValue = message.payload[slkUnitKey] ? message.payload[slkUnitKey] : "";
+                const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
+                const value = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
+                const elem = document.getElementById("Unit-" + slkUnitKey);
                 if (elem) {
-                    if (elem instanceof HTMLInputElement || elem instanceof HTMLTextAreaElement) {
+                    if (elem instanceof HTMLInputElement || elem instanceof HTMLSelectElement || elem instanceof HTMLTextAreaElement) {
                         const type = elem.type;
+
                         if (type === "text" || type === "textarea" || type === "select-one") {
-                            elem.value = message.payload.UnitFunc[unitFuncKey];
+                            elem.value = value;
                         } else if (type === "checkbox") {
-                            elem.checked = message.payload.UnitFunc[unitFuncKey] === "1";
-                        } else {
-                            console.log("type is " + elem.type);
+                            elem.checked = value === "1";
                         }
-                    } else if (elem.id === "UnitFunc-Buttonpos") {
-                        const buttonpos = message.payload.UnitFunc[unitFuncKey];
+                    } else if (elem.id === "Unit-Buttonpos") {
+                        const buttonpos = message.payload[slkUnitKey];
                         if (!buttonpos || buttonpos === "-" || buttonpos === "_") {
                             elem.value = "0,0"
                         } else {
                             elem.value = buttonpos;
                         }
+                    } else if (elem.classList.contains("multi-check")) {
+                        const childInputs = $("#Unit-" + slkUnitKey + " :input");
+                        const valueSplit = value.split(",");
+                        const valueLower = valueSplit.map(val => val.toLowerCase());
+                        for (let i = 0; i < childInputs.length; i++) {
+                            childInputs[i].checked = valueLower.includes(childInputs[i].value.toLowerCase());
+                        }
                     }
                 }
             });
 
-            index.multiColorTextarea(document.getElementById("UnitFunc-Ubertip"));
-            index.loadIcon(document.getElementById("UnitFunc-Art"));
+            index.multiColorTextarea(document.getElementById("Unit-Ubertip"));
+            index.loadIcon(document.getElementById("Unit-Art"));
         });
     },
     saveToFile: function () {
@@ -334,7 +321,7 @@ const index = {
                 const containsNumberRegex = new RegExp("^-?(?:(?:\\d*)|(?:\\d+\\.\\d+))$");
                 Value = input.value.replace(new RegExp("\n", "g"), "|n");
 
-                if (fieldSplit[0] === "SLKUnit" || Field === "UnitFunc-Ubertip") {
+                if (fieldSplit[0] === "SLKUnit" || Field === "Unit-Ubertip") {
                     if (!Value.match(containsNumberRegex)) {
                         Value = "\"" + Value + "\"";
                     }
@@ -344,7 +331,7 @@ const index = {
             }
         }
 
-        const UnitId = document.getElementById("UnitFunc-UnitId").value;
+        const UnitId = document.getElementById("Unit-UnitID").value;
         const fieldToUnit = {Field, Value, UnitId};
         if (Field != null && Value != null) {
             const message = {name: "saveFieldToUnit", payload: fieldToUnit};
@@ -364,7 +351,7 @@ const index = {
                 if (message.payload === "unsaved") {
                     index.saveUnit();
                 } else {
-                    if (Field === "UnitFunc-Name" || Field === "UnitFunc-Editorsuffix") {
+                    if (Field === "Unit-Name" || Field === "Unit-Editorsuffix") {
                         let oldUnit = null;
                         for (let i = 0; i < unitDataList.length; i++) {
                             if (unitDataList[i].UnitID === UnitId) {
@@ -376,9 +363,9 @@ const index = {
                         if (oldUnit) {
                             const oldUnitData = unitDataList[oldUnit];
 
-                            if (Field === "UnitFunc-Name") {
+                            if (Field === "Unit-Name") {
                                 oldUnitData.Name = Value;
-                            } else if (Field === "UnitFunc-Editorsuffix") {
+                            } else if (Field === "Unit-Editorsuffix") {
                                 oldUnitData.EditorSuffix = Value;
                             }
 
@@ -414,7 +401,7 @@ const index = {
     selectUnitIcon: function () {
         const inputValue = document.getElementById("icon-selector").value.toLowerCase();
         if (unitIconNameToPath.hasOwnProperty(inputValue)) {
-            const iconInput = document.getElementById("UnitFunc-Art");
+            const iconInput = document.getElementById("Unit-Art");
             iconInput.value = unitIconNameToPath[inputValue];
             $('#unit-icon-modal').modal('toggle');
 
@@ -450,211 +437,199 @@ const index = {
         if (!formsValid)
             return;
 
-        const unit = {
-            SLKUnit: {UnitUI: {}, UnitData: {}, UnitBalance: {}, UnitWeapons: {}, UnitAbilities: {}},
-            UnitFunc: {}
-        };
-
+        const unit = {};
         const inputs = $(":input");
         for (let i = 0; i < inputs.length; i++) {
             const type = inputs[i].type;
-            const idSplit = inputs[i].id.split("-");
             if (inputs[i].id) {
+                const idSplit = inputs[i].id.split("-");
                 if (type === "checkbox") {
-                    if (idSplit[0] === "SLKUnit") {
-                        unit.SLKUnit[idSplit[1]][idSplit[2]] = inputs[i].checked ? "1" : "0"
-                    } else if (idSplit[0] === "UnitFunc") {
-                        unit.UnitFunc[idSplit[1]] = inputs[i].checked ? "1" : "0"
-                    }
+                    unit[idSplit[1]] = inputs[i].checked ? "1" : "0"
                 } else if (inputs[i].value) {
-                    if (idSplit[0] === "SLKUnit") {
-                        unit.SLKUnit[idSplit[1]][idSplit[2]] = inputs[i].value
-                    } else if (idSplit[0] === "UnitFunc") {
-                        unit.UnitFunc[idSplit[1]] = inputs[i].value
-                    }
+                    unit[idSplit[1]] = inputs[i].value
                 }
             } else if (type === "checkbox" && inputs[i].checked) {
                 const parentNode = inputs[i].parentNode.parentNode.parentNode;
                 const parentIdSplit = parentNode.id.split("-");
-                const oldValue = unit.SLKUnit[parentIdSplit[1]][parentIdSplit[2]];
+                const oldValue = unit[parentIdSplit[1]];
                 if (oldValue) {
-                    unit.SLKUnit[parentIdSplit[1]][parentIdSplit[2]] += "," + inputs[i].value;
+                    unit[parentIdSplit[1]] += "," + inputs[i].value;
                 } else {
-                    unit.SLKUnit[parentIdSplit[1]][parentIdSplit[2]] = inputs[i].value;
+                    unit[parentIdSplit[1]] = inputs[i].value;
                 }
             }
         }
 
-        const unitId = unit.UnitFunc.UnitId;
+        const unitId = unit.UnitID;
         const quotedUnitId = "\"" + unitId + "\"";
-        unit.SLKUnit.UnitData.UnitID = quotedUnitId;
-        unit.SLKUnit.UnitBalance.UnitBalanceID = quotedUnitId;
-        unit.SLKUnit.UnitUI.UnitUIID = quotedUnitId;
-        unit.SLKUnit.UnitWeapons.UnitWeapID = quotedUnitId;
-        unit.SLKUnit.UnitAbilities.UnitAbilID = quotedUnitId;
+        unit.UnitID = quotedUnitId;
+        unit.UnitBalanceID = quotedUnitId;
+        unit.UnitUIID = quotedUnitId;
+        unit.UnitWeapID = quotedUnitId;
+        unit.UnitAbilID = quotedUnitId;
 
         const containsNumberRegex = new RegExp("^-?(?:(?:\\d*)|(?:\\d+\\.\\d+))$");
-        Object.keys(unit.SLKUnit.UnitWeapons).forEach(key => {
-            const val = unit.SLKUnit.UnitWeapons[key];
+        Object.keys(unit).forEach(key => {
+            const val = unit[key];
             const isNotQuoted = !(val.startsWith("\"") && val.endsWith("\""));
             if (isNotQuoted && !val.match(containsNumberRegex)) {
-                unit.SLKUnit.UnitWeapons[key] = "\"" + val + "\"";
+                unit[key] = "\"" + val + "\"";
             }
         });
-        Object.keys(unit.SLKUnit.UnitUI).forEach(key => {
-            const val = unit.SLKUnit.UnitUI[key];
+        Object.keys(unit).forEach(key => {
+            const val = unit[key];
             const isNotQuoted = !(val.startsWith("\"") && val.endsWith("\""));
             if (isNotQuoted && !val.match(containsNumberRegex)) {
-                unit.SLKUnit.UnitUI[key] = "\"" + val + "\"";
+                unit[key] = "\"" + val + "\"";
             }
         });
-        Object.keys(unit.SLKUnit.UnitData).forEach(key => {
-            const val = unit.SLKUnit.UnitData[key];
+        Object.keys(unit).forEach(key => {
+            const val = unit[key];
             const isNotQuoted = !(val.startsWith("\"") && val.endsWith("\""));
             if (isNotQuoted && !val.match(containsNumberRegex)) {
-                unit.SLKUnit.UnitData[key] = "\"" + val + "\"";
+                unit[key] = "\"" + val + "\"";
             }
         });
-        Object.keys(unit.SLKUnit.UnitBalance).forEach(key => {
-            const val = unit.SLKUnit.UnitBalance[key];
+        Object.keys(unit).forEach(key => {
+            const val = unit[key];
             const isNotQuoted = !(val.startsWith("\"") && val.endsWith("\""));
             if (isNotQuoted && !val.match(containsNumberRegex)) {
-                unit.SLKUnit.UnitBalance[key] = "\"" + val + "\"";
+                unit[key] = "\"" + val + "\"";
             }
         });
-        Object.keys(unit.SLKUnit.UnitAbilities).forEach(key => {
-            const val = unit.SLKUnit.UnitAbilities[key];
+        Object.keys(unit).forEach(key => {
+            const val = unit[key];
             const isNotQuoted = !(val.startsWith("\"") && val.endsWith("\""));
             if (isNotQuoted && !val.match(containsNumberRegex)) {
-                unit.SLKUnit.UnitAbilities[key] = "\"" + val + "\"";
+                unit[key] = "\"" + val + "\"";
             }
         });
-        if (unit.UnitFunc.Ubertip) {
-            unit.UnitFunc.Ubertip = "\"" + unit.UnitFunc.Ubertip + "\"";
+        if (unit.Ubertip) {
+            unit.Ubertip = "\"" + unit.Ubertip + "\"";
         }
 
-        unit.SLKUnit.UnitAbilities.SortAbil = "\"z3\"";
+        unit.SLKUnit.SortAbil = "\"z3\"";
 
-        unit.SLKUnit.UnitBalance.SortBalance = "\"z3\"";
-        unit.SLKUnit.UnitBalance.Sort2 = "\"zzm\"";
-        if (!unit.SLKUnit.UnitBalance.Type) {
-            unit.SLKUnit.UnitBalance.Type = "\"_\"";
+        unit.SortBalance = "\"z3\"";
+        unit.Sort2 = "\"zzm\"";
+        if (!unit.Type) {
+            unit.Type = "\"_\"";
         }
-        unit.SLKUnit.UnitBalance.RealHP = unit.SLKUnit.UnitBalance.HP;
-        if (!unit.SLKUnit.UnitBalance.Def) {
-            unit.SLKUnit.UnitBalance.Def = "\"0\"";
+        unit.RealHP = unit.HP;
+        if (!unit.Def) {
+            unit.Def = "\"0\"";
         }
-        unit.SLKUnit.UnitBalance.Realdef = unit.SLKUnit.UnitBalance.Def;
-        if (!unit.SLKUnit.UnitBalance.STR) {
-            unit.SLKUnit.UnitBalance.STR = "\"-\"";
+        unit.Realdef = unit.Def;
+        if (!unit.STR) {
+            unit.STR = "\"-\"";
         }
-        if (!unit.SLKUnit.UnitBalance.AGI) {
-            unit.SLKUnit.UnitBalance.AGI = "\"-\"";
+        if (!unit.AGI) {
+            unit.AGI = "\"-\"";
         }
-        if (!unit.SLKUnit.UnitBalance.INT) {
-            unit.SLKUnit.UnitBalance.INT = "\"-\"";
+        if (!unit.INT) {
+            unit.INT = "\"-\"";
         }
-        unit.SLKUnit.UnitBalance.AbilTest = "\"-\"";
-        if (!unit.SLKUnit.UnitBalance.Primary) {
-            unit.SLKUnit.UnitBalance.Primary = "\"_\"";
+        unit.AbilTest = "\"-\"";
+        if (!unit.Primary) {
+            unit.Primary = "\"_\"";
         }
-        if (!unit.SLKUnit.UnitBalance.Upgrades) {
-            unit.SLKUnit.UnitBalance.Upgrades = "\"_\"";
+        if (!unit.Upgrades) {
+            unit.Upgrades = "\"_\"";
         }
-        unit.SLKUnit.UnitBalance.Nbrandom = "\"_\"";
-        unit.SLKUnit.UnitBalance.InBeta = "0";
+        unit.Nbrandom = "\"_\"";
+        unit.InBeta = "0";
 
-        unit.SLKUnit.UnitData.Sort = "\"z3\"";
-        if (!unit.SLKUnit.UnitData.Threat) {
-            unit.SLKUnit.UnitData.Threat = "1";
+        unit.Sort = "\"z3\"";
+        if (!unit.Threat) {
+            unit.Threat = "1";
         }
-        if (!unit.SLKUnit.UnitData.Valid) {
-            unit.SLKUnit.UnitData.Valid = "1";
+        if (!unit.Valid) {
+            unit.Valid = "1";
         }
-        if (!unit.SLKUnit.UnitData.TargType) {
-            unit.SLKUnit.UnitData.TargType = "\"_\"";
+        if (!unit.TargType) {
+            unit.TargType = "\"_\"";
         }
-        unit.SLKUnit.UnitData.FatLOS = "0";
-        unit.SLKUnit.UnitData.BuffType = "\"_\"";
-        unit.SLKUnit.UnitData.BuffRadius = "\"-\"";
-        unit.SLKUnit.UnitData.NameCount = "\"-\"";
-        if (!unit.SLKUnit.UnitData.RequireWaterRadius) {
-            unit.SLKUnit.UnitData.RequireWaterRadius = "0";
+        unit.FatLOS = "0";
+        unit.BuffType = "\"_\"";
+        unit.BuffRadius = "\"-\"";
+        unit.NameCount = "\"-\"";
+        if (!unit.RequireWaterRadius) {
+            unit.RequireWaterRadius = "0";
         }
-        if (!unit.SLKUnit.UnitData.RequireWaterRadius) {
-            unit.SLKUnit.UnitData.RequireWaterRadius = "0";
+        if (!unit.RequireWaterRadius) {
+            unit.RequireWaterRadius = "0";
         }
-        if (!unit.SLKUnit.UnitData.RequireWaterRadius) {
-            unit.SLKUnit.UnitData.RequireWaterRadius = "0";
+        if (!unit.RequireWaterRadius) {
+            unit.RequireWaterRadius = "0";
         }
-        if (!unit.SLKUnit.UnitData.RequireWaterRadius) {
-            unit.SLKUnit.UnitData.RequireWaterRadius = "0";
+        if (!unit.RequireWaterRadius) {
+            unit.RequireWaterRadius = "0";
         }
-        unit.SLKUnit.UnitData.InBeta = "0";
-        unit.SLKUnit.UnitData.Version = "1";
+        unit.InBeta = "0";
+        unit.Version = "1";
 
-        unit.SLKUnit.UnitUI.SortUI = "\"z3\"";
-        unit.SLKUnit.UnitUI.TilesetSpecific = "0";
-        unit.SLKUnit.UnitUI.Name = "-";
-        unit.SLKUnit.UnitUI.Campaign = "1";
-        unit.SLKUnit.UnitUI.InEditor = "1";
-        unit.SLKUnit.UnitUI.HiddenInEditor = "0";
-        unit.SLKUnit.UnitUI.HostilePal = "0";
-        unit.SLKUnit.UnitUI.DropItems = "1";
-        unit.SLKUnit.UnitUI.NbmmIcon = "1";
-        unit.SLKUnit.UnitUI.UseClickHelper = "0";
-        unit.SLKUnit.UnitUI.HideHeroBar = "0";
-        unit.SLKUnit.UnitUI.HideHeroMinimap = "0";
-        unit.SLKUnit.UnitUI.HideHeroDeathMsg = "0";
-        unit.SLKUnit.UnitUI.Weap1 = "\"_\"";
-        unit.SLKUnit.UnitUI.Weap2 = "\"_\"";
-        unit.SLKUnit.UnitUI.InBeta = "0";
+        unit.SortUI = "\"z3\"";
+        unit.TilesetSpecific = "0";
+        unit.Name = "-";
+        unit.Campaign = "1";
+        unit.InEditor = "1";
+        unit.HiddenInEditor = "0";
+        unit.HostilePal = "0";
+        unit.DropItems = "1";
+        unit.NbmmIcon = "1";
+        unit.UseClickHelper = "0";
+        unit.HideHeroBar = "0";
+        unit.HideHeroMinimap = "0";
+        unit.HideHeroDeathMsg = "0";
+        unit.Weap1 = "\"_\"";
+        unit.Weap2 = "\"_\"";
+        unit.InBeta = "0";
 
-        unit.SLKUnit.UnitWeapons.SortWeap = "\"n2\"";
-        unit.SLKUnit.UnitWeapons.Sort2 = "\"zzm\"";
-        unit.SLKUnit.UnitWeapons.RngTst = "\"-\"";
-        unit.SLKUnit.UnitWeapons.Mincool1 = "\"-\"";
-        unit.SLKUnit.UnitWeapons.Mindmg1 = "0";
-        unit.SLKUnit.UnitWeapons.Mindmg2 = "0";
-        unit.SLKUnit.UnitWeapons.Avgdmg1 = "0";
-        unit.SLKUnit.UnitWeapons.Avgdmg2 = "0";
-        unit.SLKUnit.UnitWeapons.Maxdmg1 = "0";
-        unit.SLKUnit.UnitWeapons.Maxdmg2 = "0";
-        if (!unit.SLKUnit.UnitWeapons.Targs1) {
-            unit.SLKUnit.UnitWeapons.Targs1 = "\"-\"";
+        unit.SortWeap = "\"n2\"";
+        unit.Sort2 = "\"zzm\"";
+        unit.RngTst = "\"-\"";
+        unit.Mincool1 = "\"-\"";
+        unit.Mindmg1 = "0";
+        unit.Mindmg2 = "0";
+        unit.Avgdmg1 = "0";
+        unit.Avgdmg2 = "0";
+        unit.Maxdmg1 = "0";
+        unit.Maxdmg2 = "0";
+        if (!unit.Targs1) {
+            unit.Targs1 = "\"-\"";
         }
-        if (!unit.SLKUnit.UnitWeapons.Targs2) {
-            unit.SLKUnit.UnitWeapons.Targs2 = "\"-\"";
+        if (!unit.Targs2) {
+            unit.Targs2 = "\"-\"";
         }
-        if (!unit.SLKUnit.UnitWeapons.DmgUp1) {
-            unit.SLKUnit.UnitWeapons.DmgUp1 = "\"-\"";
+        if (!unit.DmgUp1) {
+            unit.DmgUp1 = "\"-\"";
         }
-        if (!unit.SLKUnit.UnitWeapons.DmgUp2) {
-            unit.SLKUnit.UnitWeapons.DmgUp2 = "\"-\"";
+        if (!unit.DmgUp2) {
+            unit.DmgUp2 = "\"-\"";
         }
-        if (!unit.SLKUnit.UnitWeapons.Hfact1) {
-            unit.SLKUnit.UnitWeapons.Hfact1 = "\"-\"";
+        if (!unit.Hfact1) {
+            unit.Hfact1 = "\"-\"";
         }
-        if (!unit.SLKUnit.UnitWeapons.Hfact2) {
-            unit.SLKUnit.UnitWeapons.Hfact2 = "\"-\"";
+        if (!unit.Hfact2) {
+            unit.Hfact2 = "\"-\"";
         }
-        if (!unit.SLKUnit.UnitWeapons.Qfact1) {
-            unit.SLKUnit.UnitWeapons.Qfact1 = "\"-\"";
+        if (!unit.Qfact1) {
+            unit.Qfact1 = "\"-\"";
         }
-        if (!unit.SLKUnit.UnitWeapons.Qfact2) {
-            unit.SLKUnit.UnitWeapons.Qfact2 = "\"-\"";
+        if (!unit.Qfact2) {
+            unit.Qfact2 = "\"-\"";
         }
-        if (!unit.SLKUnit.UnitWeapons.SplashTargs1) {
-            unit.SLKUnit.UnitWeapons.SplashTargs1 = "\"_\"";
+        if (!unit.SplashTargs1) {
+            unit.SplashTargs1 = "\"_\"";
         }
-        if (!unit.SLKUnit.UnitWeapons.SplashTargs2) {
-            unit.SLKUnit.UnitWeapons.SplashTargs2 = "\"_\"";
+        if (!unit.SplashTargs2) {
+            unit.SplashTargs2 = "\"_\"";
         }
-        if (!unit.SLKUnit.UnitWeapons.DmgUpg) {
-            unit.SLKUnit.UnitWeapons.DmgUpg = "\"-\"";
+        if (!unit.DmgUpg) {
+            unit.DmgUpg = "\"-\"";
         }
-        unit.SLKUnit.UnitWeapons.InBeta = "0";
-        unit.SLKUnit.UnitWeapons.RngTst2 = "\"-\"";
+        unit.InBeta = "0";
+        unit.RngTst2 = "\"-\"";
 
         const message = {name: "saveUnit", payload: unit};
         astilectron.sendMessage(message, function (message) {
@@ -673,9 +648,13 @@ const index = {
             }
 
             if (oldUnit) {
-                unitDataList[oldUnit] = {UnitID: unitId, Name: unit.UnitFunc.Name};
+                unitDataList[oldUnit] = {UnitID: unitId, Name: unit.Name};
             } else {
-                unitDataList.push({UnitID: unitId, Name: unit.UnitFunc.Name, EditorSuffix: unit.UnitFunc.Editorsuffix});
+                unitDataList.push({
+                    UnitID: unitId,
+                    Name: unit.Name,
+                    EditorSuffix: unit.Editorsuffix
+                });
             }
 
             index.search(document.getElementById("searchInput"));
@@ -779,7 +758,7 @@ const index = {
     selectMdxModel: function () {
         const inputValue = document.getElementById("model-selector").value.toLowerCase();
         if (unitModelNameToPath.hasOwnProperty(inputValue)) {
-            const modelFileInput = document.getElementById("SLKUnit-UnitUI-File");
+            const modelFileInput = document.getElementById("Unit-File");
             modelFileInput.value = unitModelNameToPath[inputValue];
 
             $('#unit-model-modal').modal('toggle');
@@ -857,45 +836,46 @@ const index = {
                 return;
             }
 
-            document.getElementById("UnitFunc-UnitId").value = message.payload;
+            document.getElementById("Unit-UnitID").value = message.payload;
         });
     },
     generateUnitTooltip: function () {
-        const attacksEnabled = document.getElementById("SLKUnit-UnitWeapons-WeapsOn").value;
+        const attacksEnabled = document.getElementById("Unit-WeapsOn").value;
         let value = "";
         if (attacksEnabled === "1" || attacksEnabled === "3") {
-            value += "|cffffcc00Attack:|r " + document.getElementById("SLKUnit-UnitWeapons-AtkType1").value.charAt(0).toUpperCase() + document.getElementById("SLKUnit-UnitWeapons-AtkType1").value.substr(1) + "|n";
-            value += "|cffffcc00Cooldown:|r " + document.getElementById("SLKUnit-UnitWeapons-Cool1").value + "|n";
-            const baseDamage = parseInt(document.getElementById("SLKUnit-UnitWeapons-Dmgplus1").value, 10);
-            const damageNumberOfDice = parseInt(document.getElementById("SLKUnit-UnitWeapons-Dice1").value, 10);
-            const damageSidesPerDie = parseInt(document.getElementById("SLKUnit-UnitWeapons-Sides1").value, 10);
+            value += "|cffffcc00Attack:|r " + document.getElementById("Unit-AtkType1").value.charAt(0).toUpperCase() + document.getElementById("Unit-AtkType1").value.substr(1) + "|n";
+            value += "|cffffcc00Cooldown:|r " + document.getElementById("Unit-Cool1").value + "|n";
+            const baseDamage = parseInt(document.getElementById("Unit-Dmgplus1").value, 10);
+            const damageNumberOfDice = parseInt(document.getElementById("Unit-Dice1").value, 10);
+            const damageSidesPerDie = parseInt(document.getElementById("Unit-Sides1").value, 10);
             value += "|cffffcc00Damage:|r " + (baseDamage + damageNumberOfDice) + " - " + (baseDamage + damageNumberOfDice * damageSidesPerDie) + "|n";
-            value += "|cffffcc00Range:|r " + document.getElementById("SLKUnit-UnitWeapons-RangeN1").value + "|n";
+            value += "|cffffcc00Range:|r " + document.getElementById("Unit-RangeN1").value + "|n";
         } else if (attacksEnabled === "2") {
-            value += "|cffffcc00Attack:|r " + document.getElementById("SLKUnit-UnitWeapons-AtkType2").value.charAt(0).toUpperCase() + "|n";
-            value += "|cffffcc00Cooldown:|r " + document.getElementById("SLKUnit-UnitWeapons-Cool2").value + "|n";
-            const baseDamage = parseInt(document.getElementById("SLKUnit-UnitWeapons-Dmgplus2").value, 10);
-            const damageNumberOfDice = parseInt(document.getElementById("SLKUnit-UnitWeapons-Dice2").value, 10);
-            const damageSidesPerDie = parseInt(document.getElementById("SLKUnit-UnitWeapons-Sides2").value, 10);
+            value += "|cffffcc00Attack:|r " + document.getElementById("Unit-AtkType2").value.charAt(0).toUpperCase() + "|n";
+            value += "|cffffcc00Cooldown:|r " + document.getElementById("Unit-Cool2").value + "|n";
+            const baseDamage = parseInt(document.getElementById("Unit-Dmgplus2").value, 10);
+            const damageNumberOfDice = parseInt(document.getElementById("Unit-Dice2").value, 10);
+            const damageSidesPerDie = parseInt(document.getElementById("Unit-Sides2").value, 10);
             value += "|cffffcc00Damage:|r " + (baseDamage + damageNumberOfDice) + " - " + (baseDamage + damageNumberOfDice * damageSidesPerDie) + "|n";
-            value += "|cffffcc00Range:|r " + document.getElementById("SLKUnit-UnitWeapons-RangeN2").value + "|n";
+            value += "|cffffcc00Range:|r " + document.getElementById("Unit-RangeN2").value + "|n";
         } else if (attacksEnabled === "0") {
             value += "|cffffcc00Attack:|r None|n";
-            value += "|cffffcc00Range:|r " + document.getElementById("SLKUnit-UnitWeapons-RangeN1").value + "|n";
+            value += "|cffffcc00Range:|r " + document.getElementById("Unit-RangeN1").value + "|n";
         }
 
         if (attacksEnabled === "3") {
-            value += "|cffffcc00Attack(2):|r " + document.getElementById("SLKUnit-UnitWeapons-AtkType2").value.charAt(0).toUpperCase() + document.getElementById("SLKUnit-UnitWeapons-AtkType2").value.substr(1) + "|n";
-            value += "|cffffcc00Cooldown(2):|r " + document.getElementById("SLKUnit-UnitWeapons-Cool2").value + "|n";
-            const baseDamage = parseInt(document.getElementById("SLKUnit-UnitWeapons-Dmgplus2").value, 10);
-            const damageNumberOfDice = parseInt(document.getElementById("SLKUnit-UnitWeapons-Dice2").value, 10);
-            const damageSidesPerDie = parseInt(document.getElementById("SLKUnit-UnitWeapons-Sides2").value, 10);
+            value += "|cffffcc00Attack(2):|r " + document.getElementById("Unit-AtkType2").value.charAt(0).toUpperCase() + document.getElementById("Unit-AtkType2").value.substr(1) + "|n";
+            value += "|cffffcc00Cooldown(2):|r " + document.getElementById("Unit-Cool2").value + "|n";
+            const baseDamage = parseInt(document.getElementById("Unit-Dmgplus2").value, 10);
+            const damageNumberOfDice = parseInt(document.getElementById("Unit-Dice2").value, 10);
+            const damageSidesPerDie = parseInt(document.getElementById("Unit-Sides2").value, 10);
             value += "|cffffcc00Damage(2):|r " + (baseDamage + damageNumberOfDice) + " - " + (baseDamage + damageNumberOfDice * damageSidesPerDie) + "|n";
-            value += "|cffffcc00Range(2):|r " + document.getElementById("SLKUnit-UnitWeapons-RangeN2").value + "|n";
+            value += "|cffffcc00Range(2):|r " + document.getElementById("Unit-RangeN2").value + "|n";
         }
 
-        document.getElementById("UnitFunc-Ubertip").value = value;
-        index.multiColorTextarea(document.getElementById("UnitFunc-Ubertip"));
+        const ubertipInput = document.getElementById("Unit-Ubertip");
+        ubertipInput.value = value;
+        index.multiColorTextarea(ubertipInput);
     },
     activateFileUploadButtonLoadInput: function () {
         $("#hiddenFileUploadInputLoadInput").click();
@@ -1048,10 +1028,10 @@ const index = {
     updateNewUnitIsGenerated: function (input) {
         if (input.checked) {
             input.required = true;
-            document.getElementById("NewUnit-UnitId").disabled = true;
+            document.getElementById("NewUnit-UnitID").disabled = true;
         } else {
             input.required = false;
-            document.getElementById("NewUnit-UnitId").disabled = false;
+            document.getElementById("NewUnit-UnitID").disabled = false;
         }
     },
     createNewUnit: function () {
@@ -1059,7 +1039,7 @@ const index = {
             return;
 
         const generateId = document.getElementById("NewUnit-Generated").checked;
-        const unitId = generateId ? document.getElementById("NewUnit-UnitId").value : null;
+        const unitId = generateId ? document.getElementById("NewUnit-UnitID").value : null;
         // const baseUnitValue = document.getElementById("NewUnit-BaseUnitId").value;
         const baseUnitId = null; // baseUnitValue.length > 0 ? baseUnitValue : null;
         const name = document.getElementById("NewUnit-Name").value;
@@ -1068,7 +1048,8 @@ const index = {
             (document.getElementById("NewUnit-TypeBuilding").checked ? document.getElementById("NewUnit-TypeBuilding").value :
                 (document.getElementById("NewUnit-TypeHero").checked ? document.getElementById("NewUnit-TypeHero").value :
                     "none"));
-        const message = {name: "createNewUnit",
+        const message = {
+            name: "createNewUnit",
             payload: {
                 UnitId: unitId,
                 GenerateId: generateId,
@@ -1086,72 +1067,58 @@ const index = {
             }
 
             $("#unitTableBody>tr").removeClass("active");
-            Object.keys(message.payload.SLKUnit).forEach(slkUnitKey => {
-                Object.keys(message.payload.SLKUnit[slkUnitKey]).forEach(key => {
-                    const rawValue = message.payload.SLKUnit[slkUnitKey][key] ? message.payload.SLKUnit[slkUnitKey][key] : "";
-                    const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
-                    const value = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
-                    const elemList = $("#SLKUnit-" + slkUnitKey + "-" + key);
-                    if (elemList.length > 0) {
-                        if (elemList[0] instanceof HTMLInputElement || elemList[0] instanceof HTMLSelectElement) {
-                            const type = elemList[0].type;
-
-                            if (type === "text" || type === "select-one") {
-                                elemList[0].value = value;
-                            } else if (type === "checkbox") {
-                                elemList[0].checked = value === "1";
-                            }
-                        } else if (elemList[0].classList.contains("multi-check")) {
-                            const childInputs = $("#SLKUnit-" + slkUnitKey + "-" + key + " :input");
-                            const valueSplit = value.split(",");
-                            const valueLower = valueSplit.map(val => val.toLowerCase());
-                            for (let i = 0; i < childInputs.length; i++) {
-                                if (valueLower.includes(childInputs[i].value.toLowerCase())) {
-                                    childInputs[i].checked = true;
-                                } else {
-                                    childInputs[i].checked = false;
-                                }
-                            }
-                        }
-                    }
-                })
-            });
-
-            if (message.payload.UnitFunc.Ubertip) {
-                const rawValue = message.payload.UnitFunc.Ubertip;
+            if (message.payload.Ubertip) {
+                const rawValue = message.payload.Ubertip;
                 const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
                 const trimmedLeft = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
 
-                message.payload.UnitFunc.Ubertip = trimmedLeft.replace(new RegExp("\\|n", "g"), "\n");
+                message.payload.Ubertip = trimmedLeft.replace(new RegExp("\\|n", "g"), "\n");
             }
 
-            Object.keys(message.payload.UnitFunc).forEach(unitFuncKey => {
-                const elem = document.getElementById("UnitFunc-" + unitFuncKey);
+            if (message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
+                if (message.payload.ButtonposX === "" || message.payload.ButtonposX === "_" || message.payload.ButtonposX === "-" || message.payload.ButtonposY === "" || message.payload.ButtonposY === "_" || message.payload.ButtonposY === "-") {
+                    message.payload.Buttonpos = "0,0";
+                } else {
+                    message.payload.Buttonpos = message.payload.ButtonposX + "," + message.payload.ButtonposY;
+                }
+            }
+
+            Object.keys(message.payload).forEach(slkUnitKey => {
+                const rawValue = message.payload[slkUnitKey] ? message.payload[slkUnitKey] : "";
+                const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
+                const value = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
+                const elem = document.getElementById("Unit-" + slkUnitKey);
                 if (elem) {
-                    if (elem instanceof HTMLInputElement || elem instanceof HTMLTextAreaElement) {
+                    if (elem instanceof HTMLInputElement || elem instanceof HTMLSelectElement || elem instanceof HTMLTextAreaElement) {
                         const type = elem.type;
+
                         if (type === "text" || type === "textarea" || type === "select-one") {
-                            elem.value = message.payload.UnitFunc[unitFuncKey];
+                            elem.value = value;
                         } else if (type === "checkbox") {
-                            elem.checked = message.payload.UnitFunc[unitFuncKey] === "1";
-                        } else {
-                            console.log("type is " + elem.type);
+                            elem.checked = value === "1";
                         }
-                    } else if (elem.id === "UnitFunc-Buttonpos") {
-                        const buttonpos = message.payload.UnitFunc[unitFuncKey];
+                    } else if (elem.id === "Unit-Buttonpos") {
+                        const buttonpos = message.payload[slkUnitKey];
                         if (!buttonpos || buttonpos === "-" || buttonpos === "_") {
                             elem.value = "0,0"
                         } else {
                             elem.value = buttonpos;
                         }
+                    } else if (elem.classList.contains("multi-check")) {
+                        const childInputs = $("#Unit-" + slkUnitKey + " :input");
+                        const valueSplit = value.split(",");
+                        const valueLower = valueSplit.map(val => val.toLowerCase());
+                        for (let i = 0; i < childInputs.length; i++) {
+                            childInputs[i].checked = valueLower.includes(childInputs[i].value.toLowerCase());
+                        }
                     }
                 }
             });
 
-            index.multiColorTextarea(document.getElementById("UnitFunc-Ubertip"));
-            index.loadIcon(document.getElementById("UnitFunc-Art"));
+            index.multiColorTextarea(document.getElementById("Unit-Ubertip"));
+            index.loadIcon(document.getElementById("Unit-Art"));
 
-            unitDataList.push({UnitID: message.payload.UnitFunc.UnitId, Name: name});
+            unitDataList.push({UnitID: message.payload.UnitID, Name: message.payload.Name});
             index.search(document.getElementById("searchInput"));
 
             $('#new-unit-modal').modal('toggle');
