@@ -22,6 +22,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -1318,8 +1319,18 @@ func loadSLK() {
 	var unitUIPath *string = nil
 	var unitWeaponsPath *string = nil
 	var unitBalancePath *string = nil
-	var campaignUnitPath *string = nil
+	var campaignUnitFuncPath *string = nil
 	var campaignUnitStringsPath *string = nil
+	var humanUnitFuncPath *string = nil
+	var humanUnitStringsPath *string = nil
+	var neutralUnitFuncPath *string = nil
+	var neutralUnitStringsPath *string = nil
+	var nightElfUnitFuncPath *string = nil
+	var nightElfUnitStringsPath *string = nil
+	var orcUnitFuncPath *string = nil
+	var orcUnitStringsPath *string = nil
+	var undeadUnitFuncPath *string = nil
+	var undeadUnitStringsPath *string = nil
 
 	for _, file := range filesInDirectory {
 		lowercaseFilename := strings.ToLower(file.Name())
@@ -1327,21 +1338,46 @@ func loadSLK() {
 
 		switch lowercaseFilename {
 		case "unitabilities.slk":
+			log.Println("unitabilities...")
 			unitAbilitiesPath = &path
 		case "unitdata.slk":
+			log.Println("unitdata...")
 			unitDataPath = &path
 		case "unitui.slk":
+			log.Println("unitui...")
 			unitUIPath = &path
 		case "unitweapons.slk":
+			log.Println("unitweapons...")
 			unitWeaponsPath = &path
 		case "unitbalance.slk":
+			log.Println("unitbalance...")
 			unitBalancePath = &path
 		case "campaignunitfunc.txt":
-			campaignUnitPath = &path
+			campaignUnitFuncPath = &path
 		case "campaignunitstrings.txt":
 			campaignUnitStringsPath = &path
+		case "humanunitfunc.txt":
+			humanUnitFuncPath = &path
+		case "humanunitstrings.txt":
+			humanUnitStringsPath = &path
+		case "neutralunitfunc.txt":
+			neutralUnitFuncPath = &path
+		case "neutralunitstrings.txt":
+			neutralUnitStringsPath = &path
+		case "nightelfunitfunc.txt":
+			nightElfUnitFuncPath = &path
+		case "nightelfunitstrings.txt":
+			nightElfUnitStringsPath = &path
+		case "orcunitfunc.txt":
+			orcUnitFuncPath = &path
+		case "orcunitstrings.txt":
+			orcUnitStringsPath = &path
+		case "undeadunitfunc.txt":
+			undeadUnitFuncPath = &path
+		case "undeadunitstrings.txt":
+			undeadUnitStringsPath = &path
 		default:
-			log.Printf("%v did not parse correctly!", file)
+			log.Printf("%v is an unknown file and will be ignored!", file)
 		}
 	}
 
@@ -1351,7 +1387,6 @@ func loadSLK() {
 		abilityData := filepath.Join(inputDirectory, "AbilityData.slk")
 		campaignAbilityFunc := filepath.Join(inputDirectory, "CampaignAbilityFunc.txt")
 		campaignAbilityStrings := filepath.Join(inputDirectory, "CampaignAbilityStrings.txt")
-		campaignUnitStrings := filepath.Join(inputDirectory, "CampaignUnitStrings.txt")
 		campaignUpgradeFunc := filepath.Join(inputDirectory, "CampaignUpgradeFunc.txt")
 		campaignUpgradeStrings := filepath.Join(inputDirectory, "CampaignUpgradeStrings.txt")
 		commandFunc := filepath.Join(inputDirectory, "CommandFunc.txt")
@@ -1360,8 +1395,6 @@ func loadSLK() {
 		commonAbilityStrings := filepath.Join(inputDirectory, "CommonAbilityStrings.txt")
 		humanAbilityFunc := filepath.Join(inputDirectory, "HumanAbilityFunc.txt")
 		humanAbilityStrings := filepath.Join(inputDirectory, "HumanAbilityStrings.txt")
-		humanUnitFunc := filepath.Join(inputDirectory, "HumanUnitFunc.txt")
-		humanUnitStrings := filepath.Join(inputDirectory, "HumanUnitStrings.txt")
 		humanUpgradeFunc := filepath.Join(inputDirectory, "HumanUpgradeFunc.txt")
 		humanUpgradeStrings := filepath.Join(inputDirectory, "HumanUpgradeStrings.txt")
 		itemAbilityStrings := filepath.Join(inputDirectory, "ItemAbilityStrings.txt")
@@ -1370,95 +1403,418 @@ func loadSLK() {
 		itemStrings := filepath.Join(inputDirectory, "ItemStrings.txt")
 		neutralAbilityFunc := filepath.Join(inputDirectory, "NeutralAbilityFunc.txt")
 		neutralAbilityStrings := filepath.Join(inputDirectory, "NeutralAbilityStrings.txt")
-		neutralUnitFunc := filepath.Join(inputDirectory, "NeutralUnitFunc.txt")
-		neutralUnitStrings := filepath.Join(inputDirectory, "NeutralUnitStrings.txt")
 		neutralUpgradeFunc := filepath.Join(inputDirectory, "NeutralUpgradeFunc.txt")
 		neutralUpgradeStrings := filepath.Join(inputDirectory, "NeutralUpgradeStrings.txt")
 		nightElfAbilityFunc := filepath.Join(inputDirectory, "NightElfAbilityFunc.txt")
 		nightElfAbilityStrings := filepath.Join(inputDirectory, "NightElfAbilityStrings.txt")
-		nightElfUnitFunc := filepath.Join(inputDirectory, "NightElfUnitFunc.txt")
-		nightElfUnitStrings := filepath.Join(inputDirectory, "NightElfUnitStrings.txt")
 		nightElfUpgradeFunc := filepath.Join(inputDirectory, "NightElfUpgradeFunc.txt")
 		nightElfUpgradeStrings := filepath.Join(inputDirectory, "NightElfUpgradeStrings.txt")
 		orcAbilityFunc := filepath.Join(inputDirectory, "OrcAbilityFunc.txt")
 		orcAbilityStrings := filepath.Join(inputDirectory, "OrcAbilityStrings.txt")
-		orcUnitFunc := filepath.Join(inputDirectory, "OrcUnitFunc.txt")
-		orcUnitStrings := filepath.Join(inputDirectory, "OrcUnitStrings.txt")
 		orcUpgradeFunc := filepath.Join(inputDirectory, "OrcUpgradeFunc.txt")
 		orcUpgradeStrings := filepath.Join(inputDirectory, "OrcUpgradeStrings.txt")
 		undeadAbilityFunc := filepath.Join(inputDirectory, "UndeadAbilityFunc.txt")
 		undeadAbilityStrings := filepath.Join(inputDirectory, "UndeadAbilityStrings.txt")
-		undeadUnitFunc := filepath.Join(inputDirectory, "UndeadUnitFunc.txt")
-		undeadUnitStrings := filepath.Join(inputDirectory, "UndeadUnitStrings.txt")
 		undeadUpgradeFunc := filepath.Join(inputDirectory, "UndeadUpgradeFunc.txt")
 		undeadUpgradeStrings := filepath.Join(inputDirectory, "UndeadUpgradeStrings.txt")
 		upgradeData := filepath.Join(inputDirectory, "UpgradeData.slk")
 	*/
 
-	log.Println("Reading UnitData.slk...")
+	var unitDataBytes []byte = nil
+	var unitAbilitiesBytes []byte = nil
+	var unitUIBytes []byte = nil
+	var unitWeaponsBytes []byte = nil
+	var unitBalanceBytes []byte = nil
+	var campaignUnitFuncBytes []byte = nil
+	var campaignUnitStringsBytes []byte = nil
+	var humanUnitFuncBytes []byte = nil
+	var humanUnitStringsBytes []byte = nil
+	var neutralUnitFuncBytes []byte = nil
+	var neutralUnitStringsBytes []byte = nil
+	var nightElfUnitFuncBytes []byte = nil
+	var nightElfUnitStringsBytes []byte = nil
+	var orcUnitFuncBytes []byte = nil
+	var orcUnitStringsBytes []byte = nil
+	var undeadUnitFuncBytes []byte = nil
+	var undeadUnitStringsBytes []byte = nil
+	var readFileWaitGroup sync.WaitGroup
 
-	unitDataBytes, err := ioutil.ReadFile(*unitDataPath)
-	if err != nil {
-		CrashWithMessage(w, err.Error())
-	}
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if unitDataPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*unitDataPath); err != nil || flag {
+				log.Println("Reading UnitData.slk...")
 
-	log.Println("Reading UnitAbilities.slk...")
+				unitDataBytes, err = ioutil.ReadFile(*unitDataPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
 
-	unitAbilitiesBytes, err := ioutil.ReadFile(*unitAbilitiesPath)
-	if err != nil {
-		CrashWithMessage(w, err.Error())
-	}
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if unitAbilitiesPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*unitAbilitiesPath); err != nil || flag {
+				log.Println("Reading UnitAbilities.slk...")
 
-	log.Println("Reading UnitUI.slk...")
+				unitAbilitiesBytes, err = ioutil.ReadFile(*unitAbilitiesPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
 
-	unitUIBytes, err := ioutil.ReadFile(*unitUIPath)
-	if err != nil {
-		CrashWithMessage(w, err.Error())
-	}
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if unitUIPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*unitUIPath); err != nil || flag {
+				log.Println("Reading UnitUI.slk...")
 
-	log.Println("Reading UnitWeapons.slk...")
+				unitUIBytes, err = ioutil.ReadFile(*unitUIPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
 
-	unitWeaponsBytes, err := ioutil.ReadFile(*unitWeaponsPath)
-	if err != nil {
-		CrashWithMessage(w, err.Error())
-	}
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if unitWeaponsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*unitWeaponsPath); err != nil || flag {
+				log.Println("Reading UnitWeapons.slk...")
 
-	log.Println("Reading UnitBalance.slk...")
+				unitWeaponsBytes, err = ioutil.ReadFile(*unitWeaponsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
 
-	unitBalanceBytes, err := ioutil.ReadFile(*unitBalancePath)
-	if err != nil {
-		CrashWithMessage(w, err.Error())
-	}
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if unitBalancePath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*unitBalancePath); err != nil || flag {
+				log.Println("Reading UnitBalance.slk...")
 
-	log.Println("Reading CampaignUnitFunc.txt...")
+				unitBalanceBytes, err = ioutil.ReadFile(*unitBalancePath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
 
-	campaignUnitFuncBytes, err := ioutil.ReadFile(*campaignUnitPath)
-	if err != nil {
-		CrashWithMessage(w, err.Error())
-	}
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if campaignUnitFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*campaignUnitFuncPath); err != nil || flag {
+				log.Println("Reading CampaignUnitFunc.slk...")
 
-	log.Println("Reading CampaignUnitStrings.txt...")
+				campaignUnitFuncBytes, err = ioutil.ReadFile(*campaignUnitFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
 
-	campaignUnitStringsBytes, err := ioutil.ReadFile(*campaignUnitStringsPath)
-	if err != nil {
-		CrashWithMessage(w, err.Error())
-	}
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if campaignUnitStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*campaignUnitStringsPath); err != nil || flag {
+				log.Println("Reading CampaignUnitStrings.slk...")
+
+				campaignUnitStringsBytes, err = ioutil.ReadFile(*campaignUnitStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if humanUnitFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*humanUnitFuncPath); err != nil || flag {
+				log.Println("Reading HumanUnitFunc.slk...")
+
+				humanUnitFuncBytes, err = ioutil.ReadFile(*humanUnitFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if humanUnitStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*humanUnitStringsPath); err != nil || flag {
+				log.Println("Reading HumanUnitStrings.slk...")
+
+				humanUnitStringsBytes, err = ioutil.ReadFile(*humanUnitStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if neutralUnitFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*neutralUnitFuncPath); err != nil || flag {
+				log.Println("Reading NeutralUnitFunc.slk...")
+
+				neutralUnitFuncBytes, err = ioutil.ReadFile(*neutralUnitFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if neutralUnitStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*neutralUnitStringsPath); err != nil || flag {
+				log.Println("Reading NeutralUnitStrings.slk...")
+
+				neutralUnitStringsBytes, err = ioutil.ReadFile(*neutralUnitStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if nightElfUnitFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*nightElfUnitFuncPath); err != nil || flag {
+				log.Println("Reading NightElfUnitFunc.slk...")
+
+				nightElfUnitFuncBytes, err = ioutil.ReadFile(*nightElfUnitFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if nightElfUnitStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*nightElfUnitStringsPath); err != nil || flag {
+				log.Println("Reading NightElfUnitStrings.slk...")
+
+				nightElfUnitStringsBytes, err = ioutil.ReadFile(*nightElfUnitStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if orcUnitFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*orcUnitFuncPath); err != nil || flag {
+				log.Println("Reading OrcUnitFunc.slk...")
+
+				orcUnitFuncBytes, err = ioutil.ReadFile(*orcUnitFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if orcUnitStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*orcUnitStringsPath); err != nil || flag {
+				log.Println("Reading OrcUnitStrings.slk...")
+
+				orcUnitStringsBytes, err = ioutil.ReadFile(*orcUnitStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if undeadUnitFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*undeadUnitFuncPath); err != nil || flag {
+				log.Println("Reading UndeadUnitFunc.slk...")
+
+				undeadUnitFuncBytes, err = ioutil.ReadFile(*undeadUnitFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if undeadUnitStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*undeadUnitStringsPath); err != nil || flag {
+				log.Println("Reading UndeadUnitStrings.slk...")
+
+				undeadUnitStringsBytes, err = ioutil.ReadFile(*undeadUnitStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Wait()
 
 	unitMap = make(map[string]*models.SLKUnit)
-	log.Println("Parsing unitDataBytes...")
-	parser.PopulateUnitMapWithSlkFileData(unitDataBytes, unitMap)
-	log.Println("Parsing unitAbilitiesBytes...")
-	parser.PopulateUnitMapWithSlkFileData(unitAbilitiesBytes, unitMap)
-	log.Println("Parsing unitUIBytes...")
-	parser.PopulateUnitMapWithSlkFileData(unitUIBytes, unitMap)
-	log.Println("Parsing unitWeaponsBytes...")
-	parser.PopulateUnitMapWithSlkFileData(unitWeaponsBytes, unitMap)
-	log.Println("Parsing unitBalanceBytes...")
-	parser.PopulateUnitMapWithSlkFileData(unitBalanceBytes, unitMap)
-	log.Println("Parsing campaignUnitFuncBytes...")
-	parser.PopulateUnitMapWithTxtFileData(campaignUnitFuncBytes, unitMap)
-	log.Println("Parsing campaignUnitStringsBytes...")
-	parser.PopulateUnitMapWithTxtFileData(campaignUnitStringsBytes, unitMap)
+	if unitDataBytes != nil {
+		log.Println("Parsing unitDataBytes...")
+		parser.PopulateUnitMapWithSlkFileData(unitDataBytes, unitMap)
+	}
+
+	if unitAbilitiesBytes != nil {
+		log.Println("Parsing unitAbilitiesBytes...")
+		parser.PopulateUnitMapWithSlkFileData(unitAbilitiesBytes, unitMap)
+	}
+
+	if unitUIBytes != nil {
+		log.Println("Parsing unitUIBytes...")
+		parser.PopulateUnitMapWithSlkFileData(unitUIBytes, unitMap)
+	}
+
+	if unitWeaponsBytes != nil {
+		log.Println("Parsing unitWeaponsBytes...")
+		parser.PopulateUnitMapWithSlkFileData(unitWeaponsBytes, unitMap)
+	}
+
+	if unitBalanceBytes != nil {
+		log.Println("Parsing unitBalanceBytes...")
+		parser.PopulateUnitMapWithSlkFileData(unitBalanceBytes, unitMap)
+	}
+
+	if campaignUnitFuncBytes != nil {
+		log.Println("Parsing campaignUnitFuncBytes...")
+		parser.PopulateUnitMapWithTxtFileData(campaignUnitFuncBytes, unitMap)
+	}
+
+	if campaignUnitStringsBytes != nil {
+		log.Println("Parsing campaignUnitStringsBytes...")
+		parser.PopulateUnitMapWithTxtFileData(campaignUnitStringsBytes, unitMap)
+	}
+
+	if humanUnitFuncBytes != nil {
+		log.Println("Parsing humanUnitFuncBytes...")
+		parser.PopulateUnitMapWithTxtFileData(humanUnitFuncBytes, unitMap)
+	}
+
+	if humanUnitStringsBytes != nil {
+		log.Println("Parsing humanUnitStringsBytes...")
+		parser.PopulateUnitMapWithTxtFileData(humanUnitStringsBytes, unitMap)
+	}
+
+	if neutralUnitFuncBytes != nil {
+		log.Println("Parsing neutralUnitFuncBytes...")
+		parser.PopulateUnitMapWithTxtFileData(neutralUnitFuncBytes, unitMap)
+	}
+
+	if neutralUnitStringsBytes != nil {
+		log.Println("Parsing neutralUnitStringsBytes...")
+		parser.PopulateUnitMapWithTxtFileData(neutralUnitStringsBytes, unitMap)
+	}
+
+	if nightElfUnitFuncBytes != nil {
+		log.Println("Parsing nightElfUnitFuncBytes...")
+		parser.PopulateUnitMapWithTxtFileData(nightElfUnitFuncBytes, unitMap)
+	}
+
+	if nightElfUnitStringsBytes != nil {
+		log.Println("Parsing nightElfUnitStringsBytes...")
+		parser.PopulateUnitMapWithTxtFileData(nightElfUnitStringsBytes, unitMap)
+	}
+
+	if orcUnitFuncBytes != nil {
+		log.Println("Parsing orcUnitFuncBytes...")
+		parser.PopulateUnitMapWithTxtFileData(orcUnitFuncBytes, unitMap)
+	}
+
+	if orcUnitStringsBytes != nil {
+		log.Println("Parsing orcUnitStringsBytes...")
+		parser.PopulateUnitMapWithTxtFileData(orcUnitStringsBytes, unitMap)
+	}
+
+	if undeadUnitFuncBytes != nil {
+		log.Println("Parsing undeadUnitFuncBytes...")
+		parser.PopulateUnitMapWithTxtFileData(undeadUnitFuncBytes, unitMap)
+	}
+
+	if undeadUnitStringsBytes != nil {
+		log.Println("Parsing undeadUnitStringsBytes...")
+		parser.PopulateUnitMapWithTxtFileData(undeadUnitStringsBytes, unitMap)
+	}
 }
 
 func exists(path string) (bool, error) {
