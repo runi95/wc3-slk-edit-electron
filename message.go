@@ -1338,19 +1338,14 @@ func loadSLK() {
 
 		switch lowercaseFilename {
 		case "unitabilities.slk":
-			log.Println("unitabilities...")
 			unitAbilitiesPath = &path
 		case "unitdata.slk":
-			log.Println("unitdata...")
 			unitDataPath = &path
 		case "unitui.slk":
-			log.Println("unitui...")
 			unitUIPath = &path
 		case "unitweapons.slk":
-			log.Println("unitweapons...")
 			unitWeaponsPath = &path
 		case "unitbalance.slk":
-			log.Println("unitbalance...")
 			unitBalancePath = &path
 		case "campaignunitfunc.txt":
 			campaignUnitFuncPath = &path
