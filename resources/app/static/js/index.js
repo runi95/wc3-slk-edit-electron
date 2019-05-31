@@ -783,15 +783,8 @@ const index = {
         });
     },
     loadVersion: function () {
-        const message = {name: "loadVersion", payload: null};
-        astilectron.sendMessage(message, function (message) {
-            // Check for errors
-            if (message.name === "error") {
-                asticode.notifier.error(message.payload);
-                return;
-            }
-
-            document.getElementById("version-info").innerText = message.payload;
+        $.getJSON("version.json", (data) => {
+            document.getElementById("version-info").innerText = data.version;
             index.loadIcons();
         });
     },
