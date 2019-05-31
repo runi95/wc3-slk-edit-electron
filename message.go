@@ -124,6 +124,12 @@ type NewUnit struct {
 	AttackType string
 }
 
+type FileInfo struct {
+	FileName        string
+	StatusClass     string
+	StatusIconClass string
+}
+
 type UnitModel struct {
 	Name string
 	Path string
@@ -332,8 +338,9 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			log.Println(err)
 			payload = err.Error()
 		}
+	case "loadSlk":
+		payload = loadSLK()
 	case "loadUnitData":
-		loadSLK()
 		var unitListData = make([]UnitListData, len(unitMap))
 
 		i := 0
@@ -1294,24 +1301,60 @@ func saveUnitsToFile(location string) {
 	parser.WriteToFilesAndSaveToFolder(unitList, location, true)
 }
 
-func loadSLK() {
+func loadSLK() []*FileInfo {
 	var inputDirectory string
+	var campaignUnitFuncFileInfo = &FileInfo{"CampaignUnitFunc.txt", "color-secondary", "fa-genderless"}
+	var campaignUnitStringsFileInfo = &FileInfo{"CampaignUnitStrings.txt", "color-secondary", "fa-genderless"}
+	var humanUnitFuncFileInfo = &FileInfo{"HumanUnitFunc.txt", "color-secondary", "fa-genderless"}
+	var humanUnitStringsFileInfo = &FileInfo{"HumanUnitStrings.txt", "color-secondary", "fa-genderless"}
+	var neutralUnitFuncFileInfo = &FileInfo{"NeutralUnitFunc.txt", "color-secondary", "fa-genderless"}
+	var neutralUnitStringsFileInfo = &FileInfo{"NeutralUnitStrings.txt", "color-secondary", "fa-genderless"}
+	var nightElfUnitFuncFileInfo = &FileInfo{"NightElfUnitFunc.txt", "color-secondary", "fa-genderless"}
+	var nightElfUnitStringsFileInfo = &FileInfo{"NightElfUnitStrings.txt", "color-secondary", "fa-genderless"}
+	var orcUnitFuncFileInfo = &FileInfo{"OrcUnitFunc.txt", "color-secondary", "fa-genderless"}
+	var orcUnitStringsFileInfo = &FileInfo{"OrcUnitStrings.txt", "color-secondary", "fa-genderless"}
+	var undeadUnitFuncFileInfo = &FileInfo{"UndeadUnitFunc.txt", "color-secondary", "fa-genderless"}
+	var undeadUnitStringsFileInfo = &FileInfo{"UndeadUnitStrings.txt", "color-secondary", "fa-genderless"}
+	var unitAbilitiesFileInfo = &FileInfo{"UnitAbilities.slk", "color-secondary", "fa-genderless"}
+	var unitBalanceFileInfo = &FileInfo{"UnitBalance.slk", "color-secondary", "fa-genderless"}
+	var unitDataFileInfo = &FileInfo{"UnitData.slk", "color-secondary", "fa-genderless"}
+	var unitUiFileInfo = &FileInfo{"UnitUI.slk", "color-secondary", "fa-genderless"}
+	var unitWeaponsFileInfo = &FileInfo{"UnitWeapons.slk", "color-secondary", "fa-genderless"}
+	var fileInfoList = []*FileInfo{
+		campaignUnitFuncFileInfo,
+		campaignUnitStringsFileInfo,
+		humanUnitFuncFileInfo,
+		humanUnitStringsFileInfo,
+		neutralUnitFuncFileInfo,
+		neutralUnitStringsFileInfo,
+		nightElfUnitFuncFileInfo,
+		nightElfUnitStringsFileInfo,
+		orcUnitFuncFileInfo,
+		orcUnitStringsFileInfo,
+		undeadUnitFuncFileInfo,
+		undeadUnitStringsFileInfo,
+		unitAbilitiesFileInfo,
+		unitBalanceFileInfo,
+		unitDataFileInfo,
+		unitUiFileInfo,
+		unitWeaponsFileInfo,
+	}
 
 	if configuration.InDir == nil {
 		log.Println("Input directory has not been set!")
-		return
+		return fileInfoList
 	}
 
 	inputDirectory = *configuration.InDir
 	if flag, err := exists(inputDirectory); err != nil || !flag {
 		log.Println(inputDirectory + " does not exist!")
-		return
+		return fileInfoList
 	}
 
 	filesInDirectory, err := ioutil.ReadDir(inputDirectory)
 	if err != nil {
 		log.Fatal(err)
-		return
+		return fileInfoList
 	}
 
 	var unitAbilitiesPath *string = nil
@@ -1728,88 +1771,124 @@ func loadSLK() {
 	unitMap = make(map[string]*models.SLKUnit)
 	if unitDataBytes != nil {
 		log.Println("Parsing unitDataBytes...")
+		unitDataFileInfo.StatusClass = "text-success"
+		unitDataFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithSlkFileData(unitDataBytes, unitMap)
 	}
 
 	if unitAbilitiesBytes != nil {
 		log.Println("Parsing unitAbilitiesBytes...")
+		unitAbilitiesFileInfo.StatusClass = "text-success"
+		unitAbilitiesFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithSlkFileData(unitAbilitiesBytes, unitMap)
 	}
 
 	if unitUIBytes != nil {
 		log.Println("Parsing unitUIBytes...")
+		unitUiFileInfo.StatusClass = "text-success"
+		unitUiFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithSlkFileData(unitUIBytes, unitMap)
 	}
 
 	if unitWeaponsBytes != nil {
 		log.Println("Parsing unitWeaponsBytes...")
+		unitWeaponsFileInfo.StatusClass = "text-success"
+		unitWeaponsFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithSlkFileData(unitWeaponsBytes, unitMap)
 	}
 
 	if unitBalanceBytes != nil {
 		log.Println("Parsing unitBalanceBytes...")
+		unitBalanceFileInfo.StatusClass = "text-success"
+		unitBalanceFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithSlkFileData(unitBalanceBytes, unitMap)
 	}
 
 	if campaignUnitFuncBytes != nil {
 		log.Println("Parsing campaignUnitFuncBytes...")
+		campaignUnitFuncFileInfo.StatusClass = "text-success"
+		campaignUnitFuncFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(campaignUnitFuncBytes, unitMap)
 	}
 
 	if campaignUnitStringsBytes != nil {
 		log.Println("Parsing campaignUnitStringsBytes...")
+		campaignUnitStringsFileInfo.StatusClass = "text-success"
+		campaignUnitStringsFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(campaignUnitStringsBytes, unitMap)
 	}
 
 	if humanUnitFuncBytes != nil {
 		log.Println("Parsing humanUnitFuncBytes...")
+		humanUnitFuncFileInfo.StatusClass = "text-success"
+		humanUnitFuncFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(humanUnitFuncBytes, unitMap)
 	}
 
 	if humanUnitStringsBytes != nil {
 		log.Println("Parsing humanUnitStringsBytes...")
+		humanUnitStringsFileInfo.StatusClass = "text-success"
+		humanUnitStringsFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(humanUnitStringsBytes, unitMap)
 	}
 
 	if neutralUnitFuncBytes != nil {
 		log.Println("Parsing neutralUnitFuncBytes...")
+		neutralUnitFuncFileInfo.StatusClass = "text-success"
+		neutralUnitFuncFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(neutralUnitFuncBytes, unitMap)
 	}
 
 	if neutralUnitStringsBytes != nil {
 		log.Println("Parsing neutralUnitStringsBytes...")
+		neutralUnitStringsFileInfo.StatusClass = "text-success"
+		neutralUnitStringsFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(neutralUnitStringsBytes, unitMap)
 	}
 
 	if nightElfUnitFuncBytes != nil {
 		log.Println("Parsing nightElfUnitFuncBytes...")
+		nightElfUnitFuncFileInfo.StatusClass = "text-success"
+		nightElfUnitFuncFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(nightElfUnitFuncBytes, unitMap)
 	}
 
 	if nightElfUnitStringsBytes != nil {
 		log.Println("Parsing nightElfUnitStringsBytes...")
+		nightElfUnitStringsFileInfo.StatusClass = "text-success"
+		nightElfUnitStringsFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(nightElfUnitStringsBytes, unitMap)
 	}
 
 	if orcUnitFuncBytes != nil {
 		log.Println("Parsing orcUnitFuncBytes...")
+		orcUnitFuncFileInfo.StatusClass = "text-success"
+		orcUnitFuncFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(orcUnitFuncBytes, unitMap)
 	}
 
 	if orcUnitStringsBytes != nil {
 		log.Println("Parsing orcUnitStringsBytes...")
+		orcUnitStringsFileInfo.StatusClass = "text-success"
+		orcUnitStringsFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(orcUnitStringsBytes, unitMap)
 	}
 
 	if undeadUnitFuncBytes != nil {
 		log.Println("Parsing undeadUnitFuncBytes...")
+		undeadUnitFuncFileInfo.StatusClass = "text-success"
+		undeadUnitFuncFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(undeadUnitFuncBytes, unitMap)
 	}
 
 	if undeadUnitStringsBytes != nil {
 		log.Println("Parsing undeadUnitStringsBytes...")
+		undeadUnitStringsFileInfo.StatusClass = "text-success"
+		undeadUnitStringsFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(undeadUnitStringsBytes, unitMap)
 	}
+
+	return fileInfoList
 }
 
 func exists(path string) (bool, error) {

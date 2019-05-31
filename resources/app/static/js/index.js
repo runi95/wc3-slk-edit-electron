@@ -175,6 +175,32 @@ const index = {
             addUnitTableData(unitTableBody, message.payload);
         });
     },
+    loadSlk: function () {
+        const message = {name: "loadSlk", payload: null};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            let fileInfoContainerString = '<ul style="list-style: none; padding: 0;">';
+            let i = 0;
+            message.payload.forEach(fileInfo => {
+                if (i === Math.floor(message.payload.length / 2)) {
+                    fileInfoContainerString += '</ul><ul style="list-style: none; padding: 0;">';
+                }
+
+                fileInfoContainerString += '<li><span class="' + fileInfo.StatusClass +'">' + '<i class="fas ' + fileInfo.StatusIconClass + '"></i> ' + fileInfo.FileName + '</span></li>';
+                i++;
+            });
+
+            fileInfoContainerString += '</ul>';
+            document.getElementById("file-info-container").innerHTML = fileInfoContainerString;
+
+            index.loadUnitData();
+        });
+    },
     search: function (inputField) {
         let filteredUnitDataList;
         if (isRegexSearch) {
@@ -911,7 +937,7 @@ const index = {
 
         index.activateHotkeys();
         index.listenToModals();
-        index.loadUnitData();
+        index.loadSlk();
 
         document.getElementById("downloadwindow").hidden = true;
         document.getElementById("loadingwindow").hidden = true;
@@ -1015,7 +1041,7 @@ const index = {
             }
 
             $('#options-modal').modal('toggle');
-            index.loadUnitData();
+            index.loadSlk();
         });
     },
     updateNewUnitIsGenerated: function (input) {
