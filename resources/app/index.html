@@ -351,12 +351,12 @@
                                     <div class="input-group-text"><i class="fas fa-search"></i></div>
                                 </div>
                                 <input type="text" class="form-control" id="searchInput" placeholder="search"
-                                       oninput="index.search(this)">
+                                       oninput="index.unitSearch(this)">
                                 <div style="display: flex; align-items: center;">
-                                    <input type="checkbox" id="Regex-Toggle" style="margin-left: 5px;"
-                                           onchange="index.setRegexSearch(!isRegexSearch);" aria-label="Regex"
+                                    <input type="checkbox" id="Unit-Regex-Toggle" style="margin-left: 5px;"
+                                           onchange="index.setUnitRegexSearch(!isRegexSearch);" aria-label="Regex"
                                            tabindex="-1"/>
-                                    <label for="Regex-Toggle"
+                                    <label for="Unit-Regex-Toggle"
                                            style="margin: auto 0 auto 3px; padding-bottom: 4px;">Regex</label>
                                 </div>
                             </div>
@@ -3484,18 +3484,18 @@
                 <div class="col-4" style="height: 100%; display: flex; flex-direction: column;">
                     <div class="form-dark">
                         <div class="col-auto" style="padding: 0;">
-                            <label class="sr-only" for="searchInput">Search</label>
+                            <label class="sr-only" for="itemSearchInput">Search</label>
                             <div class="input-group mb-2">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fas fa-search"></i></div>
                                 </div>
-                                <input type="text" class="form-control" id="searchInput" placeholder="search"
-                                       oninput="index.search(this)">
+                                <input type="text" class="form-control" id="itemSearchInput" placeholder="search"
+                                       oninput="index.itemSearch(this)">
                                 <div style="display: flex; align-items: center;">
-                                    <input type="checkbox" id="Regex-Toggle" style="margin-left: 5px;"
-                                           onchange="index.setRegexSearch(!isRegexSearch);" aria-label="Regex"
+                                    <input type="checkbox" id="Item-Regex-Toggle" style="margin-left: 5px;"
+                                           onchange="index.setItemRegexSearch(!isItemRegexSearch);" aria-label="Regex"
                                            tabindex="-1"/>
-                                    <label for="Regex-Toggle"
+                                    <label for="Item-Regex-Toggle"
                                            style="margin: auto 0 auto 3px; padding-bottom: 4px;">Regex</label>
                                 </div>
                             </div>
@@ -3864,16 +3864,16 @@
                 <div class="col-4" style="height: 100%; display: flex; flex-direction: column;">
                     <div class="form-dark">
                         <div class="col-auto" style="padding: 0;">
-                            <label class="sr-only" for="searchInput">Search</label>
+                            <label class="sr-only" for="unitSearchInput">Search</label>
                             <div class="input-group mb-2">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fas fa-search"></i></div>
                                 </div>
-                                <input type="text" class="form-control" id="searchInput" placeholder="search"
+                                <input type="text" class="form-control" id="unitSearchInput" placeholder="search"
                                        oninput="index.search(this)">
                                 <div style="display: flex; align-items: center;">
                                     <input type="checkbox" id="Regex-Toggle" style="margin-left: 5px;"
-                                           onchange="index.setRegexSearch(!isRegexSearch);" aria-label="Regex"
+                                           onchange="index.setItemRegexSearch(!isRegexSearch);" aria-label="Regex"
                                            tabindex="-1"/>
                                     <label for="Regex-Toggle"
                                            style="margin: auto 0 auto 3px; padding-bottom: 4px;">Regex</label>
@@ -3933,7 +3933,7 @@
                                        oninput="index.search(this)">
                                 <div style="display: flex; align-items: center;">
                                     <input type="checkbox" id="Regex-Toggle" style="margin-left: 5px;"
-                                           onchange="index.setRegexSearch(!isRegexSearch);" aria-label="Regex"
+                                           onchange="index.setItemRegexSearch(!isRegexSearch);" aria-label="Regex"
                                            tabindex="-1"/>
                                     <label for="Regex-Toggle"
                                            style="margin: auto 0 auto 3px; padding-bottom: 4px;">Regex</label>

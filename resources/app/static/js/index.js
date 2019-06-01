@@ -2,6 +2,7 @@ let unitDataList = [];
 let itemDataList = [];
 let isLocked = false;
 let isRegexSearch = false;
+let isItemRegexSearch = false;
 let selectedUnitId = null;
 let selectedItemId = null;
 let isUnsaved = false;
@@ -34,7 +35,7 @@ const sortUnitIdInverse = (a, b) => {
 const addUnitTableData = (tableBody, onclickFunc, dataList) => {
     let trList = "";
     dataList.forEach(data => {
-        let str = '<tr id="' + data.ID + '" onclick="index. ' + onclickFunc + '(this)"><th scope="row">' + data.ID + '</th><td>' + data.Name;
+        let str = '<tr id="' + data.Id + '" onclick="index. ' + onclickFunc + '(this)"><th scope="row">' + data.Id + '</th><td>' + data.Name;
         if (data.EditorSuffix) {
             str += '<span class="text-secondary"> ' + data.EditorSuffix + '</span>';
         }
@@ -162,8 +163,8 @@ const index = {
             }
 
             selectedUnitId = null;
-            unitDataList = unitDataList.filter(unit => unit.UnitID !== message.payload);
-            index.search(document.getElementById("searchInput"));
+            unitDataList = unitDataList.filter(unit => unit.Id !== message.payload);
+            index.unitSearch(document.getElementById("unitSearchInput"));
         })
     },
     removeItem: function () {
@@ -179,8 +180,8 @@ const index = {
             }
 
             selectedItemId = null;
-            itemDataList = itemDataList.filter(item => item.ItemId !== message.payload);
-            index.search(document.getElementById("searchInput"));
+            itemDataList = itemDataList.filter(item => item.Id !== message.payload);
+            index.itemSearch(document.getElementById("itemSearchInput"));
         })
     },
     loadUnitData: function () {
@@ -238,17 +239,29 @@ const index = {
             index.loadItemData();
         });
     },
-    search: function (inputField) {
+    unitSearch: function (inputField) {
         let filteredUnitDataList;
         if (isRegexSearch) {
             const regex = new RegExp(inputField.value, "i");
-            filteredUnitDataList = unitDataList.filter(unitData => (unitData.Name + unitData.UnitID + unitData.EditorSuffix).match(regex));
+            filteredUnitDataList = unitDataList.filter(unitData => (unitData.Name + unitData.Id + unitData.EditorSuffix).match(regex));
         } else {
-            filteredUnitDataList = unitDataList.filter(unitData => (unitData.Name + unitData.UnitID + unitData.EditorSuffix).includes(inputField.value));
+            filteredUnitDataList = unitDataList.filter(unitData => (unitData.Name + unitData.Id + unitData.EditorSuffix).includes(inputField.value));
         }
 
         const unitTableBody = document.getElementById("unitTableBody");
         addUnitTableData(unitTableBody, "selectUnit", filteredUnitDataList);
+    },
+    itemSearch: function (inputField) {
+        let filteredItemDataList;
+        if (isItemRegexSearch) {
+            const regex = new RegExp(inputField.value, "i");
+            filteredItemDataList = itemDataList.filter(itemData => (itemData.Name + itemData.Id + itemData.EditorSuffix).match(regex));
+        } else {
+            filteredItemDataList = itemDataList.filter(itemData => (itemData.Name + itemData.Id + itemData.EditorSuffix).includes(inputField.value));
+        }
+
+        const itemTableBody = document.getElementById("itemTableBody");
+        addUnitTableData(itemTableBody, "selectUnit", filteredItemDataList);
     },
     selectUnit: function (unitTableRow) {
         const unitId = unitTableRow.id;
@@ -413,7 +426,7 @@ const index = {
             if (Field === "Unit-Name" || Field === "Unit-Editorsuffix") {
                 let oldUnit = null;
                 for (let i = 0; i < unitDataList.length; i++) {
-                    if (unitDataList[i].UnitID === UnitId) {
+                    if (unitDataList[i].Id === UnitId) {
                         oldUnit = i;
                         break;
                     }
@@ -428,7 +441,7 @@ const index = {
                         oldUnitData.EditorSuffix = Value;
                     }
 
-                    index.search(document.getElementById("searchInput"));
+                    index.unitSearch(document.getElementById("unitSearchInput"));
                 }
             }
         });
@@ -787,23 +800,23 @@ const index = {
 
             let oldUnit = null;
             for (let i = 0; i < unitDataList.length; i++) {
-                if (unitDataList[i].UnitID === unitId) {
+                if (unitDataList[i].Id === unitId) {
                     oldUnit = i;
                     break;
                 }
             }
 
             if (oldUnit) {
-                unitDataList[oldUnit] = {UnitID: unitId, Name: unit.Name};
+                unitDataList[oldUnit] = {Id: unitId, Name: unit.Name};
             } else {
                 unitDataList.push({
-                    UnitID: unitId,
+                    Id: unitId,
                     Name: unit.Name,
                     EditorSuffix: unit.Editorsuffix
                 });
             }
 
-            index.search(document.getElementById("searchInput"));
+            index.unitSearch(document.getElementById("unitSearchInput"));
         });
     },
     loadIcons: function () {
@@ -930,7 +943,7 @@ const index = {
             document.getElementById("configInput").value = message.payload.InDir;
             document.getElementById("configOutput").value = message.payload.OutDir;
             index.disableInputs(message.payload.IsLocked);
-            index.setRegexSearch(message.payload.IsRegexSearch);
+            index.setUnitRegexSearch(message.payload.IsRegexSearch);
 
             index.loadVersion();
         });
@@ -1096,7 +1109,7 @@ const index = {
                     if (e.metaKey && e.key === "s") {
                         index.saveToFile();
                     } else if (e.metaKey && e.key === "f") {
-                        document.getElementById("searchInput").focus();
+                        document.getElementById("unitSearchInput").focus();
                     }
                 }
             } else {
@@ -1104,7 +1117,7 @@ const index = {
                     if (e.ctrlKey && e.key === "s") {
                         index.saveToFile();
                     } else if (e.ctrlKey && e.key === "f") {
-                        document.getElementById("searchInput").focus();
+                        document.getElementById("unitSearchInput").focus();
                     }
                 }
             }
@@ -1114,7 +1127,7 @@ const index = {
         $("#model-modal").on("shown.bs.modal", () => document.getElementById("model-selector").focus());
         $("#icon-modal").on("shown.bs.modal", () => document.getElementById("icon-selector").focus())
     },
-    setRegexSearch: function (bool) {
+    setUnitRegexSearch: function (bool) {
         const message = {name: "setRegexSearch", payload: bool};
         astilectron.sendMessage(message, function (message) {
             // Check for errors
@@ -1124,8 +1137,22 @@ const index = {
             }
 
             isRegexSearch = bool;
-            document.getElementById("Regex-Toggle").checked = isRegexSearch;
-            index.search(document.getElementById("searchInput"));
+            document.getElementById("Unit-Regex-Toggle").checked = isRegexSearch;
+            index.unitSearch(document.getElementById("unitSearchInput"));
+        });
+    },
+    setItemRegexSearch: function (bool) {
+        const message = {name: "setRegexSearch", payload: bool};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            isItemRegexSearch = bool;
+            document.getElementById("Item-Regex-Toggle").checked = isItemRegexSearch;
+            index.itemSearch(document.getElementById("itemSearchInput"));
         });
     },
     sortName: function () {
@@ -1276,8 +1303,8 @@ const index = {
             index.multiColorTextarea("unit-preview", document.getElementById("Unit-Ubertip"));
             index.loadIcon("unitIconImage", document.getElementById("Unit-Art"));
 
-            unitDataList.push({UnitID: message.payload.UnitID, Name: message.payload.Name});
-            index.search(document.getElementById("searchInput"));
+            unitDataList.push({Id: message.payload.UnitID, Name: message.payload.Name});
+            index.unitSearch(document.getElementById("unitSearchInput"));
 
             $('#new-unit-modal').modal('toggle');
         });

@@ -32,7 +32,7 @@ var (
 *    PUBLIC STRUCTURES
  */
 type ListData struct {
-	ID           string
+	Id           string
 	Name         string
 	EditorSuffix null.String
 }
