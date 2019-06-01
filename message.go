@@ -38,8 +38,10 @@ const (
 
 var (
 	// Private Variables
-	unitMap        map[string]*models.SLKUnit
-	lastValidIndex int
+	unitMap            map[string]*models.SLKUnit
+	itemMap            map[string]*models.SLKItem
+	lastValidUnitIndex int
+	lastValidItemIndex int
 
 	// Private Initialized Variables
 	configDirs                             = configdir.New(VENDOR_NAME, "")
@@ -100,9 +102,9 @@ var (
 )
 
 type FieldToUnit struct {
-	UnitId string
-	Field  string
-	Value  string
+	Id    string
+	Field string
+	Value string
 }
 
 type ConfigurationDirectories struct {
@@ -160,7 +162,7 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				return
 			}
 
-			if _, ok := unitMap[fieldToUnit.UnitId]; !ok {
+			if _, ok := unitMap[fieldToUnit.Id]; !ok {
 				log.Println("Unit does not exist, returning unsaved")
 				payload = "unsaved"
 				return
@@ -175,7 +177,7 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				nullString.SetValid(fieldToUnit.Value)
 			}
 
-			err = reflectUpdateValueOnFieldNullStruct(unitMap[fieldToUnit.UnitId], *nullString, split[1])
+			err = reflectUpdateValueOnFieldNullStruct(unitMap[fieldToUnit.Id], *nullString, split[1])
 			if err != nil {
 				log.Println(err)
 				payload = err.Error()
@@ -302,7 +304,9 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			payload = err.Error()
 		}
 	case "generateUnitId":
-		payload = getNextValidUnitId(lastValidIndex)
+		payload = getNextValidUnitId(lastValidUnitIndex)
+	case "generateItemId":
+		payload = getNextValidItemId(lastValidItemIndex)
 	case "saveToFile":
 		if configuration.OutDir != nil {
 			saveUnitsToFile(*configuration.OutDir)
@@ -492,7 +496,7 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 			var unitId string
 			if newUnit.GenerateId == true || !newUnit.UnitId.Valid {
-				unitId = getNextValidUnitId(lastValidIndex)
+				unitId = getNextValidUnitId(lastValidUnitIndex)
 			} else {
 				unitId = newUnit.UnitId.String
 			}
@@ -1245,6 +1249,26 @@ func saveConfigFile(fileName string, data []byte) error {
 	return folders[0].WriteFile(fileName, data)
 }
 
+func getNextValidItemId(offset int) string {
+	var str string
+
+	if offset > 16383 {
+		log.Println("Ran out of valid generated unit id's")
+		return ""
+	}
+
+	var firstChar string
+	firstChar = "I"
+
+	str = firstChar + intToHex(offset/256) + intToHex(int(offset/16)%16) + intToHex(offset%16)
+	if _, ok := unitMap[str]; !ok {
+		lastValidUnitIndex = offset
+		return str
+	}
+
+	return getNextValidItemId(offset + 1)
+}
+
 func getNextValidUnitId(offset int) string {
 	var str string
 
@@ -1272,7 +1296,7 @@ func getNextValidUnitId(offset int) string {
 
 	str = firstChar + intToHex(offset/256) + intToHex(int(offset/16)%16) + intToHex(offset%16)
 	if _, ok := unitMap[str]; !ok {
-		lastValidIndex = offset
+		lastValidItemIndex = offset
 		return str
 	}
 
@@ -1320,6 +1344,9 @@ func loadSLK() []*FileInfo {
 	var unitDataFileInfo = &FileInfo{"UnitData.slk", "color-secondary", "fa-genderless"}
 	var unitUiFileInfo = &FileInfo{"UnitUI.slk", "color-secondary", "fa-genderless"}
 	var unitWeaponsFileInfo = &FileInfo{"UnitWeapons.slk", "color-secondary", "fa-genderless"}
+	var itemDataFileInfo = &FileInfo{"ItemData.slk", "color-secondary", "fa-genderless"}
+	var itemFuncFileInfo = &FileInfo{"ItemFunc.txt", "color-secondary", "fa-genderless"}
+	var itemStringsFileInfo = &FileInfo{"ItemStrings.txt", "color-secondary", "fa-genderless"}
 	var fileInfoList = []*FileInfo{
 		campaignUnitFuncFileInfo,
 		campaignUnitStringsFileInfo,
@@ -1338,6 +1365,9 @@ func loadSLK() []*FileInfo {
 		unitDataFileInfo,
 		unitUiFileInfo,
 		unitWeaponsFileInfo,
+		itemDataFileInfo,
+		itemFuncFileInfo,
+		itemStringsFileInfo,
 	}
 
 	if configuration.InDir == nil {
@@ -1374,6 +1404,9 @@ func loadSLK() []*FileInfo {
 	var orcUnitStringsPath *string = nil
 	var undeadUnitFuncPath *string = nil
 	var undeadUnitStringsPath *string = nil
+	var itemDataPath *string = nil
+	var itemFuncPath *string = nil
+	var itemStringsPath *string = nil
 
 	for _, file := range filesInDirectory {
 		lowercaseFilename := strings.ToLower(file.Name())
@@ -1414,6 +1447,12 @@ func loadSLK() []*FileInfo {
 			undeadUnitFuncPath = &path
 		case "undeadunitstrings.txt":
 			undeadUnitStringsPath = &path
+		case "itemdata.slk":
+			itemDataPath = &path
+		case "itemfunc.txt":
+			itemFuncPath = &path
+		case "itemstrings.txt":
+			itemStringsPath = &path
 		default:
 			log.Printf("%v is an unknown file and will be ignored!", file)
 		}
@@ -1436,9 +1475,6 @@ func loadSLK() []*FileInfo {
 		humanUpgradeFunc := filepath.Join(inputDirectory, "HumanUpgradeFunc.txt")
 		humanUpgradeStrings := filepath.Join(inputDirectory, "HumanUpgradeStrings.txt")
 		itemAbilityStrings := filepath.Join(inputDirectory, "ItemAbilityStrings.txt")
-		itemData := filepath.Join(inputDirectory, "ItemData.slk")
-		itemFunc := filepath.Join(inputDirectory, "ItemFunc.txt")
-		itemStrings := filepath.Join(inputDirectory, "ItemStrings.txt")
 		neutralAbilityFunc := filepath.Join(inputDirectory, "NeutralAbilityFunc.txt")
 		neutralAbilityStrings := filepath.Join(inputDirectory, "NeutralAbilityStrings.txt")
 		neutralUpgradeFunc := filepath.Join(inputDirectory, "NeutralUpgradeFunc.txt")
@@ -1475,6 +1511,9 @@ func loadSLK() []*FileInfo {
 	var orcUnitStringsBytes []byte = nil
 	var undeadUnitFuncBytes []byte = nil
 	var undeadUnitStringsBytes []byte = nil
+	var itemDataBytes []byte = nil
+	var itemFuncBytes []byte = nil
+	var itemStringsBytes []byte = nil
 	var readFileWaitGroup sync.WaitGroup
 
 	readFileWaitGroup.Add(1)
@@ -1766,6 +1805,57 @@ func loadSLK() []*FileInfo {
 		}
 	}()
 
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if itemDataPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*itemDataPath); err != nil || flag {
+				log.Println("Reading ItemData.slk...")
+
+				itemDataBytes, err = ioutil.ReadFile(*itemDataPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if itemFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*itemFuncPath); err != nil || flag {
+				log.Println("Reading ItemFunc.txt...")
+
+				itemFuncBytes, err = ioutil.ReadFile(*itemFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if itemStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*itemStringsPath); err != nil || flag {
+				log.Println("Reading ItemStrings.txt...")
+
+				itemStringsBytes, err = ioutil.ReadFile(*itemStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
 	readFileWaitGroup.Wait()
 
 	unitMap = make(map[string]*models.SLKUnit)
@@ -1886,6 +1976,28 @@ func loadSLK() []*FileInfo {
 		undeadUnitStringsFileInfo.StatusClass = "text-success"
 		undeadUnitStringsFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(undeadUnitStringsBytes, unitMap)
+	}
+
+	itemMap = make(map[string]*models.SLKItem)
+	if itemDataBytes != nil {
+		log.Println("Parsing itemDataBytes...")
+		itemDataFileInfo.StatusClass = "text-success"
+		itemDataFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateItemMapWithSlkFileData(itemDataBytes, itemMap)
+	}
+
+	if itemFuncBytes != nil {
+		log.Println("Parsing itemFuncBytes...")
+		itemFuncFileInfo.StatusClass = "text-success"
+		itemFuncFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateItemMapWithTxtFileData(itemFuncBytes, itemMap)
+	}
+
+	if itemStringsBytes != nil {
+		log.Println("Parsing itemStringsBytes...")
+		itemStringsFileInfo.StatusClass = "text-success"
+		itemStringsFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateItemMapWithTxtFileData(itemStringsBytes, itemMap)
 	}
 
 	return fileInfoList

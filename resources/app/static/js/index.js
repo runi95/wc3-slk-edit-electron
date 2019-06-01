@@ -5,6 +5,8 @@ let selectedUnitId = null;
 let isUnsaved = false;
 let sortNameState = 0;
 let sortUnitIdState = 0;
+let iconMode;
+let modelMode;
 const mdxModels = {};
 const unitModelNameToPath = {};
 const unitModelPathToName = {};
@@ -42,7 +44,7 @@ const addUnitTableData = (unitTableBody, unitDataList) => {
 };
 
 const index = {
-    multiColorTextarea: function (input) {
+    multiColorTextarea: function (target, input) {
         const regex = new RegExp("\\|C([0-9A-F]{8})((?:(?!\\|C).)*)\\|R", "i");
         let result = input.value.split("|n").join("<br>").split("\n").join("<br>");
         let exec = regex.exec(result);
@@ -53,10 +55,10 @@ const index = {
             exec = regex.exec(result);
         }
 
-        document.getElementById("preview").innerHTML = result;
+        document.getElementById(target).innerHTML = result;
     },
-    multiColorTextareaScroll: function (input) {
-        document.getElementById("preview").scrollTop = input.scrollTop;
+    multiColorTextareaScroll: function (target, input) {
+        document.getElementById(target).scrollTop = input.scrollTop;
     },
     loadMdxModel: function (path) {
         if (mdxModels.hasOwnProperty(path)) {
@@ -85,13 +87,13 @@ const index = {
             return {src: fetchPromise, fetch: true};
         }
     },
-    loadMdxModal: function () {
+    loadMdxModal: function (modelInputId, mode) {
+        modelMode = mode;
         initMdx();
 
-        const currentModelPath = document.getElementById("Unit-File").value;
+        const currentModelPath = document.getElementById(modelInputId).value;
         const lowercaseModelPath = currentModelPath.toLowerCase().replace(new RegExp("\.mdl$"), ".mdx");
         const modelPathWithExtension = lowercaseModelPath.endsWith("mdx") ? lowercaseModelPath : lowercaseModelPath + ".mdx";
-        console.log("Loading:", modelPathWithExtension);
         if (!unitModelPathToName.hasOwnProperty(modelPathWithExtension)) {
             return;
         }
@@ -99,12 +101,13 @@ const index = {
         $("#model-selector").typeahead("val", unitModelPathToName[modelPathWithExtension]);
         loadMdxModel(modelPathWithExtension);
     },
-    loadIconModal: function () {
-        const currentIconPath = document.getElementById("Unit-Art").value;
+    loadIconModal: function (mode, artId) {
+        iconMode = mode;
+        const currentIconPath = document.getElementById(artId).value;
         if (!unitIconPathToName.hasOwnProperty(currentIconPath.toLowerCase())) {
             return;
-        }
 
+        }
         $("#icon-selector").typeahead("val", unitIconPathToName[currentIconPath.toLowerCase()]);
         index.loadModalIcon(currentIconPath);
     },
@@ -191,7 +194,7 @@ const index = {
                     fileInfoContainerString += '</ul><ul style="list-style: none; padding: 0;">';
                 }
 
-                fileInfoContainerString += '<li><span class="' + fileInfo.StatusClass +'">' + '<i class="fas ' + fileInfo.StatusIconClass + '"></i> ' + fileInfo.FileName + '</span></li>';
+                fileInfoContainerString += '<li><span class="' + fileInfo.StatusClass + '">' + '<i class="fas ' + fileInfo.StatusIconClass + '"></i> ' + fileInfo.FileName + '</span></li>';
                 i++;
             });
 
@@ -275,8 +278,8 @@ const index = {
                 }
             });
 
-            index.multiColorTextarea(document.getElementById("Unit-Ubertip"));
-            index.loadIcon(document.getElementById("Unit-Art"));
+            index.multiColorTextarea("unit-preview", document.getElementById("Unit-Ubertip"));
+            index.loadIcon("unitIconImage", document.getElementById("Unit-Art"));
         });
     },
     saveToFile: function () {
@@ -306,14 +309,42 @@ const index = {
         });
     },
     saveFieldToUnit: function (input) {
-        if (!document.getElementById("unitId-form").checkValidity())
+        index.saveField(input, "unitId-form", "Unit-UnitID", (Field, Value, UnitId) => {
+            if (Field === "Unit-Name" || Field === "Unit-Editorsuffix") {
+                let oldUnit = null;
+                for (let i = 0; i < unitDataList.length; i++) {
+                    if (unitDataList[i].UnitID === UnitId) {
+                        oldUnit = i;
+                        break;
+                    }
+                }
+
+                if (oldUnit) {
+                    const oldUnitData = unitDataList[oldUnit];
+
+                    if (Field === "Unit-Name") {
+                        oldUnitData.Name = Value;
+                    } else if (Field === "Unit-Editorsuffix") {
+                        oldUnitData.EditorSuffix = Value;
+                    }
+
+                    index.search(document.getElementById("searchInput"));
+                }
+            }
+        });
+    },
+    saveFieldToItem: function (input) {
+        index.saveField(input, "itemId-form", "Item-ItemID");
+    },
+    saveField: function (input, idForm, idInput, savedCallback) {
+        if (!document.getElementById(idForm).checkValidity())
             return;
 
-        let Field = null;
-        let Value = null;
+        let field = null;
+        let value = null;
 
         if (input.classList.contains("sub-multi-check")) {
-            Field = input.parentNode.parentNode.parentNode.id;
+            field = input.parentNode.parentNode.parentNode.id;
             input.parentNode.parentNode.parentNode.childNodes.forEach(child => {
                 if (child instanceof HTMLUListElement) {
                     child.childNodes.forEach(listChild => {
@@ -321,10 +352,10 @@ const index = {
                             listChild.childNodes.forEach(listElement => {
                                 if (listElement instanceof HTMLInputElement) {
                                     if (listElement.checked) {
-                                        if (Value === null) {
-                                            Value = "\"" + listElement.value;
+                                        if (value === null) {
+                                            value = "\"" + listElement.value;
                                         } else {
-                                            Value += "," + listElement.value;
+                                            value += "," + listElement.value;
                                         }
                                     }
                                 }
@@ -334,33 +365,30 @@ const index = {
                 }
             });
 
-            if (Value === null) {
-                Value = "\"_\"";
+            if (value === null) {
+                value = "\"_\"";
             } else {
-                Value += "\"";
+                value += "\"";
             }
         } else {
             const type = input.type;
-            Field = input.id;
-            fieldSplit = Field.split("-");
+            field = input.id;
             if (type === "text" || type === "textarea" || type === "select-one") {
                 const containsNumberRegex = new RegExp("^-?(?:(?:\\d*)|(?:\\d+\\.\\d+))$");
-                Value = input.value.replace(new RegExp("\n", "g"), "|n");
+                value = input.value.replace(new RegExp("\n", "g"), "|n");
 
-                if (fieldSplit[0] === "SLKUnit" || Field === "Unit-Ubertip") {
-                    if (!Value.match(containsNumberRegex)) {
-                        Value = "\"" + Value + "\"";
-                    }
+                if (!value.match(containsNumberRegex) && !value.startsWith("\"") && !value.endsWith("\"")) {
+                    value = "\"" + value + "\"";
                 }
             } else if (type === "checkbox") {
-                Value = input.checked ? "1" : "0";
+                value = input.checked ? "1" : "0";
             }
         }
 
-        const UnitId = document.getElementById("Unit-UnitID").value;
-        const fieldToUnit = {Field, Value, UnitId};
-        if (Field != null && Value != null) {
-            const message = {name: "saveFieldToUnit", payload: fieldToUnit};
+        const id = document.getElementById(idInput).value;
+        const fieldToSave = {Field: field, Value: value, Id: id};
+        if (field != null && value != null) {
+            const message = {name: "saveFieldToUnit", payload: fieldToSave};
             astilectron.sendMessage(message, function (message) {
                 // Check for errors
                 if (message.name === "error") {
@@ -377,26 +405,8 @@ const index = {
                 if (message.payload === "unsaved") {
                     index.saveUnit();
                 } else {
-                    if (Field === "Unit-Name" || Field === "Unit-Editorsuffix") {
-                        let oldUnit = null;
-                        for (let i = 0; i < unitDataList.length; i++) {
-                            if (unitDataList[i].UnitID === UnitId) {
-                                oldUnit = i;
-                                break;
-                            }
-                        }
-
-                        if (oldUnit) {
-                            const oldUnitData = unitDataList[oldUnit];
-
-                            if (Field === "Unit-Name") {
-                                oldUnitData.Name = Value;
-                            } else if (Field === "Unit-Editorsuffix") {
-                                oldUnitData.EditorSuffix = Value;
-                            }
-
-                            index.search(document.getElementById("searchInput"));
-                        }
+                    if (typeof savedCallback === "function") {
+                        savedCallback(field, value, id);
                     }
                 }
             });
@@ -424,19 +434,29 @@ const index = {
             }
         });
     },
-    selectUnitIcon: function () {
+    selectIcon: function () {
         const inputValue = document.getElementById("icon-selector").value.toLowerCase();
         if (unitIconNameToPath.hasOwnProperty(inputValue)) {
-            const iconInput = document.getElementById("Unit-Art");
-            iconInput.value = unitIconNameToPath[inputValue];
-            $('#unit-icon-modal').modal('toggle');
-
-            index.saveFieldToUnit(iconInput);
-            index.loadIcon(iconInput);
+            const iconPath = unitIconNameToPath[inputValue];
+            let iconInput;
+            if (iconMode === "unit") {
+                iconInput = document.getElementById("Unit-Art");
+                index.saveFieldToUnit(iconInput);
+                index.loadIconValue("unitIconImage", iconPath);
+            } else if (iconMode === "item") {
+                iconInput = document.getElementById("Item-Art");
+                index.saveFieldToItem(iconInput);
+                index.loadIconValue("itemIconImage", iconPath);
+            }
+            iconInput.value = iconPath;
+            $('#icon-modal').modal('toggle');
         }
     },
-    loadIcon: function (input) {
-        const message = {name: "loadIcon", payload: input.value};
+    loadIcon: function (iconImage, input) {
+        index.loadIconValue(iconImage, input.value);
+    },
+    loadIconValue: function (iconImage, iconPath) {
+        const message = {name: "loadIcon", payload: iconPath};
         astilectron.sendMessage(message, function (message) {
             // Check for errors
             if (message.name === "error") {
@@ -445,9 +465,9 @@ const index = {
             }
 
             if (message.payload !== null && message.payload !== "") {
-                document.getElementById("iconImage").setAttribute("src", "data:image/png;base64," + message.payload);
+                document.getElementById(iconImage).setAttribute("src", "data:image/png;base64," + message.payload);
             } else {
-                document.getElementById("iconImage").setAttribute("src", "emptyicon.png");
+                document.getElementById(iconImage).setAttribute("src", "emptyicon.png");
             }
         });
     },
@@ -784,11 +804,18 @@ const index = {
     selectMdxModel: function () {
         const inputValue = document.getElementById("model-selector").value.toLowerCase();
         if (unitModelNameToPath.hasOwnProperty(inputValue)) {
-            const modelFileInput = document.getElementById("Unit-File");
-            modelFileInput.value = unitModelNameToPath[inputValue];
+            let modelFileInput;
+            if (modelMode === "unit") {
+                modelFileInput = document.getElementById("Unit-File");
+                modelFileInput.value = unitModelNameToPath[inputValue];
+                index.saveFieldToUnit(modelFileInput);
+            } else if (modelMode === "item") {
+                modelFileInput = document.getElementById("Item-File");
+                modelFileInput.value = unitModelNameToPath[inputValue];
+                index.saveFieldToItem(modelFileInput);
+            }
 
-            $('#unit-model-modal').modal('toggle');
-            index.saveFieldToUnit(modelFileInput);
+            $('#model-modal').modal('toggle');
         }
     },
     loadConfig: function () {
@@ -858,6 +885,18 @@ const index = {
             document.getElementById("Unit-UnitID").value = message.payload;
         });
     },
+    generateItemId: function () {
+        const message = {name: "generateItemId", payload: null};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            document.getElementById("Item-ItemID").value = message.payload;
+        });
+    },
     generateUnitTooltip: function () {
         const attacksEnabled = document.getElementById("Unit-WeapsOn").value;
         let value = "";
@@ -894,7 +933,7 @@ const index = {
 
         const ubertipInput = document.getElementById("Unit-Ubertip");
         ubertipInput.value = value;
-        index.multiColorTextarea(ubertipInput);
+        index.multiColorTextarea('unit-preview', ubertipInput);
     },
     activateFileUploadButtonLoadInput: function () {
         $("#hiddenFileUploadInputLoadInput").click();
@@ -972,8 +1011,8 @@ const index = {
         });
     },
     listenToModals: function () {
-        $("#unit-model-modal").on("shown.bs.modal", () => document.getElementById("model-selector").focus());
-        $("#unit-icon-modal").on("shown.bs.modal", () => document.getElementById("icon-selector").focus())
+        $("#model-modal").on("shown.bs.modal", () => document.getElementById("model-selector").focus());
+        $("#icon-modal").on("shown.bs.modal", () => document.getElementById("icon-selector").focus())
     },
     setRegexSearch: function (bool) {
         const message = {name: "setRegexSearch", payload: bool};
@@ -1134,15 +1173,56 @@ const index = {
                 }
             });
 
-            index.multiColorTextarea(document.getElementById("Unit-Ubertip"));
-            index.loadIcon(document.getElementById("Unit-Art"));
+            index.multiColorTextarea("unit-preview", document.getElementById("Unit-Ubertip"));
+            index.loadIcon("unitIconImage", document.getElementById("Unit-Art"));
 
             unitDataList.push({UnitID: message.payload.UnitID, Name: message.payload.Name});
             index.search(document.getElementById("searchInput"));
 
             $('#new-unit-modal').modal('toggle');
         });
+    },
+    switchTab: function (containerId) {
+        if (containerId === "units-container") {
+            document.getElementById("items-container").hidden = true;
+            document.getElementById("abilities-container").hidden = true;
+            document.getElementById("buffs-container").hidden = true;
+            document.getElementById("units-container").hidden = false;
 
+            document.getElementById("items-tab").className = "nav-link";
+            document.getElementById("abilities-tab").className = "nav-link";
+            document.getElementById("buffs-tab").className = "nav-link";
+            document.getElementById("units-tab").className = "nav-link active";
+        } else if (containerId === "items-container") {
+            document.getElementById("units-container").hidden = true;
+            document.getElementById("abilities-container").hidden = true;
+            document.getElementById("buffs-container").hidden = true;
+            document.getElementById("items-container").hidden = false;
 
+            document.getElementById("units-tab").className = "nav-link";
+            document.getElementById("abilities-tab").className = "nav-link";
+            document.getElementById("buffs-tab").className = "nav-link";
+            document.getElementById("items-tab").className = "nav-link active";
+        } else if (containerId === "abilities-container") {
+            document.getElementById("units-container").hidden = true;
+            document.getElementById("items-container").hidden = true;
+            document.getElementById("buffs-container").hidden = true;
+            document.getElementById("abilities-container").hidden = false;
+
+            document.getElementById("units-tab").className = "nav-link";
+            document.getElementById("items-tab").className = "nav-link";
+            document.getElementById("buffs-tab").className = "nav-link";
+            document.getElementById("abilities-tab").className = "nav-link active";
+        } else if (containerId === "buffs-container") {
+            document.getElementById("units-container").hidden = true;
+            document.getElementById("items-container").hidden = true;
+            document.getElementById("abilities-container").hidden = true;
+            document.getElementById("buffs-container").hidden = false;
+
+            document.getElementById("units-tab").className = "nav-link";
+            document.getElementById("items-tab").className = "nav-link";
+            document.getElementById("abilities-tab").className = "nav-link";
+            document.getElementById("buffs-tab").className = "nav-link active";
+        }
     }
 };
