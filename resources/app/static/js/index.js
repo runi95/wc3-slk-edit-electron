@@ -1,7 +1,9 @@
 let unitDataList = [];
+let itemDataList = [];
 let isLocked = false;
 let isRegexSearch = false;
 let selectedUnitId = null;
+let selectedItemId = null;
 let isUnsaved = false;
 let sortNameState = 0;
 let sortUnitIdState = 0;
@@ -29,18 +31,18 @@ const sortUnitIdInverse = (a, b) => {
     return b.UnitID > a.UnitID ? 1 : -1;
 };
 
-const addUnitTableData = (unitTableBody, unitDataList) => {
+const addUnitTableData = (tableBody, onclickFunc, dataList) => {
     let trList = "";
-    unitDataList.forEach(unitData => {
-        let str = '<tr id="' + unitData.UnitID + '" onclick="index.selectUnit(this)"><th scope="row">' + unitData.UnitID + '</th><td>' + unitData.Name;
-        if (unitData.EditorSuffix) {
-            str += '<span class="text-secondary"> ' + unitData.EditorSuffix + '</span>';
+    dataList.forEach(data => {
+        let str = '<tr id="' + data.ID + '" onclick="index. ' + onclickFunc + '(this)"><th scope="row">' + data.ID + '</th><td>' + data.Name;
+        if (data.EditorSuffix) {
+            str += '<span class="text-secondary"> ' + data.EditorSuffix + '</span>';
         }
         str += '</td></tr>';
         trList += str;
     });
 
-    unitTableBody.innerHTML = trList;
+    tableBody.innerHTML = trList;
 };
 
 const index = {
@@ -164,6 +166,23 @@ const index = {
             index.search(document.getElementById("searchInput"));
         })
     },
+    removeItem: function () {
+        if (selectedItemId === null)
+            return;
+
+        const message = {name: "removeItem", payload: selectedItemId};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            selectedItemId = null;
+            itemDataList = itemDataList.filter(item => item.ItemId !== message.payload);
+            index.search(document.getElementById("searchInput"));
+        })
+    },
     loadUnitData: function () {
         const message = {name: "loadUnitData", payload: null};
         astilectron.sendMessage(message, function (message) {
@@ -175,7 +194,21 @@ const index = {
 
             unitDataList = message.payload;
             const unitTableBody = document.getElementById("unitTableBody");
-            addUnitTableData(unitTableBody, message.payload);
+            addUnitTableData(unitTableBody, "selectUnit", message.payload);
+        });
+    },
+    loadItemData: function () {
+        const message = {name: "loadItemData", payload: null};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            itemDataList = message.payload;
+            const itemTableBody = document.getElementById("itemTableBody");
+            addUnitTableData(itemTableBody, "selectItem", message.payload);
         });
     },
     loadSlk: function () {
@@ -202,6 +235,7 @@ const index = {
             document.getElementById("file-info-container").innerHTML = fileInfoContainerString;
 
             index.loadUnitData();
+            index.loadItemData();
         });
     },
     search: function (inputField) {
@@ -214,7 +248,7 @@ const index = {
         }
 
         const unitTableBody = document.getElementById("unitTableBody");
-        addUnitTableData(unitTableBody, filteredUnitDataList);
+        addUnitTableData(unitTableBody, "selectUnit", filteredUnitDataList);
     },
     selectUnit: function (unitTableRow) {
         const unitId = unitTableRow.id;
@@ -280,6 +314,72 @@ const index = {
 
             index.multiColorTextarea("unit-preview", document.getElementById("Unit-Ubertip"));
             index.loadIcon("unitIconImage", document.getElementById("Unit-Art"));
+        });
+    },
+    selectItem: function (itemTableRow) {
+        const itemId = itemTableRow.id;
+        selectedItemId = itemId;
+        const message = {name: "selectItem", payload: itemId};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            $("#itemTableBody>tr").removeClass("active");
+            itemTableRow.setAttribute("class", "active");
+
+            if (message.payload.Ubertip) {
+                const rawValue = message.payload.Ubertip;
+                const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
+                const trimmedLeft = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
+
+                message.payload.Ubertip = trimmedLeft.replace(new RegExp("\\|n", "g"), "\n");
+            }
+
+            if (message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
+                if (message.payload.ButtonposX === "" || message.payload.ButtonposX === "_" || message.payload.ButtonposX === "-" || message.payload.ButtonposY === "" || message.payload.ButtonposY === "_" || message.payload.ButtonposY === "-") {
+                    message.payload.Buttonpos = "0,0";
+                } else {
+                    message.payload.Buttonpos = message.payload.ButtonposX + "," + message.payload.ButtonposY;
+                }
+            }
+
+            Object.keys(message.payload).forEach(slkItemKey => {
+                const rawValue = message.payload[slkItemKey] ? message.payload[slkItemKey] : "";
+                const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
+                const value = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
+                const elem = document.getElementById("Item-" + slkItemKey);
+                if (elem) {
+                    if (elem instanceof HTMLInputElement || elem instanceof HTMLSelectElement || elem instanceof HTMLTextAreaElement) {
+                        const type = elem.type;
+
+                        if (type === "text" || type === "textarea" || type === "select-one") {
+                            elem.value = value;
+                        } else if (type === "checkbox") {
+                            elem.checked = value === "1";
+                        }
+                    } else if (elem.id === "Item-Buttonpos") {
+                        const buttonpos = message.payload[slkItemKey];
+                        if (!buttonpos || buttonpos === "-" || buttonpos === "_") {
+                            elem.value = "0,0"
+                        } else {
+                            elem.value = buttonpos;
+                        }
+                    } else if (elem.classList.contains("multi-check")) {
+                        const childInputs = $("#Item-" + slkItemKey + " :input");
+                        const valueSplit = value.split(",");
+                        const valueLower = valueSplit.map(val => val.toLowerCase());
+                        for (let i = 0; i < childInputs.length; i++) {
+                            childInputs[i].checked = valueLower.includes(childInputs[i].value.toLowerCase());
+                        }
+                    }
+                }
+            });
+
+            index.multiColorTextarea("item-preview", document.getElementById("Item-Ubertip"));
+            index.loadIcon("itemIconImage", document.getElementById("Item-Art"));
         });
     },
     saveToFile: function () {
@@ -1046,7 +1146,7 @@ const index = {
             sortList.sort(sortNameInverse);
         }
 
-        addUnitTableData(document.getElementById("unitTableBody"), sortList);
+        addUnitTableData(document.getElementById("unitTableBody"), "selectUnit", sortList);
     },
     sortUnitId: function () {
         sortUnitIdState = (sortUnitIdState + 1) % 3;
@@ -1066,7 +1166,7 @@ const index = {
             sortList.sort(sortUnitIdInverse);
         }
 
-        addUnitTableData(document.getElementById("unitTableBody"), sortList);
+        addUnitTableData(document.getElementById("unitTableBody"), "selectUnit", sortList);
     },
     saveOptions: function () {
         const InDir = document.getElementById("configInput").value;

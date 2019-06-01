@@ -31,8 +31,8 @@ var (
 /**
 *    PUBLIC STRUCTURES
  */
-type UnitListData struct {
-	UnitID       string
+type ListData struct {
+	ID           string
 	Name         string
 	EditorSuffix null.String
 }

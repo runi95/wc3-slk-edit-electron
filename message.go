@@ -301,6 +301,22 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			log.Println(err)
 			payload = err.Error()
 		}
+	case "selectItem":
+		var itemId string
+		if len(m.Payload) > 0 {
+			if err = json.Unmarshal(m.Payload, &itemId); err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+
+			payload = itemMap[itemId]
+		} else {
+			err = fmt.Errorf("invalid input")
+
+			log.Println(err)
+			payload = err.Error()
+		}
 	case "generateUnitId":
 		payload = getNextValidUnitId(lastValidUnitIndex)
 	case "generateItemId":
@@ -343,15 +359,26 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 	case "loadSlk":
 		payload = loadSLK()
 	case "loadUnitData":
-		var unitListData = make([]UnitListData, len(unitMap))
+		var unitListData = make([]ListData, len(unitMap))
 
 		i := 0
 		for k, v := range unitMap {
-			unitListData[i] = UnitListData{k, v.UnitString.Name.String, v.Editorsuffix}
+			unitListData[i] = ListData{k, v.UnitString.Name.String, v.Editorsuffix}
 			i++
 		}
 
 		payload = unitListData
+	case "loadItemData":
+		var itemListData = make([]ListData, len(itemMap))
+
+		i := 0
+		for k, v := range itemMap {
+			// log.Printf("v(%v)\n", v)
+			itemListData[i] = ListData{k, v.Name.String, v.Editorsuffix}
+			i++
+		}
+
+		payload = itemListData
 	case "loadIcons":
 		iconModels := make(UnitModels, 0, len(images))
 		for k := range images {
