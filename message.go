@@ -27,8 +27,6 @@ import (
 )
 
 const (
-	VERSION = "v1.0.4"
-
 	// const MAXINT = 2147483647
 	VENDOR_NAME              = "wc3-slk-edit"
 	CONFIG_FILENAME          = "config.json"
@@ -1178,8 +1176,6 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		}
 	case "getOperatingSystem":
 		payload = runtime.GOOS
-	case "loadVersion":
-		payload = VERSION
 	case "hideWindow":
 		err = w.Hide()
 		if err != nil {
