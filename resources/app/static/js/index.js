@@ -296,7 +296,7 @@ const index = {
             }
 
             if (!message.payload.Buttonpos || message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
-                if (message.payload.ButtonposX === "" || message.payload.ButtonposX === "_" || message.payload.ButtonposX === "-" || message.payload.ButtonposY === "" || message.payload.ButtonposY === "_" || message.payload.ButtonposY === "-") {
+                if (!message.payload.ButtonposX || message.payload.ButtonposX === "" || message.payload.ButtonposX === "_" || message.payload.ButtonposX === "-" || !message.payload.ButtonposY || message.payload.ButtonposY === "" || message.payload.ButtonposY === "_" || message.payload.ButtonposY === "-") {
                     message.payload.Buttonpos = "0,0";
                 } else {
                     message.payload.Buttonpos = message.payload.ButtonposX + "," + message.payload.ButtonposY;
@@ -362,7 +362,7 @@ const index = {
             }
 
             if (!message.payload.Buttonpos || message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
-                if (message.payload.ButtonposX === "" || message.payload.ButtonposX === "_" || message.payload.ButtonposX === "-" || message.payload.ButtonposY === "" || message.payload.ButtonposY === "_" || message.payload.ButtonposY === "-") {
+                if (!message.payload.ButtonposX || message.payload.ButtonposX === "" || message.payload.ButtonposX === "_" || message.payload.ButtonposX === "-" || !message.payload.ButtonposY || message.payload.ButtonposY === "" || message.payload.ButtonposY === "_" || message.payload.ButtonposY === "-") {
                     message.payload.Buttonpos = "0,0";
                 } else {
                     message.payload.Buttonpos = message.payload.ButtonposX + "," + message.payload.ButtonposY;
