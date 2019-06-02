@@ -1367,8 +1367,8 @@ const index = {
             document.getElementById("units-container").hidden = false;
 
             document.getElementById("items-tab").className = "nav-link";
-            // document.getElementById("abilities-tab").className = "nav-link";
-            // document.getElementById("buffs-tab").className = "nav-link";
+            document.getElementById("abilities-tab").className = "nav-link";
+            document.getElementById("buffs-tab").className = "nav-link";
             document.getElementById("units-tab").className = "nav-link active";
         } else if (containerId === "items-container") {
             document.getElementById("units-container").hidden = true;
@@ -1377,8 +1377,8 @@ const index = {
             document.getElementById("items-container").hidden = false;
 
             document.getElementById("units-tab").className = "nav-link";
-            // document.getElementById("abilities-tab").className = "nav-link";
-            // document.getElementById("buffs-tab").className = "nav-link";
+            document.getElementById("abilities-tab").className = "nav-link";
+            document.getElementById("buffs-tab").className = "nav-link";
             document.getElementById("items-tab").className = "nav-link active";
         } else if (containerId === "abilities-container") {
             document.getElementById("units-container").hidden = true;
@@ -1388,8 +1388,8 @@ const index = {
 
             document.getElementById("units-tab").className = "nav-link";
             document.getElementById("items-tab").className = "nav-link";
-            // document.getElementById("buffs-tab").className = "nav-link";
-            // document.getElementById("abilities-tab").className = "nav-link active";
+            document.getElementById("buffs-tab").className = "nav-link";
+            document.getElementById("abilities-tab").className = "nav-link active";
         } else if (containerId === "buffs-container") {
             document.getElementById("units-container").hidden = true;
             document.getElementById("items-container").hidden = true;
@@ -1398,8 +1398,8 @@ const index = {
 
             document.getElementById("units-tab").className = "nav-link";
             document.getElementById("items-tab").className = "nav-link";
-            // document.getElementById("abilities-tab").className = "nav-link";
-            // document.getElementById("buffs-tab").className = "nav-link active";
+            document.getElementById("abilities-tab").className = "nav-link";
+            document.getElementById("buffs-tab").className = "nav-link active";
         }
     }
 };
