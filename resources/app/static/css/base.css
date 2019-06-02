@@ -287,7 +287,7 @@ html, body {
 }
 
 .table-body > .active {
-    background-color: #641e64;
+    background-color: #641e64 !important;
 }
 
 .flex-outer {
