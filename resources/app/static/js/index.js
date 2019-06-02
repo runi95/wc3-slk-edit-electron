@@ -457,7 +457,7 @@ const index = {
         });
     },
     saveFieldToItem: function (input) {
-        index.saveField(input, "itemId-form", "Item-ItemID");
+        index.saveField(input, "itemId-form", "Item-ItemId");
     },
     saveField: function (input, idForm, idInput, savedCallback) {
         if (!document.getElementById(idForm).checkValidity())
@@ -1017,7 +1017,7 @@ const index = {
                 return;
             }
 
-            document.getElementById("Item-ItemID").value = message.payload;
+            document.getElementById("Item-ItemId").value = message.payload;
         });
     },
     generateUnitTooltip: function () {
