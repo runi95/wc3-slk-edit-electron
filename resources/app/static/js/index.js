@@ -295,7 +295,7 @@ const index = {
                 message.payload.Ubertip = trimmedLeft.replace(new RegExp("\\|n", "g"), "\n");
             }
 
-            if (message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
+            if (!message.payload.Buttonpos || message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
                 if (message.payload.ButtonposX === "" || message.payload.ButtonposX === "_" || message.payload.ButtonposX === "-" || message.payload.ButtonposY === "" || message.payload.ButtonposY === "_" || message.payload.ButtonposY === "-") {
                     message.payload.Buttonpos = "0,0";
                 } else {
@@ -361,13 +361,10 @@ const index = {
                 message.payload.Ubertip = trimmedLeft.replace(new RegExp("\\|n", "g"), "\n");
             }
 
-            if (message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
-                console.log("Yes, buttonpos is practically empty");
+            if (!message.payload.Buttonpos || message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
                 if (message.payload.ButtonposX === "" || message.payload.ButtonposX === "_" || message.payload.ButtonposX === "-" || message.payload.ButtonposY === "" || message.payload.ButtonposY === "_" || message.payload.ButtonposY === "-") {
-                    console.log("Yes, x and y are invalid");
                     message.payload.Buttonpos = "0,0";
                 } else {
-                    console.log("No, x and y are valid");
                     message.payload.Buttonpos = message.payload.ButtonposX + "," + message.payload.ButtonposY;
                 }
             }
