@@ -274,7 +274,9 @@ const index = {
         addTableData(itemTableBody, "selectItem", filteredItemDataList);
     },
     selectUnit: function (unitTableRow) {
-        const unitId = unitTableRow.id;
+        index.selectUnitFromId(unitTableRow.id);
+    },
+    selectUnitFromId: function (unitId) {
         selectedUnitId = unitId;
         const message = {name: "selectUnit", payload: unitId};
         astilectron.sendMessage(message, function (message) {
@@ -340,7 +342,9 @@ const index = {
         });
     },
     selectItem: function (itemTableRow) {
-        const itemId = itemTableRow.id;
+        index.selectItemFromId(itemTableRow.id);
+    },
+    selectItemFromId: function (itemId) {
         selectedItemId = itemId;
         const message = {name: "selectItem", payload: itemId};
         astilectron.sendMessage(message, function (message) {
@@ -1269,6 +1273,15 @@ const index = {
             document.getElementById("NewUnit-UnitID").disabled = false;
         }
     },
+    updateNewItemIsGenerated: function (input) {
+        if (input.checked) {
+            input.required = true;
+            document.getElementById("NewItem-ItemID").disabled = true;
+        } else {
+            input.required = false;
+            document.getElementById("NewItem-ItemID").disabled = false;
+        }
+    },
     createNewUnit: function () {
         if (!document.getElementById("NewUnit-Form").checkValidity())
             return;
@@ -1301,62 +1314,43 @@ const index = {
                 return;
             }
 
-            $("#unitTableBody>tr").removeClass("active");
-            if (message.payload.Ubertip) {
-                const rawValue = message.payload.Ubertip;
-                const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
-                const trimmedLeft = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
-
-                message.payload.Ubertip = trimmedLeft.replace(new RegExp("\\|n", "g"), "\n");
-            }
-
-            if (message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
-                if (message.payload.ButtonposX === "" || message.payload.ButtonposX === "_" || message.payload.ButtonposX === "-" || message.payload.ButtonposY === "" || message.payload.ButtonposY === "_" || message.payload.ButtonposY === "-") {
-                    message.payload.Buttonpos = "0,0";
-                } else {
-                    message.payload.Buttonpos = message.payload.ButtonposX + "," + message.payload.ButtonposY;
-                }
-            }
-
-            Object.keys(message.payload).forEach(slkUnitKey => {
-                const rawValue = message.payload[slkUnitKey] ? message.payload[slkUnitKey] : "";
-                const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
-                const value = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
-                const elem = document.getElementById("Unit-" + slkUnitKey);
-                if (elem) {
-                    if (elem instanceof HTMLInputElement || elem instanceof HTMLSelectElement || elem instanceof HTMLTextAreaElement) {
-                        const type = elem.type;
-
-                        if (type === "text" || type === "textarea" || type === "select-one") {
-                            elem.value = value;
-                        } else if (type === "checkbox") {
-                            elem.checked = value === "1";
-                        }
-                    } else if (elem.id === "Unit-Buttonpos") {
-                        const buttonpos = message.payload[slkUnitKey];
-                        if (!buttonpos || buttonpos === "-" || buttonpos === "_") {
-                            elem.value = "0,0"
-                        } else {
-                            elem.value = buttonpos;
-                        }
-                    } else if (elem.classList.contains("multi-check")) {
-                        const childInputs = $("#Unit-" + slkUnitKey + " :input");
-                        const valueSplit = value.split(",");
-                        const valueLower = valueSplit.map(val => val.toLowerCase());
-                        for (let i = 0; i < childInputs.length; i++) {
-                            childInputs[i].checked = valueLower.includes(childInputs[i].value.toLowerCase());
-                        }
-                    }
-                }
-            });
-
-            index.multiColorTextarea("unit-preview", document.getElementById("Unit-Ubertip"));
-            index.loadIcon("unitIconImage", document.getElementById("Unit-Art"));
-
+            index.selectUnitFromId(message.payload.UnitID);
             unitDataList.push({Id: message.payload.UnitID, Name: message.payload.Name});
             index.unitSearch(document.getElementById("unitSearchInput"));
 
             $('#new-unit-modal').modal('toggle');
+        });
+    },
+    createNewItem: function () {
+        if (!document.getElementById("NewItem-Form").checkValidity())
+            return;
+
+        const generateId = document.getElementById("NewItem-Generated").checked;
+        const itemId = generateId ? document.getElementById("NewItem-ItemID").value : null;
+        // const baseItemValue = document.getElementById("NewItem-BaseItemId").value;
+        const baseItemId = null; // baseItemValue.length > 0 ? baseItemValue : null;
+        const name = document.getElementById("NewItem-Name").value;
+        const message = {
+            name: "createNewItem",
+            payload: {
+                ItemId: itemId,
+                GenerateId: generateId,
+                Name: name,
+                BaseItemId: baseItemId
+            }
+        };
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            index.selectItemFromId(message.payload.ItemID);
+            itemDataList.push({Id: message.payload.ItemID, Name: message.payload.Name});
+            index.itemSearch(document.getElementById("itemSearchInput"));
+
+            $('#new-item-modal').modal('toggle');
         });
     },
     switchTab: function (containerId) {
@@ -1364,7 +1358,10 @@ const index = {
             document.getElementById("items-container").hidden = true;
             // document.getElementById("abilities-container").hidden = true;
             // document.getElementById("buffs-container").hidden = true;
+            document.getElementById("new-item-button").hidden = true;
+            document.getElementById("new-unit-button").hidden = false;
             document.getElementById("units-container").hidden = false;
+            document.getElementById("unit-nav-pills").hidden = false;
 
             document.getElementById("items-tab").className = "nav-link";
             document.getElementById("abilities-tab").className = "nav-link";
@@ -1374,6 +1371,9 @@ const index = {
             document.getElementById("units-container").hidden = true;
             // document.getElementById("abilities-container").hidden = true;
             // document.getElementById("buffs-container").hidden = true;
+            document.getElementById("new-unit-button").hidden = true;
+            document.getElementById("unit-nav-pills").hidden = true;
+            document.getElementById("new-item-button").hidden = false;
             document.getElementById("items-container").hidden = false;
 
             document.getElementById("units-tab").className = "nav-link";

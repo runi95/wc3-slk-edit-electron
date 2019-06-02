@@ -124,6 +124,13 @@ type NewUnit struct {
 	AttackType string
 }
 
+type NewItem struct {
+	ItemId     null.String
+	GenerateId bool
+	Name       string
+	BaseItemId null.String
+}
+
 type FileInfo struct {
 	FileName        string
 	StatusClass     string
@@ -1136,6 +1143,71 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 			unitMap[unitId] = unit
 			payload = unit
+		}
+	case "createNewItem":
+		if m.Payload != nil {
+			var newItem NewItem
+			if err = json.Unmarshal(m.Payload, &newItem); err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+
+			item := new(models.SLKItem)
+			item.ItemData = new(models.ItemData)
+			item.ItemFunc = new(models.ItemFunc)
+			item.ItemString = new(models.ItemString)
+
+			var itemId string
+			if newItem.GenerateId == true || !newItem.ItemId.Valid {
+				itemId = getNextValidItemId(lastValidItemIndex)
+			} else {
+				itemId = newItem.ItemId.String
+			}
+
+			item.ItemID.SetValid(itemId)
+			item.ItemFuncId.SetValid(itemId)
+			item.ItemStringId.SetValid(itemId)
+			item.Name.SetValid(newItem.Name)
+
+			item.AbilList.SetValid("\"Aret\"")
+			item.Buttonpos.SetValid("0,0")
+			item.ButtonposX.SetValid("0")
+			item.ButtonposY.SetValid("0")
+			item.Art.SetValid("ReplaceableTextures\\CommandButtons\\BTNTomeOfRetraining.blp")
+			item.File.SetValid("\"Objects\\InventoryItems\\TreasureChest\\treasurechest.mdl\"")
+			item.Scale.SetValid("1")
+			item.SelSize.SetValid("0")
+			item.ColorR.SetValid("255")
+			item.ColorG.SetValid("255")
+			item.ColorB.SetValid("255")
+			item.Armor.SetValid("\"Wood\"")
+			item.Uses.SetValid("1")
+			item.Droppable.SetValid("1")
+			item.Sellable.SetValid("1")
+			item.Pawnable.SetValid("1")
+			item.Class.SetValid("\"Purchasable\"")
+			item.CooldownID.SetValid("\"Aret\"")
+			item.Drop.SetValid("0")
+			item.Goldcost.SetValid("300")
+			item.HP.SetValid("75")
+			item.IgnoreCD.SetValid("0")
+			item.PickRandom.SetValid("0")
+			item.Level.SetValid("3")
+			item.OldLevel.SetValid("0")
+			item.Uses.SetValid("1")
+			item.Perishable.SetValid("1")
+			item.Prio.SetValid("0")
+			item.StockMax.SetValid("1")
+			item.StockRegen.SetValid("440")
+			item.Morph.SetValid("0")
+			item.Description.SetValid("\"Unlearns a Hero's skills.\"")
+			item.Hotkey.SetValid("\"O\"")
+			item.Tip.SetValid("\"Purchase T|cffffcc00o|rme of Retraining\"")
+			item.Ubertip.SetValid("\"Unlearns all of the Hero's spells, allowing the Hero to learn different skills.\"")
+
+			itemMap[itemId] = item
+			payload = item
 		}
 	case "loadMdx":
 		if len(m.Payload) > 0 {
