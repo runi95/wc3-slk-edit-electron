@@ -35,11 +35,11 @@ const sortUnitIdInverse = (a, b) => {
 };
 
 const sortItemIdAlphabetical = (a, b) => {
-    return a.ItemId > b.ItemId ? 1 : -1;
+    return a.ItemID > b.ItemID ? 1 : -1;
 };
 
 const sortItemIdInverse = (a, b) => {
-    return b.ItemId > a.ItemId ? 1 : -1;
+    return b.ItemID > a.ItemID ? 1 : -1;
 };
 
 const addTableData = (tableBody, onclickFunc, dataList) => {
@@ -457,7 +457,7 @@ const index = {
         });
     },
     saveFieldToItem: function (input) {
-        index.saveField(input, "itemId-form", "Item-ItemId");
+        index.saveField(input, "itemID-form", "Item-ItemID");
     },
     saveField: function (input, idForm, idInput, savedCallback) {
         if (!document.getElementById(idForm).checkValidity())
@@ -1017,7 +1017,7 @@ const index = {
                 return;
             }
 
-            document.getElementById("Item-ItemId").value = message.payload;
+            document.getElementById("Item-ItemID").value = message.payload;
         });
     },
     generateUnitTooltip: function () {
