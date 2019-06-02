@@ -45,7 +45,7 @@ const sortItemIdInverse = (a, b) => {
 const addTableData = (tableBody, onclickFunc, dataList) => {
     let trList = "";
     dataList.forEach(data => {
-        let str = '<tr id="' + data.Id + '" onclick="index. ' + onclickFunc + '(this)"><th scope="row">' + data.Id + '</th><td>' + data.Name;
+        let str = '<tr id="' + data.Id + '" onclick="index.' + onclickFunc + '(this)"><th scope="row">' + data.Id + '</th><td>' + data.Name;
         if (data.EditorSuffix) {
             str += '<span class="text-secondary"> ' + data.EditorSuffix + '</span>';
         }
@@ -271,7 +271,7 @@ const index = {
         }
 
         const itemTableBody = document.getElementById("itemTableBody");
-        addTableData(itemTableBody, "selectUnit", filteredItemDataList);
+        addTableData(itemTableBody, "selectItem", filteredItemDataList);
     },
     selectUnit: function (unitTableRow) {
         const unitId = unitTableRow.id;
@@ -362,9 +362,12 @@ const index = {
             }
 
             if (message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
+                console.log("Yes, buttonpos is practically empty");
                 if (message.payload.ButtonposX === "" || message.payload.ButtonposX === "_" || message.payload.ButtonposX === "-" || message.payload.ButtonposY === "" || message.payload.ButtonposY === "_" || message.payload.ButtonposY === "-") {
+                    console.log("Yes, x and y are invalid");
                     message.payload.Buttonpos = "0,0";
                 } else {
+                    console.log("No, x and y are valid");
                     message.payload.Buttonpos = message.payload.ButtonposX + "," + message.payload.ButtonposY;
                 }
             }
