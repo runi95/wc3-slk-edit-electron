@@ -227,6 +227,23 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			log.Println(err)
 			payload = err.Error()
 		}
+	case "removeItem":
+		var item string
+		if len(m.Payload) > 0 {
+			if err = json.Unmarshal(m.Payload, &item); err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+
+			delete(itemMap, item)
+			payload = item
+		} else {
+			err = fmt.Errorf("invalid input")
+
+			log.Println(err)
+			payload = err.Error()
+		}
 	case "getDisabledInputs":
 		var isLocked bool
 		if len(m.Payload) > 0 {
