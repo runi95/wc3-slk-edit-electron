@@ -281,12 +281,12 @@ html, body {
     text-align: center;
 }
 
-#unitTableBody > tr:hover {
+.table-body > tr:hover {
     opacity: 0.5;
     cursor: pointer;
 }
 
-#unitTableBody > .active {
+.table-body > .active {
     background-color: #641e64;
 }
 
