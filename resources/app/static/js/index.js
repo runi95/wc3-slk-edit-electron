@@ -6,8 +6,10 @@ let isItemRegexSearch = false;
 let selectedUnitId = null;
 let selectedItemId = null;
 let isUnsaved = false;
-let sortNameState = 0;
+let sortUnitNameState = 0;
 let sortUnitIdState = 0;
+let sortItemNameState = 0;
+let sortItemIdState = 0;
 let iconMode;
 let modelMode;
 const mdxModels = {};
@@ -32,7 +34,15 @@ const sortUnitIdInverse = (a, b) => {
     return b.UnitID > a.UnitID ? 1 : -1;
 };
 
-const addUnitTableData = (tableBody, onclickFunc, dataList) => {
+const sortItemIdAlphabetical = (a, b) => {
+    return a.ItemId > b.ItemId ? 1 : -1;
+};
+
+const sortItemIdInverse = (a, b) => {
+    return b.ItemId > a.ItemId ? 1 : -1;
+};
+
+const addTableData = (tableBody, onclickFunc, dataList) => {
     let trList = "";
     dataList.forEach(data => {
         let str = '<tr id="' + data.Id + '" onclick="index. ' + onclickFunc + '(this)"><th scope="row">' + data.Id + '</th><td>' + data.Name;
@@ -195,7 +205,7 @@ const index = {
 
             unitDataList = message.payload;
             const unitTableBody = document.getElementById("unitTableBody");
-            addUnitTableData(unitTableBody, "selectUnit", message.payload);
+            addTableData(unitTableBody, "selectUnit", message.payload);
         });
     },
     loadItemData: function () {
@@ -209,7 +219,7 @@ const index = {
 
             itemDataList = message.payload;
             const itemTableBody = document.getElementById("itemTableBody");
-            addUnitTableData(itemTableBody, "selectItem", message.payload);
+            addTableData(itemTableBody, "selectItem", message.payload);
         });
     },
     loadSlk: function () {
@@ -249,7 +259,7 @@ const index = {
         }
 
         const unitTableBody = document.getElementById("unitTableBody");
-        addUnitTableData(unitTableBody, "selectUnit", filteredUnitDataList);
+        addTableData(unitTableBody, "selectUnit", filteredUnitDataList);
     },
     itemSearch: function (inputField) {
         let filteredItemDataList;
@@ -261,7 +271,7 @@ const index = {
         }
 
         const itemTableBody = document.getElementById("itemTableBody");
-        addUnitTableData(itemTableBody, "selectUnit", filteredItemDataList);
+        addTableData(itemTableBody, "selectUnit", filteredItemDataList);
     },
     selectUnit: function (unitTableRow) {
         const unitId = unitTableRow.id;
@@ -1155,45 +1165,85 @@ const index = {
             index.itemSearch(document.getElementById("itemSearchInput"));
         });
     },
-    sortName: function () {
-        sortNameState = (sortNameState + 1) % 3;
+    sortUnitName: function () {
+        sortUnitNameState = (sortUnitNameState + 1) % 3;
         sortUnitIdState = 0;
         const sortList = unitDataList.slice(0);
 
-        if (sortNameState === 0) {
-            document.getElementById("name-sort-icon").setAttribute("class", "fas fa-sort");
-            document.getElementById("uid-sort-icon").setAttribute("class", "fas fa-sort");
-        } else if (sortNameState === 1) {
-            document.getElementById("name-sort-icon").setAttribute("class", "fas fa-sort-up");
-            document.getElementById("uid-sort-icon").setAttribute("class", "fas fa-sort");
+        if (sortUnitNameState === 0) {
+            document.getElementById("unit-name-sort-icon").setAttribute("class", "fas fa-sort");
+            document.getElementById("unit-id-sort-icon").setAttribute("class", "fas fa-sort");
+        } else if (sortUnitNameState === 1) {
+            document.getElementById("unit-name-sort-icon").setAttribute("class", "fas fa-sort-up");
+            document.getElementById("unit-id-sort-icon").setAttribute("class", "fas fa-sort");
             sortList.sort(sortNameAlphabetical);
         } else {
-            document.getElementById("name-sort-icon").setAttribute("class", "fas fa-sort-down");
-            document.getElementById("uid-sort-icon").setAttribute("class", "fas fa-sort");
+            document.getElementById("unit-name-sort-icon").setAttribute("class", "fas fa-sort-down");
+            document.getElementById("unit-id-sort-icon").setAttribute("class", "fas fa-sort");
             sortList.sort(sortNameInverse);
         }
 
-        addUnitTableData(document.getElementById("unitTableBody"), "selectUnit", sortList);
+        addTableData(document.getElementById("unitTableBody"), "selectUnit", sortList);
     },
     sortUnitId: function () {
         sortUnitIdState = (sortUnitIdState + 1) % 3;
-        sortNameState = 0;
+        sortUnitNameState = 0;
         const sortList = unitDataList.slice(0);
 
         if (sortUnitIdState === 0) {
-            document.getElementById("uid-sort-icon").setAttribute("class", "fas fa-sort");
-            document.getElementById("name-sort-icon").setAttribute("class", "fas fa-sort");
+            document.getElementById("unit-id-sort-icon").setAttribute("class", "fas fa-sort");
+            document.getElementById("unit-name-sort-icon").setAttribute("class", "fas fa-sort");
         } else if (sortUnitIdState === 1) {
-            document.getElementById("uid-sort-icon").setAttribute("class", "fas fa-sort-up");
-            document.getElementById("name-sort-icon").setAttribute("class", "fas fa-sort");
+            document.getElementById("unit-id-sort-icon").setAttribute("class", "fas fa-sort-up");
+            document.getElementById("unit-name-sort-icon").setAttribute("class", "fas fa-sort");
             sortList.sort(sortUnitIdAlphabetical);
         } else {
-            document.getElementById("uid-sort-icon").setAttribute("class", "fas fa-sort-down");
-            document.getElementById("name-sort-icon").setAttribute("class", "fas fa-sort");
+            document.getElementById("unit-id-sort-icon").setAttribute("class", "fas fa-sort-down");
+            document.getElementById("unit-name-sort-icon").setAttribute("class", "fas fa-sort");
             sortList.sort(sortUnitIdInverse);
         }
 
-        addUnitTableData(document.getElementById("unitTableBody"), "selectUnit", sortList);
+        addTableData(document.getElementById("unitTableBody"), "selectUnit", sortList);
+    },
+    sortItemName: function () {
+        sortItemNameState = (sortItemNameState + 1) % 3;
+        sortItemIdState = 0;
+        const sortList = itemDataList.slice(0);
+
+        if (sortItemNameState === 0) {
+            document.getElementById("item-name-sort-icon").setAttribute("class", "fas fa-sort");
+            document.getElementById("item-id-sort-icon").setAttribute("class", "fas fa-sort");
+        } else if (sortItemNameState === 1) {
+            document.getElementById("item-name-sort-icon").setAttribute("class", "fas fa-sort-up");
+            document.getElementById("item-id-sort-icon").setAttribute("class", "fas fa-sort");
+            sortList.sort(sortNameAlphabetical);
+        } else {
+            document.getElementById("item-name-sort-icon").setAttribute("class", "fas fa-sort-down");
+            document.getElementById("item-id-sort-icon").setAttribute("class", "fas fa-sort");
+            sortList.sort(sortNameInverse);
+        }
+
+        addTableData(document.getElementById("itemTableBody"), "selectItem", sortList);
+    },
+    sortItemId: function () {
+        sortItemIdState = (sortItemIdState + 1) % 3;
+        sortItemNameState = 0;
+        const sortList = itemDataList.slice(0);
+
+        if (sortItemIdState === 0) {
+            document.getElementById("item-id-sort-icon").setAttribute("class", "fas fa-sort");
+            document.getElementById("item-name-sort-icon").setAttribute("class", "fas fa-sort");
+        } else if (sortItemIdState === 1) {
+            document.getElementById("item-id-sort-icon").setAttribute("class", "fas fa-sort-up");
+            document.getElementById("item-name-sort-icon").setAttribute("class", "fas fa-sort");
+            sortList.sort(sortItemIdAlphabetical);
+        } else {
+            document.getElementById("item-id-sort-icon").setAttribute("class", "fas fa-sort-down");
+            document.getElementById("item-name-sort-icon").setAttribute("class", "fas fa-sort");
+            sortList.sort(sortItemIdInverse);
+        }
+
+        addTableData(document.getElementById("itemTableBody"), "selectItem", sortList);
     },
     saveOptions: function () {
         const InDir = document.getElementById("configInput").value;
