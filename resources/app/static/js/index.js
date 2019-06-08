@@ -920,9 +920,13 @@ const index = {
                         }
                     }
                 }).bind("typeahead:select", (obj, datum) => {
-                loadMdxModel(unitModelNameToPath[datum.toLowerCase()]);
+                    if (datum) {
+                        loadMdxModel(unitModelNameToPath[datum.toLowerCase()]);
+                    }
             }).bind("typeahead:cursorchange", (obj, datum) => {
-                loadMdxModel(unitModelNameToPath[datum.toLowerCase()]);
+                if (datum) {
+                    loadMdxModel(unitModelNameToPath[datum.toLowerCase()]);
+                }
             });
 
             index.startMainWindow()
