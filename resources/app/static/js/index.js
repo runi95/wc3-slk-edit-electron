@@ -869,9 +869,13 @@ const index = {
                         }
                     }
                 }).bind("typeahead:selected", (obj, datum) => {
-                index.loadModalIcon(unitIconNameToPath[datum.toLowerCase()]);
+                    if (datum) {
+                        index.loadModalIcon(unitIconNameToPath[datum.toLowerCase()]);
+                    }
             }).bind("typeahead:cursorchange", (obj, datum) => {
-                index.loadModalIcon(unitIconNameToPath[datum.toLowerCase()]);
+                if (datum) {
+                    index.loadModalIcon(unitIconNameToPath[datum.toLowerCase()]);
+                }
             });
 
             index.loadMdx();
