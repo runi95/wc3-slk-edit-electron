@@ -225,7 +225,7 @@ const index = {
     loadSlk: function () {
         const message = {name: "loadSlk", payload: null};
         astilectron.sendMessage(message, function (message) {
-            // Check for errors
+            // Check for errors|
             if (message.name === "error") {
                 asticode.notifier.error(message.payload);
                 return;
@@ -287,7 +287,7 @@ const index = {
             }
 
             $("#unitTableBody>tr").removeClass("active");
-            unitTableRow.setAttribute("class", "active");
+            document.getElementById(unitId).setAttribute("class", "active");
 
             if (message.payload.Ubertip) {
                 const rawValue = message.payload.Ubertip;
@@ -355,7 +355,7 @@ const index = {
             }
 
             $("#itemTableBody>tr").removeClass("active");
-            itemTableRow.setAttribute("class", "active");
+            document.getElementById(itemId).setAttribute("class", "active");
 
             if (message.payload.Ubertip) {
                 const rawValue = message.payload.Ubertip;
