@@ -5,6 +5,12 @@ html, body {
     width: 100%;
 }
 
+.multiple-datasets .model-group {
+    margin: 0 20px 5px 20px;
+    padding: 3px 0;
+    border-bottom: 1px solid #ccc;
+}
+
 .nav-tabs {
     border-bottom: 1px solid #26272b;
 }

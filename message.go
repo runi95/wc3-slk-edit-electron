@@ -137,23 +137,28 @@ type FileInfo struct {
 	StatusIconClass string
 }
 
-type UnitModel struct {
+type Model struct {
 	Name string
 	Path string
 }
 
-type UnitModels []UnitModel
+type Models []Model
 
-func (unitModels UnitModels) Len() int {
-	return len(unitModels)
+type GroupedModels struct {
+	Units     Models
+	Abilities Models
 }
 
-func (unitModels UnitModels) Less(i, j int) bool {
-	return unitModels[i].Name < unitModels[j].Name
+func (models Models) Len() int {
+	return len(models)
 }
 
-func (unitModels UnitModels) Swap(i, j int) {
-	unitModels[i], unitModels[j] = unitModels[j], unitModels[i]
+func (models Models) Less(i, j int) bool {
+	return models[i].Name < models[j].Name
+}
+
+func (models Models) Swap(i, j int) {
+	models[i], models[j] = models[j], models[i]
 }
 
 func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload interface{}, err error) {
@@ -404,12 +409,12 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 		payload = itemListData
 	case "loadIcons":
-		iconModels := make(UnitModels, 0, len(images))
+		iconModels := make(Models, 0, len(images))
 		for k := range images {
 			path := strings.Replace(strings.Replace(k, "Command", "ReplaceableTextures\\CommandButtons", 1), "Passive", "ReplaceableTextures\\PassiveButtons", 1)
 			name := strings.Replace(strings.Replace(strings.Replace(k, "Command\\BTN", "", 1), "Passive\\PASBTN", "", 1), ".blp", "", 1)
 
-			iconModels = append(iconModels, UnitModel{name, path})
+			iconModels = append(iconModels, Model{name, path})
 		}
 
 		sort.Sort(iconModels)
@@ -1239,7 +1244,7 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				}
 			}
 
-			var unitModelList UnitModels
+			var unitModelList Models
 			unitWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "units"
 			err = filepath.Walk(unitWalkPath, func(currentPath string, info os.FileInfo, err error) error {
 				if err != nil {
@@ -1250,13 +1255,14 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 					index := strings.LastIndex(info.Name(), ".")
 					if index > -1 {
 						if info.Name()[index:] == ".mdx" {
-							unitModelList = append(unitModelList, UnitModel{info.Name()[:index], "units" + currentPath[len(unitWalkPath):]})
+							unitModelList = append(unitModelList, Model{info.Name()[:index], "units" + currentPath[len(unitWalkPath):]})
 						}
 					}
 				}
 				return err
 			})
 
+			var abilityModelList Models
 			abilityWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "abilities"
 			err = filepath.Walk(abilityWalkPath, func(currentPath string, info os.FileInfo, err error) error {
 				if err != nil {
@@ -1267,8 +1273,7 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 					index := strings.LastIndex(info.Name(), ".")
 					if index > -1 {
 						if info.Name()[index:] == ".mdx" {
-							// log.Printf("info.Name(%v), index(%v), currentPath(%v), abilityWalkPath(%v), len(%v)\n", info.Name(), index, currentPath, abilityWalkPath, len(abilityWalkPath))
-							unitModelList = append(unitModelList, UnitModel{info.Name()[:index], "abilities" + currentPath[len(abilityWalkPath):]})
+							abilityModelList = append(abilityModelList, Model{info.Name()[:index], "abilities" + currentPath[len(abilityWalkPath):]})
 						}
 					}
 				}
@@ -1282,8 +1287,13 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			}
 
 			sort.Sort(unitModelList)
+			sort.Sort(abilityModelList)
 
-			payload = unitModelList
+			var groupedModelList = new(GroupedModels)
+			groupedModelList.Units = unitModelList
+			groupedModelList.Abilities = abilityModelList
+
+			payload = groupedModelList
 		}
 	case "setRegexSearch":
 		var isRegexSearch bool

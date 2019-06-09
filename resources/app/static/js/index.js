@@ -897,16 +897,45 @@ const index = {
                 return;
             }
 
-            message.payload.forEach(unitModel => {
+            message.payload.Units.forEach(unitModel => {
                 unitModelNameToPath[unitModel.Name.toLowerCase()] = unitModel.Path;
                 unitModelPathToName[unitModel.Path.toLowerCase()] = unitModel.Name.toLowerCase();
             });
 
-            const models = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.whitespace,
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                local: message.payload.map(unitModel => unitModel.Name)
+            message.payload.Abilities.forEach(unitModel => {
+                unitModelNameToPath[unitModel.Name.toLowerCase()] = unitModel.Path;
+                unitModelPathToName[unitModel.Path.toLowerCase()] = unitModel.Name.toLowerCase();
             });
+
+            const unitModels = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace("Name"),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                identify: function (obj) { return obj.Name; },
+                local: message.payload.Units
+            });
+
+            const abilityModels = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace("Name"),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                identify: function (obj) { return obj.Name; },
+                local: message.payload.Abilities
+            });
+
+            const unitsWithDefaults = (q, sync) => {
+                if (q === "") {
+                    sync(unitModels.all());
+                } else {
+                    unitModels.search(q, sync);
+                }
+            };
+
+            const abilitiesWithDefaults = (q, sync) => {
+                if (q === "") {
+                    sync(abilityModels.all());
+                } else {
+                    abilityModels.search(q, sync);
+                }
+            };
 
             $("#model-selector").typeahead({
                     hint: true,
@@ -914,22 +943,29 @@ const index = {
                     minLength: 0
                 },
                 {
-                    name: "models",
-                    limit: Object.keys(message.payload).length,
-                    source: (q, sync) => {
-                        if (q === "") {
-                            sync(models.all());
-                        } else {
-                            models.search(q, sync);
-                        }
+                    name: "unit-models",
+                    display: "Name",
+                    limit: message.payload.Units.length,
+                    source: unitsWithDefaults,
+                    templates: {
+                        header: '<h3 class="model-group">Units</h3>'
+                    }
+                },
+                {
+                    name: "ability-models",
+                    display: "Name",
+                    limit: message.payload.Abilities.length,
+                    source: abilitiesWithDefaults,
+                    templates: {
+                        header: '<h3 class="model-group">Abilities</h3>'
                     }
                 }).bind("typeahead:select", (obj, datum) => {
                     if (datum) {
-                        loadMdxModel(unitModelNameToPath[datum.toLowerCase()]);
+                        loadMdxModel(datum.Path);
                     }
             }).bind("typeahead:cursorchange", (obj, datum) => {
                 if (datum) {
-                    loadMdxModel(unitModelNameToPath[datum.toLowerCase()]);
+                    loadMdxModel(datum.Path);
                 }
             });
 
