@@ -148,6 +148,7 @@ type GroupedModels struct {
 	Units     Models
 	Abilities Models
 	Missiles  Models
+	Items     Models
 }
 
 func (models Models) Len() int {
@@ -1340,14 +1341,40 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				return
 			}
 
+			var itemModelList Models
+			itemWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "objects" + string(filepath.Separator) + "inventoryitems"
+			err = filepath.Walk(itemWalkPath, func(currentPath string, info os.FileInfo, err error) error {
+				if err != nil {
+					return err
+				}
+
+				if !info.IsDir() {
+					index := strings.LastIndex(info.Name(), ".")
+					if index > -1 {
+						if info.Name()[index:] == ".mdx" {
+							itemModelList = append(itemModelList, Model{info.Name()[:index], "objects" + string(filepath.Separator) + "inventoryitems" + currentPath[len(itemWalkPath):]})
+						}
+					}
+				}
+				return err
+			})
+
+			if err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+
 			sort.Sort(unitModelList)
 			sort.Sort(abilityModelList)
 			sort.Sort(missileModelList)
+			sort.Sort(itemModelList)
 
 			var groupedModelList = new(GroupedModels)
 			groupedModelList.Units = unitModelList
 			groupedModelList.Abilities = abilityModelList
 			groupedModelList.Missiles = missileModelList
+			groupedModelList.Items = itemModelList
 
 			payload = groupedModelList
 		}

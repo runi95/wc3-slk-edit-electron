@@ -13,8 +13,8 @@ let sortItemIdState = 0;
 let iconMode;
 let modelMode;
 const mdxModels = {};
-const unitModelNameToPath = {};
-const unitModelPathToName = {};
+const modelNameToPath = {};
+const modelPathToName = {};
 const unitIconNameToPath = {};
 const unitIconPathToName = {};
 
@@ -107,11 +107,11 @@ const index = {
         const currentModelPath = document.getElementById(modelInputId).value;
         const lowercaseModelPath = currentModelPath.toLowerCase().replace(new RegExp("\.mdl$"), ".mdx");
         const modelPathWithExtension = lowercaseModelPath.endsWith("mdx") ? lowercaseModelPath : lowercaseModelPath + ".mdx";
-        if (!unitModelPathToName.hasOwnProperty(modelPathWithExtension)) {
+        if (!modelPathToName.hasOwnProperty(modelPathWithExtension)) {
             return;
         }
 
-        $("#model-selector").typeahead("val", unitModelPathToName[modelPathWithExtension]);
+        $("#model-selector").typeahead("val", modelPathToName[modelPathWithExtension]);
         loadMdxModel(modelPathWithExtension);
     },
     loadIconModal: function (mode, artId) {
@@ -884,8 +884,8 @@ const index = {
     changeMdxModel: function (input) {
         const inputValue = input.value.toLowerCase();
 
-        if (unitModelNameToPath.hasOwnProperty(inputValue)) {
-            loadMdxModel(unitModelNameToPath[inputValue]);
+        if (modelNameToPath.hasOwnProperty(inputValue)) {
+            loadMdxModel(modelNameToPath[inputValue]);
         }
     },
     loadMdx: function () {
@@ -898,13 +898,23 @@ const index = {
             }
 
             message.payload.Units.forEach(unitModel => {
-                unitModelNameToPath[unitModel.Name.toLowerCase()] = unitModel.Path;
-                unitModelPathToName[unitModel.Path.toLowerCase()] = unitModel.Name.toLowerCase();
+                modelNameToPath[unitModel.Name.toLowerCase()] = unitModel.Path;
+                modelPathToName[unitModel.Path.toLowerCase()] = unitModel.Name.toLowerCase();
             });
 
             message.payload.Abilities.forEach(unitModel => {
-                unitModelNameToPath[unitModel.Name.toLowerCase()] = unitModel.Path;
-                unitModelPathToName[unitModel.Path.toLowerCase()] = unitModel.Name.toLowerCase();
+                modelNameToPath[unitModel.Name.toLowerCase()] = unitModel.Path;
+                modelPathToName[unitModel.Path.toLowerCase()] = unitModel.Name.toLowerCase();
+            });
+
+            message.payload.Missiles.forEach(missileModel => {
+                modelNameToPath[missileModel.Name.toLowerCase()] = missileModel.Path;
+                modelPathToName[missileModel.Path.toLowerCase()] = missileModel.Name.toLowerCase();
+            });
+
+            message.payload.Items.forEach(itemModel => {
+                modelNameToPath[itemModel.Name.toLowerCase()] = itemModel.Path;
+                modelPathToName[itemModel.Path.toLowerCase()] = itemModel.Name.toLowerCase();
             });
 
             const unitModels = new Bloodhound({
@@ -928,6 +938,13 @@ const index = {
                 local: message.payload.Missiles
             });
 
+            const itemModels = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace("Name"),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                identify: function (obj) { return obj.Name; },
+                local: message.payload.Items
+            });
+
             const unitsWithDefaults = (q, sync) => {
                 if (q === "") {
                     sync(unitModels.all());
@@ -949,6 +966,14 @@ const index = {
                     sync(missileModels.all());
                 } else {
                     missileModels.search(q, sync);
+                }
+            };
+
+            const itemsWithDefaults = (q, sync) => {
+                if (q === "") {
+                    sync(itemModels.all());
+                } else {
+                    itemModels.search(q, sync);
                 }
             };
 
@@ -983,6 +1008,15 @@ const index = {
                     templates: {
                         header: '<h3 class="model-group">Missiles</h3>'
                     }
+                },
+                {
+                    name: "item-models",
+                    display: "Name",
+                    limit: message.payload.Items.length,
+                    source: itemsWithDefaults,
+                    templates: {
+                        header: '<h3 class="model-group">Items</h3>'
+                    }
                 }).bind("typeahead:select", (obj, datum) => {
                     if (datum) {
                         loadMdxModel(datum.Path);
@@ -998,15 +1032,15 @@ const index = {
     },
     selectMdxModel: function () {
         const inputValue = document.getElementById("model-selector").value.toLowerCase();
-        if (unitModelNameToPath.hasOwnProperty(inputValue)) {
+        if (modelNameToPath.hasOwnProperty(inputValue)) {
             let modelFileInput;
             if (modelMode === "unit") {
                 modelFileInput = document.getElementById("Unit-File");
-                modelFileInput.value = unitModelNameToPath[inputValue];
+                modelFileInput.value = modelNameToPath[inputValue];
                 index.saveFieldToUnit(modelFileInput);
             } else if (modelMode === "item") {
                 modelFileInput = document.getElementById("Item-File");
-                modelFileInput.value = unitModelNameToPath[inputValue];
+                modelFileInput.value = modelNameToPath[inputValue];
                 index.saveFieldToItem(modelFileInput);
             }
 
