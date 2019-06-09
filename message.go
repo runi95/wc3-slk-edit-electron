@@ -1240,9 +1240,8 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			}
 
 			var unitModelList UnitModels
-			walkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "units"
-
-			err = filepath.Walk(walkPath, func(currentPath string, info os.FileInfo, err error) error {
+			unitWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "units"
+			err = filepath.Walk(unitWalkPath, func(currentPath string, info os.FileInfo, err error) error {
 				if err != nil {
 					return err
 				}
@@ -1251,7 +1250,25 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 					index := strings.LastIndex(info.Name(), ".")
 					if index > -1 {
 						if info.Name()[index:] == ".mdx" {
-							unitModelList = append(unitModelList, UnitModel{info.Name()[:index], "units" + currentPath[len(walkPath):]})
+							unitModelList = append(unitModelList, UnitModel{info.Name()[:index], "units" + currentPath[len(unitWalkPath):]})
+						}
+					}
+				}
+				return err
+			})
+
+			abilityWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "abilities"
+			err = filepath.Walk(abilityWalkPath, func(currentPath string, info os.FileInfo, err error) error {
+				if err != nil {
+					return err
+				}
+
+				if !info.IsDir() {
+					index := strings.LastIndex(info.Name(), ".")
+					if index > -1 {
+						if info.Name()[index:] == ".mdx" {
+							// log.Printf("info.Name(%v), index(%v), currentPath(%v), abilityWalkPath(%v), len(%v)\n", info.Name(), index, currentPath, abilityWalkPath, len(abilityWalkPath))
+							unitModelList = append(unitModelList, UnitModel{info.Name()[:index], "abilities" + currentPath[len(abilityWalkPath):]})
 						}
 					}
 				}
