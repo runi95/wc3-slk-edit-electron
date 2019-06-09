@@ -921,6 +921,13 @@ const index = {
                 local: message.payload.Abilities
             });
 
+            const missileModels = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace("Name"),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                identify: function (obj) { return obj.Name; },
+                local: message.payload.Missiles
+            });
+
             const unitsWithDefaults = (q, sync) => {
                 if (q === "") {
                     sync(unitModels.all());
@@ -934,6 +941,14 @@ const index = {
                     sync(abilityModels.all());
                 } else {
                     abilityModels.search(q, sync);
+                }
+            };
+
+            const missilesWithDefaults = (q, sync) => {
+                if (q === "") {
+                    sync(missileModels.all());
+                } else {
+                    missileModels.search(q, sync);
                 }
             };
 
@@ -958,6 +973,15 @@ const index = {
                     source: abilitiesWithDefaults,
                     templates: {
                         header: '<h3 class="model-group">Abilities</h3>'
+                    }
+                },
+                {
+                    name: "missile-models",
+                    display: "Name",
+                    limit: message.payload.Missiles.length,
+                    source: missilesWithDefaults,
+                    templates: {
+                        header: '<h3 class="model-group">Missiles</h3>'
                     }
                 }).bind("typeahead:select", (obj, datum) => {
                     if (datum) {

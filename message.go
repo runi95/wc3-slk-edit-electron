@@ -147,6 +147,7 @@ type Models []Model
 type GroupedModels struct {
 	Units     Models
 	Abilities Models
+	Missiles  Models
 }
 
 func (models Models) Len() int {
@@ -1262,8 +1263,14 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				return err
 			})
 
+			if err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+
 			var abilityModelList Models
-			abilityWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "abilities"
+			abilityWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "abilities" + string(filepath.Separator) + "spells"
 			err = filepath.Walk(abilityWalkPath, func(currentPath string, info os.FileInfo, err error) error {
 				if err != nil {
 					return err
@@ -1273,7 +1280,31 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 					index := strings.LastIndex(info.Name(), ".")
 					if index > -1 {
 						if info.Name()[index:] == ".mdx" {
-							abilityModelList = append(abilityModelList, Model{info.Name()[:index], "abilities" + currentPath[len(abilityWalkPath):]})
+							abilityModelList = append(abilityModelList, Model{info.Name()[:index], "abilities" + string(filepath.Separator) + "spells" + currentPath[len(abilityWalkPath):]})
+						}
+					}
+				}
+				return err
+			})
+
+			if err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+
+			var missileModelList Models
+			missileWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "abilities" + string(filepath.Separator) + "weapons"
+			err = filepath.Walk(missileWalkPath, func(currentPath string, info os.FileInfo, err error) error {
+				if err != nil {
+					return err
+				}
+
+				if !info.IsDir() {
+					index := strings.LastIndex(info.Name(), ".")
+					if index > -1 {
+						if info.Name()[index:] == ".mdx" {
+							missileModelList = append(missileModelList, Model{info.Name()[:index], "abilities" + string(filepath.Separator) + "weapons" + currentPath[len(missileWalkPath):]})
 						}
 					}
 				}
@@ -1288,10 +1319,12 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 			sort.Sort(unitModelList)
 			sort.Sort(abilityModelList)
+			sort.Sort(missileModelList)
 
 			var groupedModelList = new(GroupedModels)
 			groupedModelList.Units = unitModelList
 			groupedModelList.Abilities = abilityModelList
+			groupedModelList.Missiles = missileModelList
 
 			payload = groupedModelList
 		}
