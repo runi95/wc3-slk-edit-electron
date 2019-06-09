@@ -20,7 +20,6 @@ import (
 	"reflect"
 	"runtime"
 	"sort"
-	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -31,7 +30,7 @@ const (
 	VENDOR_NAME              = "wc3-slk-edit"
 	CONFIG_FILENAME          = "config.json"
 	DISABLED_INPUTS_FILENAME = "disabled-inputs.json"
-	MODEL_DOWNLOAD_URL       = "http://www.maulbot.com/media/slk-editor-required-files.zip"
+	MODEL_DOWNLOAD_URL       = "https://codeload.github.com/runi95/wc3-slk-edit-electron-resources/zip/master"
 )
 
 var (
@@ -1247,134 +1246,167 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			}
 
 			var unitModelList Models
-			unitWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "units"
-			err = filepath.Walk(unitWalkPath, func(currentPath string, info os.FileInfo, err error) error {
-				if err != nil {
-					return err
-				}
+			unitWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "wc3-slk-edit-electron-resources-master" + string(filepath.Separator) + "units"
+			var flag = false
+			if flag, err = exists(unitWalkPath); err != nil || flag {
+				err = filepath.Walk(unitWalkPath, func(currentPath string, info os.FileInfo, err error) error {
+					if err != nil {
+						return err
+					}
 
-				if !info.IsDir() {
-					index := strings.LastIndex(info.Name(), ".")
-					if index > -1 {
-						if info.Name()[index:] == ".mdx" {
-							unitModelList = append(unitModelList, Model{info.Name()[:index], "units" + currentPath[len(unitWalkPath):]})
+					if !info.IsDir() {
+						index := strings.LastIndex(info.Name(), ".")
+						if index > -1 {
+							if info.Name()[index:] == ".mdx" {
+								unitModelList = append(unitModelList, Model{info.Name()[:index], "units" + currentPath[len(unitWalkPath):]})
+							}
 						}
 					}
-				}
-				return err
-			})
+					return err
+				})
 
-			if err != nil {
-				log.Println(err)
-				payload = err.Error()
-				return
+				if err != nil {
+					log.Println(err)
+					payload = err.Error()
+					return
+				}
 			}
 
-			buildingWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "buildings"
-			err = filepath.Walk(buildingWalkPath, func(currentPath string, info os.FileInfo, err error) error {
-				if err != nil {
-					return err
-				}
+			buildingWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "wc3-slk-edit-electron-resources-master" + string(filepath.Separator) + "buildings"
+			flag = false
+			if flag, err = exists(buildingWalkPath); err != nil || flag {
+				err = filepath.Walk(buildingWalkPath, func(currentPath string, info os.FileInfo, err error) error {
+					if err != nil {
+						return err
+					}
 
-				if !info.IsDir() {
-					index := strings.LastIndex(info.Name(), ".")
-					if index > -1 {
-						if info.Name()[index:] == ".mdx" {
-							unitModelList = append(unitModelList, Model{info.Name()[:index], "buildings" + currentPath[len(buildingWalkPath):]})
+					if !info.IsDir() {
+						index := strings.LastIndex(info.Name(), ".")
+						if index > -1 {
+							if info.Name()[index:] == ".mdx" {
+								unitModelList = append(unitModelList, Model{info.Name()[:index], "buildings" + currentPath[len(buildingWalkPath):]})
+							}
 						}
 					}
-				}
-				return err
-			})
+					return err
+				})
 
-			if err != nil {
-				log.Println(err)
-				payload = err.Error()
-				return
+				if err != nil {
+					log.Println(err)
+					payload = err.Error()
+					return
+				}
 			}
 
 			var abilityModelList Models
-			abilityWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "abilities" + string(filepath.Separator) + "spells"
-			err = filepath.Walk(abilityWalkPath, func(currentPath string, info os.FileInfo, err error) error {
-				if err != nil {
-					return err
-				}
+			abilityWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "wc3-slk-edit-electron-resources-master" + string(filepath.Separator) + "abilities" + string(filepath.Separator) + "spells"
+			flag = false
+			if flag, err = exists(abilityWalkPath); err != nil || flag {
+				err = filepath.Walk(abilityWalkPath, func(currentPath string, info os.FileInfo, err error) error {
+					if err != nil {
+						return err
+					}
 
-				if !info.IsDir() {
-					index := strings.LastIndex(info.Name(), ".")
-					if index > -1 {
-						if info.Name()[index:] == ".mdx" {
-							abilityModelList = append(abilityModelList, Model{info.Name()[:index], "abilities" + string(filepath.Separator) + "spells" + currentPath[len(abilityWalkPath):]})
+					if !info.IsDir() {
+						index := strings.LastIndex(info.Name(), ".")
+						if index > -1 {
+							if info.Name()[index:] == ".mdx" {
+								abilityModelList = append(abilityModelList, Model{info.Name()[:index], "abilities" + string(filepath.Separator) + "spells" + currentPath[len(abilityWalkPath):]})
+							}
 						}
 					}
-				}
-				return err
-			})
+					return err
+				})
 
-			if err != nil {
-				log.Println(err)
-				payload = err.Error()
-				return
+				if err != nil {
+					log.Println(err)
+					payload = err.Error()
+					return
+				}
 			}
 
 			var missileModelList Models
-			missileWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "abilities" + string(filepath.Separator) + "weapons"
-			err = filepath.Walk(missileWalkPath, func(currentPath string, info os.FileInfo, err error) error {
-				if err != nil {
-					return err
-				}
+			missileWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "wc3-slk-edit-electron-resources-master" + string(filepath.Separator) + "abilities" + string(filepath.Separator) + "weapons"
+			flag = false
+			if flag, err = exists(missileWalkPath); err != nil || flag {
+				err = filepath.Walk(missileWalkPath, func(currentPath string, info os.FileInfo, err error) error {
+					if err != nil {
+						return err
+					}
 
-				if !info.IsDir() {
-					index := strings.LastIndex(info.Name(), ".")
-					if index > -1 {
-						if info.Name()[index:] == ".mdx" {
-							missileModelList = append(missileModelList, Model{info.Name()[:index], "abilities" + string(filepath.Separator) + "weapons" + currentPath[len(missileWalkPath):]})
+					if !info.IsDir() {
+						index := strings.LastIndex(info.Name(), ".")
+						if index > -1 {
+							if info.Name()[index:] == ".mdx" {
+								missileModelList = append(missileModelList, Model{info.Name()[:index], "abilities" + string(filepath.Separator) + "weapons" + currentPath[len(missileWalkPath):]})
+							}
 						}
 					}
-				}
-				return err
-			})
+					return err
+				})
 
-			if err != nil {
-				log.Println(err)
-				payload = err.Error()
-				return
+				if err != nil {
+					log.Println(err)
+					payload = err.Error()
+					return
+				}
 			}
 
 			var itemModelList Models
-			itemWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "objects" + string(filepath.Separator) + "inventoryitems"
-			err = filepath.Walk(itemWalkPath, func(currentPath string, info os.FileInfo, err error) error {
-				if err != nil {
-					return err
-				}
+			itemWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "wc3-slk-edit-electron-resources-master" + string(filepath.Separator) + "objects" + string(filepath.Separator) + "inventoryitems"
+			flag = false
+			if flag, err = exists(itemWalkPath); err != nil || flag {
+				err = filepath.Walk(itemWalkPath, func(currentPath string, info os.FileInfo, err error) error {
+					if err != nil {
+						return err
+					}
 
-				if !info.IsDir() {
-					index := strings.LastIndex(info.Name(), ".")
-					if index > -1 {
-						if info.Name()[index:] == ".mdx" {
-							itemModelList = append(itemModelList, Model{info.Name()[:index], "objects" + string(filepath.Separator) + "inventoryitems" + currentPath[len(itemWalkPath):]})
+					if !info.IsDir() {
+						index := strings.LastIndex(info.Name(), ".")
+						if index > -1 {
+							if info.Name()[index:] == ".mdx" {
+								itemModelList = append(itemModelList, Model{info.Name()[:index], "objects" + string(filepath.Separator) + "inventoryitems" + currentPath[len(itemWalkPath):]})
+							}
 						}
 					}
-				}
-				return err
-			})
+					return err
+				})
 
-			if err != nil {
-				log.Println(err)
-				payload = err.Error()
-				return
+				if err != nil {
+					log.Println(err)
+					payload = err.Error()
+					return
+				}
 			}
 
-			sort.Sort(unitModelList)
-			sort.Sort(abilityModelList)
-			sort.Sort(missileModelList)
-			sort.Sort(itemModelList)
-
 			var groupedModelList = new(GroupedModels)
-			groupedModelList.Units = unitModelList
-			groupedModelList.Abilities = abilityModelList
-			groupedModelList.Missiles = missileModelList
-			groupedModelList.Items = itemModelList
+			if unitModelList != nil {
+				sort.Sort(unitModelList)
+				groupedModelList.Units = unitModelList
+			} else {
+				groupedModelList.Units = []Model{}
+			}
+
+			if abilityModelList != nil {
+				sort.Sort(abilityModelList)
+				groupedModelList.Abilities = abilityModelList
+			} else {
+				groupedModelList.Abilities = []Model{}
+			}
+
+			if missileModelList != nil {
+				sort.Sort(missileModelList)
+				groupedModelList.Missiles = missileModelList
+			} else {
+				groupedModelList.Missiles = []Model{}
+			}
+
+			if itemModelList != nil {
+				sort.Sort(itemModelList)
+				groupedModelList.Items = itemModelList
+			} else {
+				groupedModelList.Items = []Model{}
+			}
 
 			payload = groupedModelList
 		}
@@ -2288,23 +2320,22 @@ func startDownload(w *astilectron.Window, path string) error {
 	log.Printf("Download started for %s...\n", file)
 
 	var err error
+	var headResp *http.Response
+	var size int64
 
 	out, err := os.Create(file)
 	if err != nil {
 		return err
 	}
 
-	headResp, err := http.Head(url)
+	headResp, err = http.Head(url)
 	if err != nil {
 		return err
 	}
 
 	defer headResp.Body.Close()
 
-	size, err := strconv.Atoi(headResp.Header.Get("Content-Length"))
-	if err != nil {
-		return err
-	}
+	size = headResp.ContentLength
 
 	resp, err := http.Get(url)
 	if err != nil {
@@ -2313,11 +2344,16 @@ func startDownload(w *astilectron.Window, path string) error {
 
 	defer resp.Body.Close()
 
+	// If the HEAD request didn't receive any Content-Length header we'll have to grab it from the actual request
+	if size == -1 {
+		size = resp.ContentLength
+	}
+
 	w.SendMessage(EventMessage{"downloadTextUpdate", "Downloading..."})
 
 	done := make(chan int64)
 
-	go SendDownloadProgressMessage(w, done, file, int64(size))
+	go SendDownloadProgressMessage(w, done, file, size)
 
 	n, err := io.Copy(out, resp.Body)
 	if err != nil {

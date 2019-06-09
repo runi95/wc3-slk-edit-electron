@@ -19,7 +19,7 @@ function pathSolver(path) {
     if (extension === ".slk") {
         return [lowerCaseOnly, extension, false];
     } else {
-        const mdxFetch = index.loadMdxModel("resources/" + lowerCaseOnly);
+        const mdxFetch = index.loadMdxModel("resources/wc3-slk-edit-electron-resources-master/" + lowerCaseOnly);
         return [mdxFetch.src, extension, mdxFetch.fetch];
     }
 }
