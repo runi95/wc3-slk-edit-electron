@@ -53,20 +53,20 @@
                     <label>Filters:</label>
                     <div style="width: 100%; padding-right: 1.5rem; padding-left: 1.5rem; display: flex; flex-flow: row nowrap; justify-content: space-between;">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="unit-filter">
+                            <input type="checkbox" class="form-check-input" id="unit-filter" onclick="isUnitModelFilterChecked = this.checked" checked>
                             <label class="form-check-label" for="unit-filter">Units</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="item-filter">
+                            <input type="checkbox" class="form-check-input" id="item-filter" onclick="isItemModelFilterChecked = this.checked" checked>
                             <label class="form-check-label" for="item-filter">Items</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="ability-filter">
+                            <input type="checkbox" class="form-check-input" id="ability-filter" onclick="isAbilityModelFilterChecked = this.checked" checked>
                             <label class="form-check-label" for="ability-filter">Abilities</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="buff-filter">
-                            <label class="form-check-label" for="buff-filter">Buffs</label>
+                            <input type="checkbox" class="form-check-input" id="missile-filter" onclick="isMissileModelFilterChecked = this.checked" checked>
+                            <label class="form-check-label" for="missile-filter">Missiles</label>
                         </div>
                     </div>
                 </div>

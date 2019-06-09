@@ -3,6 +3,10 @@ let itemDataList = [];
 let isLocked = false;
 let isRegexSearch = false;
 let isItemRegexSearch = false;
+let isUnitModelFilterChecked = true;
+let isItemModelFilterChecked = true;
+let isAbilityModelFilterChecked = true;
+let isMissileModelFilterChecked = true;
 let selectedUnitId = null;
 let selectedItemId = null;
 let isUnsaved = false;
@@ -946,7 +950,9 @@ const index = {
             });
 
             const unitsWithDefaults = (q, sync) => {
-                if (q === "") {
+                if (!isUnitModelFilterChecked) {
+                    sync([]);
+                } else if (q === "") {
                     sync(unitModels.all());
                 } else {
                     unitModels.search(q, sync);
@@ -954,7 +960,9 @@ const index = {
             };
 
             const abilitiesWithDefaults = (q, sync) => {
-                if (q === "") {
+                if (!isAbilityModelFilterChecked) {
+                    sync([]);
+                } else if (q === "") {
                     sync(abilityModels.all());
                 } else {
                     abilityModels.search(q, sync);
@@ -962,7 +970,9 @@ const index = {
             };
 
             const missilesWithDefaults = (q, sync) => {
-                if (q === "") {
+                if (!isMissileModelFilterChecked) {
+                    sync([]);
+                } else if (q === "") {
                     sync(missileModels.all());
                 } else {
                     missileModels.search(q, sync);
@@ -970,7 +980,9 @@ const index = {
             };
 
             const itemsWithDefaults = (q, sync) => {
-                if (q === "") {
+                if (!isItemModelFilterChecked) {
+                    sync([]);
+                } else if (q === "") {
                     sync(itemModels.all());
                 } else {
                     itemModels.search(q, sync);
