@@ -1269,6 +1269,29 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 				return
 			}
 
+			buildingWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "buildings"
+			err = filepath.Walk(buildingWalkPath, func(currentPath string, info os.FileInfo, err error) error {
+				if err != nil {
+					return err
+				}
+
+				if !info.IsDir() {
+					index := strings.LastIndex(info.Name(), ".")
+					if index > -1 {
+						if info.Name()[index:] == ".mdx" {
+							unitModelList = append(unitModelList, Model{info.Name()[:index], "buildings" + currentPath[len(buildingWalkPath):]})
+						}
+					}
+				}
+				return err
+			})
+
+			if err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+
 			var abilityModelList Models
 			abilityWalkPath := path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "abilities" + string(filepath.Separator) + "spells"
 			err = filepath.Walk(abilityWalkPath, func(currentPath string, info os.FileInfo, err error) error {
