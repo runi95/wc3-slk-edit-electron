@@ -99,6 +99,15 @@ var (
 	}
 )
 
+/**
+*    PUBLIC STRUCTURES
+ */
+type ListData struct {
+	Id           string
+	Name         string
+	EditorSuffix null.String
+}
+
 type FieldToUnit struct {
 	Id    string
 	Field string
@@ -149,6 +158,17 @@ type GroupedModels struct {
 	Abilities Models
 	Missiles  Models
 	Items     Models
+}
+
+/**
+*    PRIVATE STRUCTURES
+ */
+type config struct {
+	InDir                   *string
+	OutDir                  *string
+	IsLocked                bool
+	IsDoneDownloadingModels bool
+	IsRegexSearch           bool
 }
 
 func (models Models) Len() int {

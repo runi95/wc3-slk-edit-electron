@@ -28,26 +28,6 @@ var (
 	output    = flag.String("output", "", "sets the output folder where we'll save the resulting SLK files")
 )
 
-/**
-*    PUBLIC STRUCTURES
- */
-type ListData struct {
-	Id           string
-	Name         string
-	EditorSuffix null.String
-}
-
-/**
-*    PRIVATE STRUCTURES
- */
-type config struct {
-	InDir                   *string
-	OutDir                  *string
-	IsLocked                bool
-	IsDoneDownloadingModels bool
-	IsRegexSearch           bool
-}
-
 type logWriter struct{}
 
 /**
