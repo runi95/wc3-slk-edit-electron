@@ -37,6 +37,7 @@ var (
 	// Private Variables
 	unitMap            map[string]*models.SLKUnit
 	itemMap            map[string]*models.SLKItem
+	abilityMetaDataMap map[string]*models.AbilityMetaData
 	lastValidUnitIndex int
 	lastValidItemIndex int
 
@@ -387,6 +388,7 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			payload = err.Error()
 		}
 	case "loadSlk":
+		loadAbilityMetaData()
 		payload = loadSLK()
 	case "loadUnitData":
 		var unitListData = make([]ListData, len(unitMap))
@@ -1577,6 +1579,40 @@ func saveUnitsToFile(location string) {
 	}
 
 	parser.WriteToFilesAndSaveToFolder(unitList, location, true)
+}
+
+func loadAbilityMetaData() error {
+	var err error
+	folders := configDirs.QueryFolders(configdir.Global)
+	if len(folders) < 1 {
+		err = fmt.Errorf("failed to load config directory")
+
+		log.Println(err)
+		return err
+	}
+
+	abilityMetaDataPath := folders[0].Path + string(filepath.Separator) + "wc3-slk-edit-electron-resources-master" + string(filepath.Separator) + "AbilityMetaData.slk"
+	if flag, err := exists(abilityMetaDataPath); err != nil || !flag {
+		if err != nil {
+			log.Println(err)
+		} else {
+			log.Println(abilityMetaDataPath + " does not exist!")
+		}
+
+		return fmt.Errorf("the AbilityMetaData.slk file does not exist")
+	}
+
+	var abilityMetaDataBytes []byte
+	abilityMetaDataBytes, err = ioutil.ReadFile(abilityMetaDataPath)
+	if err != nil {
+		log.Println(err)
+		return fmt.Errorf("failed to read AbilityMetaData.slk")
+	}
+
+	abilityMetaDataMap = make(map[string]*models.AbilityMetaData)
+	parser.PopulateAbilityMetaDataMapWithSlkFileData(abilityMetaDataBytes, abilityMetaDataMap)
+
+	return nil
 }
 
 func loadSLK() []*FileInfo {
