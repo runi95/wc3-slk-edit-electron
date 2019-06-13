@@ -37,6 +37,7 @@ var (
 	// Private Variables
 	unitMap            map[string]*models.SLKUnit
 	itemMap            map[string]*models.SLKItem
+	abilityMap         map[string]*models.SLKAbility
 	abilityMetaDataMap map[string]*models.AbilityMetaData
 	lastValidUnitIndex int
 	lastValidItemIndex int
@@ -408,8 +409,15 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			payload = err.Error()
 		}
 	case "loadSlk":
-		loadAbilityMetaData()
 		payload = loadSLK()
+	case "loadAbilityMetaData":
+		err = loadAbilityMetaData()
+		if err != nil {
+			payload = err.Error()
+			return
+		}
+
+		payload = abilityMetaDataMap
 	case "loadUnitData":
 		var unitListData = make([]ListData, len(unitMap))
 
@@ -1637,16 +1645,31 @@ func loadAbilityMetaData() error {
 
 func loadSLK() []*FileInfo {
 	var inputDirectory string
+	var abilityDataFileInfo = &FileInfo{"AbilityData.slk", "color-secondary", "ga-genderless"}
+	var campaignAbilityFuncFileInfo = &FileInfo{"CampaignAbilityFunc.txt", "color-secondary", "fa-genderless"}
+	var campaignAbilityStringsFileInfo = &FileInfo{"CampaignAbilityStrings.txt", "color-secondary", "fa-genderless"}
 	var campaignUnitFuncFileInfo = &FileInfo{"CampaignUnitFunc.txt", "color-secondary", "fa-genderless"}
 	var campaignUnitStringsFileInfo = &FileInfo{"CampaignUnitStrings.txt", "color-secondary", "fa-genderless"}
+	var commonAbilityFuncFileInfo = &FileInfo{"CommonAbilityFunc.txt", "color-secondary", "fa-genderless"}
+	var commonAbilityStringsFileInfo = &FileInfo{"CommonAbilityStrings.txt", "color-secondary", "fa-genderless"}
+	var humanAbilityFuncFileInfo = &FileInfo{"HumanAbilityFunc.txt", "color-secondary", "fa-genderless"}
+	var humanAbilityStringsFileInfo = &FileInfo{"HumanAbilityStrings.txt", "color-secondary", "fa-genderless"}
 	var humanUnitFuncFileInfo = &FileInfo{"HumanUnitFunc.txt", "color-secondary", "fa-genderless"}
 	var humanUnitStringsFileInfo = &FileInfo{"HumanUnitStrings.txt", "color-secondary", "fa-genderless"}
+	var neutralAbilityFuncFileInfo = &FileInfo{"NeutralAbilityFunc.txt", "color-secondary", "fa-genderless"}
+	var neutralAbilityStringsFileInfo = &FileInfo{"NeutralAbilityStrings.txt", "color-secondary", "fa-genderless"}
 	var neutralUnitFuncFileInfo = &FileInfo{"NeutralUnitFunc.txt", "color-secondary", "fa-genderless"}
 	var neutralUnitStringsFileInfo = &FileInfo{"NeutralUnitStrings.txt", "color-secondary", "fa-genderless"}
+	var nightElfAbilityFuncFileInfo = &FileInfo{"NightElfAbilityFunc.txt", "color-secondary", "fa-genderless"}
+	var nightElfAbilityStringsFileInfo = &FileInfo{"NightElfAbilityStrings.txt", "color-secondary", "fa-genderless"}
 	var nightElfUnitFuncFileInfo = &FileInfo{"NightElfUnitFunc.txt", "color-secondary", "fa-genderless"}
 	var nightElfUnitStringsFileInfo = &FileInfo{"NightElfUnitStrings.txt", "color-secondary", "fa-genderless"}
+	var orcAbilityFuncFileInfo = &FileInfo{"OrcAbilityFunc.txt", "color-secondary", "fa-genderless"}
+	var orcAbilityStringsFileInfo = &FileInfo{"OrcAbilityStrings.txt", "color-secondary", "fa-genderless"}
 	var orcUnitFuncFileInfo = &FileInfo{"OrcUnitFunc.txt", "color-secondary", "fa-genderless"}
 	var orcUnitStringsFileInfo = &FileInfo{"OrcUnitStrings.txt", "color-secondary", "fa-genderless"}
+	var undeadAbilityFuncFileInfo = &FileInfo{"UndeadAbilityFunc.txt", "color-secondary", "fa-genderless"}
+	var undeadAbilityStringsFileInfo = &FileInfo{"UndeadAbilityStrings.txt", "color-secondary", "fa-genderless"}
 	var undeadUnitFuncFileInfo = &FileInfo{"UndeadUnitFunc.txt", "color-secondary", "fa-genderless"}
 	var undeadUnitStringsFileInfo = &FileInfo{"UndeadUnitStrings.txt", "color-secondary", "fa-genderless"}
 	var unitAbilitiesFileInfo = &FileInfo{"UnitAbilities.slk", "color-secondary", "fa-genderless"}
@@ -1654,20 +1677,36 @@ func loadSLK() []*FileInfo {
 	var unitDataFileInfo = &FileInfo{"UnitData.slk", "color-secondary", "fa-genderless"}
 	var unitUiFileInfo = &FileInfo{"UnitUI.slk", "color-secondary", "fa-genderless"}
 	var unitWeaponsFileInfo = &FileInfo{"UnitWeapons.slk", "color-secondary", "fa-genderless"}
+	var itemAbilityFuncFileInfo = &FileInfo{"ItemAbilityFunc.txt", "color-secondary", "fa-genderless"}
+	var itemAbilityStringsFileInfo = &FileInfo{"ItemAbilityStrings.txt", "color-secondary", "fa-genderless"}
 	var itemDataFileInfo = &FileInfo{"ItemData.slk", "color-secondary", "fa-genderless"}
 	var itemFuncFileInfo = &FileInfo{"ItemFunc.txt", "color-secondary", "fa-genderless"}
 	var itemStringsFileInfo = &FileInfo{"ItemStrings.txt", "color-secondary", "fa-genderless"}
 	var fileInfoList = []*FileInfo{
+		campaignAbilityFuncFileInfo,
+		campaignAbilityStringsFileInfo,
 		campaignUnitFuncFileInfo,
 		campaignUnitStringsFileInfo,
+		commonAbilityFuncFileInfo,
+		commonAbilityStringsFileInfo,
+		humanAbilityFuncFileInfo,
+		humanUnitStringsFileInfo,
 		humanUnitFuncFileInfo,
 		humanUnitStringsFileInfo,
+		neutralAbilityFuncFileInfo,
+		neutralAbilityStringsFileInfo,
 		neutralUnitFuncFileInfo,
 		neutralUnitStringsFileInfo,
+		nightElfAbilityFuncFileInfo,
+		nightElfAbilityStringsFileInfo,
 		nightElfUnitFuncFileInfo,
 		nightElfUnitStringsFileInfo,
+		orcAbilityFuncFileInfo,
+		orcAbilityStringsFileInfo,
 		orcUnitFuncFileInfo,
 		orcUnitStringsFileInfo,
+		undeadAbilityFuncFileInfo,
+		undeadAbilityStringsFileInfo,
 		undeadUnitFuncFileInfo,
 		undeadUnitStringsFileInfo,
 		unitAbilitiesFileInfo,
@@ -1675,6 +1714,8 @@ func loadSLK() []*FileInfo {
 		unitDataFileInfo,
 		unitUiFileInfo,
 		unitWeaponsFileInfo,
+		itemAbilityFuncFileInfo,
+		itemAbilityStringsFileInfo,
 		itemDataFileInfo,
 		itemFuncFileInfo,
 		itemStringsFileInfo,
@@ -1697,23 +1738,40 @@ func loadSLK() []*FileInfo {
 		return fileInfoList
 	}
 
+	var abilityDataPath *string = nil
 	var unitAbilitiesPath *string = nil
 	var unitDataPath *string = nil
 	var unitUIPath *string = nil
 	var unitWeaponsPath *string = nil
 	var unitBalancePath *string = nil
+	var campaignAbilityFuncPath *string = nil
+	var campaignAbilityStringsPath *string = nil
 	var campaignUnitFuncPath *string = nil
 	var campaignUnitStringsPath *string = nil
+	var commonAbilityFuncPath *string = nil
+	var commonAbilityStringsPath *string = nil
+	var humanAbilityFuncPath *string = nil
+	var humanAbilityStringsPath *string = nil
 	var humanUnitFuncPath *string = nil
 	var humanUnitStringsPath *string = nil
+	var neutralAbilityFuncPath *string = nil
+	var neutralAbilityStringsPath *string = nil
 	var neutralUnitFuncPath *string = nil
+	var nightElfAbilityFuncPath *string = nil
+	var nightElfAbilityStringsPath *string = nil
 	var neutralUnitStringsPath *string = nil
 	var nightElfUnitFuncPath *string = nil
 	var nightElfUnitStringsPath *string = nil
+	var orcAbilityFuncPath *string = nil
+	var orcAbilityStringsPath *string = nil
 	var orcUnitFuncPath *string = nil
 	var orcUnitStringsPath *string = nil
+	var undeadAbilityFuncPath *string = nil
+	var undeadAbilityStringsPath *string = nil
 	var undeadUnitFuncPath *string = nil
 	var undeadUnitStringsPath *string = nil
+	var itemAbilityFuncPath *string = nil
+	var itemAbilityStringsPath *string = nil
 	var itemDataPath *string = nil
 	var itemFuncPath *string = nil
 	var itemStringsPath *string = nil
@@ -1723,6 +1781,8 @@ func loadSLK() []*FileInfo {
 		path := filepath.Join(inputDirectory, file.Name())
 
 		switch lowercaseFilename {
+		case "abilitydata.slk":
+			abilityDataPath = &path
 		case "unitabilities.slk":
 			unitAbilitiesPath = &path
 		case "unitdata.slk":
@@ -1733,30 +1793,62 @@ func loadSLK() []*FileInfo {
 			unitWeaponsPath = &path
 		case "unitbalance.slk":
 			unitBalancePath = &path
+		case "campaignabilityfunc.txt":
+			campaignAbilityFuncPath = &path
+		case "campaignabilitystrings.txt":
+			campaignAbilityStringsPath = &path
 		case "campaignunitfunc.txt":
 			campaignUnitFuncPath = &path
 		case "campaignunitstrings.txt":
 			campaignUnitStringsPath = &path
+		case "commonabilityfunc.txt":
+			commonAbilityFuncPath = &path
+		case "commonabilitystrings.txt":
+			commonAbilityStringsPath = &path
+		case "humanabilityfunc.txt":
+			humanAbilityFuncPath = &path
+		case "humanabilitystrings.txt":
+			humanAbilityStringsPath = &path
 		case "humanunitfunc.txt":
 			humanUnitFuncPath = &path
 		case "humanunitstrings.txt":
 			humanUnitStringsPath = &path
+		case "neutralabilityfunc.txt":
+			neutralAbilityFuncPath = &path
+		case "neutralabilitystrings.txt":
+			neutralAbilityStringsPath = &path
 		case "neutralunitfunc.txt":
 			neutralUnitFuncPath = &path
 		case "neutralunitstrings.txt":
 			neutralUnitStringsPath = &path
+		case "nightelfabilityfunc.txt":
+			nightElfAbilityFuncPath = &path
+		case "nightelfabilitystrings.txt":
+			nightElfAbilityStringsPath = &path
 		case "nightelfunitfunc.txt":
 			nightElfUnitFuncPath = &path
 		case "nightelfunitstrings.txt":
 			nightElfUnitStringsPath = &path
+		case "orcabilityfunc.txt":
+			orcAbilityFuncPath = &path
+		case "orcabilitystrings.txt":
+			orcAbilityStringsPath = &path
 		case "orcunitfunc.txt":
 			orcUnitFuncPath = &path
 		case "orcunitstrings.txt":
 			orcUnitStringsPath = &path
+		case "undeadabilityfunc.txt":
+			undeadAbilityFuncPath = &path
+		case "undeadabilitystrings.txt":
+			undeadAbilityStringsPath = &path
 		case "undeadunitfunc.txt":
 			undeadUnitFuncPath = &path
 		case "undeadunitstrings.txt":
 			undeadUnitStringsPath = &path
+		case "itemabilityfunc.txt":
+			itemAbilityFuncPath = &path
+		case "itemabilitystrings.txt":
+			itemAbilityStringsPath = &path
 		case "itemdata.slk":
 			itemDataPath = &path
 		case "itemfunc.txt":
@@ -1771,60 +1863,79 @@ func loadSLK() []*FileInfo {
 	// Unused
 	/*
 		abilityBuffData := filepath.Join(inputDirectory, "AbilityBuffData.slk")
-		abilityData := filepath.Join(inputDirectory, "AbilityData.slk")
-		campaignAbilityFunc := filepath.Join(inputDirectory, "CampaignAbilityFunc.txt")
-		campaignAbilityStrings := filepath.Join(inputDirectory, "CampaignAbilityStrings.txt")
 		campaignUpgradeFunc := filepath.Join(inputDirectory, "CampaignUpgradeFunc.txt")
 		campaignUpgradeStrings := filepath.Join(inputDirectory, "CampaignUpgradeStrings.txt")
 		commandFunc := filepath.Join(inputDirectory, "CommandFunc.txt")
 		commandStrings := filepath.Join(inputDirectory, "CommandStrings.txt")
-		commonAbilityFunc := filepath.Join(inputDirectory, "CommonAbilityFunc.txt")
-		commonAbilityStrings := filepath.Join(inputDirectory, "CommonAbilityStrings.txt")
-		humanAbilityFunc := filepath.Join(inputDirectory, "HumanAbilityFunc.txt")
-		humanAbilityStrings := filepath.Join(inputDirectory, "HumanAbilityStrings.txt")
 		humanUpgradeFunc := filepath.Join(inputDirectory, "HumanUpgradeFunc.txt")
 		humanUpgradeStrings := filepath.Join(inputDirectory, "HumanUpgradeStrings.txt")
 		itemAbilityStrings := filepath.Join(inputDirectory, "ItemAbilityStrings.txt")
-		neutralAbilityFunc := filepath.Join(inputDirectory, "NeutralAbilityFunc.txt")
-		neutralAbilityStrings := filepath.Join(inputDirectory, "NeutralAbilityStrings.txt")
 		neutralUpgradeFunc := filepath.Join(inputDirectory, "NeutralUpgradeFunc.txt")
 		neutralUpgradeStrings := filepath.Join(inputDirectory, "NeutralUpgradeStrings.txt")
-		nightElfAbilityFunc := filepath.Join(inputDirectory, "NightElfAbilityFunc.txt")
-		nightElfAbilityStrings := filepath.Join(inputDirectory, "NightElfAbilityStrings.txt")
 		nightElfUpgradeFunc := filepath.Join(inputDirectory, "NightElfUpgradeFunc.txt")
 		nightElfUpgradeStrings := filepath.Join(inputDirectory, "NightElfUpgradeStrings.txt")
-		orcAbilityFunc := filepath.Join(inputDirectory, "OrcAbilityFunc.txt")
-		orcAbilityStrings := filepath.Join(inputDirectory, "OrcAbilityStrings.txt")
 		orcUpgradeFunc := filepath.Join(inputDirectory, "OrcUpgradeFunc.txt")
 		orcUpgradeStrings := filepath.Join(inputDirectory, "OrcUpgradeStrings.txt")
-		undeadAbilityFunc := filepath.Join(inputDirectory, "UndeadAbilityFunc.txt")
-		undeadAbilityStrings := filepath.Join(inputDirectory, "UndeadAbilityStrings.txt")
 		undeadUpgradeFunc := filepath.Join(inputDirectory, "UndeadUpgradeFunc.txt")
 		undeadUpgradeStrings := filepath.Join(inputDirectory, "UndeadUpgradeStrings.txt")
 		upgradeData := filepath.Join(inputDirectory, "UpgradeData.slk")
 	*/
 
+	var abilityDataBytes []byte = nil
 	var unitDataBytes []byte = nil
 	var unitAbilitiesBytes []byte = nil
 	var unitUIBytes []byte = nil
 	var unitWeaponsBytes []byte = nil
 	var unitBalanceBytes []byte = nil
+	var campaignAbilityFuncBytes []byte = nil
+	var campaignAbilityStringsBytes []byte = nil
 	var campaignUnitFuncBytes []byte = nil
 	var campaignUnitStringsBytes []byte = nil
+	var commonAbilityFuncBytes []byte = nil
+	var commonAbilityStringsBytes []byte = nil
+	var humanAbilityFuncBytes []byte = nil
+	var humanAbilityStringsBytes []byte = nil
 	var humanUnitFuncBytes []byte = nil
 	var humanUnitStringsBytes []byte = nil
+	var neutralAbilityFuncBytes []byte = nil
+	var neutralAbilityStringsBytes []byte = nil
 	var neutralUnitFuncBytes []byte = nil
 	var neutralUnitStringsBytes []byte = nil
+	var nightElfAbilityFuncBytes []byte = nil
+	var nightElfAbilityStringsBytes []byte = nil
 	var nightElfUnitFuncBytes []byte = nil
 	var nightElfUnitStringsBytes []byte = nil
+	var orcAbilityFuncBytes []byte = nil
+	var orcAbilityStringsBytes []byte = nil
 	var orcUnitFuncBytes []byte = nil
 	var orcUnitStringsBytes []byte = nil
+	var undeadAbilityFuncBytes []byte = nil
+	var undeadAbilityStringsBytes []byte = nil
 	var undeadUnitFuncBytes []byte = nil
 	var undeadUnitStringsBytes []byte = nil
+	var itemAbilityFuncBytes []byte = nil
+	var itemAbilityStringsBytes []byte = nil
 	var itemDataBytes []byte = nil
 	var itemFuncBytes []byte = nil
 	var itemStringsBytes []byte = nil
 	var readFileWaitGroup sync.WaitGroup
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if abilityDataPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*abilityDataPath); err != nil || flag {
+				log.Println("Reading AbilityData.slk...")
+
+				abilityDataBytes, err = ioutil.ReadFile(*abilityDataPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
 
 	readFileWaitGroup.Add(1)
 	go func() {
@@ -1914,6 +2025,40 @@ func loadSLK() []*FileInfo {
 	readFileWaitGroup.Add(1)
 	go func() {
 		defer readFileWaitGroup.Done()
+		if campaignAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*campaignAbilityFuncPath); err != nil || flag {
+				log.Println("Reading CampaignAbilityFunc.txt...")
+
+				campaignAbilityFuncBytes, err = ioutil.ReadFile(*campaignAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if campaignAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*campaignAbilityStringsPath); err != nil || flag {
+				log.Println("Reading CampaignAbilityStrings.txt...")
+
+				campaignAbilityStringsBytes, err = ioutil.ReadFile(*campaignAbilityStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
 		if campaignUnitFuncPath != nil {
 			var flag bool
 			var err error
@@ -1938,6 +2083,74 @@ func loadSLK() []*FileInfo {
 				log.Println("Reading CampaignUnitStrings.slk...")
 
 				campaignUnitStringsBytes, err = ioutil.ReadFile(*campaignUnitStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if commonAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*commonAbilityFuncPath); err != nil || flag {
+				log.Println("Reading CommonAbilityFunc.txt...")
+
+				commonAbilityFuncBytes, err = ioutil.ReadFile(*commonAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if commonAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*commonAbilityStringsPath); err != nil || flag {
+				log.Println("Reading CommonAbilityStrings.txt...")
+
+				commonAbilityStringsBytes, err = ioutil.ReadFile(*commonAbilityStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if humanAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*humanAbilityFuncPath); err != nil || flag {
+				log.Println("Reading HumanAbilityFunc.txt...")
+
+				humanAbilityFuncBytes, err = ioutil.ReadFile(*humanAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if humanAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*humanAbilityStringsPath); err != nil || flag {
+				log.Println("Reading HumanAbilityStrings.txt...")
+
+				humanAbilityStringsBytes, err = ioutil.ReadFile(*humanAbilityStringsPath)
 				if err != nil {
 					CrashWithMessage(w, err.Error())
 				}
@@ -1982,6 +2195,40 @@ func loadSLK() []*FileInfo {
 	readFileWaitGroup.Add(1)
 	go func() {
 		defer readFileWaitGroup.Done()
+		if neutralAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*neutralAbilityFuncPath); err != nil || flag {
+				log.Println("Reading NeutralAbilityFunc.txt...")
+
+				neutralAbilityFuncBytes, err = ioutil.ReadFile(*neutralAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if neutralAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*neutralAbilityStringsPath); err != nil || flag {
+				log.Println("Reading NeutralAbilityStrings.txt...")
+
+				neutralAbilityStringsBytes, err = ioutil.ReadFile(*neutralAbilityStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
 		if neutralUnitFuncPath != nil {
 			var flag bool
 			var err error
@@ -2006,6 +2253,40 @@ func loadSLK() []*FileInfo {
 				log.Println("Reading NeutralUnitStrings.slk...")
 
 				neutralUnitStringsBytes, err = ioutil.ReadFile(*neutralUnitStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if nightElfAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*nightElfAbilityFuncPath); err != nil || flag {
+				log.Println("Reading NightElfAbilityFunc.txt...")
+
+				nightElfAbilityFuncBytes, err = ioutil.ReadFile(*nightElfAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if nightElfAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*nightElfAbilityStringsPath); err != nil || flag {
+				log.Println("Reading NightElfAbilityStrings.txt...")
+
+				nightElfAbilityStringsBytes, err = ioutil.ReadFile(*nightElfAbilityStringsPath)
 				if err != nil {
 					CrashWithMessage(w, err.Error())
 				}
@@ -2050,6 +2331,40 @@ func loadSLK() []*FileInfo {
 	readFileWaitGroup.Add(1)
 	go func() {
 		defer readFileWaitGroup.Done()
+		if orcAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*orcAbilityFuncPath); err != nil || flag {
+				log.Println("Reading OrcAbilityFunc.txt...")
+
+				orcAbilityFuncBytes, err = ioutil.ReadFile(*orcAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if orcAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*orcAbilityStringsPath); err != nil || flag {
+				log.Println("Reading OrcAbilityStrings.txt...")
+
+				orcAbilityStringsBytes, err = ioutil.ReadFile(*orcAbilityStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
 		if orcUnitFuncPath != nil {
 			var flag bool
 			var err error
@@ -2084,6 +2399,40 @@ func loadSLK() []*FileInfo {
 	readFileWaitGroup.Add(1)
 	go func() {
 		defer readFileWaitGroup.Done()
+		if undeadAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*undeadAbilityFuncPath); err != nil || flag {
+				log.Println("Reading UndeadAbilityFunc.txt...")
+
+				undeadAbilityFuncBytes, err = ioutil.ReadFile(*undeadAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if undeadAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*undeadAbilityStringsPath); err != nil || flag {
+				log.Println("Reading UndeadAbilityStrings.txt...")
+
+				undeadAbilityStringsBytes, err = ioutil.ReadFile(*undeadAbilityStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
 		if undeadUnitFuncPath != nil {
 			var flag bool
 			var err error
@@ -2108,6 +2457,40 @@ func loadSLK() []*FileInfo {
 				log.Println("Reading UndeadUnitStrings.slk...")
 
 				undeadUnitStringsBytes, err = ioutil.ReadFile(*undeadUnitStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if itemAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*itemAbilityFuncPath); err != nil || flag {
+				log.Println("Reading ItemAbilityFunc.txt...")
+
+				itemAbilityFuncBytes, err = ioutil.ReadFile(*itemAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if itemAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*itemAbilityStringsPath); err != nil || flag {
+				log.Println("Reading ItemAbilityStrings.txt...")
+
+				itemAbilityStringsBytes, err = ioutil.ReadFile(*itemAbilityStringsPath)
 				if err != nil {
 					CrashWithMessage(w, err.Error())
 				}
@@ -2168,6 +2551,14 @@ func loadSLK() []*FileInfo {
 
 	readFileWaitGroup.Wait()
 
+	abilityMap = make(map[string]*models.SLKAbility)
+	if abilityDataBytes != nil {
+		log.Println("Parsing abilityDataBytes...")
+		abilityDataFileInfo.StatusClass = "text-success"
+		abilityDataFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithSlkFileData(abilityDataBytes, abilityMap)
+	}
+
 	unitMap = make(map[string]*models.SLKUnit)
 	if unitDataBytes != nil {
 		log.Println("Parsing unitDataBytes...")
@@ -2204,6 +2595,20 @@ func loadSLK() []*FileInfo {
 		parser.PopulateUnitMapWithSlkFileData(unitBalanceBytes, unitMap)
 	}
 
+	if campaignAbilityFuncBytes != nil {
+		log.Println("Parsing campaignAbilityFuncBytes...")
+		campaignAbilityFuncFileInfo.StatusClass = "text-success"
+		campaignAbilityFuncFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(campaignAbilityFuncBytes, abilityMap)
+	}
+
+	if campaignAbilityStringsBytes != nil {
+		log.Println("Parsing campaignAbilityStringsBytes...")
+		campaignAbilityStringsFileInfo.StatusClass = "text-success"
+		campaignAbilityStringsFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(campaignAbilityStringsBytes, abilityMap)
+	}
+
 	if campaignUnitFuncBytes != nil {
 		log.Println("Parsing campaignUnitFuncBytes...")
 		campaignUnitFuncFileInfo.StatusClass = "text-success"
@@ -2216,6 +2621,34 @@ func loadSLK() []*FileInfo {
 		campaignUnitStringsFileInfo.StatusClass = "text-success"
 		campaignUnitStringsFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(campaignUnitStringsBytes, unitMap)
+	}
+
+	if commonAbilityFuncBytes != nil {
+		log.Println("Parsing commonAbilityFuncBytes...")
+		commonAbilityFuncFileInfo.StatusClass = "text-success"
+		commonAbilityFuncFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(commonAbilityFuncBytes, abilityMap)
+	}
+
+	if commonAbilityStringsBytes != nil {
+		log.Println("Parsing commonAbilityStringsBytes...")
+		commonAbilityStringsFileInfo.StatusClass = "text-success"
+		commonAbilityStringsFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(commonAbilityStringsBytes, abilityMap)
+	}
+
+	if humanAbilityFuncBytes != nil {
+		log.Println("Parsing humanAbilityFuncBytes...")
+		humanAbilityFuncFileInfo.StatusClass = "text-success"
+		humanAbilityFuncFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(humanAbilityFuncBytes, abilityMap)
+	}
+
+	if humanAbilityStringsBytes != nil {
+		log.Println("Parsing humanAbilityStringsBytes...")
+		humanAbilityStringsFileInfo.StatusClass = "text-success"
+		humanAbilityStringsFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(humanAbilityStringsBytes, abilityMap)
 	}
 
 	if humanUnitFuncBytes != nil {
@@ -2232,6 +2665,20 @@ func loadSLK() []*FileInfo {
 		parser.PopulateUnitMapWithTxtFileData(humanUnitStringsBytes, unitMap)
 	}
 
+	if neutralAbilityFuncBytes != nil {
+		log.Println("Parsing neutralAbilityFuncBytes...")
+		neutralAbilityFuncFileInfo.StatusClass = "text-success"
+		neutralAbilityFuncFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(neutralAbilityFuncBytes, abilityMap)
+	}
+
+	if neutralAbilityStringsBytes != nil {
+		log.Println("Parsing neutralAbilityStringsBytes...")
+		neutralAbilityStringsFileInfo.StatusClass = "text-success"
+		neutralAbilityStringsFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(neutralAbilityStringsBytes, abilityMap)
+	}
+
 	if neutralUnitFuncBytes != nil {
 		log.Println("Parsing neutralUnitFuncBytes...")
 		neutralUnitFuncFileInfo.StatusClass = "text-success"
@@ -2244,6 +2691,20 @@ func loadSLK() []*FileInfo {
 		neutralUnitStringsFileInfo.StatusClass = "text-success"
 		neutralUnitStringsFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(neutralUnitStringsBytes, unitMap)
+	}
+
+	if nightElfAbilityFuncBytes != nil {
+		log.Println("Parsing nightElfAbilityFuncBytes...")
+		nightElfAbilityFuncFileInfo.StatusClass = "text-success"
+		nightElfAbilityFuncFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(nightElfAbilityFuncBytes, abilityMap)
+	}
+
+	if nightElfAbilityStringsBytes != nil {
+		log.Println("Parsing nightElfAbilityStringsBytes...")
+		nightElfAbilityStringsFileInfo.StatusClass = "text-success"
+		nightElfAbilityStringsFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(nightElfAbilityStringsBytes, abilityMap)
 	}
 
 	if nightElfUnitFuncBytes != nil {
@@ -2260,6 +2721,20 @@ func loadSLK() []*FileInfo {
 		parser.PopulateUnitMapWithTxtFileData(nightElfUnitStringsBytes, unitMap)
 	}
 
+	if orcAbilityFuncBytes != nil {
+		log.Println("Parsing orcAbilityFuncBytes...")
+		orcAbilityFuncFileInfo.StatusClass = "text-success"
+		orcAbilityFuncFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(orcAbilityFuncBytes, abilityMap)
+	}
+
+	if orcAbilityStringsBytes != nil {
+		log.Println("Parsing orcAbilityStringsBytes...")
+		orcAbilityStringsFileInfo.StatusClass = "text-success"
+		orcAbilityStringsFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(orcAbilityStringsBytes, abilityMap)
+	}
+
 	if orcUnitFuncBytes != nil {
 		log.Println("Parsing orcUnitFuncBytes...")
 		orcUnitFuncFileInfo.StatusClass = "text-success"
@@ -2274,6 +2749,20 @@ func loadSLK() []*FileInfo {
 		parser.PopulateUnitMapWithTxtFileData(orcUnitStringsBytes, unitMap)
 	}
 
+	if undeadAbilityFuncBytes != nil {
+		log.Println("Parsing undeadAbilityFuncBytes...")
+		undeadAbilityFuncFileInfo.StatusClass = "text-success"
+		undeadAbilityFuncFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(undeadAbilityFuncBytes, abilityMap)
+	}
+
+	if undeadAbilityStringsBytes != nil {
+		log.Println("Parsing undeadAbilityStringsBytes...")
+		undeadAbilityStringsFileInfo.StatusClass = "text-success"
+		undeadAbilityStringsFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(undeadAbilityStringsBytes, abilityMap)
+	}
+
 	if undeadUnitFuncBytes != nil {
 		log.Println("Parsing undeadUnitFuncBytes...")
 		undeadUnitFuncFileInfo.StatusClass = "text-success"
@@ -2286,6 +2775,20 @@ func loadSLK() []*FileInfo {
 		undeadUnitStringsFileInfo.StatusClass = "text-success"
 		undeadUnitStringsFileInfo.StatusIconClass = "fa-check"
 		parser.PopulateUnitMapWithTxtFileData(undeadUnitStringsBytes, unitMap)
+	}
+
+	if itemAbilityFuncBytes != nil {
+		log.Println("Parsing itemAbilityFuncBytes...")
+		itemAbilityFuncFileInfo.StatusClass = "text-success"
+		itemAbilityFuncFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(itemAbilityFuncBytes, abilityMap)
+	}
+
+	if itemAbilityStringsBytes != nil {
+		log.Println("Parsing itemAbilityStringsBytes...")
+		itemAbilityStringsFileInfo.StatusClass = "text-success"
+		itemAbilityStringsFileInfo.StatusIconClass = "fa-check"
+		parser.PopulateAbilityMapWithTxtFileData(itemAbilityStringsBytes, abilityMap)
 	}
 
 	itemMap = make(map[string]*models.SLKItem)

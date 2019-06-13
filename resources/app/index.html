@@ -592,13 +592,6 @@
                                         </select>
                                     </li>
                                     <li>
-                                        <label for="Unit-Casterupgradeart">Caster Upgrade Art</label>
-                                        <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                               id="Unit-Casterupgradeart"
-                                               aria-describedby="caster upgrade art"
-                                               placeholder="Caster Upgrade Art"/>
-                                    </li>
-                                    <li>
                                         <label for="Unit-Death">Death Time (seconds)</label>
                                         <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
                                                id="Unit-Death"
@@ -3929,6 +3922,365 @@
                                         </div>
                                     </div>
                                 </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="abilities-container" hidden>
+        <div class="container-fluid" style="height: 100%;">
+            <div class="row" style="height: 100%;">
+                <div class="col-4" style="height: 100%; display: flex; flex-direction: column;">
+                    <div class="form-dark">
+                        <div class="col-auto" style="padding: 0;">
+                            <label class="sr-only" for="abilitySearchInput">Search</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fas fa-search"></i></div>
+                                </div>
+                                <input type="text" class="form-control" id="abilitySearchInput" placeholder="search"
+                                       oninput="index.itemSearch(this)">
+                                <div style="display: flex; align-items: center;">
+                                    <input type="checkbox" id="Ability-Regex-Toggle" style="margin-left: 5px;"
+                                           onchange="index.setItemRegexSearch(!isItemRegexSearch);" aria-label="Regex"
+                                           tabindex="-1"/>
+                                    <label for="Ability-Regex-Toggle"
+                                           style="margin: auto 0 auto 3px; padding-bottom: 4px;">Regex</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="overflow-y: auto;">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col" style="cursor: pointer;" onclick="index.sortAbilityId()">Ability ID <i
+                                            id="ability-id-sort-icon" class="fas fa-sort"></i></th>
+                                <th scope="col" style="cursor: pointer;" onclick="index.sortAbilityName()">Name <i
+                                            id="ability-name-sort-icon" class="fas fa-sort"></i></th>
+                            </tr>
+                            </thead>
+                            <tbody class="table-body" id="abilityTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="form-dark">
+                        <button class="btn btn-block" onclick="index.removeAbility()" id="removeAbilityButton">✖ Remove Ability
+                        </button>
+                    </div>
+                </div>
+                <div class="col-8" style="height: 100%; overflow-y: auto;">
+                    <div class="z-depth-1 form-dark p-0 grid-container"
+                         style="position: relative; overflow-y: hidden;">
+                        <form id="abilityID-form" class="was-validated">
+                            <ul class="flex-outer">
+                                <li>
+                                    <label for="Ability-Alias">Ability ID</label>
+                                    <div style="display: flex;">
+                                        <input oninput="index.saveFieldToAbility(this)" type="text"
+                                               class="form-control"
+                                               id="Ability-Alias"
+                                               aria-describedby="ability id"
+                                               placeholder="Ability ID" required/>
+                                        <div class="btn div-btn" tabindex="-1" onclick="index.generateAbilityId()">↺
+                                            Generate
+                                            Valid ID
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <label for="Ability-Code">Base Ability</label>
+                                    <input oninput="index.saveFieldToAbility(this)" type="text" class="form-control"
+                                           id="Ability-Code"
+                                           aria-describedby="base ability"
+                                           placeholder="Base Ability"/>
+                                </li>
+                            </ul>
+                        </form>
+                        <form class="was-validated">
+                            <ul class="flex-outer">
+                                <li>
+                                    <label for="Ability-Animnames">Animation Names</label>
+                                    <input oninput="index.saveFieldToAbility(this)" type="text" class="form-control"
+                                           id="Ability-Animnames"
+                                           aria-describedby="animation names"
+                                           placeholder="Animation Names"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Areaeffectstart">Area Effect</label>
+                                    <input oninput="index.saveFieldToAbility(this)" type="text" class="form-control"
+                                           id="Ability-Areaeffectstart"
+                                           aria-describedby="area effect"
+                                           placeholder="Area Effect"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Buttonpos">Button Position</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Ability-Buttonpos"
+                                            class="custom-select">
+                                        <option value="0,0">0,0</option>
+                                        <option value="1,0">1,0</option>
+                                        <option value="2,0">2,0</option>
+                                        <option value="3,0">3,0</option>
+                                        <option value="0,1">0,1</option>
+                                        <option value="1,1">1,1</option>
+                                        <option value="2,1">2,1</option>
+                                        <option value="3,1">3,1</option>
+                                        <option value="0,2">0,2</option>
+                                        <option value="1,2">1,2</option>
+                                        <option value="2,2">2,2</option>
+                                        <option value="3,2">3,2</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <label for="Ability-Unbuttonpos">Button Position (Off)</label>
+                                    <select onchange="index.saveFieldToUnit(this)" id="Ability-Unbuttonpos"
+                                            class="custom-select">
+                                        <option value="0,0">0,0</option>
+                                        <option value="1,0">1,0</option>
+                                        <option value="2,0">2,0</option>
+                                        <option value="3,0">3,0</option>
+                                        <option value="0,1">0,1</option>
+                                        <option value="1,1">1,1</option>
+                                        <option value="2,1">2,1</option>
+                                        <option value="3,1">3,1</option>
+                                        <option value="0,2">0,2</option>
+                                        <option value="1,2">1,2</option>
+                                        <option value="2,2">2,2</option>
+                                        <option value="3,2">3,2</option>
+                                    </select>
+                                </li>
+                                <li>
+                                    <label for="Ability-CasterArt">Caster</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-CasterArt"
+                                           aria-describedby="caster"
+                                           placeholder="Caster"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Casterattach">Caster Attachment Point 1</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Casterattach"
+                                           aria-describedby="caster attachment point 1"
+                                           placeholder="Caster Attachment Point 1"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Casterattach1">Caster Attachment Point 2</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Casterattach1"
+                                           aria-describedby="caster attachment point 2"
+                                           placeholder="Caster Attachment Point 2"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Casterattachcount">Caster Attachments</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Casterattachcount"
+                                           aria-describedby="caster attachments"
+                                           placeholder="Caster Attachments"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-EffectArt">Effect</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-EffectArt"
+                                           aria-describedby="effect"
+                                           placeholder="Effect"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Art">Icon</label>
+                                    <div style="display: flex; align-items: center;">
+                                        <input oninput="index.saveFieldToUnit(this); index.loadIcon('unitIconImage', this)"
+                                               type="text"
+                                               class="form-control"
+                                               id="Ability-Art" aria-describedby="icon"
+                                               placeholder="Icon" autocomplete="on" required/>
+                                        <div class="btn div-btn"
+                                             style="padding: 0 4rem 0 4rem; height: calc(1.5em + .75rem + 2px);"
+                                             onclick="index.loadIconModal('ability', 'Ability-Art')"
+                                             data-toggle="modal"
+                                             data-target="#icon-modal">...
+                                        </div>
+                                        <img src="emptyicon.png" alt="icon" id="abilityIconImage" height="64"
+                                             width="64">
+                                    </div>
+                                </li>
+                                <li>
+                                    <label for="Ability-Unart">Icon</label>
+                                    <div style="display: flex; align-items: center;">
+                                        <input oninput="index.saveFieldToUnit(this); index.loadIcon('unitIconImage', this)"
+                                               type="text"
+                                               class="form-control"
+                                               id="Ability-Unart" aria-describedby="icon"
+                                               placeholder="Icon" autocomplete="on" required/>
+                                        <div class="btn div-btn"
+                                             style="padding: 0 4rem 0 4rem; height: calc(1.5em + .75rem + 2px);"
+                                             onclick="index.loadIconModal('ability', 'Ability-Unart')"
+                                             data-toggle="modal"
+                                             data-target="#icon-modal">...
+                                        </div>
+                                        <img src="emptyicon.png" alt="icon" id="abilityIconImage" height="64"
+                                             width="64">
+                                    </div>
+                                </li>
+                                <li>
+                                    <label for="Ability-LightningEffect">Lightning Effects</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-LightningEffect"
+                                           aria-describedby="lightning effect"
+                                           placeholder="Lightning Effects"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Missilearc">Missile Arc</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Missilearc"
+                                           aria-describedby="missile arc"
+                                           placeholder="Missile Arc"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Missileart">Missile Art</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Missileart"
+                                           aria-describedby="missile art"
+                                           placeholder="Missile Art"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-MissileHoming">Missile Homing Enabled</label>
+                                    <input oninput="index.saveFieldToAbility(this)" type="checkbox"
+                                           id="Ability-MissileHoming"
+                                           aria-label="missile homing enabled" tabindex="-1"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Missilespeed">Missile Speed</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Missilespeed"
+                                           aria-describedby="missile speed"
+                                           placeholder="Missile Speed"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-SpecialArt">Special</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-SpecialArt"
+                                           aria-describedby="special"
+                                           placeholder="Special"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Specialattach">Special Attachment Point</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Specialattach"
+                                           aria-describedby="special attachment point"
+                                           placeholder="Special Attachment Point"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-TargetArt">Target</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-TargetArt"
+                                           aria-describedby="target"
+                                           placeholder="Target"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Targetattach">Target Attachment Point 1</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Targetattach"
+                                           aria-describedby="target attachment point 1"
+                                           placeholder="Target Attachment Point 1"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Targetattach1">Target Attachment Point 2</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Targetattach1"
+                                           aria-describedby="target attachment point 2"
+                                           placeholder="Target Attachment Point 2"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Targetattach2">Target Attachment Point 3</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Targetattach2"
+                                           aria-describedby="target attachment point 3"
+                                           placeholder="Target Attachment Point 3"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Targetattach3">Target Attachment Point 4</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Targetattach3"
+                                           aria-describedby="target attachment point 4"
+                                           placeholder="Target Attachment Point 4"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Targetattach4">Target Attachment Point 5</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Targetattach4"
+                                           aria-describedby="target attachment point 5"
+                                           placeholder="Target Attachment Point 5"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Targetattach5">Target Attachment Point 6</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Targetattach5"
+                                           aria-describedby="target attachment point 6"
+                                           placeholder="Target Attachment Point 6"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Targetattachcount">Target Attachments</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Targetattachcount"
+                                           aria-describedby="target attachments"
+                                           placeholder="Target Attachments"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Effectsound">Effect Sound</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Effectsound"
+                                           aria-describedby="effect sound"
+                                           placeholder="Effect Sound"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Effectsoundlooped">Effect Sound (Looping)</label>
+                                    <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
+                                           id="Ability-Effectsoundlooped"
+                                           aria-describedby="effect sound looping"
+                                           placeholder="Effect Sound (Looping)"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-UseInEditor">Use In Editor</label>
+                                    <input oninput="index.saveFieldToAbility(this)" type="checkbox"
+                                           id="Ability-UseInEditor"
+                                           aria-label="use in editor" tabindex="-1"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Race">Race</label>
+                                    <input oninput="index.saveFieldToAbility(this)" type="checkbox"
+                                           id="Ability-Race"
+                                           aria-label="race" tabindex="-1"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-CheckDep">Check Dependencies</label>
+                                    <input oninput="index.saveFieldToAbility(this)" type="checkbox"
+                                           id="Ability-CheckDep"
+                                           aria-label="check dependencies" tabindex="-1"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Levels">Levels</label>
+                                    <input oninput="index.saveFieldToAbility(this)" type="text" class="form-control"
+                                           id="Ability-Levels"
+                                           aria-describedby="levels"
+                                           placeholder="Levels"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-ReqLevel">Required Level</label>
+                                    <input oninput="index.saveFieldToAbility(this)" type="text" class="form-control"
+                                           id="Ability-ReqLevel"
+                                           aria-describedby="required levels"
+                                           placeholder="Required Levels"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-LevelSkip">Level Skip Requirement</label>
+                                    <input oninput="index.saveFieldToAbility(this)" type="text" class="form-control"
+                                           id="Ability-LevelSkip"
+                                           aria-describedby="level skip requirements"
+                                           placeholder="Level Skip Requirements"/>
+                                </li>
+                                <div>
+                                    <!-- TODO: Put the data fields here! -->
+                                </div>
                             </ul>
                         </form>
                     </div>

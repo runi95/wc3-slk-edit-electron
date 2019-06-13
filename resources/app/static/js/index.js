@@ -226,6 +226,20 @@ const index = {
             addTableData(itemTableBody, "selectItem", message.payload);
         });
     },
+    loadAbilityMetaData: function () {
+        const message = {name: "loadAbilityMetaData", payload: null};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors|
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            Object.keys(message.payload).forEach(key => {
+                message.payload[key]
+            })
+        });
+    },
     loadSlk: function () {
         const message = {name: "loadSlk", payload: null};
         astilectron.sendMessage(message, function (message) {

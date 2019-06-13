@@ -8,7 +8,6 @@ import (
 	"github.com/asticode/go-astilog"
 	"github.com/pkg/errors"
 	"github.com/shibukawa/configdir"
-	"gopkg.in/volatiletech/null.v6"
 	"log"
 	"os"
 	"path/filepath"
