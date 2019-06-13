@@ -3941,10 +3941,10 @@
                                     <div class="input-group-text"><i class="fas fa-search"></i></div>
                                 </div>
                                 <input type="text" class="form-control" id="abilitySearchInput" placeholder="search"
-                                       oninput="index.itemSearch(this)">
+                                       oninput="index.abilitySearch(this)">
                                 <div style="display: flex; align-items: center;">
                                     <input type="checkbox" id="Ability-Regex-Toggle" style="margin-left: 5px;"
-                                           onchange="index.setItemRegexSearch(!isItemRegexSearch);" aria-label="Regex"
+                                           onchange="index.setAbilityRegexSearch(!isAbilityRegexSearch);" aria-label="Regex"
                                            tabindex="-1"/>
                                     <label for="Ability-Regex-Toggle"
                                            style="margin: auto 0 auto 3px; padding-bottom: 4px;">Regex</label>
@@ -3995,6 +3995,23 @@
                                            id="Ability-Code"
                                            aria-describedby="base ability"
                                            placeholder="Base Ability"/>
+                                </li>
+                                <li>
+                                    <label for="AbilityType">Ability Type</label>
+                                    <div id="AbilityType" style="display: flex; flex-flow: row nowrap; padding-left: 0.5rem;">
+                                        <div class="form-check" style="padding-right: 1.25rem;">
+                                            <input class="form-check-input" type="radio" name="AbilityType" id="AbilityType-Unit" value="unit">
+                                            <label class="form-check-label" for="AbilityType-Unit">Unit</label>
+                                        </div>
+                                        <div class="form-check" style="padding-right: 1.25rem;">
+                                            <input class="form-check-input" type="radio" name="AbilityType" id="AbilityType-Item" value="item">
+                                            <label class="form-check-label" for="AbilityType-Item">Item</label>
+                                        </div>
+                                        <div class="form-check" style="padding-right: 1.25rem;">
+                                            <input class="form-check-input" type="radio" name="AbilityType" id="AbilityType-Hero" value="hero" disabled>
+                                            <label class="form-check-label" for="AbilityType-Hero">Hero (Unimplemented)</label>
+                                        </div>
+                                    </div>
                                 </li>
                             </ul>
                         </form>
@@ -4170,9 +4187,9 @@
                                            placeholder="Special Attachment Point"/>
                                 </li>
                                 <li>
-                                    <label for="Ability-TargetArt">Target</label>
+                                    <label for="Ability-Targetart">Target</label>
                                     <input oninput="index.saveFieldToUnit(this)" type="text" class="form-control"
-                                           id="Ability-TargetArt"
+                                           id="Ability-Targetart"
                                            aria-describedby="target"
                                            placeholder="Target"/>
                                 </li>
@@ -4240,24 +4257,6 @@
                                            placeholder="Effect Sound (Looping)"/>
                                 </li>
                                 <li>
-                                    <label for="Ability-UseInEditor">Use In Editor</label>
-                                    <input oninput="index.saveFieldToAbility(this)" type="checkbox"
-                                           id="Ability-UseInEditor"
-                                           aria-label="use in editor" tabindex="-1"/>
-                                </li>
-                                <li>
-                                    <label for="Ability-Race">Race</label>
-                                    <input oninput="index.saveFieldToAbility(this)" type="checkbox"
-                                           id="Ability-Race"
-                                           aria-label="race" tabindex="-1"/>
-                                </li>
-                                <li>
-                                    <label for="Ability-CheckDep">Check Dependencies</label>
-                                    <input oninput="index.saveFieldToAbility(this)" type="checkbox"
-                                           id="Ability-CheckDep"
-                                           aria-label="check dependencies" tabindex="-1"/>
-                                </li>
-                                <li>
                                     <label for="Ability-Levels">Levels</label>
                                     <input oninput="index.saveFieldToAbility(this)" type="text" class="form-control"
                                            id="Ability-Levels"
@@ -4277,6 +4276,42 @@
                                            id="Ability-LevelSkip"
                                            aria-describedby="level skip requirements"
                                            placeholder="Level Skip Requirements"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-CheckDep">Check Dependencies</label>
+                                    <input oninput="index.saveFieldToAbility(this)" type="checkbox"
+                                           id="Ability-CheckDep"
+                                           aria-label="check dependencies" tabindex="-1"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-UseInEditor">Use In Editor</label>
+                                    <input oninput="index.saveFieldToAbility(this)" type="checkbox"
+                                           id="Ability-UseInEditor"
+                                           aria-label="use in editor" tabindex="-1"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Priority">Priority for Spell Steal</label>
+                                    <input oninput="index.saveFieldToAbility(this)" type="text" class="form-control"
+                                           id="Ability-Priority"
+                                           aria-describedby="priority for spell steal"
+                                           placeholder="Priority for Spell Steal"/>
+                                </li>
+                                <li>
+                                    <label for="Ability-Race">Race</label>
+                                    <select onchange="index.saveFieldToAbility(this)" id="Ability-Race"
+                                            class="custom-select">
+                                        <option value="commoner">Commoner</option>
+                                        <option value="creeps">Creep</option>
+                                        <option value="critters">Critter</option>
+                                        <option value="demon">Demon</option>
+                                        <option value="human">Human</option>
+                                        <option value="naga">Naga</option>
+                                        <option value="nightelf">Night Elf</option>
+                                        <option value="unknown">None</option>
+                                        <option value="orc">Orc</option>
+                                        <option value="other">Other</option>
+                                        <option value="undead">Undead</option>
+                                    </select>
                                 </li>
                                 <div>
                                     <!-- TODO: Put the data fields here! -->
