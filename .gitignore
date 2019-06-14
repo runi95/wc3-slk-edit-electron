@@ -11,3 +11,4 @@ windows.syso
 auto
 /disabled-inputs.json
 /config.json
+/resources/app/static/js/unused.js
