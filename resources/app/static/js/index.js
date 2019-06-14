@@ -204,20 +204,21 @@ const index = {
                 return;
             }
 
-
             Object.keys(message.payload).forEach(key => {
-                if (!message.payload[key].UseSpecific) {
+                const { UseSpecific } = message.payload[key];
+                if (!UseSpecific) {
                     console.log("Missing:", message.payload[key]);
                     return;
                 }
 
-                const useSpecificSplit = trimQuotes(message.payload[key].UseSpecific).split(",");
+                const useSpecificSplit = trimQuotes(UseSpecific).split(",");
                 useSpecificSplit.forEach(useSpecific => {
                     if (!abilityMetaDataFields.hasOwnProperty(useSpecific)) {
                         abilityMetaDataFields[useSpecific] = {};
                     }
 
-                    const addition = message.payload[key].Data === "0" ? "" : String.fromCharCode( parseInt(trimQuotes(message.payload[key].Data)) + 64);
+                    const { Data } = message.payload[key];
+                    const addition = Data === "0" ? "" : String.fromCharCode( parseInt(trimQuotes(Data)) + 64);
                     abilityMetaDataFields[useSpecific][trimQuotes(message.payload[key].Field) + addition] = {
                         DisplayName: trimQuotes(message.payload[key].DisplayName)
                     };
@@ -241,7 +242,8 @@ const index = {
                     fileInfoContainerString += '</ul><ul style="list-style: none; padding: 0;">';
                 }
 
-                fileInfoContainerString += '<li><span class="' + fileInfo.StatusClass + '">' + '<i class="fas ' + fileInfo.StatusIconClass + '"></i> ' + fileInfo.FileName + '</span></li>';
+                const { StatusClass, StatusIconClass, FileName } = fileInfo;
+                fileInfoContainerString += '<li><span class="' + StatusClass + '">' + '<i class="fas ' + StatusIconClass + '"></i> ' + FileName + '</span></li>';
                 i++;
             });
 
@@ -282,9 +284,9 @@ const index = {
         let filteredAbilityDataList;
         if (isAbilityRegexSearch) {
             const regex = new RegExp(inputField.value, "i");
-            filteredAbilityDataList = abilityDataList.filter(abilityData => (abilityData.Name + abilityData.Alias + abilityData.EditorSuffix).match(regex));
+            filteredAbilityDataList = abilityDataList.filter(abilityData => (abilityData.Name + abilityData.Id + abilityData.EditorSuffix).match(regex));
         } else {
-            filteredAbilityDataList = abilityDataList.filter(abilityData => (abilityData.Name + abilityData.Alias + abilityData.EditorSuffix).includes(inputField.value));
+            filteredAbilityDataList = abilityDataList.filter(abilityData => (abilityData.Name + abilityData.Id + abilityData.EditorSuffix).includes(inputField.value));
         }
 
         const abilityTableBody = document.getElementById("abilityTableBody");
@@ -311,10 +313,11 @@ const index = {
             }
 
             if (!message.payload.Buttonpos || message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
-                if (!message.payload.ButtonposX || message.payload.ButtonposX === "" || message.payload.ButtonposX === "_" || message.payload.ButtonposX === "-" || !message.payload.ButtonposY || message.payload.ButtonposY === "" || message.payload.ButtonposY === "_" || message.payload.ButtonposY === "-") {
+                const { ButtonposX, ButtonposY } = message.payload;
+                if (!ButtonposX || ButtonposX === "" || ButtonposX === "_" || ButtonposX === "-" || !ButtonposY || ButtonposY === "" || ButtonposY === "_" || ButtonposY === "-") {
                     message.payload.Buttonpos = "0,0";
                 } else {
-                    message.payload.Buttonpos = message.payload.ButtonposX + "," + message.payload.ButtonposY;
+                    message.payload.Buttonpos = ButtonposX + "," + ButtonposY;
                 }
             }
 
@@ -373,10 +376,11 @@ const index = {
             }
 
             if (!message.payload.Buttonpos || message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
-                if (!message.payload.ButtonposX || message.payload.ButtonposX === "" || message.payload.ButtonposX === "_" || message.payload.ButtonposX === "-" || !message.payload.ButtonposY || message.payload.ButtonposY === "" || message.payload.ButtonposY === "_" || message.payload.ButtonposY === "-") {
+                const { ButtonposX, ButtonposY } = message.payload;
+                if (!ButtonposX || ButtonposX === "" || ButtonposX === "_" || ButtonposX === "-" || !ButtonposY || ButtonposY === "" || ButtonposY === "_" || ButtonposY === "-") {
                     message.payload.Buttonpos = "0,0";
                 } else {
-                    message.payload.Buttonpos = message.payload.ButtonposX + "," + message.payload.ButtonposY;
+                    message.payload.Buttonpos = ButtonposX + "," + ButtonposY;
                 }
             }
 
@@ -435,18 +439,20 @@ const index = {
             }
 
             if (!message.payload.Buttonpos || message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
-                if (!message.payload.ButtonposX || message.payload.ButtonposX === "" || message.payload.ButtonposX === "_" || message.payload.ButtonposX === "-" || !message.payload.ButtonposY || message.payload.ButtonposY === "" || message.payload.ButtonposY === "_" || message.payload.ButtonposY === "-") {
+                const { ButtonposX, ButtonposY } = message.payload;
+                if (!ButtonposX || ButtonposX === "" || ButtonposX === "_" || ButtonposX === "-" || !ButtonposY || ButtonposY === "" || ButtonposY === "_" || ButtonposY === "-") {
                     message.payload.Buttonpos = "0,0";
                 } else {
-                    message.payload.Buttonpos = message.payload.ButtonposX + "," + message.payload.ButtonposY;
+                    message.payload.Buttonpos = ButtonposX + "," + ButtonposY;
                 }
             }
 
             if (!message.payload.Unbuttonpos || message.payload.Unbuttonpos === "" || message.payload.Unbuttonpos === "_" || message.payload.Unbuttonpos === "-") {
-                if (!message.payload.UnbuttonposX || message.payload.UnbuttonposX === "" || message.payload.UnbuttonposX === "_" || message.payload.UnbuttonposX === "-" || !message.payload.UnbuttonposY || message.payload.UnbuttonposY === "" || message.payload.UnbuttonposY === "_" || message.payload.UnbuttonposY === "-") {
+                const { UnbuttonposX, UnbuttonposY } = message.payload;
+                if (!UnbuttonposX || UnbuttonposX === "" || UnbuttonposX === "_" || UnbuttonposX === "-" || !UnbuttonposY || UnbuttonposY === "" || UnbuttonposY === "_" || UnbuttonposY === "-") {
                     message.payload.Unbuttonpos = "0,0";
                 } else {
-                    message.payload.Unbuttonpos = message.payload.UnbuttonposX + "," + message.payload.UnbuttonposY;
+                    message.payload.Unbuttonpos = UnbuttonposX + "," + UnbuttonposY;
                 }
             }
 
@@ -480,9 +486,10 @@ const index = {
                             } else if (levelDependentKey === "Rng") {
                                 dependentDataDisplayName = "Cast Range";
                             } else {
-                                const code = trimQuotes(message.payload.Code);
-                                if (abilityMetaDataFields.hasOwnProperty(code) && abilityMetaDataFields[code].hasOwnProperty(levelDependentKey)) {
-                                    dependentDataDisplayName = abilityMetaDataFields[code][levelDependentKey].DisplayName;
+                                const { Code } = message.payload;
+                                const trimmedCode = trimQuotes(Code);
+                                if (abilityMetaDataFields.hasOwnProperty(trimmedCode) && abilityMetaDataFields[trimmedCode].hasOwnProperty(levelDependentKey)) {
+                                    dependentDataDisplayName = abilityMetaDataFields[trimmedCode][levelDependentKey].DisplayName;
                                 }
                             }
 
@@ -803,14 +810,15 @@ const index = {
             unit.Ubertip = "\"" + unit.Ubertip + "\"";
         }
 
-        unit.SLKUnit.SortAbil = "\"z3\"";
-
+        unit.SortAbil = "\"z3\"";
         unit.SortBalance = "\"z3\"";
         unit.Sort2 = "\"zzm\"";
         if (!unit.Type) {
             unit.Type = "\"_\"";
         }
-        unit.RealHP = unit.HP;
+
+        const { HP } = unit;
+        unit.RealHP = HP;
         if (!unit.Def) {
             unit.Def = "\"0\"";
         }
@@ -945,10 +953,11 @@ const index = {
             if (oldUnit) {
                 unitDataList[oldUnit] = {Id: unitId, Name: unit.Name};
             } else {
+                const { Name, Editorsuffix } = unit;
                 unitDataList.push({
                     Id: unitId,
-                    Name: unit.Name,
-                    EditorSuffix: unit.Editorsuffix
+                    Name,
+                    EditorSuffix: Editorsuffix
                 });
             }
 
@@ -1019,22 +1028,24 @@ const index = {
                 return;
             }
 
-            message.payload.Units.forEach(unitModel => {
+            const { Units, Abilities, Missiles, Items } = message.payload;
+
+            Units.forEach(unitModel => {
                 modelNameToPath[unitModel.Name.toLowerCase()] = unitModel.Path;
                 modelPathToName[unitModel.Path.toLowerCase()] = unitModel.Name.toLowerCase();
             });
 
-            message.payload.Abilities.forEach(unitModel => {
+            Abilities.forEach(unitModel => {
                 modelNameToPath[unitModel.Name.toLowerCase()] = unitModel.Path;
                 modelPathToName[unitModel.Path.toLowerCase()] = unitModel.Name.toLowerCase();
             });
 
-            message.payload.Missiles.forEach(missileModel => {
+            Missiles.forEach(missileModel => {
                 modelNameToPath[missileModel.Name.toLowerCase()] = missileModel.Path;
                 modelPathToName[missileModel.Path.toLowerCase()] = missileModel.Name.toLowerCase();
             });
 
-            message.payload.Items.forEach(itemModel => {
+            Items.forEach(itemModel => {
                 modelNameToPath[itemModel.Name.toLowerCase()] = itemModel.Path;
                 modelPathToName[itemModel.Path.toLowerCase()] = itemModel.Name.toLowerCase();
             });
@@ -1043,28 +1054,28 @@ const index = {
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace("Name"),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 identify: function (obj) { return obj.Name; },
-                local: message.payload.Units
+                local: Units
             });
 
             const abilityModels = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace("Name"),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 identify: function (obj) { return obj.Name; },
-                local: message.payload.Abilities
+                local: Abilities
             });
 
             const missileModels = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace("Name"),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 identify: function (obj) { return obj.Name; },
-                local: message.payload.Missiles
+                local: Missiles
             });
 
             const itemModels = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace("Name"),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
                 identify: function (obj) { return obj.Name; },
-                local: message.payload.Items
+                local: Items
             });
 
             const unitsWithDefaults = (q, sync) => {
@@ -1115,7 +1126,7 @@ const index = {
                 {
                     name: "unit-models",
                     display: "Name",
-                    limit: message.payload.Units.length,
+                    limit: Units.length,
                     source: unitsWithDefaults,
                     templates: {
                         header: '<h3 class="model-group">Units</h3>'
@@ -1124,7 +1135,7 @@ const index = {
                 {
                     name: "ability-models",
                     display: "Name",
-                    limit: message.payload.Abilities.length,
+                    limit: Abilities.length,
                     source: abilitiesWithDefaults,
                     templates: {
                         header: '<h3 class="model-group">Abilities</h3>'
@@ -1133,7 +1144,7 @@ const index = {
                 {
                     name: "missile-models",
                     display: "Name",
-                    limit: message.payload.Missiles.length,
+                    limit: Missiles.length,
                     source: missilesWithDefaults,
                     templates: {
                         header: '<h3 class="model-group">Missiles</h3>'
@@ -1142,7 +1153,7 @@ const index = {
                 {
                     name: "item-models",
                     display: "Name",
-                    limit: message.payload.Items.length,
+                    limit: Items.length,
                     source: itemsWithDefaults,
                     templates: {
                         header: '<h3 class="model-group">Items</h3>'
@@ -1188,10 +1199,11 @@ const index = {
 
             document.getElementById("configInput").value = message.payload.InDir;
             document.getElementById("configOutput").value = message.payload.OutDir;
-            index.disableInputs(message.payload.IsLocked);
-            index.setUnitRegexSearch(message.payload.IsRegexSearch);
-            index.setItemRegexSearch(message.payload.IsRegexSearch);
-            index.setAbilityRegexSearch(message.payload.IsRegexSearch);
+            const { IsLocked, IsRegexSearch } = message.payload;
+            index.disableInputs(IsLocked);
+            index.setUnitRegexSearch(IsRegexSearch);
+            index.setItemRegexSearch(IsRegexSearch);
+            index.setAbilityRegexSearch(IsRegexSearch);
 
             index.loadVersion();
         });
@@ -1588,8 +1600,9 @@ const index = {
                 return;
             }
 
-            index.selectItemFromId(message.payload.ItemID);
-            itemDataList.push({Id: message.payload.ItemID, Name: message.payload.Name});
+            const { ItemID } = message.payload;
+            index.selectItemFromId(ItemID);
+            itemDataList.push({Id: ItemID, Name: message.payload.Name});
             index.itemSearch(document.getElementById("itemSearchInput"));
 
             $('#new-item-modal').modal('toggle');
