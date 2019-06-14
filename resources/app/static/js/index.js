@@ -416,7 +416,6 @@ const index = {
                 message.payload.Ubertip = trimQuotes(message.payload.Ubertip).replace(new RegExp("\\|n", "g"), "\n");
             }
 
-
             const {Buttonpos, ButtonposX, ButtonposY} = message.payload;
             message.payload.Buttonpos = getSanitizedButtonpos(Buttonpos, ButtonposX, ButtonposY);
 
@@ -429,7 +428,7 @@ const index = {
             }
 
             let updatedHtml = "";
-            const { LevelDependentData } = message.payload;
+            const {LevelDependentData} = message.payload;
             for (let i = 0; LevelDependentData && i < LevelDependentData.length; i++) {
                 Object.keys(LevelDependentData[i]).forEach(levelDependentKey => {
                     const dependentDataId = "Ability-LevelDependentData-" + i + "-" + levelDependentKey;
@@ -462,7 +461,7 @@ const index = {
 
                     const value = trimQuotes(LevelDependentData[i][levelDependentKey] ? LevelDependentData[i][levelDependentKey] : "");
                     if (dependentDataDisplayName) {
-                        updatedHtml += '<li><label for="' + dependentDataId + '">' + dependentDataDisplayName + ' - ' + (i + 1) + '</label><input oninput="index.saveFieldToAbility(this)" type="text" class="form-control" id="' + dependentDataId + '" placeholder="' + dependentDataDisplayName + '" value="' + value + '"/></li>';
+                        updatedHtml += '<li><label for="' + dependentDataId + '">' + dependentDataDisplayName + ' - ' + (i + 1) + '</label><input oninput="index.saveLevelDependentAbilityField(this)" type="text" class="form-control" id="' + dependentDataId + '" placeholder="' + dependentDataDisplayName + '" value="' + value + '"/></li>';
                     }
                 });
             }
@@ -548,6 +547,29 @@ const index = {
 
                     index.unitSearch(document.getElementById("unitSearchInput"));
                 }
+            }
+        });
+    },
+    saveLevelDependentAbilityField: function (input) {
+        if (!document.getElementById("abilityID-form").checkValidity())
+            return;
+
+        const field = input.id;
+        const value = input.value.replace(new RegExp("\n", "g"), "|n");
+        const id = document.getElementById("Ability-Alias").value;
+        const fieldToSave = {Field: field, Value: value, Id: id};
+        const message = {name: "saveLevelDependentAbilityField", payload: fieldToSave};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            if (!isUnsaved) {
+                isUnsaved = true;
+                document.getElementById("savedSpan").hidden = true;
+                document.getElementById("unsavedSpan").hidden = false;
             }
         });
     },
