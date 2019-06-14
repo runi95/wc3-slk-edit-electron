@@ -423,51 +423,54 @@ const index = {
             const {Unbuttonpos, UnbuttonposX, UnbuttonposY} = message.payload;
             message.payload.Unbuttonpos = getSanitizedButtonpos(Unbuttonpos, UnbuttonposX, UnbuttonposY);
 
+            const levelDependentDataElem = document.getElementById("abilityLevelDependentData");
+            while (levelDependentDataElem.firstElementChild) {
+                levelDependentDataElem.firstElementChild.remove();
+            }
+
+            let updatedHtml = "";
+            const { LevelDependentData } = message.payload;
+            for (let i = 0; LevelDependentData && i < LevelDependentData.length; i++) {
+                Object.keys(LevelDependentData[i]).forEach(levelDependentKey => {
+                    const dependentDataId = "Ability-LevelDependentData-" + i + "-" + levelDependentKey;
+                    let dependentDataDisplayName;
+                    if (levelDependentKey === "UnitID" || levelDependentKey === "BuffID" || levelDependentKey === "EfctID") {
+                        return;
+                    } else if (levelDependentKey === "Targs") {
+                        dependentDataDisplayName = "Targets Allowed";
+                    } else if (levelDependentKey === "Cast") {
+                        dependentDataDisplayName = "Casting Time";
+                    } else if (levelDependentKey === "Dur") {
+                        dependentDataDisplayName = "Duration - Normal";
+                    } else if (levelDependentKey === "HeroDur") {
+                        dependentDataDisplayName = "Duration - Hero";
+                    } else if (levelDependentKey === "Cool") {
+                        dependentDataDisplayName = "Cooldown";
+                    } else if (levelDependentKey === "Cost") {
+                        dependentDataDisplayName = "Mana Cost";
+                    } else if (levelDependentKey === "Area") {
+                        dependentDataDisplayName = "Area of Effect";
+                    } else if (levelDependentKey === "Rng") {
+                        dependentDataDisplayName = "Cast Range";
+                    } else {
+                        const {Code} = message.payload;
+                        const trimmedCode = trimQuotes(Code);
+                        if (abilityMetaDataFields.hasOwnProperty(trimmedCode) && abilityMetaDataFields[trimmedCode].hasOwnProperty(levelDependentKey)) {
+                            dependentDataDisplayName = abilityMetaDataFields[trimmedCode][levelDependentKey].DisplayName;
+                        }
+                    }
+
+                    const value = trimQuotes(LevelDependentData[i][levelDependentKey] ? LevelDependentData[i][levelDependentKey] : "");
+                    if (dependentDataDisplayName) {
+                        updatedHtml += '<li><label for="' + dependentDataId + '">' + dependentDataDisplayName + ' - ' + (i + 1) + '</label><input oninput="index.saveFieldToAbility(this)" type="text" class="form-control" id="' + dependentDataId + '" placeholder="' + dependentDataDisplayName + '" value="' + value + '"/></li>';
+                    }
+                });
+            }
+
+            levelDependentDataElem.innerHTML = updatedHtml;
+
             Object.keys(message.payload).forEach(slkAbilityKey => {
-                if (slkAbilityKey === "LevelDependentData") {
-                    const levelDependentDataElem = document.getElementById("abilityLevelDependentData");
-                    while (levelDependentDataElem.firstElementChild) {
-                        levelDependentDataElem.firstElementChild.remove();
-                    }
-                    let updatedHtml = "";
-                    for (let i = 0; i < message.payload[slkAbilityKey].length; i++) {
-                        Object.keys(message.payload[slkAbilityKey][i]).forEach(levelDependentKey => {
-                            const dependentDataId = "Ability-LevelDependentData-" + i + "-" + levelDependentKey;
-                            let dependentDataDisplayName;
-                            if (levelDependentKey === "UnitID" || levelDependentKey === "BuffID" || levelDependentKey === "EfctID") {
-                                return;
-                            } else if (levelDependentKey === "Targs") {
-                                dependentDataDisplayName = "Targets Allowed";
-                            } else if (levelDependentKey === "Cast") {
-                                dependentDataDisplayName = "Casting Time";
-                            } else if (levelDependentKey === "Dur") {
-                                dependentDataDisplayName = "Duration - Normal";
-                            } else if (levelDependentKey === "HeroDur") {
-                                dependentDataDisplayName = "Duration - Hero";
-                            } else if (levelDependentKey === "Cool") {
-                                dependentDataDisplayName = "Cooldown";
-                            } else if (levelDependentKey === "Cost") {
-                                dependentDataDisplayName = "Mana Cost";
-                            } else if (levelDependentKey === "Area") {
-                                dependentDataDisplayName = "Area of Effect";
-                            } else if (levelDependentKey === "Rng") {
-                                dependentDataDisplayName = "Cast Range";
-                            } else {
-                                const {Code} = message.payload;
-                                const trimmedCode = trimQuotes(Code);
-                                if (abilityMetaDataFields.hasOwnProperty(trimmedCode) && abilityMetaDataFields[trimmedCode].hasOwnProperty(levelDependentKey)) {
-                                    dependentDataDisplayName = abilityMetaDataFields[trimmedCode][levelDependentKey].DisplayName;
-                                }
-                            }
-
-                            if (dependentDataDisplayName) {
-                                updatedHtml += '<li><label for="' + dependentDataId + '">' + dependentDataDisplayName + ' - ' + (i + 1) + '</label><input oninput="index.saveFieldToAbility(this)" type="text" class="form-control" id="' + dependentDataId + '" placeholder="' + dependentDataDisplayName + '"/></li>';
-                            }
-                        });
-                    }
-
-                    levelDependentDataElem.innerHTML = updatedHtml;
-                } else {
+                if (slkAbilityKey !== "LevelDependentData") {
                     const value = trimQuotes(message.payload[slkAbilityKey] ? message.payload[slkAbilityKey] : "");
                     const elem = document.getElementById("Ability-" + slkAbilityKey);
                     if (elem) {
