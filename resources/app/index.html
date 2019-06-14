@@ -20,6 +20,7 @@
     <script src="static/lib/mdx-m3-viewer/js/common.js"></script>
     <script src="static/lib/mdx-m3-viewer/js/camera.js"></script>
     <script src="static/lib/mdx-m3-viewer/js/mdx.js"></script>
+    <script src="static/js/utility.js"></script>
     <script src="static/js/index.js"></script>
     <script>if (window.module) module = window.module;</script>
 </head>
@@ -53,19 +54,23 @@
                     <label>Filters:</label>
                     <div style="width: 100%; padding-right: 1.5rem; padding-left: 1.5rem; display: flex; flex-flow: row nowrap; justify-content: space-between;">
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="unit-filter" onclick="isUnitModelFilterChecked = this.checked" checked>
+                            <input type="checkbox" class="form-check-input" id="unit-filter"
+                                   onclick="isUnitModelFilterChecked = this.checked" checked>
                             <label class="form-check-label" for="unit-filter">Units</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="item-filter" onclick="isItemModelFilterChecked = this.checked" checked>
+                            <input type="checkbox" class="form-check-input" id="item-filter"
+                                   onclick="isItemModelFilterChecked = this.checked" checked>
                             <label class="form-check-label" for="item-filter">Items</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="ability-filter" onclick="isAbilityModelFilterChecked = this.checked" checked>
+                            <input type="checkbox" class="form-check-input" id="ability-filter"
+                                   onclick="isAbilityModelFilterChecked = this.checked" checked>
                             <label class="form-check-label" for="ability-filter">Abilities</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="missile-filter" onclick="isMissileModelFilterChecked = this.checked" checked>
+                            <input type="checkbox" class="form-check-input" id="missile-filter"
+                                   onclick="isMissileModelFilterChecked = this.checked" checked>
                             <label class="form-check-label" for="missile-filter">Missiles</label>
                         </div>
                     </div>
@@ -355,8 +360,8 @@
             <div class="div-btn mr-auto">
             <span id="new-unit-button" data-toggle="modal" data-target="#new-unit-modal"><i
                         class="fas fa-plus-circle"></i><span class="d-none d-xl-inline"> New unit...</span></span>
-            <span id="new-item-button" data-toggle="modal" data-target="#new-item-modal" hidden><i
-                        class="fas fa-plus-circle"></i><span class="d-none d-xl-inline"> New item...</span></span>
+                <span id="new-item-button" data-toggle="modal" data-target="#new-item-modal" hidden><i
+                            class="fas fa-plus-circle"></i><span class="d-none d-xl-inline"> New item...</span></span>
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content"
                     aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
@@ -3944,7 +3949,8 @@
                                        oninput="index.abilitySearch(this)">
                                 <div style="display: flex; align-items: center;">
                                     <input type="checkbox" id="Ability-Regex-Toggle" style="margin-left: 5px;"
-                                           onchange="index.setAbilityRegexSearch(!isAbilityRegexSearch);" aria-label="Regex"
+                                           onchange="index.setAbilityRegexSearch(!isAbilityRegexSearch);"
+                                           aria-label="Regex"
                                            tabindex="-1"/>
                                     <label for="Ability-Regex-Toggle"
                                            style="margin: auto 0 auto 3px; padding-bottom: 4px;">Regex</label>
@@ -3966,7 +3972,8 @@
                         </table>
                     </div>
                     <div class="form-dark">
-                        <button class="btn btn-block" onclick="index.removeAbility()" id="removeAbilityButton">✖ Remove Ability
+                        <button class="btn btn-block" onclick="index.removeAbility()" id="removeAbilityButton">✖ Remove
+                            Ability
                         </button>
                     </div>
                 </div>
@@ -3998,18 +4005,23 @@
                                 </li>
                                 <li>
                                     <label for="AbilityType">Ability Type</label>
-                                    <div id="AbilityType" style="display: flex; flex-flow: row nowrap; padding-left: 0.5rem;">
+                                    <div id="AbilityType"
+                                         style="display: flex; flex-flow: row nowrap; padding-left: 0.5rem;">
                                         <div class="form-check" style="padding-right: 1.25rem;">
-                                            <input class="form-check-input" type="radio" name="AbilityType" id="AbilityType-Unit" value="unit">
+                                            <input class="form-check-input" type="radio" name="AbilityType"
+                                                   id="AbilityType-Unit" value="unit">
                                             <label class="form-check-label" for="AbilityType-Unit">Unit</label>
                                         </div>
                                         <div class="form-check" style="padding-right: 1.25rem;">
-                                            <input class="form-check-input" type="radio" name="AbilityType" id="AbilityType-Item" value="item">
+                                            <input class="form-check-input" type="radio" name="AbilityType"
+                                                   id="AbilityType-Item" value="item">
                                             <label class="form-check-label" for="AbilityType-Item">Item</label>
                                         </div>
                                         <div class="form-check" style="padding-right: 1.25rem;">
-                                            <input class="form-check-input" type="radio" name="AbilityType" id="AbilityType-Hero" value="hero" disabled>
-                                            <label class="form-check-label" for="AbilityType-Hero">Hero (Unimplemented)</label>
+                                            <input class="form-check-input" type="radio" name="AbilityType"
+                                                   id="AbilityType-Hero" value="hero" disabled>
+                                            <label class="form-check-label" for="AbilityType-Hero">Hero
+                                                (Unimplemented)</label>
                                         </div>
                                     </div>
                                 </li>
@@ -4258,10 +4270,20 @@
                                 </li>
                                 <li>
                                     <label for="Ability-Levels">Levels</label>
-                                    <input oninput="index.saveFieldToAbility(this)" type="text" class="form-control"
-                                           id="Ability-Levels"
-                                           aria-describedby="levels"
-                                           placeholder="Levels"/>
+                                    <select onchange="index.saveFieldToAbility(this)" id="Ability-Levels"
+                                            class="custom-select">
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
                                 </li>
                                 <li>
                                     <label for="Ability-ReqLevel">Required Level</label>
@@ -4314,7 +4336,7 @@
                                     </select>
                                 </li>
                                 <div>
-                                    <!-- TODO: Put the data fields here! -->
+                                    <ul id="abilityLevelDependentData" class="flex-outer"></ul>
                                 </div>
                             </ul>
                         </form>

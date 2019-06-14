@@ -35,12 +35,13 @@ const (
 
 var (
 	// Private Variables
-	unitMap            map[string]*models.SLKUnit
-	itemMap            map[string]*models.SLKItem
-	abilityMap         map[string]*models.SLKAbility
-	abilityMetaDataMap map[string]*models.AbilityMetaData
-	lastValidUnitIndex int
-	lastValidItemIndex int
+	unitMap               map[string]*models.SLKUnit
+	itemMap               map[string]*models.SLKItem
+	abilityMap            map[string]*models.SLKAbility
+	abilityMetaDataMap    map[string]*models.AbilityMetaData
+	lastValidUnitIndex    int
+	lastValidItemIndex    int
+	lastValidAbilityIndex int
 
 	// Private Initialized Variables
 	configDirs                             = configdir.New(VENDOR_NAME, "")
@@ -279,6 +280,23 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			log.Println(err)
 			payload = err.Error()
 		}
+	case "removeAbility":
+		var ability string
+		if len(m.Payload) > 0 {
+			if err = json.Unmarshal(m.Payload, &ability); err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+
+			delete(abilityMap, ability)
+			payload = ability
+		} else {
+			err = fmt.Errorf("invalid input")
+
+			log.Println(err)
+			payload = err.Error()
+		}
 	case "getDisabledInputs":
 		var isLocked bool
 		if len(m.Payload) > 0 {
@@ -369,10 +387,28 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			log.Println(err)
 			payload = err.Error()
 		}
+	case "selectAbility":
+		var abilityId string
+		if len(m.Payload) > 0 {
+			if err = json.Unmarshal(m.Payload, &abilityId); err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+
+			payload = abilityMap[abilityId]
+		} else {
+			err = fmt.Errorf("invalid input")
+
+			log.Println(err)
+			payload = err.Error()
+		}
 	case "generateUnitId":
 		payload = getNextValidUnitId(lastValidUnitIndex)
 	case "generateItemId":
 		payload = getNextValidItemId(lastValidItemIndex)
+	case "generateAbilityId":
+		payload = getNextValidAbilityId(lastValidAbilityIndex)
 	case "saveToFile":
 		if configuration.OutDir != nil {
 			saveUnitsToFile(*configuration.OutDir)
@@ -439,6 +475,19 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		}
 
 		payload = itemListData
+	case "loadAbilityData":
+		log.Println("abilityMap[Bvul]")
+		log.Println(abilityMap["Bvul"])
+		var abilityListData = make([]ListData, len(abilityMap))
+
+		i := 0
+		for k, v := range abilityMap {
+			// log.Printf("v(%v)\n", v)
+			abilityListData[i] = ListData{k, v.Name.String, v.Editorsuffix}
+			i++
+		}
+
+		payload = abilityListData
 	case "loadIcons":
 		iconModels := make(Models, 0, len(images))
 		for k := range images {
@@ -1533,11 +1582,31 @@ func saveConfigFile(fileName string, data []byte) error {
 	return folders[0].WriteFile(fileName, data)
 }
 
+func getNextValidAbilityId(offset int) string {
+	var str string
+
+	if offset > 16383 {
+		log.Println("Ran out of valid generated ability id's")
+		return ""
+	}
+
+	var firstChar string
+	firstChar = "A"
+
+	str = firstChar + intToHex(offset/256) + intToHex(int(offset/16)%16) + intToHex(offset%16)
+	if _, ok := abilityMap[str]; !ok {
+		lastValidAbilityIndex = offset
+		return str
+	}
+
+	return getNextValidAbilityId(offset + 1)
+}
+
 func getNextValidItemId(offset int) string {
 	var str string
 
 	if offset > 16383 {
-		log.Println("Ran out of valid generated unit id's")
+		log.Println("Ran out of valid generated item id's")
 		return ""
 	}
 
@@ -1545,8 +1614,8 @@ func getNextValidItemId(offset int) string {
 	firstChar = "I"
 
 	str = firstChar + intToHex(offset/256) + intToHex(int(offset/16)%16) + intToHex(offset%16)
-	if _, ok := unitMap[str]; !ok {
-		lastValidUnitIndex = offset
+	if _, ok := itemMap[str]; !ok {
+		lastValidItemIndex = offset
 		return str
 	}
 
@@ -1619,7 +1688,7 @@ func loadAbilityMetaData() error {
 		return err
 	}
 
-	abilityMetaDataPath := folders[0].Path + string(filepath.Separator) + "wc3-slk-edit-electron-resources-master" + string(filepath.Separator) + "AbilityMetaData.slk"
+	abilityMetaDataPath := folders[0].Path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "wc3-slk-edit-electron-resources-master" + string(filepath.Separator) + "AbilityMetaData.slk"
 	if flag, err := exists(abilityMetaDataPath); err != nil || !flag {
 		if err != nil {
 			log.Println(err)

@@ -1,65 +1,3 @@
-let unitDataList = [];
-let itemDataList = [];
-let isLocked = false;
-let isRegexSearch = false;
-let isItemRegexSearch = false;
-let isUnitModelFilterChecked = true;
-let isItemModelFilterChecked = true;
-let isAbilityModelFilterChecked = true;
-let isMissileModelFilterChecked = true;
-let selectedUnitId = null;
-let selectedItemId = null;
-let isUnsaved = false;
-let sortUnitNameState = 0;
-let sortUnitIdState = 0;
-let sortItemNameState = 0;
-let sortItemIdState = 0;
-let iconMode;
-let modelMode;
-const mdxModels = {};
-const modelNameToPath = {};
-const modelPathToName = {};
-const unitIconNameToPath = {};
-const unitIconPathToName = {};
-
-const sortNameAlphabetical = (a, b) => {
-    return a.Name > b.Name ? 1 : -1;
-};
-
-const sortNameInverse = (a, b) => {
-    return b.Name > a.Name ? 1 : -1;
-};
-
-const sortUnitIdAlphabetical = (a, b) => {
-    return a.UnitID > b.UnitID ? 1 : -1;
-};
-
-const sortUnitIdInverse = (a, b) => {
-    return b.UnitID > a.UnitID ? 1 : -1;
-};
-
-const sortItemIdAlphabetical = (a, b) => {
-    return a.ItemID > b.ItemID ? 1 : -1;
-};
-
-const sortItemIdInverse = (a, b) => {
-    return b.ItemID > a.ItemID ? 1 : -1;
-};
-
-const addTableData = (tableBody, onclickFunc, dataList) => {
-    let trList = "";
-    dataList.forEach(data => {
-        let str = '<tr id="' + data.Id + '" onclick="index.' + onclickFunc + '(this)"><th scope="row">' + data.Id + '</th><td>' + data.Name;
-        if (data.EditorSuffix) {
-            str += '<span class="text-secondary"> ' + data.EditorSuffix + '</span>';
-        }
-        str += '</td></tr>';
-        trList += str;
-    });
-
-    tableBody.innerHTML = trList;
-};
-
 const index = {
     multiColorTextarea: function (target, input) {
         const regex = new RegExp("\\|C([0-9A-F]{8})((?:(?!\\|C).)*)\\|R", "i");
@@ -198,6 +136,23 @@ const index = {
             index.itemSearch(document.getElementById("itemSearchInput"));
         })
     },
+    removeAbility: function () {
+        if (selectedAbilityId === null)
+            return;
+
+        const message = {name: "removeAbility", payload: selectedAbilityId};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            selectedAbilityId = null;
+            abilityDataList = abilityDataList.filter(ability => ability.Id !== message.payload);
+            index.abilitySearch(document.getElementById("abilitySearchInput"));
+        })
+    },
     loadUnitData: function () {
         const message = {name: "loadUnitData", payload: null};
         astilectron.sendMessage(message, function (message) {
@@ -226,6 +181,20 @@ const index = {
             addTableData(itemTableBody, "selectItem", message.payload);
         });
     },
+    loadAbilityData: function () {
+        const message = {name: "loadAbilityData", payload: null};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            abilityDataList = message.payload;
+            const abilityTableBody = document.getElementById("abilityTableBody");
+            addTableData(abilityTableBody, "selectAbility", message.payload);
+        });
+    },
     loadAbilityMetaData: function () {
         const message = {name: "loadAbilityMetaData", payload: null};
         astilectron.sendMessage(message, function (message) {
@@ -235,9 +204,25 @@ const index = {
                 return;
             }
 
+
             Object.keys(message.payload).forEach(key => {
-                message.payload[key]
-            })
+                if (!message.payload[key].UseSpecific) {
+                    console.log("Missing:", message.payload[key]);
+                    return;
+                }
+
+                const useSpecificSplit = trimQuotes(message.payload[key].UseSpecific).split(",");
+                useSpecificSplit.forEach(useSpecific => {
+                    if (!abilityMetaDataFields.hasOwnProperty(useSpecific)) {
+                        abilityMetaDataFields[useSpecific] = {};
+                    }
+
+                    const addition = message.payload[key].Data === "0" ? "" : String.fromCharCode( parseInt(trimQuotes(message.payload[key].Data)) + 64);
+                    abilityMetaDataFields[useSpecific][trimQuotes(message.payload[key].Field) + addition] = {
+                        DisplayName: trimQuotes(message.payload[key].DisplayName)
+                    };
+                });
+            });
         });
     },
     loadSlk: function () {
@@ -265,11 +250,13 @@ const index = {
 
             index.loadUnitData();
             index.loadItemData();
+            index.loadAbilityData();
+            index.loadAbilityMetaData();
         });
     },
     unitSearch: function (inputField) {
         let filteredUnitDataList;
-        if (isRegexSearch) {
+        if (isUnitRegexSearch) {
             const regex = new RegExp(inputField.value, "i");
             filteredUnitDataList = unitDataList.filter(unitData => (unitData.Name + unitData.Id + unitData.EditorSuffix).match(regex));
         } else {
@@ -291,6 +278,18 @@ const index = {
         const itemTableBody = document.getElementById("itemTableBody");
         addTableData(itemTableBody, "selectItem", filteredItemDataList);
     },
+    abilitySearch: function (inputField) {
+        let filteredAbilityDataList;
+        if (isAbilityRegexSearch) {
+            const regex = new RegExp(inputField.value, "i");
+            filteredAbilityDataList = abilityDataList.filter(abilityData => (abilityData.Name + abilityData.Alias + abilityData.EditorSuffix).match(regex));
+        } else {
+            filteredAbilityDataList = abilityDataList.filter(abilityData => (abilityData.Name + abilityData.Alias + abilityData.EditorSuffix).includes(inputField.value));
+        }
+
+        const abilityTableBody = document.getElementById("abilityTableBody");
+        addTableData(abilityTableBody, "selectAbility", filteredAbilityDataList);
+    },
     selectUnit: function (unitTableRow) {
         index.selectUnitFromId(unitTableRow.id);
     },
@@ -308,11 +307,7 @@ const index = {
             document.getElementById(unitId).setAttribute("class", "active");
 
             if (message.payload.Ubertip) {
-                const rawValue = message.payload.Ubertip;
-                const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
-                const trimmedLeft = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
-
-                message.payload.Ubertip = trimmedLeft.replace(new RegExp("\\|n", "g"), "\n");
+                message.payload.Ubertip = trimQuotes(message.payload.Ubertip).replace(new RegExp("\\|n", "g"), "\n");
             }
 
             if (!message.payload.Buttonpos || message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
@@ -324,9 +319,7 @@ const index = {
             }
 
             Object.keys(message.payload).forEach(slkUnitKey => {
-                const rawValue = message.payload[slkUnitKey] ? message.payload[slkUnitKey] : "";
-                const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
-                const value = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
+                const value = trimQuotes(message.payload[slkUnitKey] ? message.payload[slkUnitKey] : "");
                 const elem = document.getElementById("Unit-" + slkUnitKey);
                 if (elem) {
                     if (elem instanceof HTMLInputElement || elem instanceof HTMLSelectElement || elem instanceof HTMLTextAreaElement) {
@@ -376,11 +369,7 @@ const index = {
             document.getElementById(itemId).setAttribute("class", "active");
 
             if (message.payload.Ubertip) {
-                const rawValue = message.payload.Ubertip;
-                const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
-                const trimmedLeft = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
-
-                message.payload.Ubertip = trimmedLeft.replace(new RegExp("\\|n", "g"), "\n");
+                message.payload.Ubertip = trimQuotes(message.payload.Ubertip).replace(new RegExp("\\|n", "g"), "\n");
             }
 
             if (!message.payload.Buttonpos || message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
@@ -392,9 +381,7 @@ const index = {
             }
 
             Object.keys(message.payload).forEach(slkItemKey => {
-                const rawValue = message.payload[slkItemKey] ? message.payload[slkItemKey] : "";
-                const trimmedRight = rawValue.endsWith("\"") ? rawValue.substr(0, rawValue.length - 1) : rawValue;
-                const value = trimmedRight.startsWith("\"") ? trimmedRight.substr(1) : trimmedRight;
+                const value = trimQuotes(message.payload[slkItemKey] ? message.payload[slkItemKey] : "");
                 const elem = document.getElementById("Item-" + slkItemKey);
                 if (elem) {
                     if (elem instanceof HTMLInputElement || elem instanceof HTMLSelectElement || elem instanceof HTMLTextAreaElement) {
@@ -425,6 +412,120 @@ const index = {
 
             index.multiColorTextarea("item-preview", document.getElementById("Item-Ubertip"));
             index.loadIcon("itemIconImage", document.getElementById("Item-Art"));
+        });
+    },
+    selectAbility: function (abilityTableRow) {
+        index.selectAbilityFromId(abilityTableRow.id);
+    },
+    selectAbilityFromId: function (abilityId) {
+        selectedAbilityId = abilityId;
+        const message = {name: "selectAbility", payload: abilityId};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            $("#abilityTableBody>tr").removeClass("active");
+            document.getElementById(abilityId).setAttribute("class", "active");
+
+            if (message.payload.Ubertip) {
+                message.payload.Ubertip = trimQuotes(message.payload.Ubertip).replace(new RegExp("\\|n", "g"), "\n");
+            }
+
+            if (!message.payload.Buttonpos || message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
+                if (!message.payload.ButtonposX || message.payload.ButtonposX === "" || message.payload.ButtonposX === "_" || message.payload.ButtonposX === "-" || !message.payload.ButtonposY || message.payload.ButtonposY === "" || message.payload.ButtonposY === "_" || message.payload.ButtonposY === "-") {
+                    message.payload.Buttonpos = "0,0";
+                } else {
+                    message.payload.Buttonpos = message.payload.ButtonposX + "," + message.payload.ButtonposY;
+                }
+            }
+
+            if (!message.payload.Unbuttonpos || message.payload.Unbuttonpos === "" || message.payload.Unbuttonpos === "_" || message.payload.Unbuttonpos === "-") {
+                if (!message.payload.UnbuttonposX || message.payload.UnbuttonposX === "" || message.payload.UnbuttonposX === "_" || message.payload.UnbuttonposX === "-" || !message.payload.UnbuttonposY || message.payload.UnbuttonposY === "" || message.payload.UnbuttonposY === "_" || message.payload.UnbuttonposY === "-") {
+                    message.payload.Unbuttonpos = "0,0";
+                } else {
+                    message.payload.Unbuttonpos = message.payload.UnbuttonposX + "," + message.payload.UnbuttonposY;
+                }
+            }
+
+            Object.keys(message.payload).forEach(slkAbilityKey => {
+                if (slkAbilityKey === "LevelDependentData") {
+                    const levelDependentDataElem = document.getElementById("abilityLevelDependentData");
+                    while (levelDependentDataElem.firstElementChild) {
+                        levelDependentDataElem.firstElementChild.remove();
+                    }
+                    let updatedHtml = "";
+                    for (let i = 0; i < message.payload[slkAbilityKey].length; i++) {
+                        Object.keys(message.payload[slkAbilityKey][i]).forEach(levelDependentKey => {
+                            const dependentDataId = "Ability-LevelDependentData-" + i + "-" + levelDependentKey;
+                            let dependentDataDisplayName;
+                            if (levelDependentKey === "UnitID" || levelDependentKey === "BuffID" || levelDependentKey === "EfctID") {
+                                return;
+                            } else if (levelDependentKey === "Targs") {
+                                dependentDataDisplayName = "Targets Allowed";
+                            } else if (levelDependentKey === "Cast") {
+                                dependentDataDisplayName = "Casting Time";
+                            } else if (levelDependentKey === "Dur") {
+                                dependentDataDisplayName = "Duration - Normal";
+                            } else if (levelDependentKey === "HeroDur") {
+                                dependentDataDisplayName = "Duration - Hero";
+                            } else if (levelDependentKey === "Cool") {
+                                dependentDataDisplayName = "Cooldown";
+                            } else if (levelDependentKey === "Cost") {
+                                dependentDataDisplayName = "Mana Cost";
+                            } else if (levelDependentKey === "Area") {
+                                dependentDataDisplayName = "Area of Effect";
+                            } else if (levelDependentKey === "Rng") {
+                                dependentDataDisplayName = "Cast Range";
+                            } else {
+                                const code = trimQuotes(message.payload.Code);
+                                if (abilityMetaDataFields.hasOwnProperty(code) && abilityMetaDataFields[code].hasOwnProperty(levelDependentKey)) {
+                                    dependentDataDisplayName = abilityMetaDataFields[code][levelDependentKey].DisplayName;
+                                }
+                            }
+
+                            if (dependentDataDisplayName) {
+                                updatedHtml += '<li><label for="' + dependentDataId + '">' + dependentDataDisplayName + ' - ' + (i + 1) + '</label><input oninput="index.saveFieldToAbility(this)" type="text" class="form-control" id="' + dependentDataId + '" placeholder="' + dependentDataDisplayName + '"/></li>';
+                            }
+                        });
+                    }
+
+                    levelDependentDataElem.innerHTML = updatedHtml;
+                } else {
+                    const value = trimQuotes(message.payload[slkAbilityKey] ? message.payload[slkAbilityKey] : "");
+                    const elem = document.getElementById("Ability-" + slkAbilityKey);
+                    if (elem) {
+                        if (elem instanceof HTMLInputElement || elem instanceof HTMLSelectElement || elem instanceof HTMLTextAreaElement) {
+                            const type = elem.type;
+
+                            if (type === "text" || type === "textarea" || type === "select-one") {
+                                elem.value = value;
+                            } else if (type === "checkbox") {
+                                elem.checked = value === "1";
+                            }
+                        } else if (elem.id === "Ability-Buttonpos") {
+                            const buttonpos = message.payload[slkAbilityKey];
+                            if (!buttonpos || buttonpos === "-" || buttonpos === "_") {
+                                elem.value = "0,0"
+                            } else {
+                                elem.value = buttonpos;
+                            }
+                        } else if (elem.classList.contains("multi-check")) {
+                            const childInputs = $("#Ability-" + slkAbilityKey + " :input");
+                            const valueSplit = value.split(",");
+                            const valueLower = valueSplit.map(val => val.toLowerCase());
+                            for (let i = 0; i < childInputs.length; i++) {
+                                childInputs[i].checked = valueLower.includes(childInputs[i].value.toLowerCase());
+                            }
+                        }
+                    }
+                }
+            });
+
+            // index.multiColorTextarea("ability-preview", document.getElementById("Ability-Ubertip"));
+            // index.loadIcon("abilityIconImage", document.getElementById("Ability-Art"));
         });
     },
     saveToFile: function () {
@@ -477,6 +578,9 @@ const index = {
                 }
             }
         });
+    },
+    saveFieldToAbility: function (input) {
+        index.saveField(input, "abilityID-form", "Ability-Alias");
     },
     saveFieldToItem: function (input) {
         index.saveField(input, "itemID-form", "Item-ItemID");
@@ -1086,6 +1190,8 @@ const index = {
             document.getElementById("configOutput").value = message.payload.OutDir;
             index.disableInputs(message.payload.IsLocked);
             index.setUnitRegexSearch(message.payload.IsRegexSearch);
+            index.setItemRegexSearch(message.payload.IsRegexSearch);
+            index.setAbilityRegexSearch(message.payload.IsRegexSearch);
 
             index.loadVersion();
         });
@@ -1150,6 +1256,18 @@ const index = {
             }
 
             document.getElementById("Item-ItemID").value = message.payload;
+        });
+    },
+    generateAbilityId: function () {
+        const message = {name: "generateAbilityId", payload: null};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            document.getElementById("Ability-Alias").value = message.payload;
         });
     },
     generateUnitTooltip: function () {
@@ -1278,8 +1396,8 @@ const index = {
                 return;
             }
 
-            isRegexSearch = bool;
-            document.getElementById("Unit-Regex-Toggle").checked = isRegexSearch;
+            isUnitRegexSearch = bool;
+            document.getElementById("Unit-Regex-Toggle").checked = isUnitRegexSearch;
             index.unitSearch(document.getElementById("unitSearchInput"));
         });
     },
@@ -1297,85 +1415,81 @@ const index = {
             index.itemSearch(document.getElementById("itemSearchInput"));
         });
     },
-    sortUnitName: function () {
-        sortUnitNameState = (sortUnitNameState + 1) % 3;
-        sortUnitIdState = 0;
-        const sortList = unitDataList.slice(0);
+    setAbilityRegexSearch: function (bool) {
+        const message = {name: "setRegexSearch", payload: bool};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
 
-        if (sortUnitNameState === 0) {
-            document.getElementById("unit-name-sort-icon").setAttribute("class", "fas fa-sort");
-            document.getElementById("unit-id-sort-icon").setAttribute("class", "fas fa-sort");
-        } else if (sortUnitNameState === 1) {
-            document.getElementById("unit-name-sort-icon").setAttribute("class", "fas fa-sort-up");
-            document.getElementById("unit-id-sort-icon").setAttribute("class", "fas fa-sort");
+            isAbilityRegexSearch = bool;
+            document.getElementById("Ability-Regex-Toggle").checked = isAbilityRegexSearch;
+            index.itemSearch(document.getElementById("abilitySearchInput"));
+        });
+    },
+    sortName: function (elementPrefixId, tableBodyId, onclickFuncName, sortIdState, sortList) {
+        if (sortIdState === 0) {
+            document.getElementById(`${elementPrefixId}-name-sort-icon`).setAttribute("class", "fas fa-sort");
+            document.getElementById(`${elementPrefixId}-id-sort-icon`).setAttribute("class", "fas fa-sort");
+        } else if (sortIdState === 1) {
+            document.getElementById(`${elementPrefixId}-name-sort-icon`).setAttribute("class", "fas fa-sort-up");
+            document.getElementById(`${elementPrefixId}-id-sort-icon`).setAttribute("class", "fas fa-sort");
             sortList.sort(sortNameAlphabetical);
         } else {
-            document.getElementById("unit-name-sort-icon").setAttribute("class", "fas fa-sort-down");
-            document.getElementById("unit-id-sort-icon").setAttribute("class", "fas fa-sort");
+            document.getElementById(`${elementPrefixId}-name-sort-icon`).setAttribute("class", "fas fa-sort-down");
+            document.getElementById(`${elementPrefixId}-id-sort-icon`).setAttribute("class", "fas fa-sort");
             sortList.sort(sortNameInverse);
         }
 
-        addTableData(document.getElementById("unitTableBody"), "selectUnit", sortList);
+        addTableData(document.getElementById(tableBodyId), onclickFuncName, sortList);
     },
-    sortUnitId: function () {
-        sortUnitIdState = (sortUnitIdState + 1) % 3;
-        sortUnitNameState = 0;
-        const sortList = unitDataList.slice(0);
-
-        if (sortUnitIdState === 0) {
-            document.getElementById("unit-id-sort-icon").setAttribute("class", "fas fa-sort");
-            document.getElementById("unit-name-sort-icon").setAttribute("class", "fas fa-sort");
-        } else if (sortUnitIdState === 1) {
-            document.getElementById("unit-id-sort-icon").setAttribute("class", "fas fa-sort-up");
-            document.getElementById("unit-name-sort-icon").setAttribute("class", "fas fa-sort");
-            sortList.sort(sortUnitIdAlphabetical);
-        } else {
-            document.getElementById("unit-id-sort-icon").setAttribute("class", "fas fa-sort-down");
-            document.getElementById("unit-name-sort-icon").setAttribute("class", "fas fa-sort");
-            sortList.sort(sortUnitIdInverse);
-        }
-
-        addTableData(document.getElementById("unitTableBody"), "selectUnit", sortList);
+    sortUnitName: function () {
+        sortUnitNameState = (sortUnitNameState + 1) % 3;
+        sortUnitIdState = 0;
+        index.sortName("unit", "unitTableBody", "selectUnit", sortUnitNameState, unitDataList.slice(0));
     },
     sortItemName: function () {
         sortItemNameState = (sortItemNameState + 1) % 3;
         sortItemIdState = 0;
-        const sortList = itemDataList.slice(0);
-
-        if (sortItemNameState === 0) {
-            document.getElementById("item-name-sort-icon").setAttribute("class", "fas fa-sort");
-            document.getElementById("item-id-sort-icon").setAttribute("class", "fas fa-sort");
-        } else if (sortItemNameState === 1) {
-            document.getElementById("item-name-sort-icon").setAttribute("class", "fas fa-sort-up");
-            document.getElementById("item-id-sort-icon").setAttribute("class", "fas fa-sort");
-            sortList.sort(sortNameAlphabetical);
+        index.sortName("item", "itemTableBody", "selectItem", sortItemNameState, itemDataList.slice(0));
+    },
+    sortAbilityName: function () {
+        sortAbilityNameState = (sortAbilityNameState + 1) % 3;
+        sortAbilityIdState = 0;
+        index.sortName("ability", "abilityTableBody", "selectAbility", sortAbilityNameState, abilityDataList.slice(0));
+    },
+    sortId: function (elementPrefixId, tableBodyId, onclickFuncName, sortIdState, sortList) {
+        if (sortIdState === 0) {
+            document.getElementById(`${elementPrefixId}-id-sort-icon`).setAttribute("class", "fas fa-sort");
+            document.getElementById(`${elementPrefixId}-name-sort-icon`).setAttribute("class", "fas fa-sort");
+        } else if (sortIdState === 1) {
+            document.getElementById(`${elementPrefixId}-id-sort-icon`).setAttribute("class", "fas fa-sort-up");
+            document.getElementById(`${elementPrefixId}-name-sort-icon`).setAttribute("class", "fas fa-sort");
+            sortList.sort(sortIdAlphabetical);
         } else {
-            document.getElementById("item-name-sort-icon").setAttribute("class", "fas fa-sort-down");
-            document.getElementById("item-id-sort-icon").setAttribute("class", "fas fa-sort");
-            sortList.sort(sortNameInverse);
+            document.getElementById(`${elementPrefixId}-id-sort-icon`).setAttribute("class", "fas fa-sort-down");
+            document.getElementById(`${elementPrefixId}-name-sort-icon`).setAttribute("class", "fas fa-sort");
+            sortList.sort(sortIdInverse);
         }
 
-        addTableData(document.getElementById("itemTableBody"), "selectItem", sortList);
+        addTableData(document.getElementById(tableBodyId), onclickFuncName, sortList);
+    },
+    sortUnitId: function () {
+        sortUnitIdState = (sortUnitIdState + 1) % 3;
+        sortUnitNameState = 0;
+        index.sortId("unit", "unitTableBody", "selectUnit", sortUnitIdState, unitDataList.slice(0));
     },
     sortItemId: function () {
         sortItemIdState = (sortItemIdState + 1) % 3;
         sortItemNameState = 0;
-        const sortList = itemDataList.slice(0);
-
-        if (sortItemIdState === 0) {
-            document.getElementById("item-id-sort-icon").setAttribute("class", "fas fa-sort");
-            document.getElementById("item-name-sort-icon").setAttribute("class", "fas fa-sort");
-        } else if (sortItemIdState === 1) {
-            document.getElementById("item-id-sort-icon").setAttribute("class", "fas fa-sort-up");
-            document.getElementById("item-name-sort-icon").setAttribute("class", "fas fa-sort");
-            sortList.sort(sortItemIdAlphabetical);
-        } else {
-            document.getElementById("item-id-sort-icon").setAttribute("class", "fas fa-sort-down");
-            document.getElementById("item-name-sort-icon").setAttribute("class", "fas fa-sort");
-            sortList.sort(sortItemIdInverse);
-        }
-
-        addTableData(document.getElementById("itemTableBody"), "selectItem", sortList);
+        index.sortId("item", "itemTableBody", "selectItem", sortItemIdState, itemDataList.slice(0));
+    },
+    sortAbilityId: function () {
+        sortAbilityIdState = (sortAbilityIdState + 1) % 3;
+        sortAbilityNameState = 0;
+        index.sortId("ability", "abilityTableBody", "selectAbility", sortAbilityIdState, abilityDataList.slice(0));
     },
     saveOptions: function () {
         const InDir = document.getElementById("configInput").value;
@@ -1484,7 +1598,7 @@ const index = {
     switchTab: function (containerId) {
         if (containerId === "units-container") {
             document.getElementById("items-container").hidden = true;
-            // document.getElementById("abilities-container").hidden = true;
+            document.getElementById("abilities-container").hidden = true;
             // document.getElementById("buffs-container").hidden = true;
             document.getElementById("new-item-button").hidden = true;
             document.getElementById("new-unit-button").hidden = false;
@@ -1497,7 +1611,7 @@ const index = {
             document.getElementById("units-tab").className = "nav-link active";
         } else if (containerId === "items-container") {
             document.getElementById("units-container").hidden = true;
-            // document.getElementById("abilities-container").hidden = true;
+            document.getElementById("abilities-container").hidden = true;
             // document.getElementById("buffs-container").hidden = true;
             document.getElementById("new-unit-button").hidden = true;
             document.getElementById("unit-nav-pills").hidden = true;
@@ -1512,7 +1626,7 @@ const index = {
             document.getElementById("units-container").hidden = true;
             document.getElementById("items-container").hidden = true;
             // document.getElementById("buffs-container").hidden = true;
-            // document.getElementById("abilities-container").hidden = false;
+            document.getElementById("abilities-container").hidden = false;
 
             document.getElementById("units-tab").className = "nav-link";
             document.getElementById("items-tab").className = "nav-link";
@@ -1521,7 +1635,7 @@ const index = {
         } else if (containerId === "buffs-container") {
             document.getElementById("units-container").hidden = true;
             document.getElementById("items-container").hidden = true;
-            // document.getElementById("abilities-container").hidden = true;
+            document.getElementById("abilities-container").hidden = true;
             // document.getElementById("buffs-container").hidden = false;
 
             document.getElementById("units-tab").className = "nav-link";
