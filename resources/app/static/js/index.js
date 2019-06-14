@@ -205,7 +205,7 @@ const index = {
             }
 
             Object.keys(message.payload).forEach(key => {
-                const { UseSpecific } = message.payload[key];
+                const {UseSpecific} = message.payload[key];
                 if (!UseSpecific) {
                     console.log("Missing:", message.payload[key]);
                     return;
@@ -217,8 +217,8 @@ const index = {
                         abilityMetaDataFields[useSpecific] = {};
                     }
 
-                    const { Data } = message.payload[key];
-                    const addition = Data === "0" ? "" : String.fromCharCode( parseInt(trimQuotes(Data)) + 64);
+                    const {Data} = message.payload[key];
+                    const addition = Data === "0" ? "" : String.fromCharCode(parseInt(trimQuotes(Data)) + 64);
                     abilityMetaDataFields[useSpecific][trimQuotes(message.payload[key].Field) + addition] = {
                         DisplayName: trimQuotes(message.payload[key].DisplayName)
                     };
@@ -242,7 +242,7 @@ const index = {
                     fileInfoContainerString += '</ul><ul style="list-style: none; padding: 0;">';
                 }
 
-                const { StatusClass, StatusIconClass, FileName } = fileInfo;
+                const {StatusClass, StatusIconClass, FileName} = fileInfo;
                 fileInfoContainerString += '<li><span class="' + StatusClass + '">' + '<i class="fas ' + StatusIconClass + '"></i> ' + FileName + '</span></li>';
                 i++;
             });
@@ -312,14 +312,8 @@ const index = {
                 message.payload.Ubertip = trimQuotes(message.payload.Ubertip).replace(new RegExp("\\|n", "g"), "\n");
             }
 
-            if (!message.payload.Buttonpos || message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
-                const { ButtonposX, ButtonposY } = message.payload;
-                if (!ButtonposX || ButtonposX === "" || ButtonposX === "_" || ButtonposX === "-" || !ButtonposY || ButtonposY === "" || ButtonposY === "_" || ButtonposY === "-") {
-                    message.payload.Buttonpos = "0,0";
-                } else {
-                    message.payload.Buttonpos = ButtonposX + "," + ButtonposY;
-                }
-            }
+            const {Buttonpos, ButtonposX, ButtonposY} = message.payload;
+            message.payload.Buttonpos = getSanitizedButtonpos(Buttonpos, ButtonposX, ButtonposY);
 
             Object.keys(message.payload).forEach(slkUnitKey => {
                 const value = trimQuotes(message.payload[slkUnitKey] ? message.payload[slkUnitKey] : "");
@@ -334,12 +328,7 @@ const index = {
                             elem.checked = value === "1";
                         }
                     } else if (elem.id === "Unit-Buttonpos") {
-                        const buttonpos = message.payload[slkUnitKey];
-                        if (!buttonpos || buttonpos === "-" || buttonpos === "_") {
-                            elem.value = "0,0"
-                        } else {
-                            elem.value = buttonpos;
-                        }
+                        elem.value = getSanitizedButtonpos(message.payload[slkUnitKey]);
                     } else if (elem.classList.contains("multi-check")) {
                         const childInputs = $("#Unit-" + slkUnitKey + " :input");
                         const valueSplit = value.split(",");
@@ -375,14 +364,8 @@ const index = {
                 message.payload.Ubertip = trimQuotes(message.payload.Ubertip).replace(new RegExp("\\|n", "g"), "\n");
             }
 
-            if (!message.payload.Buttonpos || message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
-                const { ButtonposX, ButtonposY } = message.payload;
-                if (!ButtonposX || ButtonposX === "" || ButtonposX === "_" || ButtonposX === "-" || !ButtonposY || ButtonposY === "" || ButtonposY === "_" || ButtonposY === "-") {
-                    message.payload.Buttonpos = "0,0";
-                } else {
-                    message.payload.Buttonpos = ButtonposX + "," + ButtonposY;
-                }
-            }
+            const {Buttonpos, ButtonposX, ButtonposY} = message.payload;
+            message.payload.Buttonpos = getSanitizedButtonpos(Buttonpos, ButtonposX, ButtonposY);
 
             Object.keys(message.payload).forEach(slkItemKey => {
                 const value = trimQuotes(message.payload[slkItemKey] ? message.payload[slkItemKey] : "");
@@ -397,12 +380,7 @@ const index = {
                             elem.checked = value === "1";
                         }
                     } else if (elem.id === "Item-Buttonpos") {
-                        const buttonpos = message.payload[slkItemKey];
-                        if (!buttonpos || buttonpos === "-" || buttonpos === "_") {
-                            elem.value = "0,0"
-                        } else {
-                            elem.value = buttonpos;
-                        }
+                        elem.value = getSanitizedButtonpos(message.payload[slkItemKey]);
                     } else if (elem.classList.contains("multi-check")) {
                         const childInputs = $("#Item-" + slkItemKey + " :input");
                         const valueSplit = value.split(",");
@@ -438,23 +416,12 @@ const index = {
                 message.payload.Ubertip = trimQuotes(message.payload.Ubertip).replace(new RegExp("\\|n", "g"), "\n");
             }
 
-            if (!message.payload.Buttonpos || message.payload.Buttonpos === "" || message.payload.Buttonpos === "_" || message.payload.Buttonpos === "-") {
-                const { ButtonposX, ButtonposY } = message.payload;
-                if (!ButtonposX || ButtonposX === "" || ButtonposX === "_" || ButtonposX === "-" || !ButtonposY || ButtonposY === "" || ButtonposY === "_" || ButtonposY === "-") {
-                    message.payload.Buttonpos = "0,0";
-                } else {
-                    message.payload.Buttonpos = ButtonposX + "," + ButtonposY;
-                }
-            }
 
-            if (!message.payload.Unbuttonpos || message.payload.Unbuttonpos === "" || message.payload.Unbuttonpos === "_" || message.payload.Unbuttonpos === "-") {
-                const { UnbuttonposX, UnbuttonposY } = message.payload;
-                if (!UnbuttonposX || UnbuttonposX === "" || UnbuttonposX === "_" || UnbuttonposX === "-" || !UnbuttonposY || UnbuttonposY === "" || UnbuttonposY === "_" || UnbuttonposY === "-") {
-                    message.payload.Unbuttonpos = "0,0";
-                } else {
-                    message.payload.Unbuttonpos = UnbuttonposX + "," + UnbuttonposY;
-                }
-            }
+            const {Buttonpos, ButtonposX, ButtonposY} = message.payload;
+            message.payload.Buttonpos = getSanitizedButtonpos(Buttonpos, ButtonposX, ButtonposY);
+
+            const {Unbuttonpos, UnbuttonposX, UnbuttonposY} = message.payload;
+            message.payload.Unbuttonpos = getSanitizedButtonpos(Unbuttonpos, UnbuttonposX, UnbuttonposY);
 
             Object.keys(message.payload).forEach(slkAbilityKey => {
                 if (slkAbilityKey === "LevelDependentData") {
@@ -486,7 +453,7 @@ const index = {
                             } else if (levelDependentKey === "Rng") {
                                 dependentDataDisplayName = "Cast Range";
                             } else {
-                                const { Code } = message.payload;
+                                const {Code} = message.payload;
                                 const trimmedCode = trimQuotes(Code);
                                 if (abilityMetaDataFields.hasOwnProperty(trimmedCode) && abilityMetaDataFields[trimmedCode].hasOwnProperty(levelDependentKey)) {
                                     dependentDataDisplayName = abilityMetaDataFields[trimmedCode][levelDependentKey].DisplayName;
@@ -513,12 +480,7 @@ const index = {
                                 elem.checked = value === "1";
                             }
                         } else if (elem.id === "Ability-Buttonpos") {
-                            const buttonpos = message.payload[slkAbilityKey];
-                            if (!buttonpos || buttonpos === "-" || buttonpos === "_") {
-                                elem.value = "0,0"
-                            } else {
-                                elem.value = buttonpos;
-                            }
+                            elem.value = getSanitizedButtonpos(message.payload[slkAbilityKey]);
                         } else if (elem.classList.contains("multi-check")) {
                             const childInputs = $("#Ability-" + slkAbilityKey + " :input");
                             const valueSplit = value.split(",");
@@ -817,7 +779,7 @@ const index = {
             unit.Type = "\"_\"";
         }
 
-        const { HP } = unit;
+        const {HP} = unit;
         unit.RealHP = HP;
         if (!unit.Def) {
             unit.Def = "\"0\"";
@@ -953,7 +915,7 @@ const index = {
             if (oldUnit) {
                 unitDataList[oldUnit] = {Id: unitId, Name: unit.Name};
             } else {
-                const { Name, Editorsuffix } = unit;
+                const {Name, Editorsuffix} = unit;
                 unitDataList.push({
                     Id: unitId,
                     Name,
@@ -1000,9 +962,9 @@ const index = {
                         }
                     }
                 }).bind("typeahead:selected", (obj, datum) => {
-                    if (datum) {
-                        index.loadModalIcon(unitIconNameToPath[datum.toLowerCase()]);
-                    }
+                if (datum) {
+                    index.loadModalIcon(unitIconNameToPath[datum.toLowerCase()]);
+                }
             }).bind("typeahead:cursorchange", (obj, datum) => {
                 if (datum) {
                     index.loadModalIcon(unitIconNameToPath[datum.toLowerCase()]);
@@ -1028,7 +990,7 @@ const index = {
                 return;
             }
 
-            const { Units, Abilities, Missiles, Items } = message.payload;
+            const {Units, Abilities, Missiles, Items} = message.payload;
 
             Units.forEach(unitModel => {
                 modelNameToPath[unitModel.Name.toLowerCase()] = unitModel.Path;
@@ -1053,28 +1015,36 @@ const index = {
             const unitModels = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace("Name"),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                identify: function (obj) { return obj.Name; },
+                identify: function (obj) {
+                    return obj.Name;
+                },
                 local: Units
             });
 
             const abilityModels = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace("Name"),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                identify: function (obj) { return obj.Name; },
+                identify: function (obj) {
+                    return obj.Name;
+                },
                 local: Abilities
             });
 
             const missileModels = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace("Name"),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                identify: function (obj) { return obj.Name; },
+                identify: function (obj) {
+                    return obj.Name;
+                },
                 local: Missiles
             });
 
             const itemModels = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace("Name"),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                identify: function (obj) { return obj.Name; },
+                identify: function (obj) {
+                    return obj.Name;
+                },
                 local: Items
             });
 
@@ -1159,9 +1129,9 @@ const index = {
                         header: '<h3 class="model-group">Items</h3>'
                     }
                 }).bind("typeahead:select", (obj, datum) => {
-                    if (datum) {
-                        loadMdxModel(datum.Path);
-                    }
+                if (datum) {
+                    loadMdxModel(datum.Path);
+                }
             }).bind("typeahead:cursorchange", (obj, datum) => {
                 if (datum) {
                     loadMdxModel(datum.Path);
@@ -1199,7 +1169,7 @@ const index = {
 
             document.getElementById("configInput").value = message.payload.InDir;
             document.getElementById("configOutput").value = message.payload.OutDir;
-            const { IsLocked, IsRegexSearch } = message.payload;
+            const {IsLocked, IsRegexSearch} = message.payload;
             index.disableInputs(IsLocked);
             index.setUnitRegexSearch(IsRegexSearch);
             index.setItemRegexSearch(IsRegexSearch);
@@ -1600,7 +1570,7 @@ const index = {
                 return;
             }
 
-            const { ItemID } = message.payload;
+            const {ItemID} = message.payload;
             index.selectItemFromId(ItemID);
             itemDataList.push({Id: ItemID, Name: message.payload.Name});
             index.itemSearch(document.getElementById("itemSearchInput"));

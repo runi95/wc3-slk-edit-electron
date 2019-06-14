@@ -69,3 +69,17 @@ const addTableData = (tableBody, onclickFunc, dataList) => {
 
     tableBody.innerHTML = trList;
 };
+
+const getSanitizedButtonpos = (buttonpos, buttonposX, buttonposY) => {
+    const buttonposInvalid = !buttonpos || buttonpos === "" || buttonpos === "_" || buttonpos === "-";
+    if (buttonposInvalid === false) {
+        return buttonpos;
+    }
+
+    const buttonXOrButtonYInvalid = !buttonposX || !buttonposY || buttonposX === "" || buttonposY === "" || buttonposX === "_" || buttonposY === "_" || buttonposX === "-" || buttonposY === "-";
+    if (buttonposInvalid === true && buttonXOrButtonYInvalid === true) {
+        return "0,0";
+    } else {
+        return buttonposX + "," + buttonposY;
+    }
+};
