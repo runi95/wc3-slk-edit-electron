@@ -1,5 +1,6 @@
 <html lang="en">
 <head>
+    <title>Warcraft III SLK Editor</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="static/lib/astiloader/astiloader.css">
     <link rel="stylesheet" href="static/lib/astinotifier/astinotifier.css">
@@ -23,19 +24,19 @@
     <script src="static/js/utility.js"></script>
     <script src="static/js/index.js"></script>
     <script>if (window.module) module = window.module;</script>
+    <style>
+        html {
+            height: 100%;
+        }
+
+        body {
+            position: relative;
+            padding-top: 100px;
+            overflow-y: hidden;
+        }
+    </style>
 </head>
 <body>
-<style>
-    html {
-        height: 100%;
-    }
-
-    body {
-        position: relative;
-        padding-top: 100px;
-        overflow-y: hidden;
-    }
-</style>
 <div class="modal" id="model-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -76,6 +77,7 @@
                     </div>
                 </div>
                 <div class="form-dark multiple-datasets">
+                    <label class="form-check-label" for="model-selector">Model</label>
                     <input id="model-selector" oninput="index.changeMdxModel(this)" type="text"
                            class="typeahead tt-query" autocomplete="off" spellcheck="false">
                 </div>
@@ -101,6 +103,7 @@
                     <img src="emptyicon.png" alt="icon" id="iconModal" height="64" width="64">
                 </div>
                 <div class="form-dark">
+                    <label class="form-check-label" for="icon-selector">Icon</label>
                     <input id="icon-selector" oninput="index.changeModalIcon(this)" type="text"
                            class="typeahead tt-query" autocomplete="off" spellcheck="false">
                 </div>
@@ -269,7 +272,7 @@
             <div class="modal-body">
                 <form id="NewUnit-Form" class="was-validated form-dark">
                     <div class="form-group row">
-                        <label for="NewUnit-UnitID" class="col-sm-2 col-form-label">Item ID</label>
+                        <label for="NewItem-ItemID" class="col-sm-2 col-form-label">Item ID</label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" id="NewItem-ItemID" placeholder="Item ID"
                                    pattern="[A-Za-z]{1}[A-Za-z0-9]{3}" required disabled>
@@ -351,11 +354,11 @@
                 <span id="unsavedSpan" onclick="index.saveToFile()" hidden><i
                             class="fas fa-save"></i><i><span class="d-none d-xl-inline"> Save files*</span></i></span>
                 <span id="savingSpan" onclick="index.saveToFile()" hidden>
-                <div class="spinner-border"
+                <span class="spinner-border"
                      style="height: 16px; width: 16px; animation: spinner-border 1.25s linear infinite;"
-                     role="status"></div>
+                     role="status"></span>
                 <span><i><span class="d-none d-xl-inline"> Save files*</span></i></span>
-            </span>
+                </span>
             </div>
             <div class="div-btn mr-auto">
             <span id="new-unit-button" data-toggle="modal" data-target="#new-unit-modal"><i
@@ -432,7 +435,7 @@
                                        oninput="index.unitSearch(this)">
                                 <div style="display: flex; align-items: center;">
                                     <input type="checkbox" id="Unit-Regex-Toggle" style="margin-left: 5px;"
-                                           onchange="index.setUnitRegexSearch(!isRegexSearch);" aria-label="Regex"
+                                           onchange="index.setUnitRegexSearch(this.checked);" aria-label="Regex"
                                            tabindex="-1"/>
                                     <label for="Unit-Regex-Toggle"
                                            style="margin: auto 0 auto 3px; padding-bottom: 4px;">Regex</label>
@@ -4335,9 +4338,9 @@
                                         <option value="undead">Undead</option>
                                     </select>
                                 </li>
-                                <div>
+                                <li style="display: block; align-items: inherit; flex-flow: inherit; text-align: inherit;">
                                     <ul id="abilityLevelDependentData" class="flex-outer"></ul>
-                                </div>
+                                </li>
                             </ul>
                         </form>
                     </div>
