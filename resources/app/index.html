@@ -355,8 +355,8 @@
                             class="fas fa-save"></i><i><span class="d-none d-xl-inline"> Save files*</span></i></span>
                 <span id="savingSpan" onclick="index.saveToFile()" hidden>
                 <span class="spinner-border"
-                     style="height: 16px; width: 16px; animation: spinner-border 1.25s linear infinite;"
-                     role="status"></span>
+                      style="height: 16px; width: 16px; animation: spinner-border 1.25s linear infinite;"
+                      role="status"></span>
                 <span><i><span class="d-none d-xl-inline"> Save files*</span></i></span>
                 </span>
             </div>
@@ -471,7 +471,7 @@
                                 <h3>Meta</h3>
                                 <hr>
                             </div>
-                            <form id="unitId-form" class="was-validated">
+                            <form id="unitId-form" class="was-validated" data-mapid="Unit-UnitID">
                                 <ul class="flex-outer">
                                     <li hidden>
                                         <label>Unit Type</label>
@@ -698,11 +698,11 @@
                                                    placeholder="Icon" autocomplete="on" required/>
                                             <div class="btn div-btn"
                                                  style="padding: 0 4rem 0 4rem; height: calc(1.5em + .75rem + 2px);"
-                                                 onclick="index.loadIconModal('unit', 'Unit-Art')"
+                                                 onclick="index.loadIconModal('Unit-Art')"
                                                  data-toggle="modal"
                                                  data-target="#icon-modal">...
                                             </div>
-                                            <img src="emptyicon.png" alt="icon" id="unitIconImage" height="64"
+                                            <img src="emptyicon.png" alt="icon" id="ImageUnit-Art" height="64"
                                                  width="64">
                                         </div>
                                     </li>
@@ -735,7 +735,7 @@
                                                    aria-describedby="model file"
                                                    placeholder="Model File"/>
                                             <div class="btn div-btn" style="padding: 0 4rem 0 4rem;"
-                                                 onclick="index.loadMdxModal('Unit-File', 'unit')"
+                                                 onclick="index.loadMdxModal('Unit-File')"
                                                  data-toggle="modal"
                                                  data-target="#model-modal">...
                                             </div>
@@ -3599,7 +3599,7 @@
                 <div class="col-8" style="height: 100%; overflow-y: auto;">
                     <div class="z-depth-1 form-dark p-0 grid-container"
                          style="position: relative; overflow-y: hidden;">
-                        <form id="itemID-form" class="was-validated">
+                        <form id="itemID-form" class="was-validated" data-mapid="Item-ItemID">
                             <ul class="flex-outer">
                                 <li>
                                     <label for="Item-ItemID">Item ID</label>
@@ -3654,11 +3654,11 @@
                                                placeholder="Icon" autocomplete="on" required/>
                                         <div class="btn div-btn"
                                              style="padding: 0 4rem 0 4rem; height: calc(1.5em + .75rem + 2px);"
-                                             onclick="index.loadIconModal('item', 'Item-Art')"
+                                             onclick="index.loadIconModal('Item-Art')"
                                              data-toggle="modal"
                                              data-target="#icon-modal">...
                                         </div>
-                                        <img src="emptyicon.png" alt="icon" id="itemIconImage" height="64" width="64">
+                                        <img src="emptyicon.png" alt="icon" id="ImageItem-Art" height="64" width="64">
                                     </div>
                                 </li>
                                 <li>
@@ -3670,7 +3670,7 @@
                                                aria-describedby="model file"
                                                placeholder="Model File"/>
                                         <div class="btn div-btn" style="padding: 0 4rem 0 4rem;"
-                                             onclick="index.loadMdxModal('Item-File', 'item')"
+                                             onclick="index.loadMdxModal('Item-File')"
                                              data-toggle="modal"
                                              data-target="#model-modal">...
                                         </div>
@@ -3983,7 +3983,7 @@
                 <div class="col-8" style="height: 100%; overflow-y: auto;">
                     <div class="z-depth-1 form-dark p-0 grid-container"
                          style="position: relative; overflow-y: hidden;">
-                        <form id="abilityID-form" class="was-validated">
+                        <form id="abilityID-form" class="was-validated" data-mapid="Ability-Alias">
                             <ul class="flex-outer">
                                 <li>
                                     <label for="Ability-Alias">Ability ID</label>
@@ -4029,8 +4029,6 @@
                                     </div>
                                 </li>
                             </ul>
-                        </form>
-                        <form class="was-validated">
                             <ul class="flex-outer">
                                 <li>
                                     <label for="Ability-Animnames">Animation Names</label>
@@ -4127,11 +4125,11 @@
                                                placeholder="Icon" autocomplete="on" required/>
                                         <div class="btn div-btn"
                                              style="padding: 0 4rem 0 4rem; height: calc(1.5em + .75rem + 2px);"
-                                             onclick="index.loadIconModal('ability', 'Ability-Art')"
+                                             onclick="index.loadIconModal('Ability-Art')"
                                              data-toggle="modal"
                                              data-target="#icon-modal">...
                                         </div>
-                                        <img src="emptyicon.png" alt="icon" id="abilityIconImage" height="64"
+                                        <img src="emptyicon.png" alt="icon" id="ImageAbility-Art" height="64"
                                              width="64">
                                     </div>
                                 </li>
@@ -4145,11 +4143,11 @@
                                                placeholder="Icon" autocomplete="on" required/>
                                         <div class="btn div-btn"
                                              style="padding: 0 4rem 0 4rem; height: calc(1.5em + .75rem + 2px);"
-                                             onclick="index.loadIconModal('ability', 'Ability-Unart')"
+                                             onclick="index.loadIconModal('Ability-Unart')"
                                              data-toggle="modal"
                                              data-target="#icon-modal">...
                                         </div>
-                                        <img src="emptyicon.png" alt="icon" id="abilityUniconImage" height="64"
+                                        <img src="emptyicon.png" alt="icon" id="ImageAbility-Unart" height="64"
                                              width="64">
                                     </div>
                                 </li>
@@ -4348,6 +4346,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 <script type="text/javascript">
     index.init();

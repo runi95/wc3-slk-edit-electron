@@ -42,11 +42,11 @@ const index = {
             return {src: fetchPromise, fetch: true};
         }
     },
-    loadMdxModal: function (modelInputId, mode) {
-        modelMode = mode;
+    loadMdxModal: function (inputId) {
+        modelInputId = inputId;
         initMdx();
 
-        const currentModelPath = document.getElementById(modelInputId).value;
+        const currentModelPath = document.getElementById(inputId).value;
         const lowercaseModelPath = currentModelPath.toLowerCase().replace(new RegExp("\.mdl$"), ".mdx");
         const modelPathWithExtension = lowercaseModelPath.endsWith("mdx") ? lowercaseModelPath : lowercaseModelPath + ".mdx";
         if (!modelPathToName.hasOwnProperty(modelPathWithExtension)) {
@@ -56,13 +56,14 @@ const index = {
         $("#model-selector").typeahead("val", modelPathToName[modelPathWithExtension]);
         loadMdxModel(modelPathWithExtension);
     },
-    loadIconModal: function (mode, artId) {
-        iconMode = mode;
-        const currentIconPath = document.getElementById(artId).value;
+    loadIconModal: function (inputId) {
+        const input = document.getElementById(inputId);
+        const currentIconPath = input.value;
         if (!unitIconPathToName.hasOwnProperty(currentIconPath.toLowerCase())) {
             return;
-
         }
+
+        iconInputId = inputId;
         $("#icon-selector").typeahead("val", unitIconPathToName[currentIconPath.toLowerCase()]);
         index.loadModalIcon(currentIconPath);
     },
@@ -341,7 +342,7 @@ const index = {
             });
 
             index.multiColorTextarea("unit-preview", document.getElementById("Unit-Ubertip"));
-            index.loadIcon("unitIconImage", document.getElementById("Unit-Art"));
+            index.loadIcon("ImageUnit-Art", document.getElementById("Unit-Art"));
         });
     },
     selectItem: function (itemTableRow) {
@@ -393,7 +394,7 @@ const index = {
             });
 
             index.multiColorTextarea("item-preview", document.getElementById("Item-Ubertip"));
-            index.loadIcon("itemIconImage", document.getElementById("Item-Art"));
+            index.loadIcon("ImageItem-Art", document.getElementById("Item-Art"));
         });
     },
     selectAbility: function (abilityTableRow) {
@@ -498,7 +499,8 @@ const index = {
             }
 
             levelDependentDataElem.innerHTML = updatedHtml;
-            index.loadIcon("abilityIconImage", document.getElementById("Ability-Art"));
+            index.loadIcon("ImageAbility-Art", document.getElementById("Ability-Art"));
+            index.loadIcon("ImageAbility-Unart", document.getElementById("Ability-Unart"));
         });
     },
     saveToFile: function () {
@@ -536,8 +538,9 @@ const index = {
     saveFieldToItem: function (input) {
         index.saveField(input, "itemID-form", "Item-ItemID");
     },
-    saveField: function (input, idForm, idInput) {
-        if (!document.getElementById(idForm).checkValidity())
+    saveField: function (input, idForm) {
+        const formElem = document.getElementById(idForm);
+        if (formElem && !formElem.checkValidity())
             return;
 
         let field = null;
@@ -585,7 +588,7 @@ const index = {
             }
         }
 
-        const id = document.getElementById(idInput).value;
+        const id = document.getElementById(formElem.dataset.mapid).value;
         const fieldToSave = {Field: field, Value: value, Id: id};
         if (field != null && value != null) {
             const message = {name: "saveField", payload: fieldToSave};
@@ -630,16 +633,10 @@ const index = {
         const inputValue = document.getElementById("icon-selector").value.toLowerCase();
         if (unitIconNameToPath.hasOwnProperty(inputValue)) {
             const iconPath = unitIconNameToPath[inputValue];
-            let iconInput;
-            if (iconMode === "unit") {
-                iconInput = document.getElementById("Unit-Art");
-                index.saveFieldToUnit(iconInput);
-                index.loadIconValue("unitIconImage", iconPath);
-            } else if (iconMode === "item") {
-                iconInput = document.getElementById("Item-Art");
-                index.saveFieldToItem(iconInput);
-                index.loadIconValue("itemIconImage", iconPath);
-            }
+            const iconInput = document.getElementById(iconInputId);
+            index.saveField(iconInput, iconInput.form.id);
+            index.loadIconValue(`Image${iconInputId}`, iconPath);
+
             iconInput.value = iconPath;
             $('#icon-modal').modal('toggle');
         }
@@ -1118,16 +1115,9 @@ const index = {
     selectMdxModel: function () {
         const inputValue = document.getElementById("model-selector").value.toLowerCase();
         if (modelNameToPath.hasOwnProperty(inputValue)) {
-            let modelFileInput;
-            if (modelMode === "unit") {
-                modelFileInput = document.getElementById("Unit-File");
-                modelFileInput.value = modelNameToPath[inputValue];
-                index.saveFieldToUnit(modelFileInput);
-            } else if (modelMode === "item") {
-                modelFileInput = document.getElementById("Item-File");
-                modelFileInput.value = modelNameToPath[inputValue];
-                index.saveFieldToItem(modelFileInput);
-            }
+            const modelFileInput = document.getElementById(modelInputId);
+            modelFileInput.value = modelNameToPath[inputValue];
+            index.saveField(modelFileInput, modelFileInput.form.id);
 
             $('#model-modal').modal('toggle');
         }
