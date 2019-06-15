@@ -461,7 +461,6 @@ const index = {
             if (parsedLevels && typeof parsedLevels === "number" && Number.isNaN(parsedLevels) === false) {
                 const updateHtmlForEachLevel = (fieldId, displayName) => {
                     for (let i = 0; i < parsedLevels; i++) {
-                        console.log("message.payload[fieldId + i] => message.payload[" + fieldId + " + " + i + "]" + message.payload[fieldId + (i + 1)]);
                         const value = trimQuotes(message.payload[fieldId + (i + 1)] ? message.payload[fieldId + (i + 1)] : "");
                         updatedHtml += '<li><label for="' + fieldId + i + '">' + displayName + ' - ' + (i + 1) + '</label><input oninput="index.saveFieldToAbility(this)" type="text" class="form-control" id="' + fieldId + i + '" placeholder="' + displayName + '" value="' + value + '"/></li>';
                     }
