@@ -427,45 +427,6 @@ const index = {
                 levelDependentDataElem.firstElementChild.remove();
             }
 
-            /*
-            const levelDependentKey = slkAbilityKey.substr(0, slkAbilityKey.length - 1);
-                    let dependentDataDisplayName;
-                    if (levelDependentKey === "UnitID") {
-                        dependentDataDisplayName = "Summoned Unit Type";
-                    } else if (levelDependentKey === "BuffID") {
-                        dependentDataDisplayName = "Buffs";
-                    } else if (levelDependentKey === "EfctID") {
-                        dependentDataDisplayName = "Effects";
-                    } else if (levelDependentKey === "Targs") {
-                        dependentDataDisplayName = "Targets Allowed";
-                    } else if (levelDependentKey === "Cast") {
-                        dependentDataDisplayName = "Casting Time";
-                    } else if (levelDependentKey === "Dur") {
-                        dependentDataDisplayName = "Duration - Normal";
-                    } else if (levelDependentKey === "HeroDur") {
-                        dependentDataDisplayName = "Duration - Hero";
-                    } else if (levelDependentKey === "Cool") {
-                        dependentDataDisplayName = "Cooldown";
-                    } else if (levelDependentKey === "Cost") {
-                        dependentDataDisplayName = "Mana Cost";
-                    } else if (levelDependentKey === "Area") {
-                        dependentDataDisplayName = "Area of Effect";
-                    } else if (levelDependentKey === "Rng") {
-                        dependentDataDisplayName = "Cast Range";
-                    } else {
-                        const {Code} = message.payload;
-                        const trimmedCode = trimQuotes(Code);
-                        if (abilityMetaDataFields.hasOwnProperty(trimmedCode) && abilityMetaDataFields[trimmedCode].hasOwnProperty(levelDependentKey)) {
-                            dependentDataDisplayName = abilityMetaDataFields[trimmedCode][levelDependentKey].DisplayName;
-                        }
-                    }
-
-                    const value = trimQuotes(LevelDependentData[i][levelDependentKey] ? LevelDependentData[i][levelDependentKey] : "");
-                    if (dependentDataDisplayName) {
-                        updatedHtml += '<li><label for="' + dependentDataId + '">' + dependentDataDisplayName + ' - ' + (i + 1) + '</label><input oninput="index.saveLevelDependentAbilityField(this)" type="text" class="form-control" id="' + dependentDataId + '" placeholder="' + dependentDataDisplayName + '" value="' + value + '"/></li>';
-                    }
-             */
-
             Object.keys(message.payload).forEach(slkAbilityKey => {
                 if (slkAbilityKey.match(abilityKeyEndsWithNumberRegex) === null) {
                     const value = trimQuotes(message.payload[slkAbilityKey] ? message.payload[slkAbilityKey] : "");
