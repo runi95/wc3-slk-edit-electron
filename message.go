@@ -20,7 +20,6 @@ import (
 	"reflect"
 	"runtime"
 	"sort"
-	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -213,47 +212,6 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 			}
 
 			err = reflectUpdateValueOnFieldNullStruct(unitMap[fieldToUnit.Id], *nullString, split[1])
-			if err != nil {
-				log.Println(err)
-				payload = err.Error()
-				return
-			}
-
-			payload = "success"
-		}
-	case "saveLevelDependentAbilityField":
-		var fieldToUnit FieldToUnit
-		if len(m.Payload) > 0 {
-			if err = json.Unmarshal(m.Payload, &fieldToUnit); err != nil {
-				log.Println(err)
-				payload = err.Error()
-				return
-			}
-
-			if _, ok := abilityMap[fieldToUnit.Id]; !ok {
-				log.Println("Ability does not exist, returning unsaved")
-				payload = "unsaved"
-				return
-			}
-
-			split := strings.Split(fieldToUnit.Field, "-")
-
-			nullString := new(null.String)
-			if fieldToUnit.Value == "" || fieldToUnit.Value == "_" || fieldToUnit.Value == "\"_\"" || fieldToUnit.Value == "-" || fieldToUnit.Value == "\"-\"" {
-				nullString.Valid = false
-			} else {
-				nullString.SetValid(fieldToUnit.Value)
-			}
-
-			var level int
-			level, err = strconv.Atoi(split[2])
-			if err != nil {
-				log.Println(err)
-				payload = err.Error()
-				return
-			}
-
-			err = reflectUpdateValueOnFieldNullStruct(abilityMap[fieldToUnit.Id].LevelDependentData[level], *nullString, split[3])
 			if err != nil {
 				log.Println(err)
 				payload = err.Error()
@@ -518,8 +476,6 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 		payload = itemListData
 	case "loadAbilityData":
-		log.Println("abilityMap[Bvul]")
-		log.Println(abilityMap["Bvul"])
 		var abilityListData = make([]ListData, len(abilityMap))
 
 		i := 0
@@ -1717,7 +1673,14 @@ func saveUnitsToFile(location string) {
 		i++
 	}
 
-	parser.WriteToFilesAndSaveToFolder(unitList, location, true)
+	abilityList := make([]*models.SLKAbility, len(abilityMap))
+	i = 0
+	for _, v := range abilityMap {
+		abilityList[i] = v
+		i++
+	}
+
+	parser.WriteToFilesAndSaveToFolder(unitList, []*models.SLKItem{}, abilityList, location, true)
 }
 
 func loadAbilityMetaData() error {

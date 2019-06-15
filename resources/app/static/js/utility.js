@@ -27,6 +27,7 @@ const modelPathToName = {};
 const unitIconNameToPath = {};
 const unitIconPathToName = {};
 const abilityMetaDataFields = {};
+const abilityKeyEndsWithNumberRegex = new RegExp("^.*[0-9]$");
 
 const trimQuotes = str => {
     if (str.startsWith("\"")) {

@@ -427,14 +427,15 @@ const index = {
                 levelDependentDataElem.firstElementChild.remove();
             }
 
-            let updatedHtml = "";
-            const {LevelDependentData} = message.payload;
-            for (let i = 0; LevelDependentData && i < LevelDependentData.length; i++) {
-                Object.keys(LevelDependentData[i]).forEach(levelDependentKey => {
-                    const dependentDataId = "Ability-LevelDependentData-" + i + "-" + levelDependentKey;
+            /*
+            const levelDependentKey = slkAbilityKey.substr(0, slkAbilityKey.length - 1);
                     let dependentDataDisplayName;
-                    if (levelDependentKey === "UnitID" || levelDependentKey === "BuffID" || levelDependentKey === "EfctID") {
-                        return;
+                    if (levelDependentKey === "UnitID") {
+                        dependentDataDisplayName = "Summoned Unit Type";
+                    } else if (levelDependentKey === "BuffID") {
+                        dependentDataDisplayName = "Buffs";
+                    } else if (levelDependentKey === "EfctID") {
+                        dependentDataDisplayName = "Effects";
                     } else if (levelDependentKey === "Targs") {
                         dependentDataDisplayName = "Targets Allowed";
                     } else if (levelDependentKey === "Cast") {
@@ -463,13 +464,10 @@ const index = {
                     if (dependentDataDisplayName) {
                         updatedHtml += '<li><label for="' + dependentDataId + '">' + dependentDataDisplayName + ' - ' + (i + 1) + '</label><input oninput="index.saveLevelDependentAbilityField(this)" type="text" class="form-control" id="' + dependentDataId + '" placeholder="' + dependentDataDisplayName + '" value="' + value + '"/></li>';
                     }
-                });
-            }
-
-            levelDependentDataElem.innerHTML = updatedHtml;
+             */
 
             Object.keys(message.payload).forEach(slkAbilityKey => {
-                if (slkAbilityKey !== "LevelDependentData") {
+                if (slkAbilityKey.match(abilityKeyEndsWithNumberRegex) === null) {
                     const value = trimQuotes(message.payload[slkAbilityKey] ? message.payload[slkAbilityKey] : "");
                     const elem = document.getElementById("Ability-" + slkAbilityKey);
                     if (elem) {
@@ -495,8 +493,52 @@ const index = {
                 }
             });
 
-            // index.multiColorTextarea("ability-preview", document.getElementById("Ability-Ubertip"));
-            // index.loadIcon("abilityIconImage", document.getElementById("Ability-Art"));
+            let updatedHtml = "";
+            const {Levels, Code} = message.payload;
+            const trimmedCode = trimQuotes(Code);
+            const parsedLevels = parseInt(Levels);
+            if (parsedLevels && typeof parsedLevels === "number" && Number.isNaN(parsedLevels) === false) {
+                const updateHtmlForEachLevel = (fieldId, displayName) => {
+                    for (let i = 0; i < parsedLevels; i++) {
+                        console.log("message.payload[fieldId + i] => message.payload[" + fieldId + " + " + i + "]" + message.payload[fieldId + (i + 1)]);
+                        const value = trimQuotes(message.payload[fieldId + (i + 1)] ? message.payload[fieldId + (i + 1)] : "");
+                        updatedHtml += '<li><label for="' + fieldId + i + '">' + displayName + ' - ' + (i + 1) + '</label><input oninput="index.saveFieldToAbility(this)" type="text" class="form-control" id="' + fieldId + i + '" placeholder="' + displayName + '" value="' + value + '"/></li>';
+                    }
+                };
+
+                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataA"))
+                    updateHtmlForEachLevel("DataA", abilityMetaDataFields[trimmedCode]["DataA"].DisplayName);
+                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataB"))
+                    updateHtmlForEachLevel("DataB", abilityMetaDataFields[trimmedCode]["DataB"].DisplayName);
+                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataC"))
+                    updateHtmlForEachLevel("DataC", abilityMetaDataFields[trimmedCode]["DataC"].DisplayName);
+                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataD"))
+                    updateHtmlForEachLevel("DataD", abilityMetaDataFields[trimmedCode]["DataD"].DisplayName);
+                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataE"))
+                    updateHtmlForEachLevel("DataE", abilityMetaDataFields[trimmedCode]["DataE"].DisplayName);
+                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataF"))
+                    updateHtmlForEachLevel("DataF", abilityMetaDataFields[trimmedCode]["DataF"].DisplayName);
+                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataG"))
+                    updateHtmlForEachLevel("DataG", abilityMetaDataFields[trimmedCode]["DataG"].DisplayName);
+                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataH"))
+                    updateHtmlForEachLevel("DataH", abilityMetaDataFields[trimmedCode]["DataH"].DisplayName);
+                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataI"))
+                    updateHtmlForEachLevel("DataI", abilityMetaDataFields[trimmedCode]["DataI"].DisplayName);
+                updateHtmlForEachLevel("UnitID", "Summoned Unit Type");
+                updateHtmlForEachLevel("BuffID", "Buffs");
+                updateHtmlForEachLevel("EfctID", "Effects");
+                updateHtmlForEachLevel("Targs", "Targets Allowed");
+                updateHtmlForEachLevel("Cast", "Casting Time");
+                updateHtmlForEachLevel("Dur", "Duration - Normal");
+                updateHtmlForEachLevel("HeroDur", "Duration - Hero");
+                updateHtmlForEachLevel("Cool", "Cooldown");
+                updateHtmlForEachLevel("Cost", "Mana Cost");
+                updateHtmlForEachLevel("Area", "Area of Effect");
+                updateHtmlForEachLevel("Rng", "Cast Range");
+            }
+
+            levelDependentDataElem.innerHTML = updatedHtml;
+            index.loadIcon("abilityIconImage", document.getElementById("Ability-Art"));
         });
     },
     saveToFile: function () {
@@ -547,29 +589,6 @@ const index = {
 
                     index.unitSearch(document.getElementById("unitSearchInput"));
                 }
-            }
-        });
-    },
-    saveLevelDependentAbilityField: function (input) {
-        if (!document.getElementById("abilityID-form").checkValidity())
-            return;
-
-        const field = input.id;
-        const value = input.value.replace(new RegExp("\n", "g"), "|n");
-        const id = document.getElementById("Ability-Alias").value;
-        const fieldToSave = {Field: field, Value: value, Id: id};
-        const message = {name: "saveLevelDependentAbilityField", payload: fieldToSave};
-        astilectron.sendMessage(message, function (message) {
-            // Check for errors
-            if (message.name === "error") {
-                asticode.notifier.error(message.payload);
-                return;
-            }
-
-            if (!isUnsaved) {
-                isUnsaved = true;
-                document.getElementById("savedSpan").hidden = true;
-                document.getElementById("unsavedSpan").hidden = false;
             }
         });
     },
