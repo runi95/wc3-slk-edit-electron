@@ -528,29 +528,7 @@ const index = {
         });
     },
     saveFieldToUnit: function (input) {
-        index.saveField(input, "unitId-form", "Unit-UnitID", (Field, Value, UnitId) => {
-            if (Field === "Unit-Name" || Field === "Unit-Editorsuffix") {
-                let oldUnit = null;
-                for (let i = 0; i < unitDataList.length; i++) {
-                    if (unitDataList[i].Id === UnitId) {
-                        oldUnit = i;
-                        break;
-                    }
-                }
-
-                if (oldUnit) {
-                    const oldUnitData = unitDataList[oldUnit];
-
-                    if (Field === "Unit-Name") {
-                        oldUnitData.Name = Value;
-                    } else if (Field === "Unit-Editorsuffix") {
-                        oldUnitData.EditorSuffix = Value;
-                    }
-
-                    index.unitSearch(document.getElementById("unitSearchInput"));
-                }
-            }
-        });
+        index.saveField(input, "unitId-form", "Unit-UnitID");
     },
     saveFieldToAbility: function (input) {
         index.saveField(input, "abilityID-form", "Ability-Alias");
@@ -558,7 +536,7 @@ const index = {
     saveFieldToItem: function (input) {
         index.saveField(input, "itemID-form", "Item-ItemID");
     },
-    saveField: function (input, idForm, idInput, savedCallback) {
+    saveField: function (input, idForm, idInput) {
         if (!document.getElementById(idForm).checkValidity())
             return;
 
@@ -610,7 +588,7 @@ const index = {
         const id = document.getElementById(idInput).value;
         const fieldToSave = {Field: field, Value: value, Id: id};
         if (field != null && value != null) {
-            const message = {name: "saveFieldToUnit", payload: fieldToSave};
+            const message = {name: "saveField", payload: fieldToSave};
             astilectron.sendMessage(message, function (message) {
                 // Check for errors
                 if (message.name === "error") {
@@ -622,14 +600,6 @@ const index = {
                     isUnsaved = true;
                     document.getElementById("savedSpan").hidden = true;
                     document.getElementById("unsavedSpan").hidden = false;
-                }
-
-                if (message.payload === "unsaved") {
-                    index.saveUnit();
-                } else {
-                    if (typeof savedCallback === "function") {
-                        savedCallback(field, value, id);
-                    }
                 }
             });
         }

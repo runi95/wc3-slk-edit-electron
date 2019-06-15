@@ -110,7 +110,7 @@ type ListData struct {
 	EditorSuffix null.String
 }
 
-type FieldToUnit struct {
+type SaveField struct {
 	Id    string
 	Field string
 	Value string
@@ -187,31 +187,46 @@ func (models Models) Swap(i, j int) {
 
 func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload interface{}, err error) {
 	switch m.Name {
-	case "saveFieldToUnit":
-		var fieldToUnit FieldToUnit
+	case "saveField":
+		var saveField SaveField
 		if len(m.Payload) > 0 {
-			if err = json.Unmarshal(m.Payload, &fieldToUnit); err != nil {
+			if err = json.Unmarshal(m.Payload, &saveField); err != nil {
 				log.Println(err)
 				payload = err.Error()
 				return
 			}
 
-			if _, ok := unitMap[fieldToUnit.Id]; !ok {
-				log.Println("Unit does not exist, returning unsaved")
+			fieldSplit := strings.Split(saveField.Field, "-")
+			var ok bool
+			var v interface{}
+			if fieldSplit[0] == "Unit" {
+				v, ok = unitMap[saveField.Id]
+			} else if fieldSplit[0] == "Item" {
+				v, ok = itemMap[saveField.Id]
+			} else if fieldSplit[0] == "Ability" {
+				v, ok = abilityMap[saveField.Id]
+			} else {
+				err = fmt.Errorf("invalid field name %v does not belong anywhere", saveField.Field)
+				log.Println(err)
+				return
+			}
+
+			if !ok {
+				log.Println("The given id does not exist, returning unsaved")
 				payload = "unsaved"
 				return
 			}
 
-			split := strings.Split(fieldToUnit.Field, "-")
+			split := strings.Split(saveField.Field, "-")
 
 			nullString := new(null.String)
-			if fieldToUnit.Value == "" || fieldToUnit.Value == "_" || fieldToUnit.Value == "\"_\"" || fieldToUnit.Value == "-" || fieldToUnit.Value == "\"-\"" {
+			if saveField.Value == "" || saveField.Value == "_" || saveField.Value == "\"_\"" || saveField.Value == "-" || saveField.Value == "\"-\"" {
 				nullString.Valid = false
 			} else {
-				nullString.SetValid(fieldToUnit.Value)
+				nullString.SetValid(saveField.Value)
 			}
 
-			err = reflectUpdateValueOnFieldNullStruct(unitMap[fieldToUnit.Id], *nullString, split[1])
+			err = reflectUpdateValueOnFieldNullStruct(v, *nullString, split[1])
 			if err != nil {
 				log.Println(err)
 				payload = err.Error()
