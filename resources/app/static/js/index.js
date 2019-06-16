@@ -461,9 +461,9 @@ const index = {
             const parsedLevels = parseInt(Levels);
             if (parsedLevels && typeof parsedLevels === "number" && Number.isNaN(parsedLevels) === false) {
                 const updateHtmlForEachLevel = (fieldId, displayName) => {
-                    for (let i = 0; i < parsedLevels; i++) {
-                        const value = trimQuotes(message.payload[fieldId + (i + 1)] ? message.payload[fieldId + (i + 1)] : "");
-                        updatedHtml += '<li><label for="' + fieldId + i + '">' + displayName + ' - ' + (i + 1) + '</label><input oninput="index.saveFieldToAbility(this)" type="text" class="form-control" id="' + fieldId + i + '" placeholder="' + displayName + '" value="' + value + '"/></li>';
+                    for (let i = 1; i <= parsedLevels; i++) {
+                        const value = trimQuotes(message.payload[fieldId + i] ? message.payload[fieldId + i] : "");
+                        updatedHtml += '<li><label for="' + fieldId + i + '">' + displayName + ' - ' + i + '</label><input oninput="index.saveField(this, this.form.id)" type="text" class="form-control" id="' + fieldId + i + '" placeholder="' + displayName + '" value="' + value + '"/></li>';
                     }
                 };
 
@@ -529,19 +529,12 @@ const index = {
             document.getElementById("savingSpan").hidden = true;
         });
     },
-    saveFieldToUnit: function (input) {
-        index.saveField(input, "unitId-form", "Unit-UnitID");
-    },
-    saveFieldToAbility: function (input) {
-        index.saveField(input, "abilityID-form", "Ability-Alias");
-    },
-    saveFieldToItem: function (input) {
-        index.saveField(input, "itemID-form", "Item-ItemID");
-    },
     saveField: function (input, idForm) {
         const formElem = document.getElementById(idForm);
-        if (formElem && !formElem.checkValidity())
+        if (formElem && !formElem.checkValidity()) {
+            console.log("Invalid field!");
             return;
+        }
 
         let field = null;
         let value = null;
