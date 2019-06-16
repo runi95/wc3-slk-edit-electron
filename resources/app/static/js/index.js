@@ -459,7 +459,7 @@ const index = {
             const {Levels, Code} = message.payload;
             const trimmedCode = trimQuotes(Code ? Code : "");
             const parsedLevels = parseInt(Levels);
-            if (parsedLevels && typeof parsedLevels === "number" && Number.isNaN(parsedLevels) === false) {
+            if (parsedLevels && typeof parsedLevels === "number" && Number.isNaN(parsedLevels) === false && parsedLevels > 0) {
                 const updateHtmlForEachLevel = (fieldId, displayName) => {
                     for (let i = 1; i <= parsedLevels; i++) {
                         const value = trimQuotes(message.payload[fieldId + i] ? message.payload[fieldId + i] : "");
@@ -496,6 +496,63 @@ const index = {
                 updateHtmlForEachLevel("Cost", "Mana Cost");
                 updateHtmlForEachLevel("Area", "Area of Effect");
                 updateHtmlForEachLevel("Rng", "Cast Range");
+
+                const {Tip, Ubertip, Untip, Unubertip} = message.payload;
+                if (Tip) {
+                    updatedHtml += '<li id="Ability-Tip" style="display: block; align-items: inherit; flex-flow: inherit; text-align: inherit;"><ul class="flex-outer multi-text">';
+
+                    const tipSplit = Tip.split(",");
+                    for (let i = 1; i <= parsedLevels; i++) {
+                        const fieldId = "Tip-" + i;
+                        const displayName = "Tooltip - Normal - " + i;
+                        const value = trimQuotes(tipSplit[i - 1] ? tipSplit[i - 1] : "");
+                        updatedHtml += '<li><label for="' + fieldId + '">' + displayName + '</label><input class="form-control sub-multi-text" oninput="index.saveField(this, this.form.id)" type="text" value="' + value + '"/></li>';
+                    }
+
+                    updatedHtml += '</ul></li>';
+                }
+
+                if (Ubertip) {
+                    updatedHtml += '<li id="Ability-Ubertip" style="display: block; align-items: inherit; flex-flow: inherit; text-align: inherit;"><ul class="flex-outer multi-text">';
+
+                    const tipSplit = Tip.split(",");
+                    for (let i = 1; i <= parsedLevels; i++) {
+                        const fieldId = "Ubertip-" + i;
+                        const displayName = "Tooltip - Extended - " + i;
+                        const value = trimQuotes(tipSplit[i - 1] ? tipSplit[i - 1] : "");
+                        updatedHtml += '<li><label for="' + fieldId + '">' + displayName + '</label><input class="form-control sub-multi-text" oninput="index.saveField(this, this.form.id)" type="text" value="' + value + '"/></li>';
+                    }
+
+                    updatedHtml += '</ul></li>';
+                }
+
+                if (Untip) {
+                    updatedHtml += '<li id="Ability-Untip" style="display: block; align-items: inherit; flex-flow: inherit; text-align: inherit;"><ul class="flex-outer multi-text">';
+
+                    const tipSplit = Tip.split(",");
+                    for (let i = 1; i <= parsedLevels; i++) {
+                        const fieldId = "Untip-" + i;
+                        const displayName = "Tooltip - Turn Off - " + i;
+                        const value = trimQuotes(tipSplit[i - 1] ? tipSplit[i - 1] : "");
+                        updatedHtml += '<li><label for="' + fieldId + '">' + displayName + '</label><input class="form-control sub-multi-text" oninput="index.saveField(this, this.form.id)" type="text" value="' + value + '"/></li>';
+                    }
+
+                    updatedHtml += '</ul></li>';
+                }
+
+                if (Unubertip) {
+                    updatedHtml += '<li id="Ability-Unubertip" style="display: block; align-items: inherit; flex-flow: inherit; text-align: inherit;"><ul class="flex-outer multi-text">';
+
+                    const tipSplit = Tip.split(",");
+                    for (let i = 1; i <= parsedLevels; i++) {
+                        const fieldId = "Unubertip-" + i;
+                        const displayName = "Tooltip - Turn Off Extended - " + i;
+                        const value = trimQuotes(tipSplit[i - 1] ? tipSplit[i - 1] : "");
+                        updatedHtml += '<li><label for="' + fieldId + '">' + displayName + '</label><input class="form-control sub-multi-text" oninput="index.saveField(this, this.form.id)" type="text" value="' + value + '"/></li>';
+                    }
+
+                    updatedHtml += '</ul></li>';
+                }
             }
 
             levelDependentDataElem.innerHTML = updatedHtml;
@@ -538,8 +595,9 @@ const index = {
 
         let field = null;
         let value = null;
-
-        if (input.classList.contains("sub-multi-check")) {
+        const containsMultiCheck = input.classList.contains("sub-multi-check");
+        const containsMultiText = input.classList.contains("sub-multi-text");
+        if (containsMultiCheck || containsMultiText) {
             field = input.parentNode.parentNode.parentNode.id;
             input.parentNode.parentNode.parentNode.childNodes.forEach(child => {
                 if (child instanceof HTMLUListElement) {
@@ -547,11 +605,17 @@ const index = {
                         if (listChild instanceof HTMLLIElement) {
                             listChild.childNodes.forEach(listElement => {
                                 if (listElement instanceof HTMLInputElement) {
-                                    if (listElement.checked) {
+                                    if (containsMultiCheck && listElement.checked) {
                                         if (value === null) {
                                             value = "\"" + listElement.value;
                                         } else {
                                             value += "," + listElement.value;
+                                        }
+                                    } else if (containsMultiText) {
+                                        if (value === null) {
+                                            value += "\"" + listElement.value + "\"";
+                                        } else {
+                                            value += ",\"" + listElement.value + "\"";
                                         }
                                     }
                                 }
@@ -563,7 +627,7 @@ const index = {
 
             if (value === null) {
                 value = "\"_\"";
-            } else {
+            } else if (containsMultiCheck) {
                 value += "\"";
             }
         } else {
