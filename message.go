@@ -1746,7 +1746,7 @@ func loadAbilityMetaData() error {
 		return err
 	}
 
-	abilityMetaDataPath := folders[0].Path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "wc3-slk-edit-electron-resources-master" + string(filepath.Separator) + "AbilityMetaData.slk"
+	abilityMetaDataPath := folders[0].Path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "wc3-slk-edit-electron-resources-master" + string(filepath.Separator) + "data" + string(filepath.Separator) + "AbilityMetaData.slk"
 	if flag, err := exists(abilityMetaDataPath); err != nil || !flag {
 		if err != nil {
 			log.Println(err)
@@ -3030,9 +3030,12 @@ func startDownload(w *astilectron.Window, path string) error {
 
 	defer resp.Body.Close()
 
+	log.Printf("size(%v)\n", size)
+
 	// If the HEAD request didn't receive any Content-Length header we'll have to grab it from the actual request
-	if size == -1 {
+	if size < 0 {
 		size = resp.ContentLength
+		log.Printf("Size failed, new size(%v)\n", size)
 	}
 
 	w.SendMessage(EventMessage{"downloadTextUpdate", "Downloading..."})
@@ -3062,10 +3065,7 @@ func startDownload(w *astilectron.Window, path string) error {
 
 	unzipDestination := path + string(filepath.Separator) + "resources"
 
-	err = os.Mkdir(unzipDestination, os.ModePerm)
-	if err != nil {
-		return err
-	}
+	os.Mkdir(unzipDestination, os.ModePerm)
 
 	_, err = Unzip(w, file, unzipDestination)
 	if err != nil {
