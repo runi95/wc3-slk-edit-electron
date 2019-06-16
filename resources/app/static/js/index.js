@@ -457,7 +457,7 @@ const index = {
 
             let updatedHtml = "";
             const {Levels, Code} = message.payload;
-            const trimmedCode = trimQuotes(Code);
+            const trimmedCode = trimQuotes(Code ? Code : "");
             const parsedLevels = parseInt(Levels);
             if (parsedLevels && typeof parsedLevels === "number" && Number.isNaN(parsedLevels) === false) {
                 const updateHtmlForEachLevel = (fieldId, displayName) => {
