@@ -463,7 +463,7 @@ const index = {
                 const updateHtmlForEachLevel = (fieldId, displayName) => {
                     for (let i = 1; i <= parsedLevels; i++) {
                         const value = trimQuotes(message.payload[fieldId + i] ? message.payload[fieldId + i] : "");
-                        updatedHtml += '<li><label for="' + fieldId + i + '">' + displayName + ' - ' + i + '</label><input oninput="index.saveField(this, this.form.id)" type="text" class="form-control" id="' + fieldId + i + '" placeholder="' + displayName + '" value="' + value + '"/></li>';
+                        updatedHtml += '<li><label for="Ability-' + fieldId + i + '">' + displayName + ' - ' + i + '</label><input oninput="index.saveField(this, this.form.id)" type="text" class="form-control" id="Ability-' + fieldId + i + '" placeholder="' + displayName + '" value="' + value + '"/></li>';
                     }
                 };
 
