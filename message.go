@@ -142,6 +142,13 @@ type NewItem struct {
 	BaseItemId null.String
 }
 
+type NewAbility struct {
+	Alias         null.String
+	GenerateId    bool
+	Name          string
+	BaseAbilityId null.String
+}
+
 type FileInfo struct {
 	FileName        string
 	StatusClass     string
@@ -1306,6 +1313,37 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 			itemMap[itemId] = item
 			payload = item
+		}
+	case "createNewAbility":
+		if m.Payload != nil {
+			var newAbility NewAbility
+			if err = json.Unmarshal(m.Payload, &newAbility); err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
+			}
+
+			ability := new(models.SLKAbility)
+			ability.AbilityData = new(models.AbilityData)
+			ability.AbilityFunc = new(models.AbilityFunc)
+			ability.AbilityString = new(models.AbilityString)
+
+			var alias string
+			if newAbility.GenerateId == true || !newAbility.Alias.Valid {
+				alias = getNextValidAbilityId(lastValidAbilityIndex)
+			} else {
+				alias = newAbility.Alias.String
+			}
+
+			ability.Alias.SetValid(alias)
+			ability.AbilityFuncId.SetValid(alias)
+			ability.AbilityStringId.SetValid(alias)
+			ability.Name.SetValid(newAbility.Name)
+
+			// TODO: Implement functionality to create new abilities here!
+
+			abilityMap[alias] = ability
+			payload = ability
 		}
 	case "loadMdx":
 		if len(m.Payload) > 0 {

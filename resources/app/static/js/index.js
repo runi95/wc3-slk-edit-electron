@@ -1527,6 +1527,15 @@ const index = {
             document.getElementById("NewItem-ItemID").disabled = false;
         }
     },
+    updateNewAbilityIsGenerated: function (input) {
+        if (input.checked) {
+            input.required = true;
+            document.getElementById("NewAbility-Alias").disabled = true;
+        } else {
+            input.required = false;
+            document.getElementById("NewAbility-Alias").disabled = false;
+        }
+    },
     createNewUnit: function () {
         if (!document.getElementById("NewUnit-Form").checkValidity())
             return;
@@ -1599,12 +1608,46 @@ const index = {
             $('#new-item-modal').modal('toggle');
         });
     },
+    createNewAbility: function () {
+        if (!document.getElementById("NewAbility-Form").checkValidity())
+            return;
+
+        const generateId = document.getElementById("NewAbility-Generated").checked;
+        const alias = generateId ? document.getElementById("NewAbility-Alias").value : null;
+        // const baseAbilityValue = document.getElementById("NewAbility-BaseAbilityId").value;
+        const baseAbilityId = null; // baseAbilityValue.length > 0 ? baseAbilityValue : null;
+        const name = document.getElementById("NewAbility-Name").value;
+        const message = {
+            name: "createNewAbility",
+            payload: {
+                Alias: alias,
+                GenerateId: generateId,
+                Name: name,
+                BaseAbilityId: baseAbilityId
+            }
+        };
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            const {Alias} = message.payload;
+            index.selectAbilityFromId(Alias);
+            itemDataList.push({Id: Alias, Name: message.payload.Name});
+            index.abilitySearch(document.getElementById("abilitySearchInput"));
+
+            $('#new-ability-modal').modal('toggle');
+        });
+    },
     switchTab: function (containerId) {
         if (containerId === "units-container") {
             document.getElementById("items-container").hidden = true;
             document.getElementById("abilities-container").hidden = true;
             // document.getElementById("buffs-container").hidden = true;
             document.getElementById("new-item-button").hidden = true;
+            document.getElementById("new-ability-button").hidden = true;
             document.getElementById("new-unit-button").hidden = false;
             document.getElementById("units-container").hidden = false;
             document.getElementById("unit-nav-pills").hidden = false;
@@ -1618,6 +1661,7 @@ const index = {
             document.getElementById("abilities-container").hidden = true;
             // document.getElementById("buffs-container").hidden = true;
             document.getElementById("new-unit-button").hidden = true;
+            document.getElementById("new-ability-button").hidden = true;
             document.getElementById("unit-nav-pills").hidden = true;
             document.getElementById("new-item-button").hidden = false;
             document.getElementById("items-container").hidden = false;
@@ -1630,6 +1674,10 @@ const index = {
             document.getElementById("units-container").hidden = true;
             document.getElementById("items-container").hidden = true;
             // document.getElementById("buffs-container").hidden = true;
+            document.getElementById("new-unit-button").hidden = true;
+            document.getElementById("new-item-button").hidden = true;
+            document.getElementById("unit-nav-pills").hidden = true;
+            document.getElementById("new-ability-button").hidden = false;
             document.getElementById("abilities-container").hidden = false;
 
             document.getElementById("units-tab").className = "nav-link";

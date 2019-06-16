@@ -270,7 +270,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="NewUnit-Form" class="was-validated form-dark">
+                <form id="NewItem-Form" class="was-validated form-dark">
                     <div class="form-group row">
                         <label for="NewItem-ItemID" class="col-sm-2 col-form-label">Item ID</label>
                         <div class="col-sm-6">
@@ -305,6 +305,55 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary" onclick="index.createNewItem()">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="new-ability-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New Ability</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span style="color: #fff;" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="NewAbility-Form" class="was-validated form-dark">
+                    <div class="form-group row">
+                        <label for="NewAbility-Alias" class="col-sm-2 col-form-label">Ability ID</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="NewAbility-Alias" placeholder="Ability ID"
+                                   pattern="[A-Za-z]{1}[A-Za-z0-9]{3}" required disabled>
+                        </div>
+                        <div class="col-sm-4" style="display: flex; align-items: center;">
+                            <input class="form-check-input" onchange="index.updateNewAbilityIsGenerated(this);"
+                                   style="position: inherit; margin-right: 5px;" type="checkbox" id="NewAbility-Generated"
+                                   required checked>
+                            <label class="form-check-label" for="NewAbility-Generated">
+                                Generated
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="NewAbility-Name" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="NewAbility-Name" placeholder="Name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="NewAbility-BaseAbility" class="col-sm-2">Base Ability</label>
+                        <div class="col-sm-10">
+                            <select id="NewAbility-BaseAbility" class="custom-select">
+                                <option value="">Default</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="index.createNewAbility()">Create</button>
             </div>
         </div>
     </div>
@@ -361,10 +410,12 @@
                 </span>
             </div>
             <div class="div-btn mr-auto">
-            <span id="new-unit-button" data-toggle="modal" data-target="#new-unit-modal"><i
-                        class="fas fa-plus-circle"></i><span class="d-none d-xl-inline"> New unit...</span></span>
+                <span id="new-unit-button" data-toggle="modal" data-target="#new-unit-modal"><i
+                            class="fas fa-plus-circle"></i><span class="d-none d-xl-inline"> New unit...</span></span>
                 <span id="new-item-button" data-toggle="modal" data-target="#new-item-modal" hidden><i
                             class="fas fa-plus-circle"></i><span class="d-none d-xl-inline"> New item...</span></span>
+                <span id="new-ability-button" data-toggle="modal" data-target="#new-ability-modal"><i
+                            class="fas fa-plus-circle"></i><span class="d-none d-xl-inline"> New ability...</span></span>
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content"
                     aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
