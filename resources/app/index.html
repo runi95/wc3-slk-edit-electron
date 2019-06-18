@@ -328,7 +328,8 @@
                         </div>
                         <div class="col-sm-4" style="display: flex; align-items: center;">
                             <input class="form-check-input" onchange="index.updateNewAbilityIsGenerated(this);"
-                                   style="position: inherit; margin-right: 5px;" type="checkbox" id="NewAbility-Generated"
+                                   style="position: inherit; margin-right: 5px;" type="checkbox"
+                                   id="NewAbility-Generated"
                                    required checked>
                             <label class="form-check-label" for="NewAbility-Generated">
                                 Generated
@@ -344,9 +345,8 @@
                     <div class="form-group row">
                         <label for="NewAbility-BaseAbility" class="col-sm-2">Base Ability</label>
                         <div class="col-sm-10">
-                            <select id="NewAbility-BaseAbility" class="custom-select">
-                                <option value="">Default</option>
-                            </select>
+                            <input id="NewAbility-BaseAbility" type="text" class="typeahead tt-query" autocomplete="off"
+                                   spellcheck="false">
                         </div>
                     </div>
                 </form>
@@ -415,7 +415,8 @@
                 <span id="new-item-button" data-toggle="modal" data-target="#new-item-modal" hidden><i
                             class="fas fa-plus-circle"></i><span class="d-none d-xl-inline"> New item...</span></span>
                 <span id="new-ability-button" data-toggle="modal" data-target="#new-ability-modal"><i
-                            class="fas fa-plus-circle"></i><span class="d-none d-xl-inline"> New ability...</span></span>
+                            class="fas fa-plus-circle"></i><span
+                            class="d-none d-xl-inline"> New ability...</span></span>
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content"
                     aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">

@@ -182,6 +182,16 @@ const index = {
             addTableData(itemTableBody, "selectItem", message.payload);
         });
     },
+    loadData: function () {
+        const message = {name: "loadData", payload: null};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+        });
+    },
     loadAbilityData: function () {
         const message = {name: "loadAbilityData", payload: null};
         astilectron.sendMessage(message, function (message) {
@@ -227,6 +237,40 @@ const index = {
             });
         });
     },
+    loadBaseAbilityData: function () {
+        const message = {name: "loadBaseAbilityData", payload: null};
+        astilectron.sendMessage(message, function (message) {
+            // Check for errors|
+            if (message.name === "error") {
+                asticode.notifier.error(message.payload);
+                return;
+            }
+
+            const abilities = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                local: message.payload
+            });
+
+            $("#NewAbility-BaseAbility").typeahead({
+                    hint: true,
+                    highlight: true,
+                    minLength: 0
+                },
+                {
+                    name: "abilities",
+                    limit: message.payload.length,
+                    source: (q, sync) => {
+                        if (q === "") {
+                            sync(abilities.all());
+                        } else {
+                            abilities.search(q, sync);
+                        }
+                    }
+                }
+            );
+        });
+    },
     loadSlk: function () {
         const message = {name: "loadSlk", payload: null};
         astilectron.sendMessage(message, function (message) {
@@ -251,10 +295,12 @@ const index = {
             fileInfoContainerString += '</ul>';
             document.getElementById("file-info-container").innerHTML = fileInfoContainerString;
 
+            index.loadData();
             index.loadUnitData();
             index.loadItemData();
             index.loadAbilityData();
             index.loadAbilityMetaData();
+            index.loadBaseAbilityData();
         });
     },
     unitSearch: function (inputField) {

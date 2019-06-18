@@ -38,6 +38,7 @@ var (
 	unitMap               map[string]*models.SLKUnit
 	itemMap               map[string]*models.SLKItem
 	abilityMap            map[string]*models.SLKAbility
+	baseAbilityMap        map[string]*models.SLKAbility
 	abilityMetaDataMap    map[string]*models.AbilityMetaData
 	lastValidUnitIndex    int
 	lastValidItemIndex    int
@@ -468,13 +469,24 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 		}
 	case "loadSlk":
 		payload = loadSLK()
-	case "loadAbilityMetaData":
-		err = loadAbilityMetaData()
+	case "loadData":
+		err = loadData()
 		if err != nil {
 			payload = err.Error()
 			return
 		}
 
+		payload = "success"
+	case "loadBaseAbilityData":
+		var baseAbilityKeyList = make([]string, len(baseAbilityMap))
+		i := 0
+		for k := range baseAbilityMap {
+			baseAbilityKeyList[i] = k
+			i++
+		}
+
+		payload = baseAbilityKeyList
+	case "loadAbilityMetaData":
 		payload = abilityMetaDataMap
 	case "loadUnitData":
 		var unitListData = make([]ListData, len(unitMap))
@@ -1736,8 +1748,9 @@ func saveUnitsToFile(location string) {
 	parser.WriteToFilesAndSaveToFolder(unitList, []*models.SLKItem{}, abilityList, location, true)
 }
 
-func loadAbilityMetaData() error {
+func loadData() error {
 	var err error
+
 	folders := configDirs.QueryFolders(configdir.Global)
 	if len(folders) < 1 {
 		err = fmt.Errorf("failed to load config directory")
@@ -1746,26 +1759,489 @@ func loadAbilityMetaData() error {
 		return err
 	}
 
-	abilityMetaDataPath := folders[0].Path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "wc3-slk-edit-electron-resources-master" + string(filepath.Separator) + "data" + string(filepath.Separator) + "AbilityMetaData.slk"
-	if flag, err := exists(abilityMetaDataPath); err != nil || !flag {
-		if err != nil {
-			log.Println(err)
-		} else {
-			log.Println(abilityMetaDataPath + " does not exist!")
-		}
+	var abilityMetaDataPath *string = nil
+	var abilityDataPath *string = nil
+	var campaignAbilityFuncPath *string = nil
+	var campaignAbilityStringsPath *string = nil
+	var commonAbilityFuncPath *string = nil
+	var commonAbilityStringsPath *string = nil
+	var humanAbilityFuncPath *string = nil
+	var humanAbilityStringsPath *string = nil
+	var itemAbilityFuncPath *string = nil
+	var itemAbilityStringsPath *string = nil
+	var neutralAbilityFuncPath *string = nil
+	var neutralAbilityStringsPath *string = nil
+	var nightElfAbilityFuncPath *string = nil
+	var nightElfAbilityStringsPath *string = nil
+	var orcAbilityFuncPath *string = nil
+	var orcAbilityStringsPath *string = nil
+	var undeadAbilityFuncPath *string = nil
+	var undeadAbilityStringsPath *string = nil
 
-		return fmt.Errorf("the AbilityMetaData.slk file does not exist")
-	}
+	inputDirectory := folders[0].Path + string(filepath.Separator) + "resources" + string(filepath.Separator) + "wc3-slk-edit-electron-resources-master" + string(filepath.Separator) + "data"
 
-	var abilityMetaDataBytes []byte
-	abilityMetaDataBytes, err = ioutil.ReadFile(abilityMetaDataPath)
+	var filesInDirectory []os.FileInfo
+	filesInDirectory, err = ioutil.ReadDir(inputDirectory)
 	if err != nil {
-		log.Println(err)
-		return fmt.Errorf("failed to read AbilityMetaData.slk")
+		log.Fatal(err)
+		return err
 	}
+
+	for _, file := range filesInDirectory {
+		lowercaseFilename := strings.ToLower(file.Name())
+		path := filepath.Join(inputDirectory, file.Name())
+
+		switch lowercaseFilename {
+		case "abilitymetadata.txt":
+			abilityMetaDataPath = &path
+		case "abilitydata.slk":
+			abilityDataPath = &path
+		case "campaignabilityfunc.txt":
+			campaignAbilityFuncPath = &path
+		case "campaignabilitystrings.txt":
+			campaignAbilityStringsPath = &path
+		case "commonabilityfunc.txt":
+			commonAbilityFuncPath = &path
+		case "commonabilitystrings.txt":
+			commonAbilityStringsPath = &path
+		case "humanabilityfunc.txt":
+			humanAbilityFuncPath = &path
+		case "humanabilitystrings.txt":
+			humanAbilityStringsPath = &path
+		case "neutralabilityfunc.txt":
+			neutralAbilityFuncPath = &path
+		case "neutralabilitystrings.txt":
+			neutralAbilityStringsPath = &path
+		case "nightelfabilityfunc.txt":
+			nightElfAbilityFuncPath = &path
+		case "nightelfabilitystrings.txt":
+			nightElfAbilityStringsPath = &path
+		case "orcabilityfunc.txt":
+			orcAbilityFuncPath = &path
+		case "orcabilitystrings.txt":
+			orcAbilityStringsPath = &path
+		case "undeadabilityfunc.txt":
+			undeadAbilityFuncPath = &path
+		case "undeadabilitystrings.txt":
+			undeadAbilityStringsPath = &path
+		case "itemabilityfunc.txt":
+			itemAbilityFuncPath = &path
+		case "itemabilitystrings.txt":
+			itemAbilityStringsPath = &path
+		default:
+			log.Printf("%v is an unknown file and will be ignored!", lowercaseFilename)
+		}
+	}
+
+	var abilityMetaDataBytes []byte = nil
+	var abilityDataBytes []byte = nil
+	var itemAbilityFuncBytes []byte = nil
+	var itemAbilityStringsBytes []byte = nil
+	var campaignAbilityFuncBytes []byte = nil
+	var campaignAbilityStringsBytes []byte = nil
+	var commonAbilityFuncBytes []byte = nil
+	var commonAbilityStringsBytes []byte = nil
+	var humanAbilityFuncBytes []byte = nil
+	var humanAbilityStringsBytes []byte = nil
+	var neutralAbilityFuncBytes []byte = nil
+	var neutralAbilityStringsBytes []byte = nil
+	var nightElfAbilityFuncBytes []byte = nil
+	var nightElfAbilityStringsBytes []byte = nil
+	var orcAbilityFuncBytes []byte = nil
+	var orcAbilityStringsBytes []byte = nil
+	var undeadAbilityFuncBytes []byte = nil
+	var undeadAbilityStringsBytes []byte = nil
+	var readFileWaitGroup sync.WaitGroup
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if abilityMetaDataPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*abilityMetaDataPath); err != nil || flag {
+				log.Println("Reading AbilityMetaData.slk...")
+
+				abilityMetaDataBytes, err = ioutil.ReadFile(*abilityMetaDataPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if abilityDataPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*abilityDataPath); err != nil || flag {
+				log.Println("Reading AbilityData.slk...")
+
+				abilityDataBytes, err = ioutil.ReadFile(*abilityDataPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if itemAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*itemAbilityFuncPath); err != nil || flag {
+				log.Println("Reading CampaignAbilityFunc.txt...")
+
+				itemAbilityFuncBytes, err = ioutil.ReadFile(*itemAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if itemAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*itemAbilityStringsPath); err != nil || flag {
+				log.Println("Reading CampaignAbilityStrings.txt...")
+
+				itemAbilityStringsBytes, err = ioutil.ReadFile(*itemAbilityStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if campaignAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*campaignAbilityFuncPath); err != nil || flag {
+				log.Println("Reading ItemAbilityFunc.txt...")
+
+				campaignAbilityFuncBytes, err = ioutil.ReadFile(*campaignAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if campaignAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*campaignAbilityStringsPath); err != nil || flag {
+				log.Println("Reading ItemAbilityStrings.txt...")
+
+				campaignAbilityStringsBytes, err = ioutil.ReadFile(*campaignAbilityStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if commonAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*commonAbilityFuncPath); err != nil || flag {
+				log.Println("Reading CommonAbilityFunc.txt...")
+
+				commonAbilityFuncBytes, err = ioutil.ReadFile(*commonAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if commonAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*commonAbilityStringsPath); err != nil || flag {
+				log.Println("Reading CommonAbilityStrings.txt...")
+
+				commonAbilityStringsBytes, err = ioutil.ReadFile(*commonAbilityStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if humanAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*humanAbilityFuncPath); err != nil || flag {
+				log.Println("Reading HumanAbilityFunc.txt...")
+
+				humanAbilityFuncBytes, err = ioutil.ReadFile(*humanAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if humanAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*humanAbilityStringsPath); err != nil || flag {
+				log.Println("Reading HumanAbilityStrings.txt...")
+
+				humanAbilityStringsBytes, err = ioutil.ReadFile(*humanAbilityStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if neutralAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*neutralAbilityFuncPath); err != nil || flag {
+				log.Println("Reading NeutralAbilityFunc.txt...")
+
+				neutralAbilityFuncBytes, err = ioutil.ReadFile(*neutralAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if neutralAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*neutralAbilityStringsPath); err != nil || flag {
+				log.Println("Reading NeutralAbilityStrings.txt...")
+
+				neutralAbilityStringsBytes, err = ioutil.ReadFile(*neutralAbilityStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if nightElfAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*nightElfAbilityFuncPath); err != nil || flag {
+				log.Println("Reading NightElfAbilityFunc.txt...")
+
+				nightElfAbilityFuncBytes, err = ioutil.ReadFile(*nightElfAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if nightElfAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*nightElfAbilityStringsPath); err != nil || flag {
+				log.Println("Reading NightElfAbilityStrings.txt...")
+
+				nightElfAbilityStringsBytes, err = ioutil.ReadFile(*nightElfAbilityStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if orcAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*orcAbilityFuncPath); err != nil || flag {
+				log.Println("Reading OrcAbilityFunc.txt...")
+
+				orcAbilityFuncBytes, err = ioutil.ReadFile(*orcAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if orcAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*orcAbilityStringsPath); err != nil || flag {
+				log.Println("Reading OrcAbilityStrings.txt...")
+
+				orcAbilityStringsBytes, err = ioutil.ReadFile(*orcAbilityStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if undeadAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*undeadAbilityFuncPath); err != nil || flag {
+				log.Println("Reading UndeadAbilityFunc.txt...")
+
+				undeadAbilityFuncBytes, err = ioutil.ReadFile(*undeadAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if undeadAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*undeadAbilityStringsPath); err != nil || flag {
+				log.Println("Reading UndeadAbilityStrings.txt...")
+
+				undeadAbilityStringsBytes, err = ioutil.ReadFile(*undeadAbilityStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
+
+	readFileWaitGroup.Wait()
 
 	abilityMetaDataMap = make(map[string]*models.AbilityMetaData)
-	parser.PopulateAbilityMetaDataMapWithSlkFileData(abilityMetaDataBytes, abilityMetaDataMap)
+	if abilityDataBytes != nil {
+		log.Println("Parsing abilityMetaDataBytes...")
+		parser.PopulateAbilityMetaDataMapWithSlkFileData(abilityMetaDataBytes, abilityMetaDataMap)
+	}
+
+	baseAbilityMap = make(map[string]*models.SLKAbility)
+	if abilityDataBytes != nil {
+		log.Println("Parsing abilityDataBytes...")
+		parser.PopulateAbilityMapWithSlkFileData(abilityDataBytes, baseAbilityMap)
+	}
+
+	if campaignAbilityFuncBytes != nil {
+		log.Println("Parsing campaignAbilityFuncBytes...")
+		parser.PopulateAbilityMapWithTxtFileData(campaignAbilityFuncBytes, baseAbilityMap)
+	}
+
+	if campaignAbilityStringsBytes != nil {
+		log.Println("Parsing campaignAbilityStringsBytes...")
+		parser.PopulateAbilityMapWithTxtFileData(campaignAbilityStringsBytes, baseAbilityMap)
+	}
+
+	if commonAbilityFuncBytes != nil {
+		log.Println("Parsing commonAbilityFuncBytes...")
+		parser.PopulateAbilityMapWithTxtFileData(commonAbilityFuncBytes, baseAbilityMap)
+	}
+
+	if commonAbilityStringsBytes != nil {
+		log.Println("Parsing commonAbilityStringsBytes...")
+		parser.PopulateAbilityMapWithTxtFileData(commonAbilityStringsBytes, baseAbilityMap)
+	}
+
+	if humanAbilityFuncBytes != nil {
+		log.Println("Parsing humanAbilityFuncBytes...")
+		parser.PopulateAbilityMapWithTxtFileData(humanAbilityFuncBytes, baseAbilityMap)
+	}
+
+	if humanAbilityStringsBytes != nil {
+		log.Println("Parsing humanAbilityStringsBytes...")
+		parser.PopulateAbilityMapWithTxtFileData(humanAbilityStringsBytes, baseAbilityMap)
+	}
+
+	if nightElfAbilityFuncBytes != nil {
+		log.Println("Parsing nightElfAbilityFuncBytes...")
+		parser.PopulateAbilityMapWithTxtFileData(nightElfAbilityFuncBytes, baseAbilityMap)
+	}
+
+	if nightElfAbilityStringsBytes != nil {
+		log.Println("Parsing nightElfAbilityStringsBytes...")
+		parser.PopulateAbilityMapWithTxtFileData(nightElfAbilityStringsBytes, baseAbilityMap)
+	}
+
+	if orcAbilityFuncBytes != nil {
+		log.Println("Parsing orcAbilityFuncBytes...")
+		parser.PopulateAbilityMapWithTxtFileData(orcAbilityFuncBytes, baseAbilityMap)
+	}
+
+	if orcAbilityStringsBytes != nil {
+		log.Println("Parsing orcAbilityStringsBytes...")
+		parser.PopulateAbilityMapWithTxtFileData(orcAbilityStringsBytes, baseAbilityMap)
+	}
+
+	if undeadAbilityFuncBytes != nil {
+		log.Println("Parsing undeadAbilityFuncBytes...")
+		parser.PopulateAbilityMapWithTxtFileData(undeadAbilityFuncBytes, baseAbilityMap)
+	}
+
+	if undeadAbilityStringsBytes != nil {
+		log.Println("Parsing undeadAbilityStringsBytes...")
+		parser.PopulateAbilityMapWithTxtFileData(undeadAbilityStringsBytes, baseAbilityMap)
+	}
+
+	if itemAbilityFuncBytes != nil {
+		log.Println("Parsing itemAbilityFuncBytes...")
+		parser.PopulateAbilityMapWithTxtFileData(itemAbilityFuncBytes, baseAbilityMap)
+	}
+
+	if itemAbilityStringsBytes != nil {
+		log.Println("Parsing itemAbilityStringsBytes(2)...")
+		parser.PopulateAbilityMapWithTxtFileData(itemAbilityStringsBytes, baseAbilityMap)
+	}
 
 	return nil
 }
