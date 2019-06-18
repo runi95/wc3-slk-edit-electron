@@ -1792,7 +1792,7 @@ func loadData() error {
 		path := filepath.Join(inputDirectory, file.Name())
 
 		switch lowercaseFilename {
-		case "abilitymetadata.txt":
+		case "abilitymetadata.slk":
 			abilityMetaDataPath = &path
 		case "abilitydata.slk":
 			abilityDataPath = &path
@@ -2162,7 +2162,7 @@ func loadData() error {
 	readFileWaitGroup.Wait()
 
 	abilityMetaDataMap = make(map[string]*models.AbilityMetaData)
-	if abilityDataBytes != nil {
+	if abilityMetaDataBytes != nil {
 		log.Println("Parsing abilityMetaDataBytes...")
 		parser.PopulateAbilityMetaDataMapWithSlkFileData(abilityMetaDataBytes, abilityMetaDataMap)
 	}
