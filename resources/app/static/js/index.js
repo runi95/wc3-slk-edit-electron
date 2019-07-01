@@ -517,24 +517,26 @@ const index = {
                     }
                 };
 
-                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataA"))
-                    updateHtmlForEachLevel("DataA", abilityMetaDataFields[trimmedCode]["DataA"].DisplayName);
-                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataB"))
-                    updateHtmlForEachLevel("DataB", abilityMetaDataFields[trimmedCode]["DataB"].DisplayName);
-                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataC"))
-                    updateHtmlForEachLevel("DataC", abilityMetaDataFields[trimmedCode]["DataC"].DisplayName);
-                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataD"))
-                    updateHtmlForEachLevel("DataD", abilityMetaDataFields[trimmedCode]["DataD"].DisplayName);
-                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataE"))
-                    updateHtmlForEachLevel("DataE", abilityMetaDataFields[trimmedCode]["DataE"].DisplayName);
-                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataF"))
-                    updateHtmlForEachLevel("DataF", abilityMetaDataFields[trimmedCode]["DataF"].DisplayName);
-                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataG"))
-                    updateHtmlForEachLevel("DataG", abilityMetaDataFields[trimmedCode]["DataG"].DisplayName);
-                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataH"))
-                    updateHtmlForEachLevel("DataH", abilityMetaDataFields[trimmedCode]["DataH"].DisplayName);
-                if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataI"))
-                    updateHtmlForEachLevel("DataI", abilityMetaDataFields[trimmedCode]["DataI"].DisplayName);
+                if (abilityMetaDataFields.hasOwnProperty(trimmedCode)) {
+                    if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataA"))
+                        updateHtmlForEachLevel("DataA", abilityMetaDataFields[trimmedCode]["DataA"].DisplayName);
+                    if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataB"))
+                        updateHtmlForEachLevel("DataB", abilityMetaDataFields[trimmedCode]["DataB"].DisplayName);
+                    if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataC"))
+                        updateHtmlForEachLevel("DataC", abilityMetaDataFields[trimmedCode]["DataC"].DisplayName);
+                    if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataD"))
+                        updateHtmlForEachLevel("DataD", abilityMetaDataFields[trimmedCode]["DataD"].DisplayName);
+                    if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataE"))
+                        updateHtmlForEachLevel("DataE", abilityMetaDataFields[trimmedCode]["DataE"].DisplayName);
+                    if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataF"))
+                        updateHtmlForEachLevel("DataF", abilityMetaDataFields[trimmedCode]["DataF"].DisplayName);
+                    if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataG"))
+                        updateHtmlForEachLevel("DataG", abilityMetaDataFields[trimmedCode]["DataG"].DisplayName);
+                    if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataH"))
+                        updateHtmlForEachLevel("DataH", abilityMetaDataFields[trimmedCode]["DataH"].DisplayName);
+                    if (abilityMetaDataFields[trimmedCode].hasOwnProperty("DataI"))
+                        updateHtmlForEachLevel("DataI", abilityMetaDataFields[trimmedCode]["DataI"].DisplayName);
+                }
                 updateHtmlForEachLevel("UnitID", "Summoned Unit Type");
                 updateHtmlForEachLevel("BuffID", "Buffs");
                 updateHtmlForEachLevel("EfctID", "Effects");
