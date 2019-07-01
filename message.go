@@ -46,7 +46,7 @@ var (
 
 	// Private Initialized Variables
 	configDirs                             = configdir.New(VENDOR_NAME, "")
-	configuration                          = &config{InDir: nil, OutDir: nil, IsLocked: false, IsDoneDownloadingModels: false, IsRegexSearch: false}
+	configuration                          = &config{InDir: nil, OutDir: nil, ResourceETag: nil, IsLocked: false, IsRegexSearch: false}
 	globalConfig         *configdir.Config = nil
 	defaultDisabledUnits                   = []string{
 		"Unit-Blend",
@@ -174,11 +174,11 @@ type GroupedModels struct {
 *    PRIVATE STRUCTURES
  */
 type config struct {
-	InDir                   *string
-	OutDir                  *string
-	IsLocked                bool
-	IsDoneDownloadingModels bool
-	IsRegexSearch           bool
+	InDir         *string
+	OutDir        *string
+	ResourceETag  *string
+	IsLocked      bool
+	IsRegexSearch bool
 }
 
 func (models Models) Len() int {
@@ -1369,22 +1369,11 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 			path := folders[0].Path
 
-			if !configuration.IsDoneDownloadingModels {
-				err = startDownload(w, path)
-				if err != nil {
-					log.Println(err)
-					payload = err.Error()
-					return
-				}
-
-				configuration.IsDoneDownloadingModels = true
-
-				err = saveConfig()
-				if err != nil {
-					log.Println(err)
-					payload = err.Error()
-					return
-				}
+			err = startDownload(w, path)
+			if err != nil {
+				log.Println(err)
+				payload = err.Error()
+				return
 			}
 
 			var unitModelList Models
@@ -3497,6 +3486,12 @@ func startDownload(w *astilectron.Window, path string) error {
 
 	defer headResp.Body.Close()
 
+	eTag := headResp.Header.Get("ETag")
+
+	if configuration.ResourceETag != nil && *(configuration.ResourceETag) == eTag {
+		return nil
+	}
+
 	size = headResp.ContentLength
 
 	resp, err := http.Get(url)
@@ -3536,6 +3531,13 @@ func startDownload(w *astilectron.Window, path string) error {
 
 	elapsed := time.Since(start)
 	log.Printf("Download completed in %s\n", elapsed)
+
+	configuration.ResourceETag = &eTag
+
+	err = saveConfig()
+	if err != nil {
+		return err
+	}
 
 	w.SendMessage(EventMessage{"downloadTextUpdate", "Extracting..."})
 
