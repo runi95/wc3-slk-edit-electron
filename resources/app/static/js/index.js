@@ -190,7 +190,13 @@ const index = {
                 asticode.notifier.error(message.payload);
                 return;
             }
+
+            index.postLoadData();
         });
+    },
+    postLoadData: function () {
+        index.loadAbilityMetaData();
+        index.loadBaseAbilityData();
     },
     loadAbilityData: function () {
         const message = {name: "loadAbilityData", payload: null};
@@ -299,8 +305,6 @@ const index = {
             index.loadUnitData();
             index.loadItemData();
             index.loadAbilityData();
-            index.loadAbilityMetaData();
-            index.loadBaseAbilityData();
         });
     },
     unitSearch: function (inputField) {
