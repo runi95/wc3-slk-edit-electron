@@ -2,6 +2,10 @@
 
 A simple editor that lets you edit Warcraft III SLK files much more easily.
 
+## Prerequisites
+
+Go version 1.17 or newer
+
 ## Installation
 
 ### Linux
@@ -9,7 +13,7 @@ A simple editor that lets you edit Warcraft III SLK files much more easily.
 Linux users will have to build the binaries themselves by following the steps below
 
 1. Run `go get -u github.com/asticode/go-astilectron-bundler/...` to download the electron bundler
-2. Run `go install github.com/asticode/go-astilectron-bundler/astilectron-bundler` to install the electron bundler
+2. Run `go install github.com/asticode/go-astilectron-bundler/astilectron-bundler@latest` to install the electron bundler
 3. Run `go get -u github.com/runi95/wc3-slk-edit-electron` to download the SLK editor
 4. Run `cd $GOPATH/src/github.com/runi95/wc3-slk-edit-electron` to enter the new directory
 5. Run `make clean` to clean the workspace (this is required)
@@ -21,7 +25,7 @@ Linux users will have to build the binaries themselves by following the steps be
 You can simply download the Warcraft_III_SLK_Edit.exe file from [latest releases](https://github.com/runi95/wc3-slk-edit-electron/releases/latest) or you can follow the steps below to build the executable yourself
 
 1. Run `go get -u github.com/asticode/go-astilectron-bundler/...` to download the electron bundler
-2. Run `go install github.com/asticode/go-astilectron-bundler/astilectron-bundler` to install the electron bundler
+2. Run `go install github.com/asticode/go-astilectron-bundler/astilectron-bundler@latest` to install the electron bundler
 3. Run `go get -u github.com/runi95/wc3-slk-edit-electron` to download the SLK editor
 4. Run `cd $GOPATH/src/github.com/runi95/wc3-slk-edit-electron` to enter the new directory
 5. Run `clean.bat` to clean the workspace (this is required)
@@ -33,7 +37,7 @@ You can simply download the Warcraft_III_SLK_Edit.exe file from [latest releases
 You can simply download the Warcraft_III_SLK_Edit_macos_amd64.zip file from [latest releases](https://github.com/runi95/wc3-slk-edit-electron/releases/latest) or you can follow the steps below to build the executable yourself
 
 1. Run `go get -u github.com/asticode/go-astilectron-bundler/...` to download the electron bundler
-2. Run `go install github.com/asticode/go-astilectron-bundler/astilectron-bundler` to install the electron bundler
+2. Run `go install github.com/asticode/go-astilectron-bundler/astilectron-bundler@latest` to install the electron bundler
 3. Run `go get -u github.com/runi95/wc3-slk-edit-electron` to download the SLK editor
 4. Run `cd $GOPATH/src/github.com/runi95/wc3-slk-edit-electron` to enter the new directory
 5. Run `make clean` to clean the workspace (this is required)

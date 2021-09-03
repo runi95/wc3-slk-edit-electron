@@ -4,13 +4,13 @@ clean:
 	rm -f bind_linux_amd64.go
 	rm -f bind_windows_amd64.go
 	rm -rf auto
-	#astilectron-bundler cc -v
+	#astilectron-bundler cc
 
 build:
-	astilectron-bundler -v
+	astilectron-bundler
 
 start:
 	"./output/linux-amd64/Warcraft_III_SLK_Edit"
 
 debug:
-	"./output/linux-amd64/Warcraft_III_SLK_Edit" -d -v
+	"./output/linux-amd64/Warcraft_III_SLK_Edit" -d

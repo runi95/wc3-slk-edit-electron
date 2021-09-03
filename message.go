@@ -5,12 +5,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"github.com/asticode/go-astilectron"
-	"github.com/asticode/go-astilectron-bootstrap"
-	"github.com/runi95/wts-parser/models"
-	"github.com/runi95/wts-parser/parser"
-	"github.com/shibukawa/configdir"
-	"gopkg.in/volatiletech/null.v6"
 	"io"
 	"io/ioutil"
 	"log"
@@ -23,6 +17,13 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/asticode/go-astilectron"
+	bootstrap "github.com/asticode/go-astilectron-bootstrap"
+	"github.com/runi95/wts-parser/models"
+	"github.com/runi95/wts-parser/parser"
+	"github.com/shibukawa/configdir"
+	"gopkg.in/volatiletech/null.v6"
 )
 
 const (
@@ -1758,8 +1759,8 @@ func loadData() error {
 	var humanAbilityStringsPath *string = nil
 	var itemAbilityFuncPath *string = nil
 	var itemAbilityStringsPath *string = nil
-	var neutralAbilityFuncPath *string = nil
-	var neutralAbilityStringsPath *string = nil
+	// var neutralAbilityFuncPath *string = nil
+	// var neutralAbilityStringsPath *string = nil
 	var nightElfAbilityFuncPath *string = nil
 	var nightElfAbilityStringsPath *string = nil
 	var orcAbilityFuncPath *string = nil
@@ -1797,10 +1798,10 @@ func loadData() error {
 			humanAbilityFuncPath = &path
 		case "humanabilitystrings.txt":
 			humanAbilityStringsPath = &path
-		case "neutralabilityfunc.txt":
-			neutralAbilityFuncPath = &path
-		case "neutralabilitystrings.txt":
-			neutralAbilityStringsPath = &path
+		// case "neutralabilityfunc.txt":
+		// 	neutralAbilityFuncPath = &path
+		// case "neutralabilitystrings.txt":
+		// 	neutralAbilityStringsPath = &path
 		case "nightelfabilityfunc.txt":
 			nightElfAbilityFuncPath = &path
 		case "nightelfabilitystrings.txt":
@@ -1832,8 +1833,8 @@ func loadData() error {
 	var commonAbilityStringsBytes []byte = nil
 	var humanAbilityFuncBytes []byte = nil
 	var humanAbilityStringsBytes []byte = nil
-	var neutralAbilityFuncBytes []byte = nil
-	var neutralAbilityStringsBytes []byte = nil
+	// var neutralAbilityFuncBytes []byte = nil
+	// var neutralAbilityStringsBytes []byte = nil
 	var nightElfAbilityFuncBytes []byte = nil
 	var nightElfAbilityStringsBytes []byte = nil
 	var orcAbilityFuncBytes []byte = nil
@@ -2012,39 +2013,39 @@ func loadData() error {
 		}
 	}()
 
-	readFileWaitGroup.Add(1)
-	go func() {
-		defer readFileWaitGroup.Done()
-		if neutralAbilityFuncPath != nil {
-			var flag bool
-			var err error
-			if flag, err = exists(*neutralAbilityFuncPath); err != nil || flag {
-				log.Println("Reading NeutralAbilityFunc.txt...")
+	// readFileWaitGroup.Add(1)
+	// go func() {
+	// 	defer readFileWaitGroup.Done()
+	// 	if neutralAbilityFuncPath != nil {
+	// 		var flag bool
+	// 		var err error
+	// 		if flag, err = exists(*neutralAbilityFuncPath); err != nil || flag {
+	// 			log.Println("Reading NeutralAbilityFunc.txt...")
 
-				neutralAbilityFuncBytes, err = ioutil.ReadFile(*neutralAbilityFuncPath)
-				if err != nil {
-					CrashWithMessage(w, err.Error())
-				}
-			}
-		}
-	}()
+	// 			neutralAbilityFuncBytes, err = ioutil.ReadFile(*neutralAbilityFuncPath)
+	// 			if err != nil {
+	// 				CrashWithMessage(w, err.Error())
+	// 			}
+	// 		}
+	// 	}
+	// }()
 
-	readFileWaitGroup.Add(1)
-	go func() {
-		defer readFileWaitGroup.Done()
-		if neutralAbilityStringsPath != nil {
-			var flag bool
-			var err error
-			if flag, err = exists(*neutralAbilityStringsPath); err != nil || flag {
-				log.Println("Reading NeutralAbilityStrings.txt...")
+	// readFileWaitGroup.Add(1)
+	// go func() {
+	// 	defer readFileWaitGroup.Done()
+	// 	if neutralAbilityStringsPath != nil {
+	// 		var flag bool
+	// 		var err error
+	// 		if flag, err = exists(*neutralAbilityStringsPath); err != nil || flag {
+	// 			log.Println("Reading NeutralAbilityStrings.txt...")
 
-				neutralAbilityStringsBytes, err = ioutil.ReadFile(*neutralAbilityStringsPath)
-				if err != nil {
-					CrashWithMessage(w, err.Error())
-				}
-			}
-		}
-	}()
+	// 			neutralAbilityStringsBytes, err = ioutil.ReadFile(*neutralAbilityStringsPath)
+	// 			if err != nil {
+	// 				CrashWithMessage(w, err.Error())
+	// 			}
+	// 		}
+	// 	}
+	// }()
 
 	readFileWaitGroup.Add(1)
 	go func() {

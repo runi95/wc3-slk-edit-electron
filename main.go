@@ -3,69 +3,45 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/asticode/go-astilectron"
-	"github.com/asticode/go-astilectron-bootstrap"
-	"github.com/asticode/go-astilog"
-	"github.com/pkg/errors"
-	"github.com/shibukawa/configdir"
 	"log"
 	"os"
-	"path/filepath"
+
+	"github.com/asticode/go-astikit"
+	"github.com/asticode/go-astilectron"
+	bootstrap "github.com/asticode/go-astilectron-bootstrap"
 )
 
+// Constants
+const htmlAbout = `Welcome on <b>Astilectron</b> demo!<br>
+This is using the bootstrap and the bundler.`
+
+// Vars injected via ldflags by bundler
 var (
-	// Public Variables
-	AppName string
-	BuiltAt string
-
-	// Private Variables
-	w *astilectron.Window
-
-	// Flags
-	debugFlag = flag.Bool("d", false, "enables the debug mode")
-	input     = flag.String("input", "", "sets the input folder where the SLK files are stored")
-	output    = flag.String("output", "", "sets the output folder where we'll save the resulting SLK files")
+	AppName            string
+	BuiltAt            string
+	VersionAstilectron string
+	VersionElectron    string
 )
 
-type logWriter struct{}
+// Application Vars
+var (
+	fs     = flag.NewFlagSet(os.Args[0], flag.ContinueOnError)
+	debug  = fs.Bool("d", false, "enables the debug mode")
+	input  = fs.String("input", "", "sets the input folder where the SLK files are stored")
+	output = fs.String("output", "", "sets the output folder where we'll save the resulting SLK files")
 
-/**
-*    PRIVATE FUNCTIONS
- */
-func (w *logWriter) Write(p []byte) (int, error) {
-	var err error
-	fmt.Println(string(p))
-
-	folders := configDirs.QueryFolders(configdir.Global)
-	if len(folders) < 1 {
-		err = fmt.Errorf("failed to load output directories")
-
-		fmt.Println(err)
-		return 0, err
-	}
-
-	file, err := os.OpenFile(folders[0].Path+string(filepath.Separator)+"log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-	if err != nil {
-		fmt.Println(err)
-		return 0, err
-	}
-	defer file.Close()
-
-	return file.Write(p)
-}
+	w *astilectron.Window
+)
 
 func main() {
-	writer := new(logWriter)
-	log.SetOutput(writer)
+	// Create logger
+	l := log.New(log.Writer(), log.Prefix(), log.Flags())
 
-	log.Println("Starting up...")
-
-	// Init
-	flag.Parse()
-	astilog.FlagInit()
+	// Parse flags
+	fs.Parse(os.Args[1:])
 
 	// Run bootstrap
-	astilog.Debugf("Running app built at %s", BuiltAt)
+	l.Printf("Running app built at %s\n", BuiltAt)
 	if err := bootstrap.Run(bootstrap.Options{
 		Asset:    Asset,
 		AssetDir: AssetDir,
@@ -73,29 +49,34 @@ func main() {
 			AppName:            AppName,
 			AppIconDarwinPath:  "resources/icon.icns",
 			AppIconDefaultPath: "resources/icon.png",
+			SingleInstance:     true,
+			VersionAstilectron: VersionAstilectron,
+			VersionElectron:    VersionElectron,
 		},
-		Debug:       *debugFlag,
+		Debug:       *debug,
+		Logger:      l,
 		MenuOptions: []*astilectron.MenuItemOptions{},
 		OnWait: func(_ *astilectron.Astilectron, ws []*astilectron.Window, _ *astilectron.Menu, _ *astilectron.Tray, _ *astilectron.Menu) error {
 			w = ws[0]
 
-			if *debugFlag {
+			if *debug {
 				w.OpenDevTools()
 			}
 
 			return nil
 		},
 		RestoreAssets: RestoreAssets,
-		Windows: []*bootstrap.Window{
-			{
-				Homepage:       "index.html",
-				MessageHandler: HandleMessages,
-				Options: &astilectron.WindowOptions{
-					Center:          astilectron.PtrBool(true),
-					AutoHideMenuBar: astilectron.PtrBool(true),
-				},
-			}},
+		Windows: []*bootstrap.Window{{
+			Homepage:       "index.html",
+			MessageHandler: HandleMessages,
+			Options: &astilectron.WindowOptions{
+				BackgroundColor: astikit.StrPtr("#333"),
+				Center:          astikit.BoolPtr(true),
+				Height:          astikit.IntPtr(700),
+				Width:           astikit.IntPtr(700),
+			},
+		}},
 	}); err != nil {
-		astilog.Fatal(errors.Wrap(err, "running bootstrap failed"))
+		l.Fatal(fmt.Errorf("running bootstrap failed: %w", err))
 	}
 }

@@ -1,2 +1,2 @@
 @ECHO OFF
-astilectron-bundler -v
+astilectron-bundler
