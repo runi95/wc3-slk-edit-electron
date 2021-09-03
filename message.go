@@ -504,7 +504,6 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 		i := 0
 		for k, v := range itemMap {
-			// log.Printf("v(%v)\n", v)
 			itemListData[i] = ListData{k, v.Name.String, v.Editorsuffix}
 			i++
 		}
@@ -515,7 +514,6 @@ func HandleMessages(w *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 		i := 0
 		for k, v := range abilityMap {
-			// log.Printf("v(%v)\n", v)
 			abilityListData[i] = ListData{k, v.Name.String, v.Editorsuffix}
 			i++
 		}
@@ -1759,8 +1757,8 @@ func loadData() error {
 	var humanAbilityStringsPath *string = nil
 	var itemAbilityFuncPath *string = nil
 	var itemAbilityStringsPath *string = nil
-	// var neutralAbilityFuncPath *string = nil
-	// var neutralAbilityStringsPath *string = nil
+	var neutralAbilityFuncPath *string = nil
+	var neutralAbilityStringsPath *string = nil
 	var nightElfAbilityFuncPath *string = nil
 	var nightElfAbilityStringsPath *string = nil
 	var orcAbilityFuncPath *string = nil
@@ -1798,10 +1796,10 @@ func loadData() error {
 			humanAbilityFuncPath = &path
 		case "humanabilitystrings.txt":
 			humanAbilityStringsPath = &path
-		// case "neutralabilityfunc.txt":
-		// 	neutralAbilityFuncPath = &path
-		// case "neutralabilitystrings.txt":
-		// 	neutralAbilityStringsPath = &path
+		case "neutralabilityfunc.txt":
+			neutralAbilityFuncPath = &path
+		case "neutralabilitystrings.txt":
+			neutralAbilityStringsPath = &path
 		case "nightelfabilityfunc.txt":
 			nightElfAbilityFuncPath = &path
 		case "nightelfabilitystrings.txt":
@@ -1833,8 +1831,8 @@ func loadData() error {
 	var commonAbilityStringsBytes []byte = nil
 	var humanAbilityFuncBytes []byte = nil
 	var humanAbilityStringsBytes []byte = nil
-	// var neutralAbilityFuncBytes []byte = nil
-	// var neutralAbilityStringsBytes []byte = nil
+	var neutralAbilityFuncBytes []byte = nil
+	var neutralAbilityStringsBytes []byte = nil
 	var nightElfAbilityFuncBytes []byte = nil
 	var nightElfAbilityStringsBytes []byte = nil
 	var orcAbilityFuncBytes []byte = nil
@@ -2013,39 +2011,39 @@ func loadData() error {
 		}
 	}()
 
-	// readFileWaitGroup.Add(1)
-	// go func() {
-	// 	defer readFileWaitGroup.Done()
-	// 	if neutralAbilityFuncPath != nil {
-	// 		var flag bool
-	// 		var err error
-	// 		if flag, err = exists(*neutralAbilityFuncPath); err != nil || flag {
-	// 			log.Println("Reading NeutralAbilityFunc.txt...")
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if neutralAbilityFuncPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*neutralAbilityFuncPath); err != nil || flag {
+				log.Println("Reading NeutralAbilityFunc.txt...")
 
-	// 			neutralAbilityFuncBytes, err = ioutil.ReadFile(*neutralAbilityFuncPath)
-	// 			if err != nil {
-	// 				CrashWithMessage(w, err.Error())
-	// 			}
-	// 		}
-	// 	}
-	// }()
+				neutralAbilityFuncBytes, err = ioutil.ReadFile(*neutralAbilityFuncPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
 
-	// readFileWaitGroup.Add(1)
-	// go func() {
-	// 	defer readFileWaitGroup.Done()
-	// 	if neutralAbilityStringsPath != nil {
-	// 		var flag bool
-	// 		var err error
-	// 		if flag, err = exists(*neutralAbilityStringsPath); err != nil || flag {
-	// 			log.Println("Reading NeutralAbilityStrings.txt...")
+	readFileWaitGroup.Add(1)
+	go func() {
+		defer readFileWaitGroup.Done()
+		if neutralAbilityStringsPath != nil {
+			var flag bool
+			var err error
+			if flag, err = exists(*neutralAbilityStringsPath); err != nil || flag {
+				log.Println("Reading NeutralAbilityStrings.txt...")
 
-	// 			neutralAbilityStringsBytes, err = ioutil.ReadFile(*neutralAbilityStringsPath)
-	// 			if err != nil {
-	// 				CrashWithMessage(w, err.Error())
-	// 			}
-	// 		}
-	// 	}
-	// }()
+				neutralAbilityStringsBytes, err = ioutil.ReadFile(*neutralAbilityStringsPath)
+				if err != nil {
+					CrashWithMessage(w, err.Error())
+				}
+			}
+		}
+	}()
 
 	readFileWaitGroup.Add(1)
 	go func() {
@@ -2191,6 +2189,16 @@ func loadData() error {
 	if humanAbilityStringsBytes != nil {
 		log.Println("Parsing humanAbilityStringsBytes...")
 		parser.PopulateAbilityMapWithTxtFileData(humanAbilityStringsBytes, baseAbilityMap)
+	}
+
+	if neutralAbilityFuncBytes != nil {
+		log.Println("Parsing neutralAbilityFuncBytes...")
+		parser.PopulateAbilityMapWithTxtFileData(neutralAbilityFuncBytes, baseAbilityMap)
+	}
+
+	if neutralAbilityStringsBytes != nil {
+		log.Println("Parsing neutralAbilityStringsBytes...")
+		parser.PopulateAbilityMapWithTxtFileData(neutralAbilityStringsBytes, baseAbilityMap)
 	}
 
 	if nightElfAbilityFuncBytes != nil {
